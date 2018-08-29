@@ -17,7 +17,6 @@ class TipoPersona extends Model
 
 	public static function buscarTipoPersona($id){
 		return TipoPersona::select('id', 'nombre')
-            ->where('nombre', 'Alumno')
             ->where('fkestado', $id)
             ->orderBy('nombre', 'asc')->get();
 	}
