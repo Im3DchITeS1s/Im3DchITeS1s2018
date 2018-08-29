@@ -1,1 +1,1 @@
-Inicio del Proyecto en el repositorio, del instituto
+Inicio del Proyecto en el repositorio, del instituto IMEDCHI
