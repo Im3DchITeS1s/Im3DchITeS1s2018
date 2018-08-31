@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -15,14 +14,8 @@ class ProfesionController extends Controller
 {
     protected $verificar_insert =
     [
-        'nombre' => 'required|max:50|unique:profesion',
-    ];
-
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:32|unique:profesion,nombre,$id',
-        'fkestado' => 'required'
-    ];    
+        'nombre' => 'required|max:50|unique:profesion'
+    ];  
 
     public function __construct()
     {
@@ -99,7 +92,10 @@ class ProfesionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:50|unique:profesion,nombre,'.$request->id,
+            'fkestado' => 'required']);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
