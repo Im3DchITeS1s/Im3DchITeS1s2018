@@ -72,6 +72,12 @@ Route::get('/sistema/imedchi/usuario/droppersona/{id}', 'UsuarioController@dropp
 Route::get('/sistema/imedchi/usuario/dropemail/{id}', 'UsuarioController@dropemail');
 Route::get('/sistema/imedchi/usuario/existeuser/{id}', 'UsuarioController@existeuser');
 
+//Curso
+Route::resource('/mantenimiento/curso', 'CursoController');
+Route::get('Curso/getdata', 'CursoController@getdata')->name('Curso.getdata');
+Route::post('/mantenimiento/curso/cambiarEstado', 'CursoController@cambiarEstado');
+Route::get('/mantenimiento/curso/dropestado/{id}', 'CursoController@dropestado');
+
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
 Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');

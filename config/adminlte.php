@@ -134,7 +134,7 @@ return [
                 'text' => 'Genero',
                 'url'  => '/mantenimiento/genero',
                 'icon_color' => 'red',
-                ],    
+                ],   
                 [
                 'text' => 'Tipo Email',
                 'url'  => '/mantenimiento/tipoemail',
@@ -309,15 +309,15 @@ return [
                         'icon_color' => 'aqua',
                     ],
                     [
-                        'text'    => 'Materias',
-                        'url'     => '#',
-                        'icon_color' => 'aqua',
-                    ],
-                    [
                         'text' => 'Grado',
                         'url'  => '#',
                         'icon_color' => 'aqua',
                     ],
+                    [
+                    'text' => 'Materias',
+                    'url'  => '/mantenimiento/curso',
+                    'icon_color' => 'aqua',
+                    ], 
                     [
                         'text'    => 'Sección',
                         'url'     => '#',
