@@ -78,6 +78,18 @@ Route::get('Curso/getdata', 'CursoController@getdata')->name('Curso.getdata');
 Route::post('/mantenimiento/curso/cambiarEstado', 'CursoController@cambiarEstado');
 Route::get('/mantenimiento/curso/dropestado/{id}', 'CursoController@dropestado');
 
+//Grado
+Route::resource('/mantenimiento/grado', 'GradoController');
+Route::get('Grado/getdata', 'GradoController@getdata')->name('Grado.getdata');
+Route::post('/mantenimiento/grado/cambiarEstado', 'GradoController@cambiarEstado');
+Route::get('/mantenimiento/grado/dropestado/{id}', 'GradoController@dropestado');
+
+//Carrera
+Route::resource('/mantenimiento/carrera', 'CarreraController');
+Route::get('Carrera/getdata', 'CarreraController@getdata')->name('Carrera.getdata');
+Route::post('/mantenimiento/carrera/cambiarEstado', 'CarreraController@cambiarEstado');
+Route::get('/mantenimiento/carrera/dropestado/{id}', 'CarreraController@dropestado');
+
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
 Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');

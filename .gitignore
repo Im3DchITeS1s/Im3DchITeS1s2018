@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 .phpunit.result.cache
 .env
+app/Http/Controllers/ProfesionController.php
+app/Http/Controllers/ProfesionController.php

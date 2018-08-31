@@ -8,19 +8,19 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
 use Response;
-use App\Profesion;
+use App\Grado;
 use App\Estado;
 
-class ProfesionController extends Controller
+class GradoController extends Controller
 {
     protected $verificar_insert =
     [
-        'nombre' => 'required|max:50|unique:profesion',
+        'nombre' => 'required|max:50|unique:grado',
     ];
 
     protected $verificar_update =
     [
-        'nombre' => 'required|max:32|unique:profesion,nombre,$id',
+        'nombre' => 'required|max:32|unique:grado,nombre,$id',
         'fkestado' => 'required'
     ];    
 
@@ -31,27 +31,27 @@ class ProfesionController extends Controller
 
     public function index()
     {
-        return view('mantenimiento/Profesion/profesion');
+        return view('mantenimiento/Grado/grado');
     }
 
     public function getdata()
     {
         $color_estado = "";
 
-        $query = Profesion::dataProfesion();
+        $query = grado::dataGrado();
 
         return Datatables::of($query)
-            ->addColumn('action', function ($profesion) {
-                switch ($profesion->id_estado) {
+            ->addColumn('action', function ($grado) {
+                switch ($grado->id_estado) {
                     case 5:
-                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$profesion->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
+                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$grado->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
                         break;
                     case 6:
-                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$profesion->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
+                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$grado->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$profesion->id.'" data-nombre="'.$profesion->nombre.'" data-fkestado="'.$profesion->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$grado->id.'" data-nombre="'.$grado->nombre.'" data-fkestado="'.$grado->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
@@ -79,7 +79,7 @@ class ProfesionController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new Profesion();
+            $insert = new grado();
             $insert->nombre = $request->nombre;
             $insert->fkestado = $estado->id;
             $insert->save();
@@ -103,7 +103,7 @@ class ProfesionController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = Profesion::findOrFail($id);  
+            $cambiar = grado::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
             $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
@@ -118,7 +118,7 @@ class ProfesionController extends Controller
         else
             $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = Profesion::findOrFail($request->pkprofesion); 
+        $cambiar = grado::findOrFail($request->pkgrado); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          

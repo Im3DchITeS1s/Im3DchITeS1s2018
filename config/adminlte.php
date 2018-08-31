@@ -310,19 +310,19 @@ return [
                     ],
                     [
                         'text' => 'Grado',
-                        'url'  => '#',
+                        'url'  => '/mantenimiento/grado',
+                        'icon_color' => 'aqua',
+                    ],
+                     [
+                        'text'    => 'Carreras',
+                        'url'     => 'mantenimiento/carrera',
                         'icon_color' => 'aqua',
                     ],
                     [
                     'text' => 'Materias',
                     'url'  => '/mantenimiento/curso',
                     'icon_color' => 'aqua',
-                    ], 
-                    [
-                        'text'    => 'Sección',
-                        'url'     => '#',
-                        'icon_color' => 'aqua',
-                    ],                    
+                    ],                     
                 ],                
                 ],                           
             ],

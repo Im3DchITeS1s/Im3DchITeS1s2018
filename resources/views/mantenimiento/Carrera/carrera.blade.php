@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Mantenimiento - Curso')
+@section('title', 'Mantenimiento - Carrera')
 
 @section('content_header')
     <div class="content-header">
-        <h1>Curso
+        <h1>Carrera
             <button type="button" class="add-modal btn btn-success">
                 <span class="fa fa-plus-circle"></span>
             </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Curso</li>
+            <li class="active">Carrera</li>
         </ol>                      
     </div>    
 @stop
@@ -33,6 +33,7 @@
                     <thead >
                         <tr>
                             <th width="25%">Nombre</th>
+                            <th width="25%">Descripcion</th>
                             <th width="8%">Accion</th>
                         </tr>
                     </thead>
@@ -65,8 +66,10 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar curso" autofocus>
-                                </div>                                                               
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar carrera" autofocus>
+                                </div>                                                             </div>
+                                  <input type="text" class="form-control" id="descripcion_add" placeholder="ingresar Descripcion" autofocus>
+                                </div>                                                                    
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
@@ -107,7 +110,10 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar curso" autofocus>                         
+                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar carrera" autofocus>                         
+                                </div> 
+                                </div>
+                                    <input type="text" class="form-control" id="descripcion_edit" placeholder="ingresar descripcion" autofocus>                         
                                 </div> 
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
                             </div>
@@ -150,9 +156,10 @@
             table = $('#info-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('Curso.getdata') !!}',
+                ajax: '{!! route('Carrera.getdata') !!}',
                 columns: [
                     { data: 'nombre', name: 'nombre' },
+                    { data: 'descripcion', name: 'descripcion' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -162,15 +169,17 @@
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorNombre').addClass('hidden');
+            $('.errorDescripcion').addClass('hidden');
             $('#addModal').modal('show');
         });
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/curso',
+                url: '/mantenimiento/carrera',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'nombre': $('#nombre_add').val(),
+                    'descripcion': $('#descripcion_add').val(),
                 },
                 success: function(data) {
                     $('.errorNombre').addClass('hidden');
@@ -188,10 +197,15 @@
                             $('.errorNombre').removeClass('hidden');
                             $('.errorNombre').text(data.errors.nombre);
                         }
+                        if (data.errors.nombre) {
+                            $('.errorDescripcion').removeClass('hidden');
+                            $('.errorDescripcion').text(data.errors.descripcion);
+                        }
                     } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
                             $('#nombre_add').val('');
+                            $('#descripcion_add').val('');
                           table.ajax.reload(); 
                         }); 
                     }
@@ -205,14 +219,16 @@
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorNombre').addClass('hidden');
+            $('.errorDescripcion').addClass('hidden');
             $('.errorEstado').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
             $('#nombre_edit').val($(this).data('nombre'));
+            $('#descripcion_edit').val($(this).data('descripcion'));
             id = $('#id_edit').val();
             id_estado = $(this).data('fkestado');
             $('#editModal').modal('show');
-            $.get("/mantenimiento/curso/dropestado/"+1,function(response,id){
+            $.get("/mantenimiento/carrera/dropestado/"+1,function(response,id){
                 $("#fkestado_edit").empty();
                 for(i=0; i<response.length; i++){
                     $("#fkestado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
@@ -223,15 +239,17 @@
         $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
-                url: '/mantenimiento/curso/' + id,
+                url: '/mantenimiento/carrera/' + id,
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
                     'nombre': $('#nombre_edit').val(),
+                    'descripcion': $('#descripcion_edit').val(),
                     'fkestado': $('#fkestado_edit').val()
                 },
                 success: function(data) {
                     $('.errorNombre').addClass('hidden');
+                    $('.errorDescripcion').addClass('hidden');
                     $('.errorEstado').addClass('hidden');
 
                     if ((data.errors)) {
@@ -247,6 +265,10 @@
                             $('.errorNombre').removeClass('hidden');
                             $('.errorNombre').text(data.errors.nombre);
                         }
+                         if (data.errors.descripcion) {
+                            $('.errorDescripcion').removeClass('hidden');
+                            $('.errorDescripcion').text(data.errors.descripcion);
+                        }
                         if (data.errors.fkestado) {
                             $('.errorEstado').removeClass('hidden');
                             $('.errorEstado').text(data.errors.fkestado);
@@ -256,6 +278,7 @@
                         .then((value) => {
                          $("#id_edit").val('');
                          $('#nombre_edit').val('');
+                         $('#descripcion_edit').val('');
                          $('#fkestado_edit').val('');
                           table.ajax.reload(); 
                         }); 
@@ -279,10 +302,10 @@
               if (willDelete) {
                 $.ajax({
                     type: 'POST',
-                    url: "/mantenimiento/curso/cambiarEstado",
+                    url: "/mantenimiento/carrera/cambiarEstado",
                     data: {
                         '_token': $('input[name=_token]').val(),
-                        'pkcurso': id,
+                        'pkcarrera': id,
                         'estado' : $(this).data('estado')
                     },
                     success: function(data) {                 

@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Mantenimiento - Curso')
+@section('title', 'Mantenimiento - Grado')
 
 @section('content_header')
     <div class="content-header">
-        <h1>Curso
+        <h1>Grado
             <button type="button" class="add-modal btn btn-success">
                 <span class="fa fa-plus-circle"></span>
             </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Curso</li>
+            <li class="active">Grado</li>
         </ol>                      
     </div>    
 @stop
@@ -65,7 +65,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar curso" autofocus>
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar grado" autofocus>
                                 </div>                                                               
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
@@ -107,7 +107,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar curso" autofocus>                         
+                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar grado" autofocus>                         
                                 </div> 
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
                             </div>
@@ -150,8 +150,7 @@
             table = $('#info-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('Curso.getdata') !!}',
-                columns: [
+                ajax: '{!! route('Grado.getdata') !!}', columns: [
                     { data: 'nombre', name: 'nombre' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
@@ -167,7 +166,7 @@
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/curso',
+                url: '/mantenimiento/grado',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'nombre': $('#nombre_add').val(),
@@ -212,7 +211,7 @@
             id = $('#id_edit').val();
             id_estado = $(this).data('fkestado');
             $('#editModal').modal('show');
-            $.get("/mantenimiento/curso/dropestado/"+1,function(response,id){
+            $.get("/mantenimiento/grado/dropestado/"+1,function(response,id){
                 $("#fkestado_edit").empty();
                 for(i=0; i<response.length; i++){
                     $("#fkestado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
@@ -223,7 +222,7 @@
         $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
-                url: '/mantenimiento/curso/' + id,
+                url: '/mantenimiento/grado/' + id,
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
@@ -279,10 +278,10 @@
               if (willDelete) {
                 $.ajax({
                     type: 'POST',
-                    url: "/mantenimiento/curso/cambiarEstado",
+                    url: "/mantenimiento/grado/cambiarEstado",
                     data: {
                         '_token': $('input[name=_token]').val(),
-                        'pkcurso': id,
+                        'pkgrado': id,
                         'estado' : $(this).data('estado')
                     },
                     success: function(data) {                 

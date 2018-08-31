@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
 		$this->call(PersonaTableSeeder::class);    	
     	$this->call(SistemaTableSeeder::class);
         $this->call(RolTableSeeder::class);
+        $this->call(SeccionTableSeeder::class);
         $this->call(SistemaRolTableSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(SistemaRolUserTableSeeder::class);
