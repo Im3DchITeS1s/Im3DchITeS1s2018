@@ -72,6 +72,13 @@ Route::get('/sistema/imedchi/usuario/droppersona/{id}', 'UsuarioController@dropp
 Route::get('/sistema/imedchi/usuario/dropemail/{id}', 'UsuarioController@dropemail');
 Route::get('/sistema/imedchi/usuario/existeuser/{id}', 'UsuarioController@existeuser');
 
+//Sistema Rol Usuario
+Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
+Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');
+Route::post('/sistema/imedchi/sistemarolusuario/cambiarEstado', 'SistemaRolUsuarioController@cambiarEstado');
+Route::get('/sistema/imedchi/sistemarolusuario/dropsistema/{id}', 'SistemaRolUsuarioController@dropsistema');
+Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRolUsuarioController@dropsistemarol');
+
 //Curso
 Route::resource('/mantenimiento/curso', 'CursoController');
 Route::get('Curso/getdata', 'CursoController@getdata')->name('Curso.getdata');
@@ -90,6 +97,7 @@ Route::get('Carrera/getdata', 'CarreraController@getdata')->name('Carrera.getdat
 Route::post('/mantenimiento/carrera/cambiarEstado', 'CarreraController@cambiarEstado');
 Route::get('/mantenimiento/carrera/dropestado/{id}', 'CarreraController@dropestado');
 
+<<<<<<< HEAD
 //CarreraCurso
 Route::resource('/mantenimiento/carreracurso', 'CarreraCursoController');
 Route::get('/carreracurso/getdata/{id}', 'CarreraCursoController@getdata');
@@ -102,3 +110,8 @@ Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->
 Route::post('/sistema/imedchi/sistemarolusuario/cambiarEstado', 'SistemaRolUsuarioController@cambiarEstado');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistema/{id}', 'SistemaRolUsuarioController@dropsistema');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRolUsuarioController@dropsistemarol');
+=======
+//Genero
+Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
+Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
+>>>>>>> 16dd7abcffdecebaf892aba6b4071f441c28c740

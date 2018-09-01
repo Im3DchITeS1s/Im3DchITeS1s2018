@@ -53,7 +53,7 @@ class CarreraController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$carrera->id.'" data-nombre="'.$carrera->nombre.'" data-fkestado="'.$carrera->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$carrera->id.'" data-nombre="'.$carrera->nombre.'" data-fkestado="'.$carrera->id_estado.'" data-descripcion="'.$carrera->descripcion.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       

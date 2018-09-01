@@ -13,6 +13,7 @@ class CreatePeriodoAcademicoTable extends Migration
             $table->string('nombre', 75)->unique();
             $table->date('inicio');
             $table->date('fin');
+            $table->string('ciclo', 4);
 
             $table->unsignedInteger('fktipo_periodo');
             $table->unsignedInteger('fkestado');
