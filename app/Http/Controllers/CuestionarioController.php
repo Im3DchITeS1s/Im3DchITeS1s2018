@@ -38,6 +38,24 @@ class CuestionarioController extends Controller
         return view('blackboard/cuestionario');
     }
 
+    public function getdataCuestionarioCreado()
+    {
+        $idPersona = Auth::user()->fkpersona;
+        $ciclo = date ("Y");
+        $query = Cuestionario::dataCuestionarioCicloCatedratico($idPersona, 18, $ciclo);
+
+        return Datatables::of($query)
+            ->addColumn('action', function ($data) {
+                $prioridad = '<button class="btn btn-'.$data->color_prioridad.' btn-xs" type="button">'.$data->prioridad.'></span></button>';
+                $btn_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><small>mover</small></button>';
+
+                return $prioridad.' <button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-titulo="'.$data->titulo.'" data-descripcion="'.$data->descripcion.'" data-punteo="'.$data->punteo.'" data-fkcatedratico_curso="'.$data->fkcatedratico_curso.'" data-fkperiodo_academico="'.$data->fkperiodo_academico.'" data-fktipo_cuestionario="'.$data->fktipo_cuestionario.'" data-fkprioridad="'.$data->fkprioridad.'" data-fkestado="'.$data->fkestado.'" data-carrera="'.$data->carrera.'" data-curso="'.$data->curso.'" data-grado="'.$data->grado.'" data-seccion="'.$data->seccion.'" data-periodo_academico="'.$data->periodo_academico.'" data-ciclo="'.$data->ciclo.'" data-tipo_periodo="'.$data->tipo_periodo.'" data-prioridad="'.$data->prioridad.'" data-color_prioridad="'.$data->color_prioridad.'"  data-estado="'.$data->estado.'">
+                    <span class="glyphicon glyphicon-edit"></span></button> '.$btn_estado;
+            })       
+            ->editColumn('id', 'ID: {{$id}}')       
+            ->make(true);
+    }
+
     public function dropcarreracatedratico(Request $request, $id)
     {
         $id = Auth::user()->fkpersona;

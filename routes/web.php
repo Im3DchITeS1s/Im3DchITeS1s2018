@@ -110,6 +110,13 @@ Route::post('/sistema/imedchi/sistemarolusuario/cambiarEstado', 'SistemaRolUsuar
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistema/{id}', 'SistemaRolUsuarioController@dropsistema');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRolUsuarioController@dropsistemarol');
 
+<<<<<<< HEAD
 //Cuestionario
 Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
 Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
+=======
+//Genero
+Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
+Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
+
+>>>>>>> ee5f3ea047a3225f3eb049063340bf012271d124
