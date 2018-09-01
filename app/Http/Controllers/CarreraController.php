@@ -122,7 +122,7 @@ class CarreraController extends Controller
         else
             $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = Carrera::findOrFail($request->pkcurso); 
+        $cambiar = Carrera::findOrFail($request->pkcarrera); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
