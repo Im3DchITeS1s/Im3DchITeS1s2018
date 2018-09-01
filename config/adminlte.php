@@ -308,18 +308,23 @@ return [
                         'url'  => '#',
                         'icon_color' => 'aqua',
                     ],
+                     [
+                        'text' => 'Carreras y cursos',
+                        'url'  => '/mantenimiento/carreracurso',
+                        'icon_color' => 'aqua',
+                    ],
+                    [
+                        'text'    => 'Carreras',
+                        'url'     => '/mantenimiento/carrera',
+                        'icon_color' => 'aqua',
+                    ],
                     [
                         'text' => 'Grado',
                         'url'  => '/mantenimiento/grado',
                         'icon_color' => 'aqua',
                     ],
-                     [
-                        'text'    => 'Carreras',
-                        'url'     => 'mantenimiento/carrera',
-                        'icon_color' => 'aqua',
-                    ],
                     [
-                    'text' => 'Materias',
+                    'text' => 'Cursos',
                     'url'  => '/mantenimiento/curso',
                     'icon_color' => 'aqua',
                     ],                     
