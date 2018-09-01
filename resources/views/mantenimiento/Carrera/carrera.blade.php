@@ -41,10 +41,6 @@
             </div>                
           </div>
         </div>
-
-        <div class="box-footer">
-
-        </div>
     </div>
 
     <!-- Modal Agregar -->
@@ -58,18 +54,16 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
+                            <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <i class="fa fa-sticky-note"></i>
+                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                                   </div>
                                   <input type="text" class="form-control" id="nombre_add" placeholder="ingresar carrera" autofocus>
-                                </div>                                                             </div>
-                                  <input type="text" class="form-control" id="descripcion_add" placeholder="ingresar Descripcion" autofocus>
-                                </div>                                                                    
+                                </div>                                                             
+                            </div>
+                            <div class="col-sm-12">
+                                <textarea type="text" class="form-control" id="descripcion_add" placeholder="ingresar Descripcion" autofocus></textarea>                                                 
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
@@ -102,19 +96,16 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
+                            <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <i class="fa fa-sticky-note"></i>
+                                        <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                                     </div>
                                     <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar carrera" autofocus>                         
                                 </div> 
-                                </div>
-                                    <input type="text" class="form-control" id="descripcion_edit" placeholder="ingresar descripcion" autofocus>                         
-                                </div> 
+                            </div>
+                            <div class="col-sm-12">
+                                <textarea type="text" class="form-control" id="descripcion_edit" placeholder="ingresar descripcion" autofocus></textarea>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
                             </div>
                         </div>
