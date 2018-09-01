@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
 use Response;
-use App\CursoCarrera;
+use App\CarreraCurso;
 use App\Carrera;
 use App\Curso;
 use App\Estado;
@@ -40,20 +40,19 @@ class CarreraCursoController extends Controller
         return view('/mantenimiento/CarreraCurso/carreracurso');
     }
 
-    public function getdata(Request $request, $id)
+    public function getdata()
     {
-        if($request->ajax()){
-            $query = CarreraCurso::dataCarreraCurso($id);
-        } 
+        $query = CarreraCurso::dataCarreraCurso();
+
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
                 $btn_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-down"></span></button>';
 
-                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-fkcarrera="'.$data->id.'" data-fkcarrera="'.$data->fkcarrera.'" data-carrera="'.$data->carrera.'">
+                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcurso="'.$data->fkcurso.'" data-fkcarrera="'.$data->fkcarrera.'">
                     <span class="glyphicon glyphicon-edit"></span></button>';           
 
                 return '<small class="label label-success">'.$data->estado.'</small> '.$btn_edit.' '.$btn_estado;
-            })                  
+            })                       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }

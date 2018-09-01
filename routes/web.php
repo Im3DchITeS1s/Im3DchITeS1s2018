@@ -87,7 +87,7 @@ Route::get('/mantenimiento/curso/dropestado/{id}', 'CursoController@dropestado')
 
 //Grado
 Route::resource('/mantenimiento/grado', 'GradoController');
-Route::get('Grado/getdata', 'GradoController@getdata')->name('Grado.getdata');
+Route::get('grado/getdata', 'GradoController@getdata')->name('grado.getdata');
 Route::post('/mantenimiento/grado/cambiarEstado', 'GradoController@cambiarEstado');
 Route::get('/mantenimiento/grado/dropestado/{id}', 'GradoController@dropestado');
 
@@ -97,10 +97,9 @@ Route::get('Carrera/getdata', 'CarreraController@getdata')->name('Carrera.getdat
 Route::post('/mantenimiento/carrera/cambiarEstado', 'CarreraController@cambiarEstado');
 Route::get('/mantenimiento/carrera/dropestado/{id}', 'CarreraController@dropestado');
 
-<<<<<<< HEAD
 //CarreraCurso
 Route::resource('/mantenimiento/carreracurso', 'CarreraCursoController');
-Route::get('/carreracurso/getdata/{id}', 'CarreraCursoController@getdata');
+Route::get('carreracurso/getdata', 'CarreraCursoController@getdata')->name('carreracurso.getdata');
 Route::post('/mantenimiento/carreracurso/cambiarEstado', 'CarreraCursoController@cambiarEstado');
 Route::get('/mantenimiento/carreracurso/dropestado/{id}', 'CarreraCursoController@droestado');
 
@@ -110,8 +109,7 @@ Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->
 Route::post('/sistema/imedchi/sistemarolusuario/cambiarEstado', 'SistemaRolUsuarioController@cambiarEstado');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistema/{id}', 'SistemaRolUsuarioController@dropsistema');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRolUsuarioController@dropsistemarol');
-=======
-//Genero
+
+//Cuestionario
 Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
 Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
->>>>>>> 16dd7abcffdecebaf892aba6b4071f441c28c740
