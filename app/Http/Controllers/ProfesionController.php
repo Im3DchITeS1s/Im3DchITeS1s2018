@@ -99,7 +99,10 @@ class ProfesionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:50|unique:profesion,nombre,'.$request->id,
+            'fkestado' => 'required']);
+        
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
