@@ -93,6 +93,42 @@ class EstadoTableSeeder extends Seeder
         $nuevo = new Estado();
         $nuevo->nombre = 'Mantenimiento';
         $nuevo->idpadre = 4;
-        $nuevo->save();           
+        $nuevo->save();  
+
+        //17
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Cuestionario';
+        $nuevo->idpadre = 0;
+        $nuevo->save();   
+
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Creado';
+        $nuevo->idpadre = 17;
+        $nuevo->save();  
+
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Edicion';
+        $nuevo->idpadre = 17;
+        $nuevo->save(); 
+
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Listo';
+        $nuevo->idpadre = 17;
+        $nuevo->save();
+
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Publicado';
+        $nuevo->idpadre = 17;
+        $nuevo->save(); 
+
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Restringido';
+        $nuevo->idpadre = 17;
+        $nuevo->save();
+
+        $nuevo = new Estado();
+        $nuevo->nombre = 'Inactivo';
+        $nuevo->idpadre = 17;
+        $nuevo->save();                                                               
     }
 }

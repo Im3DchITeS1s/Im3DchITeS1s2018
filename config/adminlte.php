@@ -226,8 +226,8 @@ return [
             'icon'    => 'file',
             'submenu' => [
                 [
-                'text' => 'Evaluación1',
-                'url'  => '#',
+                'text' => 'Cuestionario',
+                'url'  => '/plataforma/blackboard/cuestionario',
                 'icon_color' => 'red',
                 ],
                 [

@@ -99,3 +99,4 @@ Route::get('/mantenimiento/carrera/dropestado/{id}', 'CarreraController@dropesta
 
 //Genero
 Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
+Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');

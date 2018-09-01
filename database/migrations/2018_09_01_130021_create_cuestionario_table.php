@@ -12,8 +12,6 @@ class CreateCuestionarioTable extends Migration
             $table->increments('id');
             $table->string('titulo', 100);
             $table->string('descripcion', 1000);
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
             $table->decimal('punteo', 3,2);
 
             $table->unsignedInteger('fkcatedratico_curso');
