@@ -5,11 +5,6 @@ use App\Seccion;
 
 class SeccionTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $nuevo = new Seccion();
@@ -53,4 +48,3 @@ class SeccionTableSeeder extends Seeder
         $nuevo->save();
     }
     }
-
