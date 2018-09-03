@@ -28,11 +28,13 @@ class DatabaseSeeder extends Seeder
         $this->call(CantidadAlumnoTableSeeder::class);
         $this->call(CatedraticoCursoTableSeeder::class); 
         $this->call(TipoPeriodoTableSeeder::class); 
-        $this->call(PeriodoAcademicoTableSeeder::class); 
-
+        $this->call(PeriodoAcademicoTableSeeder::class);
 
         //Blackboard
         $this->call(PrioridadTableSeeder::class); 
-        $this->call(TipoCuestionarioTableSeeder::class); 
+        $this->call(TipoCuestionarioTableSeeder::class);
+
+        //Gestion Administrativa 
+         $this->call(MesTableSeeder::class); 
     }
 }
