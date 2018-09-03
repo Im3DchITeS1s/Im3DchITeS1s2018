@@ -113,4 +113,7 @@ Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRol
 //Cuestionario
 Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
 Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
+Route::get('/plataforma/blackboard/cuestionario/droptipocuestionario/{id}', 'CuestionarioController@droptipocuestionario');
+Route::get('/plataforma/blackboard/cuestionario/dropperiodoacademico/{id}', 'CuestionarioController@dropperiodoacademico');
+Route::get('/plataforma/blackboard/cuestionario/dropprioridad/{id}', 'CuestionarioController@dropprioridad');
 

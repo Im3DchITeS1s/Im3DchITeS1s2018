@@ -122,7 +122,14 @@
         <div class="col-md-8">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">INFORMACION</h3>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#datospersonales">Creados</a></li>
+                        <li><a data-toggle="tab" href="#profesion">Edicion</a></li>
+                        <li><a data-toggle="tab" href="#telefono">Listo</a></li>
+                        <li><a data-toggle="tab" href="#email">Publicado</a></li>
+                        <li><a data-toggle="tab" href="#usuarios">Restringido</a></li>
+                        <li><a data-toggle="tab" href="#usuarios">Inactivo</a></li>
+                    </ul>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -160,6 +167,33 @@
             for(i=0; i<response.length; i++){
                 $("#fkcatedratico_curso_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" / "+response[i].curso+" / "+response[i].grado+" / "+response[i].seccion+" </option>");
             }
-        });                    
+        });
+
+        $.get("/plataforma/blackboard/cuestionario/droptipocuestionario/"+5,function(response){
+            $("#fktipo_cuestionario_add").empty();
+            $("#fktipo_cuestionario_add").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fktipo_cuestionario_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fktipo_cuestionario_add').val('').trigger('change.select2');
+            }
+        });
+
+        $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response){
+            $("#fkperiodo_academico_add").empty();
+            $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" - "+response[i].ciclo+" </option>");
+                $('#fkperiodo_academico_add').val('').trigger('change.select2');
+            }
+        });
+
+        $.get("/plataforma/blackboard/cuestionario/dropprioridad/"+5,function(response){
+            $("#fkprioridad_add").empty();
+            $("#fkprioridad_add").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fkprioridad_add").append("<option value='"+response[i].id+"'> <i class='fa fa-circle-o text-"+response[i].color+"'>"+response[i].nombre+"</i>"+" </option>");
+                $('#fkprioridad_add').val('').trigger('change.select2');
+            }
+        });                                            
     </script>    
 @stop

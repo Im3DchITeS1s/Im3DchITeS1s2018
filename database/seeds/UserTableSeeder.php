@@ -16,6 +16,15 @@ class UserTableSeeder extends Seeder
         $nuevo->fkestado = 11;
         $nuevo->save();
 
+        $nuevo = new User();
+        $nuevo->username = 'Renato';
+        $nuevo->email = 'renato@imedchi.edu.gt';
+        $nuevo->password = bcrypt('secret');
+        $nuevo->token = '1';
+        $nuevo->fkpersona = 2;
+        $nuevo->fkestado = 11;
+        $nuevo->save();        
+
         /*$nuevo = new User();
         $nuevo->username = 'Liliana';
         $nuevo->email = 'liliana@imedchi.edu.gt';

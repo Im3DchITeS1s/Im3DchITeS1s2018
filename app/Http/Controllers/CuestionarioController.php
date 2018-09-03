@@ -65,6 +65,30 @@ class CuestionarioController extends Controller
         }        
     }  
 
+    public function droptipocuestionario(Request $request, $id)
+    {
+        if($request->ajax()){
+            $data = TipoCuestionario::buscarTipoCuestionario($id);
+            return response()->json($data);
+        }        
+    }   
+
+    public function dropperiodoacademico(Request $request, $id)
+    {
+        if($request->ajax()){
+            $data = PeriodoAcademico::buscarPeriodoAcademico($id);
+            return response()->json($data);
+        }        
+    }   
+
+    public function dropprioridad(Request $request, $id)
+    {
+        if($request->ajax()){
+            $data = Prioridad::buscarPrioridad($id);
+            return response()->json($data);
+        }        
+    }        
+
     public function create()
     {
         //
