@@ -460,6 +460,23 @@ return [
                 ],                
             ],                                                       
         ], 
+
+        [
+            'text'    => 'Inventario',
+            'icon'    => 'suitcase',
+            'submenu' => [
+                [
+                'text' => 'Cargar',
+                'url'  => '#',
+                'icon_color' => 'red',
+                ],
+                [
+                'text'    => 'Descargar',
+                'url'     => '#',
+                'icon_color' => 'yellow',
+                ],          
+            ],                                                       
+        ],
     ],    
 
     /*
