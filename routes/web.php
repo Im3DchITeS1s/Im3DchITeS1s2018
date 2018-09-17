@@ -28,7 +28,7 @@ Route::get('tipoemail/getdata', 'TipoEmailController@getdata')->name('tipoemail.
 Route::post('/mantenimiento/tipoemail/cambiarEstado', 'TipoEmailController@cambiarEstado');
 Route::get('/mantenimiento/tipoemail/dropestado/{id}', 'TipoEmailController@dropestado');
 
-//TipoEmail
+//Compania
 Route::resource('/mantenimiento/compania', 'CompaniaController');
 Route::get('compania/getdata', 'CompaniaController@getdata')->name('compania.getdata');
 Route::post('/mantenimiento/compania/cambiarEstado', 'CompaniaController@cambiarEstado');
@@ -112,8 +112,29 @@ Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRol
 
 //Cuestionario
 Route::resource('/plataforma/blackboard/cuestionario', 'CuestionarioController');
+Route::get('cuestionario/getdataCuestionarioCreado', 'CuestionarioController@getdataCuestionarioCreado')->name('cuestionario.getdataCuestionarioCreado');
+Route::get('cuestionario/getdataCuestionarioEdicion', 'CuestionarioController@getdataCuestionarioEdicion')->name('cuestionario.getdataCuestionarioEdicion');
+Route::get('cuestionario/getdataCuestionarioListo', 'CuestionarioController@getdataCuestionarioListo')->name('cuestionario.getdataCuestionarioListo');
+Route::get('cuestionario/getdataCuestionarioPublicado', 'CuestionarioController@getdataCuestionarioPublicado')->name('cuestionario.getdataCuestionarioPublicado');
+Route::get('cuestionario/getdataCuestionarioRestringido', 'CuestionarioController@getdataCuestionarioRestringido')->name('cuestionario.getdataCuestionarioRestringido');
+Route::get('cuestionario/getdataCuestionarioInactivo', 'CuestionarioController@getdataCuestionarioInactivo')->name('cuestionario.getdataCuestionarioInactivo');
+Route::get('/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/{id}', 'CuestionarioController@contadorEstadoCuestionario');
+Route::post('/plataforma/blackboard/cuestionario/cambiarEstado', 'CuestionarioController@cambiarEstado');
 Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
 Route::get('/plataforma/blackboard/cuestionario/droptipocuestionario/{id}', 'CuestionarioController@droptipocuestionario');
 Route::get('/plataforma/blackboard/cuestionario/dropperiodoacademico/{id}', 'CuestionarioController@dropperiodoacademico');
 Route::get('/plataforma/blackboard/cuestionario/dropprioridad/{id}', 'CuestionarioController@dropprioridad');
 
+//Etiquetas
+Route::get('/plataforma/blackboard/etiqueta/etiquetaestado/{id}', 'EtiquetaController@etiquetaestado');
+
+//Preguntas
+Route::resource('/plataforma/blackboard/pregunta', 'PreguntaController');
+Route::get('/pregunta/getdata/{id}', 'PreguntaController@getdata');
+Route::get('/plataforma/blackboard/pregunta/buscaretiqueta/{id}', 'PreguntaController@buscaretiqueta');
+Route::post('/plataforma/blackboard/pregunta/cambiarEstado', 'PreguntaController@cambiarEstado');
+
+//Respuestas
+Route::resource('/plataforma/blackboard/respuesta', 'RespuestaController');
+Route::get('/respuesta/getdata/{id}', 'RespuestaController@getdata');
+Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaController@cambiarEstado');

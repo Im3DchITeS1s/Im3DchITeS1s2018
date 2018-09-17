@@ -11,8 +11,6 @@ class CreatePreguntaTable extends Migration
         Schema::create('pregunta', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion', 500);
-            $table->dateTime('fecha_ingreso');
-            $table->smallInteger('cantidad_respuesta');
 
             $table->unsignedInteger('fkcuestionario');
             $table->unsignedInteger('fketiqueta');

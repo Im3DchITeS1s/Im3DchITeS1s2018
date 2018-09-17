@@ -9,19 +9,19 @@ class PrioridadTableSeeder extends Seeder
     {
         $nuevo = new Prioridad();
         $nuevo->nombre = 'Alta';
-        $nuevo->color = 'red';        
+        $nuevo->color = 'danger';        
         $nuevo->fkestado = 5;
         $nuevo->save();
 
         $nuevo = new Prioridad();
         $nuevo->nombre = 'Media';
-        $nuevo->color = 'yellow';        
+        $nuevo->color = 'warning';        
         $nuevo->fkestado = 5;
         $nuevo->save(); 
 
         $nuevo = new Prioridad();
         $nuevo->nombre = 'Baja';
-        $nuevo->color = 'aqua';        
+        $nuevo->color = 'prymary';        
         $nuevo->fkestado = 5;
         $nuevo->save();         
     }
