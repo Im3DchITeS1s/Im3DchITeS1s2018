@@ -47,4 +47,4 @@ class SeccionTableSeeder extends Seeder
         $nuevo->fkestado = 5;
         $nuevo->save();
     }
-    }
+}

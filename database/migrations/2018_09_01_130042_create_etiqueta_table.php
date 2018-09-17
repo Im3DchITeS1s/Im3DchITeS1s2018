@@ -12,11 +12,12 @@ class CreateEtiquetaTable extends Migration
             $table->increments('id');
             $table->string('nombre', 20);
             $table->string('tipo', 15);
-            $table->string('metadata_inicio', 200);
-            $table->string('valor_metadata', 200);
-            $table->string('metadata_cierra', 200)->nullable();
-            $table->string('error', 200);
-            $table->smallInteger('impresion');
+            $table->string('color', 15)->nullable();            
+            $table->string('metadata_inicio', 500);
+            $table->string('idetiqueta', 100)->nullable();
+            $table->string('nameetiqueta', 100)->nullable();
+            $table->string('cierreetiqueta', 10)->nullable();
+            $table->string('metadata_cierra', 500)->nullable();
 
             $table->unsignedInteger('fkestado');
 

@@ -10,6 +10,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/bootstrap/dist/css/checkslider.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
@@ -24,7 +25,9 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>        
         <link href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
-        <script src="{{ asset('bower_components/select2/dist/js/select2.min.js') }}"></script>      
+        <script src="{{ asset('bower_components/select2/dist/js/select2.min.js') }}"></script>  
+
+        <link href="{{ asset('bower_components/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet" />           
     @endif
 
     <!-- Theme style -->

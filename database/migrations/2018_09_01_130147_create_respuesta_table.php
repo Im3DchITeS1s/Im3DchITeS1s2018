@@ -10,10 +10,8 @@ class CreateRespuestaTable extends Migration
     {
         Schema::create('respuesta', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion', 500);
-            $table->boolean('validar');      
-            $table->decimal('punteo', 3,2);        
-            $table->dateTime('fecha_ingreso');
+            $table->string('descripcion', 150);
+            $table->boolean('validar');           
 
             $table->unsignedInteger('fkpregunta');
             $table->unsignedInteger('fkestado');

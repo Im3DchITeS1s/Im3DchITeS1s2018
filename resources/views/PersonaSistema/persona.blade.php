@@ -1628,7 +1628,7 @@
             })
             .then((willDelete) => {
               if (willDelete) {
-                console.log($(this).data('accion'));
+
                 $.ajax({
                     type: 'POST',
                     url: "/sistema/imedchi/persona/cambiarEstado",
@@ -1661,7 +1661,7 @@
             })
             .then((willDelete) => {
               if (willDelete) {
-                console.log($(this).data('accion'));
+
                 $.ajax({
                     type: 'POST',
                     url: "/sistema/imedchi/personaprofesion/cambiarEstado",
@@ -1692,7 +1692,7 @@
             })
             .then((willDelete) => {
               if (willDelete) {
-                console.log($(this).data('accion'));
+
                 $.ajax({
                     type: 'POST',
                     url: "/sistema/imedchi/email/cambiarEstado",
@@ -1723,7 +1723,7 @@
             })
             .then((willDelete) => {
               if (willDelete) {
-                console.log($(this).data('accion'));
+
                 $.ajax({
                     type: 'POST',
                     url: "/sistema/imedchi/telefono/cambiarEstado",
