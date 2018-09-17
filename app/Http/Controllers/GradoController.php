@@ -58,6 +58,14 @@ class GradoController extends Controller
             ->make(true);
     }
 
+     public function dropgrado(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Grado::buscarGrado($id);
+            return response()->json($estado);
+        }        
+    }
+
     public function dropestado(Request $request, $id)
     {
         if($request->ajax()){

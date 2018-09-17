@@ -8,22 +8,28 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
 use Response;
+use App\CarreraGrado;
 use App\Carrera;
+use App\Grado;
 use App\Estado;
 
-class CarreraController extends Controller
+
+class CarreraGradoController extends Controller
 {
-   protected $verificar_insert =
+     protected $verificar_insert =
     [
-        'nombre' => 'required|max:100|unique:carrera',
-        'descripcion' => 'max:1000',
+        'fkcarrera' => 'required|integer', 
+        'fkgrado' => 'required|integer',
+                                                                              
     ];
 
     protected $verificar_update =
     [
-        'nombre' => 'required|max:100|unique:carrera,nombre,$id',
-        'descripcion' => 'max:1000',
+     
+        'fkcarrera' => 'required|integer', 
+        'fkgrado' => 'required|integer',
         'fkestado' => 'required'
+
     ];    
 
     public function __construct()
@@ -31,50 +37,62 @@ class CarreraController extends Controller
         $this->middleware('auth');
     }
 
+
     public function index()
-    {
-        return view('mantenimiento/Carrera/carrera');
+    {   
+        return view('/mantenimiento/CarreraGrado/carreragrado');
     }
 
-    public function getdata()
-    {
-        $color_estado = "";
 
-        $query = Carrera::dataCarrera();
+ public function getdata()
+    {
+      
+         $color_estado = "";
+        $query = CarreraGrado::dataCarreraGrado();
 
         return Datatables::of($query)
-            ->addColumn('action', function ($carrera) {
-                switch ($carrera->id_estado) {
+            ->addColumn('action', function ($data) {
+                 
+                switch ($data->id_estado) {
                     case 5:
-                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$carrera->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
+                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
                         break;
                     case 6:
-                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$carrera->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
+                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$carrera->id.'" data-nombre="'.$carrera->nombre.'" data-fkestado="'.$carrera->id_estado.'" data-descripcion="'.$carrera->descripcion.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcarrera="'.$data->fkcarrera.'" data-fkgrado="'.$data->fkgrado.'" data-fkestado="'.$data->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
 
-public function dropcarrera(Request $request, $id)
+
+ public function dropcarrera(Request $request, $id)
     {
         if($request->ajax()){
             $estado = Carrera::buscarCarrera($id);
             return response()->json($estado);
         }        
     }
-    
+
+    public function dropgrado(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Grado::buscarGrado($id);
+            return response()->json($estado);
+        }        
+    }
+
     public function dropestado(Request $request, $id)
     {
         if($request->ajax()){
             $estado = Estado::buscarEstadoPadre($id);
             return response()->json($estado);
         }        
-    }    
+    }         
 
     public function create()
     {
@@ -89,10 +107,10 @@ public function dropcarrera(Request $request, $id)
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new Carrera();
-            $insert->nombre = $request->nombre;
-            $insert->descripcion = $request->descripcion;
-            $insert->fkestado = $estado->id;
+            $insert = new CarreraGado();            
+            $insert->fkcarrera = $request->fkcarrera;
+            $insert->fkgrado = $request->fkgrado;           
+            $insert->fkestado = $estado->id;                                                                           
             $insert->save();
             return response()->json($insert);
         }        
@@ -114,23 +132,22 @@ public function dropcarrera(Request $request, $id)
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = Carrera::findOrFail($id);  
-            $cambiar->nombre = $request->nombre;
- 			$cambiar->descripcion = $request->descripcion;
-            $cambiar->fkestado = $request->fkestado;
+            $cambiar = CarreraGrado::findOrFail($id);              
+            $cambiar->fkcarrera = $request->fkcarrera;
+            $cambiar->fkgrado = $request->fkgrado;
             $cambiar->save();
             return response()->json($cambiar);
         }        
     }
 
-    public function cambiarEstado(Request $request)
+  public function cambiarEstado(Request $request)
     {
         if($request->estado == "activo")
             $estado = Estado::buscarIDEstado(6);
         else
             $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = Carrera::findOrFail($request->pkcarrera); 
+        $cambiar = CarreraGrado::findOrFail($request->pkcarreragrado); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
@@ -138,6 +155,7 @@ public function dropcarrera(Request $request, $id)
 
     public function destroy($id)
     {
-      
+        //
     }
+
 }

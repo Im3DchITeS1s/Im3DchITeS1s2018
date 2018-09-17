@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Mantenimiento - CarreraCurso')
+@section('title', 'Mantenimiento - CarreraGrado')
 
 @section('content_header')
     <div class="content-header">
-        <h1>Carrera Curso
+        <h1>Carrera Grado
             <button type="button" class="add-modal btn btn-success">
                 <span class="fa fa-plus-circle"></span>
             </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Carrera Curso</li>
+            <li class="active">Carrera Grado</li>
         </ol>                      
     </div>    
 @stop
@@ -33,7 +33,7 @@
                     <thead >
                         <tr>
                             <th width="25%">Carrera</th>
-                             <th width="25%">Curso</th>
+                             <th width="25%">Grado</th>
                             <th width="8%">Accion</th>
                         </tr>
                     </thead>
@@ -77,17 +77,17 @@
                             </div>
      
 
-                                <!--Drop list de los Cursos-->
+                                <!--Drop list de los grados-->
                             <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
                                     <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcurso_add" id='fkcurso_add' required autofocus>
+                                    name="fkgrado_add" id='fkgrado_add' required autofocus>
                                     </select> 
                                 </div>                                                               
-                                <p class="errorCurso text-center alert alert-danger hidden"></p>
+                                <p class="errorGrado text-center alert alert-danger hidden"></p>
                             </div>
 
                         </div>
@@ -138,38 +138,25 @@
                                 <p class="errorCarrera text-center alert alert-danger hidden"></p>
                             </div>
 
-                            <!--Drop list del Curso-->
+                            <!--Drop list del grado-->
                        <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
                                     <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcurso_edit" id='fkcurso_edit' required autofocus>
+                                    name="fkgrado_edit" id='fkgrado_edit' required autofocus>
                                     </select> 
                                 </div>                                                               
-                                <p class="errorCurso text-center alert alert-danger hidden"></p>
+                                <p class="errorGrado text-center alert alert-danger hidden"></p>
                             </div>
 
                         </div>
                  </div>
 
-                        <!--Drop list del estado-->
-                        <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                name="fkestado_edit" id='fkestado_edit' required autofocus>
-                                </select> 
-                                <p class="errorEstado text-center alert alert-danger hidden"></p>               
-                            </div>
-                        </div>
-
           </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary add" data-dismiss="modal">
+                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
                             <span id="" class='fa fa-save'></span>
                         </button>
                         <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
@@ -180,9 +167,6 @@
             </div>
         </div>
     </div>    
-
-
-
 
 
       <!-- AJAX CRUD operations -->
@@ -202,10 +186,10 @@
                 serverSide: false,
                 paginate: true,
                 searching: true,
-                ajax: '{!! route('carreracurso.getdata') !!}',
+                ajax: '{!! route('carreragrado.getdata') !!}',
                 columns: [
                     { data: 'carrera', name: 'carrera' },
-                    { data: 'curso', name: 'curso' },
+                    { data: 'grado', name: 'grado' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -215,10 +199,10 @@
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCarrera').addClass('hidden');
-            $('.errorCurso').addClass('hidden');
+            $('.errorGrado').addClass('hidden');
             $('#addModal').modal('show');
 
-          $.get("/mantenimiento/carreracurso/dropcarrera/"+5,function(response,id){
+          $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_add").empty();
                 $("#fkcarrera_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
@@ -227,28 +211,28 @@
                 }
             }); 
 
-           $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
-                $("#fkcurso_add").empty();
-                $("#fkcurso_add").append("<option value=''> seleccionar </option>");
+           $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
+                $("#fkgrado_add").empty();
+                $("#fkgrado_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcurso_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcurso_add').val('').trigger('change.select2'); 
+                    $("#fkgrado_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                    $('#fkgrado_add').val('').trigger('change.select2'); 
                 }
             }); 
 
            $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/carreracurso/',
+                url: '/mantenimiento/carreragrado/',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),
-                    'fkcurso': $('#fkcurso_add').val(),
+                    'fkgrado': $('#fkgrado_add').val(),
                     
                 },
                 success: function(data) {
                     $('.errorCarrera').addClass('hidden');
-                    $('.errorCurso').addClass('hidden');
+                    $('.errorGrado').addClass('hidden');
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -264,15 +248,15 @@
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
            
-                    if (data.errors.fkcurso) {
-                            $('.errorcurso').removeClass('hidden');
-                            $('.errorcurso').text(data.errors.fkcurso);
+                    if (data.errors.fkgrado) {
+                            $('.errorGrado').removeClass('hidden');
+                            $('.errorGrado').text(data.errors.fkgrado);
                         }
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
                             $('#fkcarrera_add').val('');
-                            $('#fkcurso_add').val('');
+                            $('#fkgrado_add').val('');
                             table.ajax.reload();
                         });                          
                     }
@@ -281,67 +265,55 @@
         });
     });
 
- //Edit
+
+//Edit
  $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorCarrera').addClass('hidden');
-             $('.errorCurso').addClass('hidden');
-            $('.errorEstado').addClass('hidden');
+            $('.errorGrado').addClass('hidden');
+            $('#editModal').show('modal');
                                 
             $('#id_edit').val($(this).data('id'));
             
             id = $('#id_edit').val();
-            fkcarrera = $('#fkcarrera_edit');
+            fkcarrera = $(this).data('fkcarrera');
 
-                $.get("/mantenimiento/carreracurso/dropcarrera/"+5,function(response,id){
+            $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_edit").empty();
                 $("#fkcarrera_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcarrera_edit').val('').trigger('change.select2'); 
+                    $('#fkcarrera_edit').val(fkcarrera).trigger('change.select2'); 
                 }
             }); 
 
           
-            fkcurso = $('#fkcurso_edit');
+            fkgrado = $(this).data('fkgrado');
 
 
-             $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
-                $("#fkcurso_edit").empty();
-                $("#fkcurso_edit").append("<option value=''> seleccionar </option>");
+             $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
+                $("#fkgrado_edit").empty();
+                $("#fkgrado_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcurso_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcurso_edit').val('').trigger('change.select2'); 
-                }
-            }); 
-
-
-            id_estado = $(this).data('#fkestado');
-            $('#editModal').modal('show');
-            $.get("/mantenimiento/carreracurso/dropestado/"+1,function(response,id){
-                $("#fkestado_edit").empty();
-                for(i=0; i<response.length; i++){
-                    $("#fkestado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkestado_edit').val(id_estado).trigger('change.select2'); 
+                    $("#fkgrado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                    $('#fkgrado_edit').val(fkgrado).trigger('change.select2'); 
                 }
             });           
         });
         $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
-                url: '/mantenimiento/carreracurso/' + id,
+                url: '/mantenimiento/carreragrado/' + id,
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
                     'fkcarrera': $('#fkcarrera_edit').val(),
-                    'fkcurso': $('#fkcurso_edit').val(),
-                    'fkestado': $('#fkestado_edit').val()
+                    'fkgrado': $('#fkgrado_edit').val(),
                 },
                 success: function(data) {
                     $('.errorCarrera').addClass('hidden');
-                    $('.errorCurso').addClass('hidden');
-                    $('.errorEstado').addClass('hidden');
+                    $('.errorGrado').addClass('hidden');
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -356,28 +328,22 @@
                             $('.errorCarrera').removeClass('hidden');
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
-                          if (data.errors.fkcurso) {
-                            $('.errorCurso').removeClass('hidden');
-                            $('.errorCurso').text(data.errors.fkcurso);
-                        }
-                        if (data.errors.fkestado) {
-                            $('.errorEstado').removeClass('hidden');
-                            $('.errorEstado').text(data.errors.fkestado);
+                          if (data.errors.fkgrado) {
+                            $('.errorGrado').removeClass('hidden');
+                            $('.errorGrado').text(data.errors.fkgrado);
                         }
                     } else {
                         swal("Correcto", "Se modifico la informacion", "success")
                         .then((value) => {
                          $("#id_edit").val('');
                          $('#fkcarrera_edit').val('');
-                         $('#fkcurso_edit').val('');
-                         $('#fkestado_edit').val('');
+                         $('#fkgrado_edit').val('');
                           table.ajax.reload(); 
                         }); 
                     }
                 },
             });  
         });
-
 
 
 
@@ -395,10 +361,10 @@
               if (willDelete) {
                 $.ajax({
                     type: 'POST',
-                    url: "/mantenimiento/carreracurso/cambiarEstado",
+                    url: "/mantenimiento/carreragrado/cambiarEstado",
                     data: {
                         '_token': $('input[name=_token]').val(),
-                        'pkcarreracurso': id,
+                        'pkcarreragrado': id,
                         'estado' : $(this).data('estado')
                     },
                     success: function(data) {                 

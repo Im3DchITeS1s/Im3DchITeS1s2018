@@ -57,7 +57,14 @@ class GeneroController extends Controller
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
-
+    
+    public function dropgenero(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Genero::buscarGenero($id);
+            return response()->json($estado);
+        }        
+    }
     public function dropestado(Request $request, $id)
     {
         if($request->ajax()){

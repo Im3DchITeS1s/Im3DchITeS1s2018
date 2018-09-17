@@ -17,7 +17,7 @@ class Carrera extends Model
 	}
 
 	public static function buscarCarrera($id){
-		return Carrera::select('id', 'nombre','descripcion')
+		return Carrera::select('id', 'nombre')
             ->where('fkestado', $id)
             ->orderBy('nombre', 'asc')->get();
 	}

@@ -13,10 +13,10 @@ use App\Carrera;
 use App\Curso;
 use App\Estado;
 
+
 class CarreraCursoController extends Controller
 {
-  
-	 protected $verificar_insert =
+     protected $verificar_insert =
     [
         'fkcarrera' => 'required|integer', 
         'fkcurso' => 'required|integer',
@@ -27,7 +27,9 @@ class CarreraCursoController extends Controller
     [
      
         'fkcarrera' => 'required|integer', 
-        'fkcurso' => 'required|integer',         
+        'fkcurso' => 'required|integer',
+        'fkestado' => 'required'
+
     ];    
 
     public function __construct()
@@ -35,26 +37,53 @@ class CarreraCursoController extends Controller
         $this->middleware('auth');
     }
 
+
     public function index()
     {   
         return view('/mantenimiento/CarreraCurso/carreracurso');
     }
 
-    public function getdata()
+
+ public function getdata()
     {
+      
+         $color_estado = "";
         $query = CarreraCurso::dataCarreraCurso();
 
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
-                $btn_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-down"></span></button>';
+                 
+                switch ($data->id_estado) {
+                    case 5:
+                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
+                        break;
+                    case 6:
+                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
+                        break;
+                }
 
-                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcurso="'.$data->fkcurso.'" data-fkcarrera="'.$data->fkcarrera.'">
-                    <span class="glyphicon glyphicon-edit"></span></button>';           
-
-                return '<small class="label label-success">'.$data->estado.'</small> '.$btn_edit.' '.$btn_estado;
-            })                       
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcarrera="'.$data->fkcarrera.'" data-fkcurso="'.$data->fkcurso.'" data-fkestado="'.$data->id_estado.'" data-fkcurso="'.$data->fkcurso.'">
+                    <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
+            })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
+    }
+
+
+ public function dropcarrera(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Carrera::buscarCarrera($id);
+            return response()->json($estado);
+        }        
+    }
+
+    public function dropcurso(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Curso::buscarCurso($id);
+            return response()->json($estado);
+        }        
     }
 
     public function dropestado(Request $request, $id)
@@ -78,7 +107,7 @@ class CarreraCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraCurso();            
+            $insert = new CarreraGado();            
             $insert->fkcarrera = $request->fkcarrera;
             $insert->fkcurso = $request->fkcurso;           
             $insert->fkestado = $estado->id;                                                                           
@@ -111,15 +140,18 @@ class CarreraCursoController extends Controller
         }        
     }
 
-    public function cambiarEstado(Request $request)
+  public function cambiarEstado(Request $request)
     {
-        $estado = Estado::buscarIDEstado(6);
+        if($request->estado == "activo")
+            $estado = Estado::buscarIDEstado(6);
+        else
+            $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = CarreraCurso::findOrFail($request->id); 
+        $cambiar = CarreraCurso::findOrFail($request->pkcarreracurso); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
-    }    
+    }
 
     public function destroy($id)
     {

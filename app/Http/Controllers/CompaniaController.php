@@ -42,7 +42,8 @@ class CompaniaController extends Controller
 
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
-                switch ($data->id_estado) {
+                switch ($data->id_estado)
+                 {
                     case 5:
                         $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
                         break;

@@ -308,9 +308,14 @@ return [
                         'url'  => '#',
                         'icon_color' => 'aqua',
                     ],
-                     [
+                    [
                         'text' => 'Carreras y cursos',
                         'url'  => '/mantenimiento/carreracurso',
+                        'icon_color' => 'aqua',
+                    ],
+                    [
+                        'text' => 'Carreras y grados',
+                        'url'  => '/mantenimiento/carreragrado',
                         'icon_color' => 'aqua',
                     ],
                     [

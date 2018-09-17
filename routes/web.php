@@ -101,7 +101,19 @@ Route::get('/mantenimiento/carrera/dropestado/{id}', 'CarreraController@dropesta
 Route::resource('/mantenimiento/carreracurso', 'CarreraCursoController');
 Route::get('carreracurso/getdata', 'CarreraCursoController@getdata')->name('carreracurso.getdata');
 Route::post('/mantenimiento/carreracurso/cambiarEstado', 'CarreraCursoController@cambiarEstado');
-Route::get('/mantenimiento/carreracurso/dropestado/{id}', 'CarreraCursoController@droestado');
+Route::get('/mantenimiento/carreracurso/dropcarrera/{id}', 'CarreraCursoController@dropcarrera');
+Route::get('/mantenimiento/carreracurso/dropcurso/{id}', 'CarreraCursoController@dropcurso');
+Route::get('/mantenimiento/carreracurso/dropestado/{id}', 'CarreraCursoController@dropestado');
+
+//CarreraGrado
+Route::resource('/mantenimiento/carreragrado', 'CarreraGradoController');
+Route::get('carreragrado/getdata', 'CarreraGradoController@getdata')->name('carreragrado.getdata');
+Route::post('/mantenimiento/carreragrado/cambiarEstado', 'CarreraGradoController@cambiarEstado');
+Route::get('/mantenimiento/carreragrado/dropcarrera/{id}', 'CarreraGradoController@dropcarrera');
+Route::get('/mantenimiento/carreragrado/dropgrado/{id}', 'CarreraGradoController@dropgrado');
+Route::get('/mantenimiento/carreragrado/dropestado/{id}', 'CarreraGradoController@dropestado');
+
+
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');

@@ -58,6 +58,15 @@ class CursoController extends Controller
             ->make(true);
     }
 
+
+     public function dropcurso(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Curso::buscarCurso($id);
+            return response()->json($estado);
+        }        
+    }  
+
     public function dropestado(Request $request, $id)
     {
         if($request->ajax()){
