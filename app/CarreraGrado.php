@@ -16,8 +16,17 @@ class CarreraGrado extends Model
                     ->select(['carrera_grado.id as id', 'carrera.nombre as carrera', 'carrera_grado.fkcarrera as fkcarrera', 'grado.nombre as grado', 'carrera_grado.fkgrado as fkgrado', 'carrera_grado.fkestado as id_estado']);
 	}
 
-	public static function buscarIDCarreragrado($id)
+	
+public static function buscarCarreragrado($id){
+		return Carrera::select('id', 'nombre')
+            ->where('fkestado', $id)
+            ->orderBy('nombre', 'asc')->get();
+	}
+	public static function buscarIDCarreraGrado($id)
     {
         return Carreragrado::findOrFail($id);       
     } 
+
+
+
 }
