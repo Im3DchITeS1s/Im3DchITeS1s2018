@@ -5,10 +5,10 @@ use App\Etiqueta;
 
 class EtiquetaTableSeeder extends Seeder
 {
+   
     public function run()
     {
-
-    	$insert = new Etiqueta();
+        $insert = new Etiqueta();
     	$insert->nombre = 'Click';
     	$insert->tipo = 'check';
         $insert->color = 'clouds';
@@ -174,6 +174,7 @@ class EtiquetaTableSeeder extends Seeder
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
     	$insert->fkestado = 5;  
-        $insert->save();             	 	    	  	    	     	      	   	 	
+        $insert->save();
+        
     }
 }
