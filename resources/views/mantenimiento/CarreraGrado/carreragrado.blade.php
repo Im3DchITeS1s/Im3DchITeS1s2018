@@ -219,6 +219,8 @@
                     $('#fkgrado_add').val('').trigger('change.select2'); 
                 }
             }); 
+        });
+
 
            $('.modal-footer').on('click', '.add', function() {
             $.ajax({
@@ -252,6 +254,7 @@
                             $('.errorGrado').removeClass('hidden');
                             $('.errorGrado').text(data.errors.fkgrado);
                         }
+
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
@@ -263,8 +266,7 @@
                 },
             }); 
         });
-    });
-
+  
 
 //Edit
  $(document).on('click', '.edit-modal', function() {    
