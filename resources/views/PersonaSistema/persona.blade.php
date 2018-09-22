@@ -916,6 +916,8 @@
             $('#editModal').modal('show');
 
             $.get("/sistema/imedchi/usuario/existeuser/"+id,function(response,id){
+                $('#divEmailUser').removeClass('hidden');
+                $('#nombre_usuario').addClass('hidden');                                
                 for(i=0; i<response.length; i++){
                     $('#divEmailUser').addClass('hidden');
                     $('#nombre_usuario').removeClass('hidden');
@@ -1607,6 +1609,8 @@
                             $('#rol_add').val('').trigger('change.select2');
 
                             $.get("/sistema/imedchi/usuario/existeuser/"+id,function(response,id){
+                                $('#divEmailUser').removeClass('hidden');
+                                $('#nombre_usuario').addClass('hidden');                                
                                 for(i=0; i<response.length; i++){
                                     $('#divEmailUser').addClass('hidden');
                                     $('#nombre_usuario').removeClass('hidden');
