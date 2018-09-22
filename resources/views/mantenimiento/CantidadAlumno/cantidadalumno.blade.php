@@ -221,6 +221,8 @@
             });
         });
 
+
+        //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCantidad').addClass('hidden');
