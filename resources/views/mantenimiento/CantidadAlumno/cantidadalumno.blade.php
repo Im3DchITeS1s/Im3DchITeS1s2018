@@ -32,7 +32,7 @@
                 <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
                     <thead >
                         <tr>
-                            <th width="25%">Cantidad Alumno</th>
+                            <th width="15%">Cantidad Alumno</th>
                              <th width="25%">Carrera Grado</th>
                             <th width="8%">Accion</th>
                         </tr>
@@ -40,10 +40,6 @@
                 </table>         
             </div>                
           </div>
-        </div>
-
-        <div class="box-footer">
-
         </div>
     </div>
 
@@ -60,54 +56,69 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                                <!--Drop list de la carrera-->
+                            <!--Cantidad-->
                             <div class="col-sm-12">
                                 <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <div class="input-group-addon">
+                                        <label>Cantidad</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                    <small class="pull-right" style="color:green;"></small>
                                   </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_add" id='fkcarrera_add' required autofocus>
-                                    </select> 
-                                </div>                                                              
-                                <p class="errorCarrera text-center alert alert-danger hidden"></p>
-                            </div>
-     
+                                  <input type="text" class="form-control" id="cantidad_add" placeholder="Cantidad" autofocus maxlength="6">
+                                </div>                                                          
+                                <small class="control-label">Max: 6| unico</small>
+                                <p class="errorCantidad text-center alert alert-danger hidden"></p>
+                            </div>   
+                        </div>      
 
-                                <!--Drop list de los grados-->
-                            <div class="col-sm-5">
+                            <!--Drop list de la Carrera Grado-->
+                        <div class="form-group has-success">
+                             <div class="col-sm-12">
                                 <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <div class="input-group-addon">
+                                        <label>Carrera Grado</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                    <small class="pull-right" style="color:green;"></small>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkgrado_add" id='fkgrado_add' required autofocus>
+                                    name="fkcarrera_grado_add" id='fkcarrera_grado_add' required autofocus>
                                     </select> 
                                 </div>                                                               
-                                <p class="errorGrado text-center alert alert-danger hidden"></p>
+                                <p class="errorCarreraGrado text-center alert alert-danger hidden"></p>
+                            </div> 
+                        </div> 
+                        <div class="form-group has-success">                       
+                          <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Seccion</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                    <small class="pull-right" style="color:green;"></small>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkseccion_add" id='fkseccion_add' required autofocus>
+                                    </select> 
+                                </div>                                                               
+                                <p class="errorSeccion text-center alert alert-danger hidden"></p>
                             </div>
-
                         </div>
-                 </div>
 
                     </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary add" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary add" data-dismiss="modal">
+                        <span id="" class='fa fa-save'></span>
+                    </button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+                        <span class='fa fa-ban'></span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>   
 
-    <!-- Modal Editar -->
+
+ <!-- Modal Editar -->
     <div id="editModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -121,40 +132,56 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                            <div class="col-sm-11">
+                                <small class="pull-right" style="color:orange;"></small>
                             </div>
-
-                            <!--Drop list de la carrera-->
-                       <div class="col-sm-12">
+                            <div class="col-sm-11">
                                 <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_edit" id='fkcarrera_edit' required autofocus>
-                                    </select> 
-                                </div>                                                              
-                                <p class="errorCarrera text-center alert alert-danger hidden"></p>
-                            </div>
+                                    <div class="input-group-addon">
+                                        <label>Cantidad</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                    </div>
 
-                            <!--Drop list del grado-->
-                       <div class="col-sm-5">
-                                <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkgrado_edit" id='fkgrado_edit' required autofocus>
-                                    </select> 
-                                </div>                                                               
-                                <p class="errorGrado text-center alert alert-danger hidden"></p>
+                                    <input type="text" class="form-control" id="cantidad_edit" placeholder="editar cantidad" autofocus>
+                                </div>     
                             </div>
-
                         </div>
-                 </div>
+                        <!--Drop actualizar carreragrado-->
+                        <div class="form-group has-warning">
+                            <div class="col-sm-11">
+                                <small class="pull-right" style="color:orange;"></small>
+                            </div>
+                            <div class="col-sm-11">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Carrera Grado</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                    </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkcarrera_grado_edit" id='fkcarrera_grado_edit' required autofocus>
+                                    </select> 
+                                </div>     
+                            </div>
+                        </div>
 
-          </form>
+                         <!--Drop actualizar carreragrado-->
+                        <div class="form-group has-warning">
+                            <div class="col-sm-11">
+                                <small class="pull-right" style="color:orange;"></small>
+                            </div>
+                            <div class="col-sm-11">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Seccion</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                    </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkseccion_edit" id='fkseccion_edit' required autofocus>
+                                    </select> 
+                                </div>     
+                            </div>
+                        </div>
+                    </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary edit" data-dismiss="modal">
                             <span id="" class='fa fa-save'></span>
@@ -166,8 +193,7 @@
                 </div>
             </div>
         </div>
-    </div>    
-
+    </div>     
 
       <!-- AJAX CRUD operations -->
     <script type="text/javascript">
@@ -180,7 +206,7 @@
        
 
         //Leer
-     $(document).ready(function() {
+        $(document).ready(function() {
             table = $('#info-table').DataTable({  
                 processing: true,
                 serverSide: false,
@@ -195,8 +221,174 @@
             });
         });
 
-        
+        $(document).on('click', '.add-modal', function() {
+            $('.modal-title').text('Agregar Informacion');
+            $('.errorCantidad').addClass('hidden');
+            $('.errorCarreraGrado').addClass('hidden');
+            $('.errorSeccion').addClass('hidden');
+            $('#addModal').modal('show');
 
+            $.get("/mantenimiento/cantidadalumno/dropCantidadCarreraGrado/"+5,function(response,id){
+                $("#fkcarrera_grado_add").empty();
+                $("#fkcarrera_grado_add").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkcarrera_grado_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+"/"+response[i].grado+" </option>");
+                    $('#fkcarrera_grado_add').val('').trigger('change.select2'); 
+                }
+            });              
+
+            $.get("/mantenimiento/cantidadalumno/dropCantidadSeccion/"+5,function(response,id){
+                $("#fkseccion_add").empty();
+                $("#fkseccion_add").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkseccion_add").append("<option value='"+response[i].id+"'> "+response[i].letra+" </option>");
+                    $('#fkseccion_add').val('').trigger('change.select2'); 
+                }
+            });            
+        });        
+
+        $('.modal-footer').on('click', '.add', function() {
+            $.ajax({
+                type: 'POST',
+                url: '/mantenimiento/cantidadalumno',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'cantidad': $('#cantidad_add').val(),
+                    'fkcarrera_grado': $('#fkcarrera_grado_add').val(),
+                    'fkseccion': $('#fkseccion_add').val(),
+                },
+                success: function(data) {
+                    $('.errorCantidad').addClass('hidden');
+                    $('.errorCarreraGrado').addClass('hidden');
+                    $('.errorSeccion').addClass('hidden');
+
+                    if ((data.errors)) {
+                        setTimeout(function () {
+                            $('#addModal').modal('show');
+                            swal("Error", "No se ingreso la informacion", "error", {
+                              buttons: false,
+                              timer: 2000,
+                            });
+                        }, 500);
+
+                     if (data.errors.cantidad) {
+                            $('.errorCantidad').removeClass('hidden');
+                            $('.errorCantidad').text(data.errors.cantidad);
+                        }
+
+                     if (data.errors.fkcarrera_grado) {
+                            $('.errorCarreraGrado').removeClass('hidden');
+                            $('.errorCarreraGrado').text(data.errors.fkcarrera_grado);
+                        }
+
+                    if (data.errors.fkseccion) {
+                            $('.errorSeccion').removeClass('hidden');
+                            $('.errorSeccion').text(data.errors.fkseccion);
+                        }
+
+                     } else {
+                        swal("Correcto", "Se ingreso la informacion", "success")
+                        .then((value) => {
+                            $('#cantidad').val('');
+                            $('#fkcarrera_grado_add').val('');
+                            $('#fkseccion_add').val('');
+                            table.ajax.reload();
+                        });                          
+                    }
+                },
+            }); 
+        });
+
+        //Edit
+            $(document).on('click', '.edit-modal', function() {    
+            $('#id_edit').addClass('hidden');                               
+            $('.modal-title').text('Editar Informacion');
+            $('.errorCantidad').addClass('hidden');
+            $('.errorCarreraGrado').addClass('hidden');
+            $('.errorSeccion').addClass('hidden');
+                                
+            $('#id_edit').val($(this).data('id'));
+            $('#cantidad_edit').val($(this).data('cantidad'));
+            $('#fkcarrera_grado_edit').val($(this).data('fkcarrera_grado'));
+            $('#fkseccion_edit').val($(this).data('fkseccion'));
+            id = $('#id_edit').val();
+            fkcarrera_grado = $(this).data('fkcarrera_grado');
+            fkseccion = $(this).data('fkseccion');
+            $('#editModal').modal('show');
+
+            
+            $.get("/mantenimiento/cantidadalumno/dropCantidadCarreraGrado/"+5,function(response,id){
+                $("#fkcarrera_grado_edit").empty();
+                $("#fkcarrera_grado_edit").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkcarrera_grado_edit").append("<option value='"+response[i].id+"'> "+response[i].carrera+"/"+response[i].grado+" </option>");
+                    $('#fkcarrera_grado_edit').val('').trigger('change.select2'); 
+                }
+                  });
+            }); 
+
+
+            $.get("/mantenimiento/cantidadalumno/dropCantidadSeccion/"+5,function(response,id){
+                $("#fkseccion_edit").empty();
+                $("#fkseccion_edit").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkseccion_edit").append("<option value='"+response[i].id+"'> "+response[i].letra+" </option>");
+                    $('#fkseccion_edit').val('').trigger('change.select2'); 
+                }
+            });        
+          
+
+          $('.modal-footer').on('click', '.edit', function() {
+            $.ajax({
+                type: 'PUT',
+                url: '/mantenimiento/cantidadalumno/' + id,
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id': $("#id_edit").val(),
+                    'cantidad': $('#cantidad_edit').val(),
+                    'fkcarrera_grado': $('#fkcarrera_grado_edit').val(),
+                    'fkseccion': $('#fkseccion_edit').val()
+                },
+                success: function(data) {
+                    $('.errorCantidad').addClass('hidden');
+                    $('.errorCarreraGrado').addClass('hidden');
+                    $('.errorSeccion').addClass('hidden');
+
+                    if ((data.errors)) {
+                        setTimeout(function () {
+                            $('#editModal').modal('show');
+                            swal("Error", "No se modifico la informacion", "error", {
+                              buttons: false,
+                              timer: 2000,
+                            });
+                        }, 500);
+
+                        if (data.errors.cantidad) {
+                            $('.errorCantidad').removeClass('hidden');
+                            $('.errorCantidad').text(data.errors.cantidad);
+                        }
+                        if (data.errors.fkcarrera_grado) {
+                            $('.errorCarreraGrado').removeClass('hidden');
+                            $('.errorCarreraGrado').text(data.errors.fkcarrera_grado);
+                        }
+                        if (data.errors.fkseccion) {
+                            $('.errorSeccion').removeClass('hidden');
+                            $('.errorSeccion').text(data.errors.fkseccion);
+                        }
+                    } else {
+                        swal("Correcto", "Se modifico la informacion", "success")
+                            .then((value) => {
+                            $("#id_edit").val('');
+                            $('#cantidad_edit').val('');
+                            $('#fkcarrera_grado_edit').val('');
+                            $('#fkseccion_edit').val('');
+                          table.ajax.reload(); 
+                        });                          
+                    }
+                },
+            }); 
+        });
+ 
 
         // delete
         $(document).on('click', '.delete-modal', function() {

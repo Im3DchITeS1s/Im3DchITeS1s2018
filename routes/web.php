@@ -116,8 +116,9 @@ Route::get('/mantenimiento/carreragrado/dropestado/{id}', 'CarreraGradoControlle
 //CantidadAlumno
 Route::resource('/mantenimiento/cantidadalumno', 'CantidadAlumnoController');
 Route::get('cantidadalumno/getdata', 'CantidadAlumnoController@getdata')->name('cantidadalumno.getdata');
+Route::get('/mantenimiento/cantidadalumno/dropCantidadCarreraGrado/{id}', 'CantidadAlumnoController@dropCantidadCarreraGrado');
+Route::get('/mantenimiento/cantidadalumno/dropCantidadSeccion/{id}', 'CantidadAlumnoController@dropCantidadSeccion');
 Route::post('/mantenimiento/cantidadalumno/cambiarEstado', 'CantidadAlumnoController@cambiarEstado');
-
 
 
 //Sistema Rol Usuario
@@ -155,3 +156,7 @@ Route::post('/plataforma/blackboard/pregunta/cambiarEstado', 'PreguntaController
 Route::resource('/plataforma/blackboard/respuesta', 'RespuestaController');
 Route::get('/respuesta/getdata/{id}', 'RespuestaController@getdata');
 Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaController@cambiarEstado');
+
+//Producto
+Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
+Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');

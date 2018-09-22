@@ -21,19 +21,9 @@ class CantidadAlumnoController extends Controller
     [
     	'cantidad' => 'required|integer',
         'fkcarrera_grado' => 'required|integer', 
-        'fkseccion' => 'required|integer',
-                                                                              
-    ];
-
-    protected $verificar_update =
-    [
-     
-        'cantidad' => 'required|integer',
-        'fkcarrera_grado' => 'required|integer', 
-        'fkseccion' => 'required|integer',
-        'fkestado' => 'required|integer',
-
+        'fkseccion' => 'required|integer'                              
     ];    
+
 
     public function __construct()
     {
@@ -43,6 +33,7 @@ class CantidadAlumnoController extends Controller
 
     public function index()
     {       
+
         return view('/mantenimiento/CantidadAlumno/cantidadalumno');
     }
 
@@ -74,30 +65,86 @@ class CantidadAlumnoController extends Controller
             ->make(true);
     }
 
-     public function dropSeccion(Request $request, $id)
+    public function dropCantidadCarreraGrado(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = CarreraGrado::buscarCarreragrado($id);
+            return response()->json($estado);
+        }        
+    }
+
+    public function dropCantidadSeccion(Request $request, $id)
     {
         if($request->ajax()){
             $estado = Seccion::buscarSeccion($id);
             return response()->json($estado);
         }        
-    }
+    } 
 
-      public function dropCarreraGrado(Request $request, $id)
+    public function dropestado(Request $request, $id)
     {
         if($request->ajax()){
-            $estado = CarreraGrado::buscarCarrreraGrado($id);
+            $estado = Estado::buscarEstadoPadre($id);
             return response()->json($estado);
         }        
+    }  
+
+     public function create()
+    {
+        //
     }
 
-      public function cambiarEstado(Request $request)
+    public function store(Request $request)
+    {
+        $estado = Estado::buscarIDEstado(5);
+
+        $validator = Validator::make(Input::all(), $this->verificar_insert);
+        if ($validator->fails()) {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        } else {            
+            $insert = new CantidadAlumno();            
+            $insert->cantidad = $request->cantidad;
+            $insert->fkcarrera_grado = $request->fkcarrera_grado;    
+            $insert->fkseccion = $request->fkseccion;        
+            $insert->fkestado = $estado->id;                                                      
+            $insert->save();
+            return response()->json($insert);
+        }
+    }  
+
+    public function show($id)
+    {
+        //
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make(Input::all(), $this->verificar_insert);
+        if ($validator->fails()) {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        } else {
+            $cambiar = CantidadAlumno::findOrFail($id);            
+            $cambiar->cantidad = $request->cantidad;
+            $cambiar->fkcarrera_grado = $request->fkcarrera_grado;    
+            $cambiar->fkseccion = $request->fkseccion;                                    
+            $cambiar->save();
+            return response()->json($cambiar); 
+        }       
+    }     
+
+    public function cambiarEstado(Request $request)
     {
         if($request->estado == "activo")
             $estado = Estado::buscarIDEstado(6);
         else
             $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = CarreraGrado::findOrFail($request->pkcantidadalumno); 
+        $cambiar = CantidadAlumno::findOrFail($request->pkcantidadalumno); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
