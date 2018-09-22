@@ -311,7 +311,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
@@ -356,7 +355,7 @@
                         <button type="button" class="btn btn-primary addRespuesta">
                             <span id="" class='fa fa-save'></span>
                         </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+                        <button type="button" class="btn btn-danger pull-left cerrarRespuesta">
                             <span class='fa fa-ban'></span>
                         </button>
                     </div>                    
@@ -1022,7 +1021,7 @@
             id_pregunta = $(this).data('id');
 
             $('.modal-title').text('Agregar Respuesta');5
-            $('#addRespuestaModal').modal('show');  
+            $('#addRespuestaModal').modal({show: true, backdrop: 'static'});  
             $('#nombrePregunta').text($(this).data('pregunta'));
 
             $.get("/plataforma/blackboard/pregunta/buscaretiqueta/"+id_pregunta,function(response){
@@ -1149,7 +1148,7 @@
             }           
         });
 
-        $(document).on('click', '.deleteRespuesta-modal', function() { 
+        $(document).on('click', '.editRespuesta-modal', function() { 
             id_respuesta = $(this).data('id');
             $('#respuesta_add').val($(this).data('respuesta'));
             estado_validar = $(this).data('validar');
@@ -1194,6 +1193,13 @@
               }
             });            
         });                                         
-                                                                          
+              
+        $('.modal-footer').on('click', '.cerrarRespuesta', function() {
+            id_pregunta = 0;
+            $('#addRespuestaModal').modal('hide');
+            $('#respuesta_add').val('');
+            $('#validacion_add').prop("checked", false);
+            id_respuesta = 0;
+        });                                                          
     </script>    
 @stop

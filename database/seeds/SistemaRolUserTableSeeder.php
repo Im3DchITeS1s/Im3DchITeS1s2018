@@ -92,11 +92,8 @@ class SistemaRolUserTableSeeder extends Seeder
 
 
 		/*1*/$persona1 = User::where('username', 'Admin')->first();
-		/*2*/$persona2 = User::where('username', 'Liliana')->first();
-		/*3*/$persona3 = User::where('username', 'Mayra')->first();
-		/*4*/$persona4 = User::where('username', 'Mynor')->first();
-		/*5*/$persona5 = User::where('username', 'Adalberto')->first();
-		/*6*/$persona6 = User::where('username', 'Estuardo')->first();		
+		/*2*/$persona2 = User::where('username', 'Jose')->first();
+		/*3*/$persona3 = User::where('username', 'Alejandro')->first();		
 
 
 		$nuevo = new Sistema_Rol_Usuario();

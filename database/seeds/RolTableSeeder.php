@@ -13,7 +13,7 @@ class RolTableSeeder extends Seeder
         $nuevo->save();
 
         $nuevo = new Rol();
-        $nuevo->nombre = 'Directora';
+        $nuevo->nombre = 'Director';
         $nuevo->fkestado = 5;        
         $nuevo->save();
 

@@ -607,11 +607,10 @@
                             </div>                            
                               <div class="row">
                                 <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-email" width="100%">
+                                    <table class="table table-bordered table-hover dataTable" id="info-table-sistema-rol-usuario" width="100%">
                                         <thead >
                                             <tr>
-                                                <th width="1%">Emails</th>
-                                                <th width="1%">Tipo Email</th>
+                                                <th width="100%">Sistema / Rol</th>
                                                 <th width="1%">Accion</th>
                                             </tr>
                                         </thead>
@@ -917,6 +916,8 @@
             $('#editModal').modal('show');
 
             $.get("/sistema/imedchi/usuario/existeuser/"+id,function(response,id){
+                $('#divEmailUser').removeClass('hidden');
+                $('#nombre_usuario').addClass('hidden');                                
                 for(i=0; i<response.length; i++){
                     $('#divEmailUser').addClass('hidden');
                     $('#nombre_usuario').removeClass('hidden');
@@ -1061,7 +1062,7 @@
                     { data: 'compania', name: 'compania' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
-            }); 
+            });          
 
             $.get("/sistema/imedchi/telefono/dropcompania/"+5,function(response,id){
                 $("#fkcompania_add_edit").empty();
@@ -1073,6 +1074,22 @@
             });
 
             //DataTable Usuario
+            table_sistema_rol_usuario = $('#info-table-sistema-rol-usuario').DataTable({
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: {
+                    url: '/sistemarolusuario/getdata/'+id,
+                    type: 'GET'
+                },
+                columns: [
+                    { data: 'sistema_rol', name: 'sistema_rol' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+            });    
+            
             if(existe == false){
                 $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
                     $("#email_add").empty();
@@ -1397,6 +1414,16 @@
                                 id_email=0;
                                 $('#email_add_edit').val(''),                            
                                 table_email.ajax.reload();
+
+                                if(existe == false){
+                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                        $("#seleccionar_email_add").empty();
+                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
+                                        for(i=0; i<response.length; i++){
+                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                        }
+                                    });
+                                }                                
                             });                        
                         }
                     },
@@ -1419,7 +1446,7 @@
                         if ((data.errors)) {
                             setTimeout(function () {
                                 $('#editModal').modal('show');
-                                swal("Error", "No se modifico la informacion", "error", {
+                                swal("Error", "No se ingreso la informacion", "error", {
                                   buttons: false,
                                   timer: 2000,
                                 });
@@ -1436,10 +1463,20 @@
 
                         } else {
                             $('#editModal').modal('show');
-                            swal("Correcto", "Se modifico la informacion", "success")
+                            swal("Correcto", "Se ingreso la informacion", "success")
                             .then((value) => {
                                 $('#email_add_edit').val(''),                                
                                 table_email.ajax.reload();
+
+                                if(existe == false){
+                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                        $("#seleccionar_email_add").empty();
+                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
+                                        for(i=0; i<response.length; i++){
+                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                        }
+                                    });
+                                }                                
                             });                        
                         }
                     },
@@ -1534,86 +1571,59 @@
             }
         });
         $('.modal-footer').on('click', '.edit_persona_usuario', function() {
-            if(id_sistema_rol > 0){
-                $.ajax({
-                    type: 'PUT',
-                    url: '/sistema/imedchi/sistemarolusuario/' + id_sistema_rol,
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'id': id_sistema_rol,
-                        'pkpersona': id,
-                        'fkrol': $('#rol_add').val(),
-                    },
-                    success: function(data) {
-                        $('.errorSeleccionarRol').addClass('hidden');
+            $.ajax({
+                type: 'POST',
+                url: '/sistema/imedchi/usuario',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'email': $('#email_add').val(),
+                    'fkrol': $('#rol_add').val(),
+                    'fkpersona': id,
+                },
+                success: function(data) {
+                    $('.errorSeleccionarEmail').addClass('hidden');
+                    $('.errorSeleccionarRol').addClass('hidden');
 
-                        if ((data.errors)) {
-                            setTimeout(function () {
-                                $('#editModal').modal('show');
-                                swal("Error", "No se modifico la informacion", "error", {
-                                  buttons: false,
-                                  timer: 2000,
-                                });
-                            }, 500);
-
-                            if (data.errors.fkrol) {
-                                $('.errorSeleccionarRol').removeClass('hidden');
-                                $('.errorSeleccionarRol').text(data.errors.fkrol);
-                            }
-                        } else {
-                            $('#editModal').modal('show');                            
-                            swal("Correcto", "Se modifico la informacion", "success")
-                            .then((value) => {
-                                id_sistema_rol=0;                          
-                                table_telefono.ajax.reload();
-                            });                        
-                        }
-                    },
-                });
-            }
-            else{
-                $.ajax({
-                    type: 'POST',
-                    url: '/sistema/imedchi/usuario',
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'email': $('#email_add').val(),
-                        'fkrol': $('#rol_add').val(),
-                        'fkpersona': id,
-                    },
-                    success: function(data) {
-                        $('.errorSeleccionarEmail').addClass('hidden');
-                        $('.errorSeleccionarRol').addClass('hidden');
-
-                        if ((data.errors)) {
-                            setTimeout(function () {
-                                $('#editModal').modal('show');
-                                swal("Error", "No se modifico la informacion", "error", {
-                                  buttons: false,
-                                  timer: 2000,
-                                });
-                            }, 500);
-
-                            if (data.errors.email) {
-                                $('.errorSeleccionarEmail').removeClass('hidden');
-                                $('.errorSeleccionarEmail').text(data.errors.email);
-                            }
-                            if (data.errors.fkrol) {
-                                $('.errorSeleccionarRol').removeClass('hidden');
-                                $('.errorSeleccionarRol').text(data.errors.fkrol);
-                            }
-                        } else {
+                    if ((data.errors)) {
+                        setTimeout(function () {
                             $('#editModal').modal('show');
-                            swal("Correcto", "Se modifico la informacion", "success")
-                            .then((value) => {  
-                                $('#email_add').val('').trigger('change.select2');    
-                                $('#rol_add').val('').trigger('change.select2');                        
-                                table_telefono.ajax.reload();
-                            });                        
+                            swal("Error", "No se ingreso la informacion", "error", {
+                              buttons: false,
+                              timer: 2000,
+                            });
+                        }, 500);
+
+                        if (data.errors.email) {
+                            $('.errorSeleccionarEmail').removeClass('hidden');
+                            $('.errorSeleccionarEmail').text(data.errors.email);
                         }
-                    },
-                });
-            }
+                        if (data.errors.fkrol) {
+                            $('.errorSeleccionarRol').removeClass('hidden');
+                            $('.errorSeleccionarRol').text(data.errors.fkrol);
+                        }
+                    } else {
+                        $('#editModal').modal('show');
+                        swal("Correcto", "Se agrego la informacion", "success")
+                        .then((value) => {  
+                            $('#email_add').val('').trigger('change.select2');    
+                            $('#rol_add').val('').trigger('change.select2');
+
+                            $.get("/sistema/imedchi/usuario/existeuser/"+id,function(response,id){
+                                $('#divEmailUser').removeClass('hidden');
+                                $('#nombre_usuario').addClass('hidden');                                
+                                for(i=0; i<response.length; i++){
+                                    $('#divEmailUser').addClass('hidden');
+                                    $('#nombre_usuario').removeClass('hidden');
+                                    $('#nombre_usuario').text(response[i].username);
+                                    existe = true;
+                                }
+                            });
+
+                            table_sistema_rol_usuario.ajax.reload();
+                        });                        
+                    }
+                },
+            });
         });
 
         // delete
@@ -1743,29 +1753,29 @@
               }
             });            
         });
-        /*$(document).on('click', '.delete-modal-usuario', function() {
-            id_eliminar_sistema_rol_usuario = $(this).data('id');
+        $(document).on('click', '.delete-modal-sistema_rol_usuario', function() {
+            id_sistema_rol_usuario = $(this).data('id');
             swal({
               title: "Esta seguro?",
-              text: "modificara el estado de la informacion",
+              text: "eliminara la informacion",
               icon: "warning",
               buttons: true,
               dangerMode: true,
             })
             .then((willDelete) => {
               if (willDelete) {
-                console.log($(this).data('accion'));
+
                 $.ajax({
-                    type: 'POST',
-                    url: "/sistema/imedchi/sistemarolusuario/cambiarEstado",
+                    type: 'DELETE',
+                    url: "/sistema/imedchi/sistemarolusuario/"+id_sistema_rol_usuario,
                     data: {
                         '_token': $('input[name=_token]').val(),
-                        'id': id_eliminar_sistema_rol_usuario,
+                        'id': id_sistema_rol_usuario,
                     },
                     success: function(data) {                 
-                        swal("Correcto", "Se modifico el estado", "success")
+                        swal("Correcto", "Se elimino el rol", "success")
                         .then((value) => {
-                          table_telefono.ajax.reload(); 
+                            table_sistema_rol_usuario.ajax.reload(); 
                         });                                                  
                     },
                 });                                           
@@ -1773,7 +1783,7 @@
                 swal("no se realizo el cambio!");
               }
             });            
-        });*/
+        });
 
 
         //View
