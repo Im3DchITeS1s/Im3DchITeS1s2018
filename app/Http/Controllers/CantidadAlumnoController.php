@@ -24,6 +24,7 @@ class CantidadAlumnoController extends Controller
         'fkseccion' => 'required|integer'                              
     ];    
 
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -32,6 +33,7 @@ class CantidadAlumnoController extends Controller
 
     public function index()
     {       
+
         return view('/mantenimiento/CantidadAlumno/cantidadalumno');
     }
 
@@ -87,6 +89,11 @@ class CantidadAlumnoController extends Controller
         }        
     }  
 
+     public function create()
+    {
+        //
+    }
+
     public function store(Request $request)
     {
         $estado = Estado::buscarIDEstado(5);
@@ -105,18 +112,28 @@ class CantidadAlumnoController extends Controller
         }
     }  
 
+    public function show($id)
+    {
+        //
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
     public function update(Request $request, $id)
     {
         $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $update = CantidadAlumno::findOrFail($id);            
-            $update->cantidad = $request->cantidad;
-            $update->fkcarrera_grado = $request->fkcarrera_grado;    
-            $update->fkseccion = $request->fkseccion;                                                           
-            $update->save();
-            return response()->json($update); 
+            $cambiar = CantidadAlumno::findOrFail($id);            
+            $cambiar->cantidad = $request->cantidad;
+            $cambiar->fkcarrera_grado = $request->fkcarrera_grado;    
+            $cambiar->fkseccion = $request->fkseccion;                                    
+            $cambiar->save();
+            return response()->json($cambiar); 
         }       
     }     
 
@@ -127,7 +144,7 @@ class CantidadAlumnoController extends Controller
         else
             $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = CarreraGrado::findOrFail($request->pkcantidadalumno); 
+        $cambiar = CantidadAlumno::findOrFail($request->pkcantidadalumno); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
