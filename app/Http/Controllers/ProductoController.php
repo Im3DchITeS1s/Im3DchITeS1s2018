@@ -37,18 +37,30 @@ class ProductoController extends Controller
     }
  	 public function getdata()
     {
+
         $query = Producto::dataProducto();
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
+
                 $btn_estado = '<button class="delete-modal-profesion btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-down"></span></button>';
 
                 $btn_edit = '<button class="edit-modal-profesion btn btn-warning btn-xs" type="button" data-fkpersona_profesion="'.$data->id.'" data-idproducto="'.$data->producto.'">
                     <span class="glyphicon glyphicon-edit"></span></button>';           
 
+                
+
                 return '<small class="label label-success">'.$data->estado.'</small> '.$btn_edit.' '.$btn_estado;
             })                  
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
+    }
+
+   public function dropproducto(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = Producto::buscarProducto($id);
+            return response()->json($estado);
+        }        
     }
 
         // Funcion Cambiar Estado
