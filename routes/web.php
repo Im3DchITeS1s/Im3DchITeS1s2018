@@ -150,3 +150,7 @@ Route::post('/plataforma/blackboard/pregunta/cambiarEstado', 'PreguntaController
 Route::resource('/plataforma/blackboard/respuesta', 'RespuestaController');
 Route::get('/respuesta/getdata/{id}', 'RespuestaController@getdata');
 Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaController@cambiarEstado');
+
+//Producto
+Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
+Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');

@@ -472,7 +472,7 @@ return [
             'submenu' => [
                 [
                 'text' => 'Cargar',
-                'url'  => '#',
+                'url'  => '/gestionadministrativa/inventario/producto',
                 'icon_color' => 'red',
                 ],
                 [
