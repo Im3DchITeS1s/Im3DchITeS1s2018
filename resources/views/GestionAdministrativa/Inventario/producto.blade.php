@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Inventario de Productos')
+@section('title', 'Mantenimiento - Producto')
 
 @section('content_header')
-	<div class="content-header">
+    <div class="content-header">
         <h1>Producto
             <button type="button" class="add-modal btn btn-success">
                 <span class="fa fa-plus-circle"></span>
@@ -13,14 +13,14 @@
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active">Producto</li>
         </ol>                      
-	</div>    
+    </div>    
 @stop
 
 @section('content')
     
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">INFORMACION DEL PRODUCTO </h3>
+            <h3 class="box-title">INFORMACION</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
@@ -32,9 +32,9 @@
                 <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
                     <thead >
                         <tr>
-                            <th width="25%">nombre</th>
-                            <th width="25%">descripcion</th>
-                            <th width="25%">categoria</th>
+                            <th width="25%">Nombre</th>
+                            <th width="25%">Descripcion</th>
+                            <th width="25%">Categoria</th>
                             <th width="8%">Accion</th>
                         </tr>
                     </thead>
@@ -62,27 +62,44 @@
                             <div class="col-sm-1">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                             </div>
-                            <div class="col-sm-11">
-                               
+                            <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
+                                    <label>Nombre</label>
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="producto_add" placeholder="ingresar nombre del producto" autofocus>
-                                </div>                                                               
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar carrera" autofocus>
+                                </div>                                                             
+                                <textarea type="text" class="form-control" id="descripcion_add" placeholder="ingresar Descripcion" autofocus></textarea>
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
-
+                            </div>
+                            <!--Drop list de la categoria-->
+                            <div class="col-sm-12">
                                 <div class="input-group">
-                                      <div class="input-group-addon">
-                                        <i class="fa fa-money"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="cantidad_add" placeholder="cantidad del producto" autofocus>
-                                </div>                                                               
-                            
+                                  <div class="input-group-addon">
+                                       <label>Categoria</label>
+                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkcategoria_add" id='fkcategoria_add' required autofocus>
+                                    </select> 
+                                </div>                                                              
+                                <p class="errorCategoria text-center alert alert-danger hidden"></p>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <label>Cantidad</label>
+                                    <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                  <input type="text" class="form-control" id="cantidad_add" placeholder="ingresar cantidad" autofocus>
+                                </div>                                                             
+                                <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
-                                <br/> 
+                            </div>
                         </div>
+     
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary add" data-dismiss="modal">
@@ -119,8 +136,9 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar nombre" autofocus>                         
+                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar carrera" autofocus>
                                 </div> 
+                                <textarea type="text" class="form-control" id="descripcion_edit" placeholder="ingresar Descripcion" autofocus></textarea>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
                             </div>
                         </div>
@@ -147,7 +165,7 @@
                 </div>
             </div>
         </div>
-    </div>     
+    </div>      
 
     <!-- AJAX CRUD operations -->
     <script type="text/javascript">
@@ -176,18 +194,31 @@
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Producto');
             $('.errorNombre').addClass('hidden');
+            $('.errorDescripcion').addClass('hidden');
+            $('.errorCategoria').addClass('hidden');
             $('#addModal').modal('show');
         });
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/profesion',
+                url: '/mantenimiento/producto',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'nombre': $('#nombre_add').val(),
+                    'descripcion': $('#descripcion_add').val(),
+                    'fkcategoria': $('#fkcategoria_add').val(),
                 },
                 success: function(data) {
                     $('.errorNombre').addClass('hidden');
+
+                $.get("/GestionAdministrativa/inventario/dropcategoria/"+5,function(response,id){
+                $("#fkcategoria_add").empty();
+                $("#fkcategoria_add").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkcategoria_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                    $('#fkcategoria_add').val('').trigger('change.select2'); 
+                }
+            }); 
 
                     if ((data.errors)) {
                         setTimeout(function () {

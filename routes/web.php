@@ -160,3 +160,11 @@ Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaControll
 //Producto
 Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
 Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');
+Route::get('/inventario/producto/dropcategoria/{id}', 'ProductoController@dropcategoria');
+
+
+
+
+
+
+
