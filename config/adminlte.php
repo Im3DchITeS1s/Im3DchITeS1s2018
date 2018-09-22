@@ -231,17 +231,17 @@ return [
                 'icon_color' => 'red',
                 ],
                 [
-                'text'    => 'Evaluación2',
+                'text'    => 'Bandeja de Cuestionario',
                 'url'     => '#',
                 'icon_color' => 'yellow',
                 'submenu' => [
                     [
-                        'text' => 'Evaluación2.1',
+                        'text' => 'Responder Cuestionario',
                         'url'  => '#',
                         'icon_color' => 'yellow',
                     ],
                     [
-                        'text'    => 'Evaluación2.1',
+                        'text'    => 'Cuestionarios Resueltos',
                         'url'     => '#',
                         'icon_color' => 'yellow',
                     ],

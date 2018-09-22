@@ -100,46 +100,52 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
-        $estado = Estado::buscarIDEstado(12);
-        $token = "IMEDCHI-".str_random(6)."!";
+        $existe = User::existeUsuario($request->fkpersona);
 
-        $validator = Validator::make(Input::all(), $this->verificar_insert);
-        if ($validator->fails()) {
-            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
-        } else {
-            //Generar usuario
-            $persona = Persona::buscarIDPersona($request->fkpersona);
-            $nombre_completo = $persona->nombre1.' '.$persona->nombre2.' '.$persona->nombre3.' '.$persona->apellido1.' '.$persona->apellido2.' '.$persona->apellido3;
-            $incial_nombre1 =  substr($persona->nombre1, 0, 1);
-            if($persona->nombre2 != null){
-                $incial_nombre2 = substr($persona->nombre2, 0, 1);
-                $username = strtolower(str_replace(' ', '',trim($incial_nombre1.$incial_nombre2.$persona->apellido1)));
-            }else{
-                $incial_apellido2 = substr($persona->apellido2, 0, 1);
-                $username = strtolower(str_replace(' ', '',trim($incial_nombre1.$incial_apellido2.$persona->apellido1)));                
-            }          
+        if($existe->count() < 1)
+        {
+            $estado = Estado::buscarIDEstado(12);
+            $token = "IMEDCHI-".str_random(6)."!";
 
-            $insert = new User();
-            $insert->username = $username;
-            $insert->email = $username."@imedchi.edu.gt";      
-            $insert->token = $token; 
-            $insert->password = bcrypt("@dM1nIStR4t0r");
-            $insert->fkpersona = $request->fkpersona;                                  
-            $insert->fkestado = $estado->id;
-            $insert->save();
+            $validator = Validator::make(Input::all(), $this->verificar_insert);
+            if ($validator->fails()) {
+                return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+            } else {
+                //Generar usuario
+                $persona = Persona::buscarIDPersona($request->fkpersona);
+                $nombre_completo = $persona->nombre1.' '.$persona->nombre2.' '.$persona->nombre3.' '.$persona->apellido1.' '.$persona->apellido2.' '.$persona->apellido3;
+                $incial_nombre1 =  substr($persona->nombre1, 0, 1);
+                if($persona->nombre2 != null){
+                    $incial_nombre2 = substr($persona->nombre2, 0, 1);
+                    $username = strtolower(str_replace(' ', '',trim($incial_nombre1.$incial_nombre2.$persona->apellido1)));
+                }else{
+                    $incial_apellido2 = substr($persona->apellido2, 0, 1);
+                    $username = strtolower(str_replace(' ', '',trim($incial_nombre1.$incial_apellido2.$persona->apellido1)));                
+                }          
 
-            $user = User::buscarIDUsuario($request->fkpersona);
-
-            foreach ($request->fkrol as $rol) {
-                $insert = new Sistema_Rol_Usuario();
-                $insert->fksistema_rol = $rol;
-                $insert->fkuser = $user->id;      
+                $insert = new User();
+                $insert->username = $username;
+                $insert->email = $username."@imedchi.edu.gt";      
+                $insert->token = $token; 
+                $insert->password = bcrypt("@dM1nIStR4t0r");
+                $insert->fkpersona = $request->fkpersona;                                  
+                $insert->fkestado = $estado->id;
                 $insert->save();
-            }
 
-            $this->enviarEmail($request->email, $nombre_completo, $username, $token);
-            return response()->json($insert);
-        }        
+                $this->enviarEmail($request->email, $nombre_completo, $username, $token);
+            }
+        } 
+        
+        $user = User::buscarIDUsuario($request->fkpersona);
+
+        foreach ($request->fkrol as $rol) {
+            $insert = new Sistema_Rol_Usuario();
+            $insert->fksistema_rol = $rol;
+            $insert->fkuser = $user->id;      
+            $insert->save();
+        }
+
+        return response()->json($insert);       
     }
 
     public function show($id)
