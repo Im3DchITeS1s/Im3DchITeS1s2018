@@ -28,8 +28,6 @@ class CarreraGradoController extends Controller
      
         'fkcarrera' => 'required|integer', 
         'fkgrado' => 'required|integer',
-        'fkestado' => 'required'
-
     ];    
 
     public function __construct()
@@ -40,6 +38,7 @@ class CarreraGradoController extends Controller
 
     public function index()
     {   
+        
         return view('/mantenimiento/CarreraGrado/carreragrado');
     }
 
@@ -107,7 +106,7 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraGado();            
+            $insert = new CarreraGrado();            
             $insert->fkcarrera = $request->fkcarrera;
             $insert->fkgrado = $request->fkgrado;           
             $insert->fkestado = $estado->id;                                                                           
