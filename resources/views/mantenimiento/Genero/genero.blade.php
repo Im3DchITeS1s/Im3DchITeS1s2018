@@ -63,6 +63,7 @@
                             <div class="col-sm-11">
                                 <div class="input-group">
                                   <div class="input-group-addon">
+                                    <label>Nombre</label>
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
                                   <input type="text" class="form-control" id="nombre_add" placeholder="ingresar nombre" autofocus>

@@ -28,7 +28,6 @@ class CarreraCursoController extends Controller
      
         'fkcarrera' => 'required|integer', 
         'fkcurso' => 'required|integer',
-        'fkestado' => 'required'
 
     ];    
 
@@ -107,7 +106,7 @@ class CarreraCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraGado();            
+            $insert = new CarreraCurso();            
             $insert->fkcarrera = $request->fkcarrera;
             $insert->fkcurso = $request->fkcurso;           
             $insert->fkestado = $estado->id;                                                                           

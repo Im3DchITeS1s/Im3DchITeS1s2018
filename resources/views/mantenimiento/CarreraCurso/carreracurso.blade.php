@@ -77,7 +77,7 @@
                             </div>
      
 
-                                <!--Drop list de los Cursos-->
+                                <!--Drop list de los grados-->
                             <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
@@ -138,7 +138,7 @@
                                 <p class="errorCarrera text-center alert alert-danger hidden"></p>
                             </div>
 
-                            <!--Drop list del Curso-->
+                            <!--Drop list del grado-->
                        <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
@@ -154,22 +154,9 @@
                         </div>
                  </div>
 
-                        <!--Drop list del estado-->
-                        <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                name="fkestado_edit" id='fkestado_edit' required autofocus>
-                                </select> 
-                                <p class="errorEstado text-center alert alert-danger hidden"></p>               
-                            </div>
-                        </div>
-
           </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary add" data-dismiss="modal">
+                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
                             <span id="" class='fa fa-save'></span>
                         </button>
                         <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
@@ -180,9 +167,6 @@
             </div>
         </div>
     </div>    
-
-
-
 
 
       <!-- AJAX CRUD operations -->
@@ -210,33 +194,33 @@
                 ]
             });
         });
-
-            //Insert
+  //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCarrera').addClass('hidden');
             $('.errorCurso').addClass('hidden');
             $('#addModal').modal('show');
 
-          $.get("/mantenimiento/carreracurso/dropcarrera/"+5,function(response,id){
+            $.get("/mantenimiento/carreracurso/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_add").empty();
                 $("#fkcarrera_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcarrera_add').val('').trigger('change.select2'); 
                 }
-            }); 
+            });              
 
-           $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
+              $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
                 $("#fkcurso_add").empty();
                 $("#fkcurso_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcurso_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcurso_add').val('').trigger('change.select2'); 
                 }
-            }); 
+            });      
+            });              
 
-           $('.modal-footer').on('click', '.add', function() {
+        $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
                 url: '/mantenimiento/carreracurso/',
@@ -244,7 +228,6 @@
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),
                     'fkcurso': $('#fkcurso_add').val(),
-                    
                 },
                 success: function(data) {
                     $('.errorCarrera').addClass('hidden');
@@ -258,15 +241,14 @@
                               timer: 2000,
                             });
                         }, 500);
-
                      if (data.errors.fkcarrera) {
                             $('.errorCarrera').removeClass('hidden');
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
-           
-                    if (data.errors.fkcurso) {
-                            $('.errorcurso').removeClass('hidden');
-                            $('.errorcurso').text(data.errors.fkcurso);
+
+                      if (data.errors.fkcurso) {
+                            $('.errorCurso').removeClass('hidden');
+                            $('.errorCurso').text(data.errors.fkcurso);
                         }
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
@@ -279,55 +261,45 @@
                 },
             }); 
         });
-    });
 
- //Edit
- $(document).on('click', '.edit-modal', function() {    
+        //Edit
+            $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorCarrera').addClass('hidden');
-             $('.errorCurso').addClass('hidden');
-            $('.errorEstado').addClass('hidden');
+            $('.errorCurso').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
-            
+            $('#fkcarrera_edit').val($(this).data('fkcarrera'));
+            $('#curso_edit').val($(this).data('fkcurso'));
+    
             id = $('#id_edit').val();
-            fkcarrera = $('#fkcarrera_edit');
+            fkcarrera = $(this).data('fkcarrera');
+            fkcurso = $(this).data('fkcurso');
+            $('#editModal').modal('show');
 
-                $.get("/mantenimiento/carreracurso/dropcarrera/"+5,function(response,id){
+            
+           $.get("/mantenimiento/carreracurso/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_edit").empty();
                 $("#fkcarrera_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcarrera_edit').val('').trigger('change.select2'); 
                 }
+            });              
             }); 
 
-          
-            fkcurso = $('#fkcurso_edit');
-
-
-             $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
+           $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
                 $("#fkcurso_edit").empty();
                 $("#fkcurso_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcurso_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcurso_edit').val('').trigger('change.select2'); 
                 }
-            }); 
+            });       
+          
 
-
-            id_estado = $(this).data('#fkestado');
-            $('#editModal').modal('show');
-            $.get("/mantenimiento/carreracurso/dropestado/"+1,function(response,id){
-                $("#fkestado_edit").empty();
-                for(i=0; i<response.length; i++){
-                    $("#fkestado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkestado_edit').val(id_estado).trigger('change.select2'); 
-                }
-            });           
-        });
-        $('.modal-footer').on('click', '.edit', function() {
+          $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
                 url: '/mantenimiento/carreracurso/' + id,
@@ -335,13 +307,11 @@
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
                     'fkcarrera': $('#fkcarrera_edit').val(),
-                    'fkcurso': $('#fkcurso_edit').val(),
-                    'fkestado': $('#fkestado_edit').val()
+                    'fkcurso': $('#fkcurso_edit').val()
                 },
                 success: function(data) {
                     $('.errorCarrera').addClass('hidden');
                     $('.errorCurso').addClass('hidden');
-                    $('.errorEstado').addClass('hidden');
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -356,31 +326,23 @@
                             $('.errorCarrera').removeClass('hidden');
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
-                          if (data.errors.fkcurso) {
+                        if (data.errors.fkcurso) {
                             $('.errorCurso').removeClass('hidden');
                             $('.errorCurso').text(data.errors.fkcurso);
                         }
-                        if (data.errors.fkestado) {
-                            $('.errorEstado').removeClass('hidden');
-                            $('.errorEstado').text(data.errors.fkestado);
-                        }
                     } else {
                         swal("Correcto", "Se modifico la informacion", "success")
-                        .then((value) => {
-                         $("#id_edit").val('');
-                         $('#fkcarrera_edit').val('');
-                         $('#fkcurso_edit').val('');
-                         $('#fkestado_edit').val('');
+                            .then((value) => {
+                            $("#id_edit").val('');
+                            $('#fkcarrera_edit').val('');
+                            $('fkcurso_edit').val('');
                           table.ajax.reload(); 
-                        }); 
+                        });                          
                     }
                 },
-            });  
+            }); 
         });
-
-
-
-
+        
         // delete
         $(document).on('click', '.delete-modal', function() {
             id = $(this).data('id');
