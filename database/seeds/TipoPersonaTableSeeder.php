@@ -14,8 +14,28 @@ class TipoPersonaTableSeeder extends Seeder
         $nuevo->save();
 
         $nuevo = new TipoPersona();
+        $nuevo->nombre = 'Director';
+        $nuevo->fkestado = 5;
+        $nuevo->save();       
+
+        $nuevo = new TipoPersona();
+        $nuevo->nombre = 'Secreataria';
+        $nuevo->fkestado = 5;
+        $nuevo->save();           
+
+        $nuevo = new TipoPersona();
+        $nuevo->nombre = 'Contador';
+        $nuevo->fkestado = 5;
+        $nuevo->save(); 
+
+        $nuevo = new TipoPersona();
         $nuevo->nombre = 'Catedratico';
         $nuevo->fkestado = 5;
-        $nuevo->save();        
+        $nuevo->save();    
+
+        $nuevo = new TipoPersona();
+        $nuevo->nombre = 'Alumno';
+        $nuevo->fkestado = 5;
+        $nuevo->save();              
     }
 }

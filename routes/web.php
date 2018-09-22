@@ -74,7 +74,7 @@ Route::get('/sistema/imedchi/usuario/existeuser/{id}', 'UsuarioController@existe
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
-Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');
+Route::get('/sistemarolusuario/getdata/{id}', 'SistemaRolUsuarioController@getdata');
 Route::post('/sistema/imedchi/sistemarolusuario/cambiarEstado', 'SistemaRolUsuarioController@cambiarEstado');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistema/{id}', 'SistemaRolUsuarioController@dropsistema');
 Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRolUsuarioController@dropsistemarol');

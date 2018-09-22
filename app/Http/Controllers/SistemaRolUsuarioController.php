@@ -14,14 +14,33 @@ use App\Sistema_Rol;
 
 class SistemaRolUsuarioController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
     }
 
-    public function getdata()
+    public function getdata(Request $request, $id)
     {
+        if($request->ajax()){
+            $query = Sistema_Rol_Usuario::dataSistemaRolUsuario($id);
+        } 
+        return Datatables::of($query)
+            ->addColumn('sistema_rol', function ($data) {
+                return $data->sistema.' / '.$data->rol;
+            })                
+            ->addColumn('action', function ($data) {
+                $btn_eliminar = '<button class="delete-modal-sistema_rol_usuario btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-down"></span></button>';        
 
+                return $btn_eliminar;
+            })                  
+            ->editColumn('id', 'ID: {{$id}}')       
+            ->make(true);
     }
 
     public function dropsistema(Request $request, $id)
@@ -50,35 +69,16 @@ class SistemaRolUsuarioController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -86,19 +86,13 @@ class SistemaRolUsuarioController extends Controller
 
     public function cambiarEstado(Request $request)
     {
-        if($request->estado == "activo")
-            $estado = Estado::buscarIDEstado(12);
-        else
-            $estado = Estado::buscarIDEstado(11);
-
-        $cambiar = User::findOrFail($request->pkprofesion); 
-        $cambiar->fkestado = $estado->id;
-        $cambiar->save();
-        return response()->json($cambiar);          
+        
     }
     
     public function destroy($id)
     {
-        //
+        $delete = Sistema_Rol_Usuario::findOrFail($id); 
+        $delete->delete();
+        return response()->json($delete);  
     }
 }

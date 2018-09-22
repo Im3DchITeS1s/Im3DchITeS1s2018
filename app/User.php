@@ -23,11 +23,11 @@ class User extends Authenticatable
 
     public static function buscarIDUsuario($id)
     {
-        return User::findOrFail($id);       
+        return User::where('fkpersona', $id)->first();       
     } 
 
     public static function existeUsuario($id)
     {
         return User::select('username')->where('fkpersona', $id)->get();       
-    }     	   
+    }        	   
 }

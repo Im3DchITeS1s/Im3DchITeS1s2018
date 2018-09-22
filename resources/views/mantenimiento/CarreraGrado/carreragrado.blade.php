@@ -194,35 +194,33 @@
                 ]
             });
         });
-
-            //Insert
+  //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCarrera').addClass('hidden');
             $('.errorGrado').addClass('hidden');
             $('#addModal').modal('show');
 
-          $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
+            $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_add").empty();
                 $("#fkcarrera_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcarrera_add').val('').trigger('change.select2'); 
                 }
-            }); 
+            });              
 
-           $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
+              $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
                 $("#fkgrado_add").empty();
                 $("#fkgrado_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkgrado_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkgrado_add').val('').trigger('change.select2'); 
                 }
-            }); 
-        });
+            });      
+            });              
 
-
-           $('.modal-footer').on('click', '.add', function() {
+        $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
                 url: '/mantenimiento/carreragrado/',
@@ -230,7 +228,6 @@
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),
                     'fkgrado': $('#fkgrado_add').val(),
-                    
                 },
                 success: function(data) {
                     $('.errorCarrera').addClass('hidden');
@@ -244,16 +241,16 @@
                               timer: 2000,
                             });
                         }, 500);
-
                      if (data.errors.fkcarrera) {
                             $('.errorCarrera').removeClass('hidden');
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
-           
-                    if (data.errors.fkgrado) {
+
+                      if (data.errors.fkgrado) {
                             $('.errorGrado').removeClass('hidden');
                             $('.errorGrado').text(data.errors.fkgrado);
                         }
+            
 
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
@@ -266,44 +263,45 @@
                 },
             }); 
         });
-  
 
-//Edit
- $(document).on('click', '.edit-modal', function() {    
+        //Edit
+            $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorCarrera').addClass('hidden');
             $('.errorGrado').addClass('hidden');
-            $('#editModal').show('modal');
                                 
             $('#id_edit').val($(this).data('id'));
-            
+            $('#fkcarrera_edit').val($(this).data('fkcarrera'));
+            $('#fkgrado_edit').val($(this).data('fkgrado'));
+    
             id = $('#id_edit').val();
             fkcarrera = $(this).data('fkcarrera');
+            fkgrado = $(this).data('fkgrado');
+            $('#editModal').modal('show');
 
-            $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
+            
+           $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_edit").empty();
                 $("#fkcarrera_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcarrera_edit').val(fkcarrera).trigger('change.select2'); 
+                    $('#fkcarrera_edit').val('').trigger('change.select2'); 
                 }
+            });              
             }); 
 
-          
-            fkgrado = $(this).data('fkgrado');
-
-
-             $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
+           $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
                 $("#fkgrado_edit").empty();
                 $("#fkgrado_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkgrado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkgrado_edit').val(fkgrado).trigger('change.select2'); 
+                    $('#fkgrado_edit').val('').trigger('change.select2'); 
                 }
-            });           
-        });
-        $('.modal-footer').on('click', '.edit', function() {
+            });       
+          
+
+          $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
                 url: '/mantenimiento/carreragrado/' + id,
@@ -311,7 +309,7 @@
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
                     'fkcarrera': $('#fkcarrera_edit').val(),
-                    'fkgrado': $('#fkgrado_edit').val(),
+                    'fkgrado': $('#fkgrado_edit').val()
                 },
                 success: function(data) {
                     $('.errorCarrera').addClass('hidden');
@@ -330,25 +328,23 @@
                             $('.errorCarrera').removeClass('hidden');
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
-                          if (data.errors.fkgrado) {
+                        if (data.errors.fkgrado) {
                             $('.errorGrado').removeClass('hidden');
                             $('.errorGrado').text(data.errors.fkgrado);
                         }
                     } else {
                         swal("Correcto", "Se modifico la informacion", "success")
-                        .then((value) => {
-                         $("#id_edit").val('');
-                         $('#fkcarrera_edit').val('');
-                         $('#fkgrado_edit').val('');
+                            .then((value) => {
+                            $("#id_edit").val('');
+                            $('#fkcarrera_edit').val('');
+                            $('fkgrado_edit').val('');
                           table.ajax.reload(); 
-                        }); 
+                        });                          
                     }
                 },
-            });  
+            }); 
         });
-
-
-
+        
         // delete
         $(document).on('click', '.delete-modal', function() {
             id = $(this).data('id');

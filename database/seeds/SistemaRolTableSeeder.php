@@ -14,7 +14,7 @@ class SistemaRolTableSeeder extends Seeder
         /*3*/$Sistema_adeministrativo = Sistema::where('nombre', 'Sistema Administrativo')->first();
 
         /*1*/$rol_admin = Rol::where('nombre', 'Administrador')->first();
-        /*2*/$rol_director = Rol::where('nombre', 'Directora')->first();
+        /*2*/$rol_director = Rol::where('nombre', 'Director')->first();
         /*3*/$rol_secre = Rol::where('nombre', 'Secreataria')->first();
         /*4*/$rol_contador = Rol::where('nombre', 'Contador')->first();
         /*5*/$rol_catedratico = Rol::where('nombre', 'Catedratico')->first();
@@ -27,24 +27,18 @@ class SistemaRolTableSeeder extends Seeder
 		$nuevo->fkrol = $rol_admin->id;
         $nuevo->fkestado = 5;		
 		$nuevo->save(); 
-
-		/*$nuevo = new Sistema_Rol();
-		$nuevo->fksistema = $sistema_blackboard->pksistema;   
-		$nuevo->fkrol = $rol_director->id; 
-        $nuevo->fkestado = 5;		 
-		$nuevo->save();	
 		
 		$nuevo = new Sistema_Rol();
-		$nuevo->fksistema = $sistema_blackboard->pksistema;  
+		$nuevo->fksistema = $sistema_blackboard->id;  
 		$nuevo->fkrol = $rol_catedratico->id;  
         $nuevo->fkestado = 5;		
 		$nuevo->save(); 
 
 		$nuevo = new Sistema_Rol();
-		$nuevo->fksistema = $sistema_blackboard->pksistema;  
+		$nuevo->fksistema = $sistema_blackboard->id;  
 		$nuevo->fkrol = $rol_alumno->id;  
         $nuevo->fkestado = 5;		
-		$nuevo->save();	*/
+		$nuevo->save();	
 
         //Roles del Sistema Gestion Academica
 		$nuevo = new Sistema_Rol();
@@ -53,7 +47,7 @@ class SistemaRolTableSeeder extends Seeder
         $nuevo->fkestado = 5;		
 		$nuevo->save();
 
-		/*$nuevo = new Sistema_Rol();
+		$nuevo = new Sistema_Rol();
 		$nuevo->fksistema = $Sistema_academico->id;   
 		$nuevo->fkrol = $rol_director->id;  
         $nuevo->fkestado = 5;		
@@ -65,13 +59,6 @@ class SistemaRolTableSeeder extends Seeder
         $nuevo->fkestado = 5;		
 		$nuevo->save(); 	
 
-		$nuevo = new Sistema_Rol();
-		$nuevo->fksistema = $Sistema_academico->id;   
-		$nuevo->fkrol = $rol_catedratico->id;  
-        $nuevo->fkestado = 5;		
-		$nuevo->save(); */	
-
-
         //Roles del Sistema Admisnitracion
 		$nuevo = new Sistema_Rol();
 		$nuevo->fksistema = $Sistema_adeministrativo->id;    
@@ -79,7 +66,7 @@ class SistemaRolTableSeeder extends Seeder
         $nuevo->fkestado = 5;		
 		$nuevo->save();
 
-		/*$nuevo = new Sistema_Rol();
+		$nuevo = new Sistema_Rol();
 		$nuevo->fksistema = $Sistema_adeministrativo->id;   
 		$nuevo->fkrol = $rol_director->id;  
         $nuevo->fkestado = 5;		
@@ -95,6 +82,6 @@ class SistemaRolTableSeeder extends Seeder
 		$nuevo->fksistema = $Sistema_adeministrativo->id;   
 		$nuevo->fkrol = $rol_contador->id;  
         $nuevo->fkestado = 5;		
-		$nuevo->save(); */								 				           
+		$nuevo->save(); 								 				           
     }
 }
