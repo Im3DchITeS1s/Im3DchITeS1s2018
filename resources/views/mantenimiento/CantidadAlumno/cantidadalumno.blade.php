@@ -62,7 +62,7 @@
                                     <div class="input-group-addon">
                                         <label>Cantidad</label>
                                         <i class="fa fa-sticky-note"></i>
-                                    <small class="pull-right" style="color:green;"></small>
+                                    
                                   </div>
                                   <input type="text" class="form-control" id="cantidad_add" placeholder="Cantidad" autofocus maxlength="6">
                                 </div>                                                          
@@ -78,7 +78,6 @@
                                     <div class="input-group-addon">
                                         <label>Carrera Grado</label>
                                         <i class="fa fa-sticky-note"></i>
-                                    <small class="pull-right" style="color:green;"></small>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcarrera_grado_add" id='fkcarrera_grado_add' required autofocus>

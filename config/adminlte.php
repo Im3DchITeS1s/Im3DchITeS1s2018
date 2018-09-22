@@ -475,8 +475,13 @@ return [
             'text'    => 'Inventario',
             'icon'    => 'suitcase',
             'submenu' => [
+                 [
+                'text' => 'Categoría',
+                'url'  => '#',
+                'icon_color' => 'red',
+                ],
                 [
-                'text' => 'Cargar',
+                'text' => 'Producto',
                 'url'  => '/gestionadministrativa/inventario/producto',
                 'icon_color' => 'red',
                 ],

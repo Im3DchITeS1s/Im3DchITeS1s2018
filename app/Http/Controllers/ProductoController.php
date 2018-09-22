@@ -8,21 +8,25 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
 use Response;
+use App\Producto;
 use App\Categoria;
 use App\Estado;
-use App\Producto;
+
 
 class ProductoController extends Controller
 {
      protected $verificar_insert =
     [
         'nombre' => 'required|max:50|unique:producto',
+        'descripcion' => 'required|descripcion',
+        'fkcategoria' => 'required|fkcategoria',
     ];
 
     protected $verificar_update =
     [
-        'nombre' => 'required|max:32|unique:producto,nombre,$id',
-        'fkestado' => 'required'
+         'nombre' => 'required|max:50|unique:producto',
+        'descripcion' => 'required|descripcion',
+        'fkcategoria' => 'required|fkcategoria',
     ];    
 
 
@@ -55,27 +59,78 @@ class ProductoController extends Controller
             ->make(true);
     }
 
-   public function dropproducto(Request $request, $id)
+   public function dropcategoria(Request $request, $id)
     {
         if($request->ajax()){
-            $estado = Producto::buscarProducto($id);
+            $estado = Categoria::buscarCategoria($id);
             return response()->json($estado);
         }        
     }
 
-        // Funcion Cambiar Estado
-    public function cambiarEstado(Request $request)
+ public function create()
+    {
+        //
+    }
+
+    public function store(Request $request)
+    {
+        $estado = Estado::buscarIDEstado(5);
+
+        $validator = Validator::make(Input::all(), $this->verificar_insert);
+        if ($validator->fails()) {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        } else {
+            $insert = new CarreraCurso();            
+            $insert->producto = $request->producto;
+            $insert->descripcion = $request->descripcion;
+            $insert->fkcategoria = $request->fkcategoria;          
+            $insert->fkestado = $estado->id;                                                                           
+            $insert->save();
+            return response()->json($insert);
+        }        
+    }
+
+    public function show($id)
+    {
+        //
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make(Input::all(), $this->verificar_update);
+        if ($validator->fails()) {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        } else {
+            $cambiar = Producto::findOrFail($id);              
+            $cambiar->producto = $request->producto;
+            $cambiar->descripcion = $request->descripcion;
+            $cambiar->fkcategoria = $request->fkcategoria;
+            $cambiar->save();
+            return response()->json($cambiar);
+        }        
+    }
+
+  public function cambiarEstado(Request $request)
     {
         if($request->estado == "activo")
             $estado = Estado::buscarIDEstado(6);
         else
             $estado = Estado::buscarIDEstado(5);
 
-        $cambiar = Productofunc::findOrFail($request->fkproducto); 
+        $cambiar = Producto::findOrFail($request->pkcarreracurso); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
     }
 
-    
-}//FinClaas
+    public function destroy($id)
+    {
+        //
+    }
+
+}

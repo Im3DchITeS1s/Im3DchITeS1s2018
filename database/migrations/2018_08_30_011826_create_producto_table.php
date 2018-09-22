@@ -12,7 +12,6 @@ class CreateProductoTable extends Migration
             $table->increments('id');
             $table->string('nombre', 75)->unique();
             $table->string('descripcion', 1000);
-
             $table->unsignedInteger('fkcategoria');
             $table->unsignedInteger('fkestado');
 

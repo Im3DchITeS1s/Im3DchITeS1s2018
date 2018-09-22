@@ -188,7 +188,7 @@
             $('.errorCategoria').addClass('hidden');
             $('#addModal').modal('show');
 
-            $.get("/gestionadministrativa/inventario/producto/dropcategoria"+5,function(response,id){
+            $.get("/gestionadministrativa/inventario/producto"+5,function(response,id){
                 $("#fkcategoria_add").empty();
                 $("#fkcategoria_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
