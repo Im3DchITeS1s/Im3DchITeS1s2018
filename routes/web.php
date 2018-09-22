@@ -113,6 +113,12 @@ Route::get('/mantenimiento/carreragrado/dropcarrera/{id}', 'CarreraGradoControll
 Route::get('/mantenimiento/carreragrado/dropgrado/{id}', 'CarreraGradoController@dropgrado');
 Route::get('/mantenimiento/carreragrado/dropestado/{id}', 'CarreraGradoController@dropestado');
 
+//CantidadAlumno
+Route::resource('/mantenimiento/cantidadalumno', 'CantidadAlumnoController');
+Route::get('cantidadalumno/getdata', 'CantidadAlumnoController@getdata')->name('cantidadalumno.getdata');
+Route::get('/mantenimiento/cantidadalumno/dropCantidadCarreraGrado/{id}', 'CantidadAlumnoController@dropCantidadCarreraGrado');
+Route::get('/mantenimiento/cantidadalumno/dropCantidadSeccion/{id}', 'CantidadAlumnoController@dropCantidadSeccion');
+Route::post('/mantenimiento/cantidadalumno/cambiarEstado', 'CantidadAlumnoController@cambiarEstado');
 
 
 //Sistema Rol Usuario

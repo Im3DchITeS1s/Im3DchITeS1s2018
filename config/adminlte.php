@@ -308,6 +308,11 @@ return [
                         'url'  => '#',
                         'icon_color' => 'aqua',
                     ],
+                      [
+                        'text' => 'Cantidad de Alumnos ',
+                        'url'  => '/mantenimiento/cantidadalumno',
+                        'icon_color' => 'aqua',
+                    ],
                     [
                         'text' => 'Carreras y cursos',
                         'url'  => '/mantenimiento/carreracurso',
