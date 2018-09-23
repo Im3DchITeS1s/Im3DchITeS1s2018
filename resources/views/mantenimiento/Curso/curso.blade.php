@@ -57,15 +57,13 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
                             <div class="col-sm-11">
                                 <div class="input-group">
                                   <div class="input-group-addon">
+                                    <label>Curso</label>
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar curso" autofocus>
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="Ingresar Curso" autofocus>
                                 </div>                                                               
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
@@ -99,12 +97,11 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
+                           
                             <div class="col-sm-11">
                                 <div class="input-group">
                                     <div class="input-group-addon">
+                                        <label>Curso</label>
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
                                     <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar curso" autofocus>                         
@@ -113,15 +110,6 @@
                             </div>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                name="fkestado_edit" id='fkestado_edit' required autofocus>
-                                </select> 
-                                <p class="errorEstado text-center alert alert-danger hidden"></p>               
-                            </div>
                         </div>                        
                     </form>
                     <div class="modal-footer">
@@ -135,8 +123,7 @@
                 </div>
             </div>
         </div>
-    </div>     
-
+    </div> 
     <!-- AJAX CRUD operations -->
     <script type="text/javascript">
         var table = "";
@@ -150,7 +137,7 @@
             table = $('#info-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('Curso.getdata') !!}',
+                ajax: '{!! route('curso.getdata') !!}',
                 columns: [
                     { data: 'nombre', name: 'nombre' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}

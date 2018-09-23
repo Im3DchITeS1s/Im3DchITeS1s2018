@@ -21,7 +21,6 @@ class CursoController extends Controller
     protected $verificar_update =
     [
         'nombre' => 'required|max:32|unique:curso,nombre,$id',
-        'fkestado' => 'required'
     ];    
 
     public function __construct()
@@ -31,7 +30,7 @@ class CursoController extends Controller
 
     public function index()
     {
-        return view('mantenimiento/Curso/curso');
+        return view('/mantenimiento/Curso/curso');
     }
 
     public function getdata()
@@ -114,7 +113,6 @@ class CursoController extends Controller
         } else {
             $cambiar = curso::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

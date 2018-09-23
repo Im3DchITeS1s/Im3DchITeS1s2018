@@ -59,7 +59,8 @@
                             <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Persona</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkpersona_add" id='fkpersona_add' required autofocus>
@@ -72,7 +73,8 @@
                             <div class="col-sm-4">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Usuario</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
                                   <input type="text" class="form-control" id="username_add" placeholder="usuario" autofocus>
                                 </div>                                                               
@@ -82,7 +84,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Email</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="email_add" id='email_add' required autofocus>
@@ -94,18 +97,20 @@
                         <div class="form-group has-success">
                             <div class="col-sm-12">
                                 <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                   <div class="input-group-addon">
+                                    <label>Contraseña</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="password" class="form-control" id="password_add" name="password" placeholder="password" autofocus>
+                                  <input type="password" class="form-control" id="password_add" name="password" placeholder="Password" autofocus>
                                 </div>                                                               
                             </div>  
                             <div class="col-sm-12">
                                 <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                   <div class="input-group-addon">
+                                    <label>Contraseña</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="password" class="form-control" id="password_confirmation_add" name="password_confirmation" placeholder="confirmacion password" autofocus>
+                                  <input type="password" class="form-control" id="password_confirmation_add" name="password_confirmation" placeholder="Confirmación de password" autofocus>
                                 </div>                                                               
                                 <p class="errorPassword text-center alert alert-danger hidden"></p>
                             </div>                                                                          

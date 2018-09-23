@@ -23,13 +23,6 @@ class CarreraGradoController extends Controller
                                                                               
     ];
 
-    protected $verificar_update =
-    [
-     
-        'fkcarrera' => 'required|integer', 
-        'fkgrado' => 'required|integer',
-    ];    
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -127,7 +120,7 @@ class CarreraGradoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

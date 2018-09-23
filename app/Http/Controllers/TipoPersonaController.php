@@ -21,7 +21,6 @@ class TipoPersonaController extends Controller
     protected $verificar_update =
     [
         'nombre' => 'required|max:32|unique:tipo_persona,nombre,$id',
-        'fkestado' => 'required'
     ];    
 
     public function __construct()
@@ -105,7 +104,6 @@ class TipoPersonaController extends Controller
         } else {
             $cambiar = TipoPersona::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

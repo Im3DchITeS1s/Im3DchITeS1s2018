@@ -60,14 +60,13 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
+                            
                                 <!--Drop list de la carrera-->
                             <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Carreras</label>
+                                     <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcarrera_add" id='fkcarrera_add' required autofocus>
@@ -81,7 +80,8 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                  <label>Grados</label>
+                                  <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkgrado_add" id='fkgrado_add' required autofocus>
@@ -121,15 +121,12 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-
-                            <!--Drop list de la carrera-->
+                      <!--Drop list de la carrera-->
                        <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Carreras</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcarrera_edit" id='fkcarrera_edit' required autofocus>
@@ -142,7 +139,8 @@
                        <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                   <label>Grados</label>
+                                   <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkgrado_edit" id='fkgrado_edit' required autofocus>
@@ -286,7 +284,7 @@
                 $("#fkcarrera_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcarrera_edit').val('').trigger('change.select2'); 
+                    $('#fkcarrera_edit').val(fkcarrera).trigger('change.select2'); 
                 }
             });              
             }); 

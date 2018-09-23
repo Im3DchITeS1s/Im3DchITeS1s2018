@@ -60,28 +60,28 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                                <!--Drop list de la carrera-->
+                        
+                            <!--Drop list de la carrera-->
                             <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Carreras</label>
+                                     <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcarrera_add" id='fkcarrera_add' required autofocus>
                                     </select> 
-                                </div>                                                              
+                                </div>                                                       
                                 <p class="errorCarrera text-center alert alert-danger hidden"></p>
                             </div>
      
 
-                                <!--Drop list de los grados-->
+                                <!--Drop list de los Cursos-->
                             <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                  <label>Cursos</label>
+                                  <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcurso_add" id='fkcurso_add' required autofocus>
@@ -121,15 +121,13 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-
-                            <!--Drop list de la carrera-->
+                        
+                      <!--Drop list de la carrera-->
                        <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <label>Carreras</label>
+                                    <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcarrera_edit" id='fkcarrera_edit' required autofocus>
@@ -142,8 +140,9 @@
                        <div class="col-sm-5">
                                 <div class="input-group">
                                   <div class="input-group-addon">
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                                  </div>
+                                    <label>Cursos</label>
+                                    <i class="fa fa-sticky-note"></i>
+                                     </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcurso_edit" id='fkcurso_edit' required autofocus>
                                     </select> 

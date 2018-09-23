@@ -8,31 +8,28 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('/mantenimiento/profesion', 'ProfesionController');
 Route::get('profesion/getdata', 'ProfesionController@getdata')->name('profesion.getdata');
 Route::post('/mantenimiento/profesion/cambiarEstado', 'ProfesionController@cambiarEstado');
-Route::get('/mantenimiento/profesion/dropestado/{id}', 'ProfesionController@dropestado');
 
 //TipoPersona
 Route::resource('/mantenimiento/tipopersona', 'TipoPersonaController');
 Route::get('tipopersona/getdata', 'TipoPersonaController@getdata')->name('tipopersona.getdata');
 Route::post('/mantenimiento/tipopersona/cambiarEstado', 'TipoPersonaController@cambiarEstado');
-Route::get('/mantenimiento/tipopersona/dropestado/{id}', 'TipoPersonaController@dropestado');
 
 //Genero
 Route::resource('/mantenimiento/genero', 'GeneroController');
 Route::get('genero/getdata', 'GeneroController@getdata')->name('genero.getdata');
 Route::post('/mantenimiento/genero/cambiarEstado', 'GeneroController@cambiarEstado');
-Route::get('/mantenimiento/genero/dropestado/{id}', 'GeneroController@dropestado');
 
 //TipoEmail
 Route::resource('/mantenimiento/tipoemail', 'TipoEmailController');
 Route::get('tipoemail/getdata', 'TipoEmailController@getdata')->name('tipoemail.getdata');
 Route::post('/mantenimiento/tipoemail/cambiarEstado', 'TipoEmailController@cambiarEstado');
-Route::get('/mantenimiento/tipoemail/dropestado/{id}', 'TipoEmailController@dropestado');
+
 
 //Compania
 Route::resource('/mantenimiento/compania', 'CompaniaController');
 Route::get('compania/getdata', 'CompaniaController@getdata')->name('compania.getdata');
 Route::post('/mantenimiento/compania/cambiarEstado', 'CompaniaController@cambiarEstado');
-Route::get('/mantenimiento/compania/dropestado/{id}', 'CompaniaController@dropestado');
+
 
 //Persona
 Route::resource('/sistema/imedchi/persona', 'PersonaController');
@@ -81,21 +78,21 @@ Route::get('/sistema/imedchi/sistemarolusuario/dropsistemarol/{id}', 'SistemaRol
 
 //Curso
 Route::resource('/mantenimiento/curso', 'CursoController');
-Route::get('Curso/getdata', 'CursoController@getdata')->name('Curso.getdata');
+Route::get('Curso/getdata', 'CursoController@getdata')->name('curso.getdata');
 Route::post('/mantenimiento/curso/cambiarEstado', 'CursoController@cambiarEstado');
-Route::get('/mantenimiento/curso/dropestado/{id}', 'CursoController@dropestado');
+
 
 //Grado
 Route::resource('/mantenimiento/grado', 'GradoController');
 Route::get('grado/getdata', 'GradoController@getdata')->name('grado.getdata');
 Route::post('/mantenimiento/grado/cambiarEstado', 'GradoController@cambiarEstado');
-Route::get('/mantenimiento/grado/dropestado/{id}', 'GradoController@dropestado');
+
 
 //Carrera
 Route::resource('/mantenimiento/carrera', 'CarreraController');
 Route::get('Carrera/getdata', 'CarreraController@getdata')->name('Carrera.getdata');
 Route::post('/mantenimiento/carrera/cambiarEstado', 'CarreraController@cambiarEstado');
-Route::get('/mantenimiento/carrera/dropestado/{id}', 'CarreraController@dropestado');
+
 
 //CarreraCurso
 Route::resource('/mantenimiento/carreracurso', 'CarreraCursoController');

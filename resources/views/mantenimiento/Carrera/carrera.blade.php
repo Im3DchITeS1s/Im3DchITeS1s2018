@@ -64,11 +64,12 @@
                             <div class="col-sm-12">
                                 <div class="input-group">
                                   <div class="input-group-addon">
+                                    <label>Carrera</label>
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar carrera" autofocus>
-                                </div>                                                             
-                                <textarea type="text" class="form-control" id="descripcion_add" placeholder="ingresar Descripcion" autofocus></textarea>
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="Ingresar carrera" autofocus>
+                                </div>                               
+                                <textarea type="text" class="form-control" id="descripcion_add" placeholder="Ingresar Descripcion" autofocus></textarea>
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
@@ -101,29 +102,21 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
                             <div class="col-sm-11">
                                 <div class="input-group">
                                     <div class="input-group-addon">
+                                        <label>Carrera</label>
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar carrera" autofocus>
+                                    <input type="text" class="form-control" id="nombre_edit" placeholder="Editar la informacion" autofocus>
                                 </div> 
-                                <textarea type="text" class="form-control" id="descripcion_edit" placeholder="ingresar Descripcion" autofocus></textarea>
+                                <textarea type="text" class="form-control" id="descripcion_edit" placeholder="Editar la Descripcion" autofocus></textarea>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
                             </div>
                         </div>
                         <div class="form-group has-warning">
                             <div class="col-sm-1">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                name="fkestado_edit" id='fkestado_edit' required autofocus>
-                                </select> 
-                                <p class="errorEstado text-center alert alert-danger hidden"></p>               
                             </div>
                         </div>                        
                     </form>
@@ -138,8 +131,7 @@
                 </div>
             </div>
         </div>
-    </div>     
-
+    </div> 
     <!-- AJAX CRUD operations -->
     <script type="text/javascript">
         var table = "";

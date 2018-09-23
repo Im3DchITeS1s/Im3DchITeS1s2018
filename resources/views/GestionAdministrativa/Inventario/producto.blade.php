@@ -192,7 +192,7 @@
                 $("#fkcategoria_add").empty();
                 $("#fkcategoria_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcategoria_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                    $("#fkcategoria_add").append("<option value='"+response[i].id+"'> "+response[i].categoria+" </option>");
                     $('#fkcategoria_add').val('').trigger('change.select2'); 
                 }
             });              
