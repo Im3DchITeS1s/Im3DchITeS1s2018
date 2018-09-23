@@ -21,7 +21,6 @@ class GeneroController extends Controller
     protected $verificar_update =
     [
         'nombre' => 'required|max:32|unique:genero,id,$id',
-        'fkestado' => 'required'
     ];    
 
     public function __construct()
@@ -113,7 +112,6 @@ class GeneroController extends Controller
         } else {
             $cambiar = Genero::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

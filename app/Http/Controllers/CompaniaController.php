@@ -21,7 +21,6 @@ class CompaniaController extends Controller
     protected $verificar_update =
     [
         'nombre' => 'required|max:32|unique:compania,nombre,$id',
-        'fkestado' => 'required'
     ];    
 
     public function __construct()
@@ -106,7 +105,6 @@ class CompaniaController extends Controller
         } else {
             $cambiar = Compania::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

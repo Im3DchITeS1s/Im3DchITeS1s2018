@@ -57,16 +57,14 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
                             <div class="col-sm-11">
                                 <div class="input-group">
                                   <div class="input-group-addon">
+                                    <label>Tipo de Persona</label>
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar nombre" autofocus>
-                                </div>                                                               
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="Ingresar tipo de Persona" autofocus>
+                                </div>                                        
                                 <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
@@ -99,30 +97,18 @@
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
                         <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
                             <div class="col-sm-11">
                                 <div class="input-group">
                                     <div class="input-group-addon">
+                                        <label>Tipo de Persona</label>
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar nombre" autofocus>                         
+                                    <input type="text" class="form-control" id="nombre_edit" placeholder="Editar tipo de Persona" autofocus>                         
                                 </div> 
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
                             </div>
                         </div>
-                        <div class="form-group has-warning">
-                            <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                name="fkestado_edit" id='fkestado_edit' required autofocus>
-                                </select> 
-                                <p class="errorEstado text-center alert alert-danger hidden"></p>               
-                            </div>
-                        </div>                        
+                </div>                        
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary edit" data-dismiss="modal">
@@ -205,20 +191,13 @@
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorNombre').addClass('hidden');
-            $('.errorEstado').addClass('hidden');
-                                
+      
             $('#id_edit').val($(this).data('id'));
             $('#nombre_edit').val($(this).data('nombre'));
             id = $('#id_edit').val();
-            id_estado = $(this).data('fkestado');
+   
             $('#editModal').modal('show');
-            $.get("/mantenimiento/tipopersona/dropestado/"+1,function(response,id){
-                $("#fkestado_edit").empty();
-                for(i=0; i<response.length; i++){
-                    $("#fkestado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkestado_edit').val(id_estado).trigger('change.select2'); 
-                }
-            });           
+                   
         });
         $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
@@ -228,11 +207,9 @@
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
                     'nombre': $('#nombre_edit').val(),
-                    'fkestado': $('#fkestado_edit').val()
                 },
                 success: function(data) {
                     $('.errorNombre').addClass('hidden');
-                    $('.errorEstado').addClass('hidden');
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -247,16 +224,13 @@
                             $('.errorNombre').removeClass('hidden');
                             $('.errorNombre').text(data.errors.nombre);
                         }
-                        if (data.errors.fkestado) {
-                            $('.errorEstado').removeClass('hidden');
-                            $('.errorEstado').text(data.errors.fkestado);
-                        }
+               
                     } else {
                         swal("Correcto", "Se modifico la informacion", "success")
                         .then((value) => {
                             $("#id_edit").val('');
                             $('#nombre_edit').val('');
-                            $('#fkestado_edit').val('');
+        
                           table.ajax.reload();  
                         });                        
                     }

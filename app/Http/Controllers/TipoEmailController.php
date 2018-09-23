@@ -21,7 +21,6 @@ class TipoEmailController extends Controller
     protected $verificar_update =
     [
         'nombre' => 'required|max:32',
-        'fkestado' => 'required'
     ];    
 
     public function __construct()
@@ -105,7 +104,6 @@ class TipoEmailController extends Controller
         } else {
             $cambiar = TipoEmail::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

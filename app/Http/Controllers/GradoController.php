@@ -18,12 +18,6 @@ class GradoController extends Controller
         'nombre' => 'required|max:50|unique:grado',
     ];
 
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:32|unique:grado,nombre,$id',
-        'fkestado' => 'required'
-    ];    
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -107,13 +101,12 @@ class GradoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $cambiar = grado::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

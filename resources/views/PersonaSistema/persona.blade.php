@@ -438,8 +438,8 @@
                             <div class="form-group has-success">
                                 <div class="col-sm-12">
                                     <div class="input-group">
-                                      <div class="input-group-addon">
-                                        <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                       <div class="input-group-addon">
+                                         <i class="fa fa-sticky-note">Profesión</i>
                                       </div>
                                         <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                         name="fkprofesion_add_edit" id='fkprofesion_add_edit' required autofocus>
@@ -453,7 +453,7 @@
                                     <table class="table table-bordered table-hover dataTable" id="info-table-profesion" width="100%">
                                         <thead >
                                             <tr>
-                                                <th width="1%">Profeciones</th>
+                                                <th width="1%">Profesiones</th>
                                                 <th width="1%">Accion</th>
                                             </tr>
                                         </thead>
@@ -479,7 +479,7 @@
                                 <div class="col-sm-6">
                                     <div class="input-group">
                                       <div class="input-group-addon">
-                                        <i class="fa fa-font"></i>
+                                        <i class="fa fa-font">Número</i>
                                       </div>
                                       <input type="text" class="form-control" id="telefono_add_edit" placeholder="telefono" autofocus>
                                     </div>                                                               
@@ -489,7 +489,7 @@
                                 <div class="col-sm-6">
                                     <div class="input-group">
                                       <div class="input-group-addon">
-                                        <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                         <i class="fa fa-sticky-note">Compania</i>
                                       </div>
                                         <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                         name="fkcompania_add_edit" id='fkcompania_add_edit' required autofocus>
@@ -532,15 +532,15 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-font"></i>
                                       </div>
-                                      <input type="text" class="form-control" id="email_add_edit" placeholder="email" autofocus>
+                                      <input type="text" class="form-control" id="email_add_edit" placeholder="Usuario" autofocus>
                                     </div>                                                               
                                     <small class="control-label">Max: 15</small>
                                     <p class="errorEmail text-center alert alert-danger hidden"></p>
                                 </div>                                  
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                      <div class="input-group-addon">
-                                        <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                       <div class="input-group-addon">
+                                         <i class="fa fa-sticky-note">E-mail</i>
                                       </div>
                                         <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                         name="fkemail_add_edit" id='fkemail_add_edit' required autofocus>
@@ -581,9 +581,6 @@
                                 <div class="col-sm-12">
                                     <small>escoger los correos a donde se enviara la informacion</small>
                                     <div class="input-group">
-                                      <div class="input-group-addon">
-                                        <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                                      </div>
                                         <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                         name="email_add" id='email_add' required autofocus>
                                         </select> 
@@ -596,8 +593,8 @@
                                     <small>escoger los permisos que tendra el usuario en los sistemas</small>
                                     <div class="input-group">
                                       <div class="input-group-addon">
-                                        <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                                      </div>                                                                         
+                                         <i class="fa fa-sticky-note">Permisos</i>
+                                      </div>                                                                     
                                         <select class="form-control js-example-basic-multiple" multiple="multiple" style="width: 100%;"
                                         name="rol_add[]" id='rol_add' required autofocus>
                                         </select> 

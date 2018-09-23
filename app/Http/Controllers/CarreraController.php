@@ -18,13 +18,7 @@ class CarreraController extends Controller
         'nombre' => 'required|max:100|unique:carrera',
         'descripcion' => 'max:1000',
     ];
-
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:100|unique:carrera,nombre,$id',
-        'descripcion' => 'max:1000',
-        'fkestado' => 'required'
-    ];    
+  
 
     public function __construct()
     {
@@ -33,7 +27,7 @@ class CarreraController extends Controller
 
     public function index()
     {
-        return view('mantenimiento/Carrera/carrera');
+        return view('/mantenimiento/Carrera/carrera');
     }
 
     public function getdata()
@@ -110,14 +104,13 @@ public function dropcarrera(Request $request, $id)
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $cambiar = Carrera::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
  			$cambiar->descripcion = $request->descripcion;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        
