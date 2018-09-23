@@ -188,8 +188,8 @@
                             <table class="table table-bordered table-hover dataTable" id="info-table-pregunta" width="100%">
                                 <thead >
                                     <tr>
-                                        <th width="1%">Pregunta</th>
-                                        <th width="1%">Accion</th>
+                                        <th width="90%">Pregunta</th>
+                                        <th width="10%">Accion</th>
                                     </tr>
                                 </thead>
                             </table> 
@@ -901,8 +901,7 @@
                                     $("#fketiqueta_add").empty();
                                     $("#fketiqueta_add").append("<option value=''> seleccionar </option>");
                                     for(i=0; i<response.length; i++){
-                                        $("#fketiqueta_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"/"+response[i].color+" </option>");                      
-                                        $('#fketiqueta_add').val('').trigger('change.select2');  
+                                        $("#fketiqueta_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"/"+response[i].tipo+"/"+response[i].color+" </option>");                      
                                     }
                                 });                            
                                 table_pregunta.ajax.reload();                                
@@ -1135,6 +1134,7 @@
                                 $('.errorValidarAdd').text(data.errors.validar);
                             }                           
                         } else {
+                            $('#validacion_add').prop("checked", false);
                             swal("Correcto", "Se ingreso la informacion", "success")
                             .then((value) => {
                                 $('#respuesta_add').val('');
@@ -1198,7 +1198,7 @@
             id_pregunta = 0;
             $('#addRespuestaModal').modal('hide');
             $('#respuesta_add').val('');
-            $('#validacion_add').prop("checked", false);
+            $('#validacion_add').prop("checked", false);  
             id_respuesta = 0;
         });                                                          
     </script>    

@@ -237,7 +237,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Responder Cuestionario',
-                        'url'  => '#',
+                        'url'  => '/plataforma/blackboard/bandeja/responder/cuestionario',
                         'icon_color' => 'yellow',
                     ],
                     [

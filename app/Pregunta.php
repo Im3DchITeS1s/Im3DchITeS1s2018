@@ -27,7 +27,7 @@ class Pregunta extends Model
 	public static function preguntaEncuesta($id)
 	{
 		return Pregunta::join('etiqueta', 'pregunta.fketiqueta', '=', 'etiqueta.id')
-			->select('pregunta.id as id', 'pregunta.descripcion','etiqueta.nombre as etiqueta', 'etiqueta.tipo as tipo_etiqueta', 'etiqueta.color as etiqueta_color', 'etiqueta.metadata_inicio as metadata_inicio', 'etiqueta.idetiqueta as idetiqueta', 'etiqueta.nameetiqueta as nameetiqueta', 'etiqueta.cierreetiqueta as cierreetiqueta', 'etiqueta.metadata_cierra as metadata_cierra')
+			->select('pregunta.id as id', 'pregunta.descripcion as descripcion','etiqueta.nombre as etiqueta', 'etiqueta.tipo as tipo_etiqueta', 'etiqueta.color as etiqueta_color', 'etiqueta.metadata_inicio as metadata_inicio', 'etiqueta.idetiqueta as idetiqueta', 'etiqueta.nameetiqueta as nameetiqueta', 'etiqueta.cierreetiqueta as cierreetiqueta', 'etiqueta.metadata_cierra as metadata_cierra')
             ->where('pregunta.fkcuestionario', $id)
             ->where('pregunta.fkestado', 5)->get(); 
 	}	

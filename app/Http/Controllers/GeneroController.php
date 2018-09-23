@@ -65,6 +65,7 @@ class GeneroController extends Controller
             return response()->json($estado);
         }        
     }
+    
     public function dropestado(Request $request, $id)
     {
         if($request->ajax()){
