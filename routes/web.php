@@ -157,7 +157,7 @@ Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaControll
 //Producto
 Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
 Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');
-<<<<<<< HEAD
+Route::get('/gestionadministrativa/inventario/producto/dropcategoria/{id}', 'ProductoController@dropcategoria');
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
@@ -165,13 +165,3 @@ Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionario
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
 Route::get('/mostrar/cuestionarios/seleccionados/blackboard/{id1}/{id2}', 'ResponderBandejaCuestionarioController@mostrarCuestionariosSeleccionados')->name('cuestionarios.mostrarCuestionariosSeleccionados');
 Route::get('/resolver/cuestionario/seleccionado/blackboard/{id1}', 'ResponderBandejaCuestionarioController@encabezadoCuestionarioSeleccionado')->name('cuestionarios.encabezadoCuestionarioSeleccionado');
-=======
-Route::get('/gestionadministrativa/inventario/producto/dropcategoria/{id}', 'ProductoController@dropcategoria');
-
-
-
-
-
-
-
->>>>>>> 3da2ab763ce991eb1bb578f2b46128d916fa60bf
