@@ -164,6 +164,7 @@ Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaControll
 Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
 Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');
 Route::get('/gestionadministrativa/inventario/producto/dropcategoria/{id}', 'ProductoController@dropcategoria');
+Route::post('/gestionadministrativa/inventario/producto/cambiarEstado', 'ProductoController@cambiarEstado');
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
