@@ -33,12 +33,13 @@ class DatabaseSeeder extends Seeder
         //Blackboard
         $this->call(PrioridadTableSeeder::class); 
         $this->call(TipoCuestionarioTableSeeder::class);
-         $this->call(EtiquetaTableSeeder::class);         
+        $this->call(EtiquetaTableSeeder::class);    
+        $this->call(FormatoDocumentoTablaSeeder::class);              
 
         //Gestion Administrativa 
-         $this->call(MesTableSeeder::class); 
-         $this->call(CategoriaTableSeeder::class); 
-         $this->call(ProductoTableSeeder::class); 
+        $this->call(MesTableSeeder::class); 
+        $this->call(CategoriaTableSeeder::class); 
+        $this->call(ProductoTableSeeder::class); 
 
     }
     

@@ -175,13 +175,13 @@ return [
             'icon'    => 'folder',
             'submenu' => [
                 [
-                'text'    => 'Admin2',
+                'text'    => 'Contenido Educativo',
                 'url'     => '#',
                 'icon_color' => 'yellow',
                 'submenu' => [
                     [
-                        'text' => 'Admin2.1',
-                        'url'  => '#',
+                        'text' => 'Cargar Contenido',
+                        'url'  => '/plataforma/blackboard/cargar/contenido_educativo/catedratico',
                         'icon_color' => 'yellow',
                     ],
                     [
@@ -191,6 +191,23 @@ return [
                     ],
                 ],
                 ],
+                [
+                'text'    => 'Contenido Educativo',
+                'url'     => '#',
+                'icon_color' => 'red',
+                'submenu' => [
+                    [
+                        'text' => 'Cargar Contenido',
+                        'url'  => '/plataforma/blackboard/cargar/contenido_educativo/alumno',
+                        'icon_color' => 'red',
+                    ],
+                    [
+                        'text'    => 'Admin2.1',
+                        'url'     => '#',
+                        'icon_color' => 'red',
+                    ],
+                ],
+                ],                
             ],
         ],
         [
