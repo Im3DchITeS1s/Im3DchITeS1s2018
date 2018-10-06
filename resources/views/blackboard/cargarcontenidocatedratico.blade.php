@@ -119,7 +119,7 @@
                         </div>
                     </div>
 
-                    <div class="box-body form-group has-success">
+                    <div class="box-body">
                       <div class="row">
                         <div class="col-md-12">
                              <table class="table table-bordered table-hover dataTable" id="info-table-contenido" width="100%">
@@ -128,6 +128,8 @@
                                         <th width="1%">Titulo</th>
                                         <th width="1%">Descripción</th>
                                         <th width="1%">Formato</th>
+                                        <th width="1%">Tarea</th>
+                                        <th width="1%">Fecha</th>
                                         <th width="1%">Accion</th>
                                     </tr>
                                 </thead>
@@ -150,7 +152,7 @@
                         </div>
                     </div>
 
-                    <div class="box-body form-group has-success">
+                    <div class="box-body">
                       <div class="row">
                         <div class="col-md-12">
                             <ul class="timeline">
@@ -196,6 +198,24 @@
                 placeholder: "Seleccionar una opcion",
             });
         }); 
+
+        $(document).ready(function() {
+            tabla = $('#info-table-contenido').DataTable({ 
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: '{!! route('contenido_educativo_catedratico.getdata') !!}',
+                columns: [
+                    { data: 'titulo', name: 'titulo' },
+                    { data: 'descripcion', name: 'descripcion' },
+                    { data: 'formato', name: 'formato' },
+                    { data: 'tarea', name: 'tarea' },
+                    { data: 'created_at', name: 'created_at' },                    
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+            });
+        });         
 
         $.get("/plataforma/blackboard/cargar/dropInformacionCatedratico",function(response){
             $("#fkcatedratico_curso_add").empty();

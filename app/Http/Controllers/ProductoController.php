@@ -15,20 +15,12 @@ use App\Estado;
 
 class ProductoController extends Controller
 {
-     protected $verificar_insert =
+    protected $verificar_insert =
     [
         'nombre' => 'required|max:50|unique:producto',
-        'descripcion' => 'required|descripcion',
-        'fkcategoria' => 'required|fkcategoria',
+        'descripcion' => 'required|max:50',
+        'fkcategoria' => 'required|integer',
     ];
-
-    protected $verificar_update =
-    [
-         'nombre' => 'required|max:50|unique:producto',
-        'descripcion' => 'required|descripcion',
-        'fkcategoria' => 'required|fkcategoria',
-    ];    
-
 
 	 public function __construct()
     {
@@ -43,12 +35,20 @@ class ProductoController extends Controller
     {
 
         $query = Producto::dataProducto();
+
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
 
-                $btn_estado = '<button class="delete-modal-profesion btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-down"></span></button>';
+                if($data->fkestado == 5)
+                {
+                    $btn_estado = '<button class="delete-modal-producto btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-down"></span></button>';
+                }
+                else
+                {
+                    $btn_estado = '<button class="delete-modal-producto btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-down"></span></button>';
+                }
 
-                $btn_edit = '<button class="edit-modal-profesion btn btn-warning btn-xs" type="button" data-fkpersona_profesion="'.$data->id.'" data-idproducto="'.$data->producto.'">
+                $btn_edit = '<button class="edit-modal-producto btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-nombre="'.$data->producto.'" data-descripcion="'.$data->descripcion.'" data-fkcategoria="'.$data->fkcategoria.'">
                     <span class="glyphicon glyphicon-edit"></span></button>';           
 
                 
@@ -80,8 +80,8 @@ class ProductoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraCurso();            
-            $insert->producto = $request->producto;
+            $insert = new Producto();            
+            $insert->nombre = $request->nombre;
             $insert->descripcion = $request->descripcion;
             $insert->fkcategoria = $request->fkcategoria;          
             $insert->fkestado = $estado->id;                                                                           
@@ -102,13 +102,19 @@ class ProductoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+        [
+            'nombre' => 'required|max:50|unique:producto,nombre,'.$request->id,
+            'descripcion' => 'required|max:50',
+            'fkcategoria' => 'required|integer',
+        ]);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $cambiar = Producto::findOrFail($id);              
-            $cambiar->producto = $request->producto;
-            $cambiar->descripcion = $request->descripcion;
+            $cambiar->nombre = $request->producto;
+            $cambiar->descripcion = $request->descripcion; //request = nombres del formulario (derecho)  , objeto = nombre de la tabla (izquierdo)
             $cambiar->fkcategoria = $request->fkcategoria;
             $cambiar->save();
             return response()->json($cambiar);
@@ -117,13 +123,15 @@ class ProductoController extends Controller
 
   public function cambiarEstado(Request $request)
     {
-        if($request->estado == "activo")
-            $estado = Estado::buscarIDEstado(6);
+        $cambiar = Producto::findOrFail($request->id);
+        if($request->fkestado == 5)
+        {
+            $cambiar->fkestado = 6;
+        }
         else
-            $estado = Estado::buscarIDEstado(5);
-
-        $cambiar = Producto::findOrFail($request->pkcarreracurso); 
-        $cambiar->fkestado = $estado->id;
+        {
+            $cambiar->fkestado = 5;
+        }
         $cambiar->save();
         return response()->json($cambiar);          
     }

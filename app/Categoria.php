@@ -12,14 +12,14 @@ class Categoria extends Model
 	protected $fillable = ['nombre'];
 
 	   public static function buscarCategoria($id){
-		return Seccion::select('id', 'nombre')
+		return Categoria::select('id', 'nombre')
             ->where('fkestado', $id)
             ->orderBy('nombre', 'asc')->get();
 	}
 
     public static function BucarIDCategoria($id)
     {
-        return Seccion::findOrFail($id);       
+        return Categoria::findOrFail($id);       
     } 
 }
 

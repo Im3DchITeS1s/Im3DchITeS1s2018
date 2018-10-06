@@ -60,7 +60,7 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
                             <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                <small class="pull-right" style="color: red;"></small>
                             </div>
                             <div class="col-sm-12">
                                 <div class="input-group">
@@ -68,10 +68,10 @@
                                     <label>Nombre</label>
                                     <i class="fa fa-sticky-note"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar carrera" autofocus>
+                                  <input type="text" class="form-control" id="nombre_add" placeholder="ingresar producto" autofocus>
                                 </div>                                                             
-                                <textarea type="text" class="form-control" id="descripcion_add" placeholder="ingresar Descripcion" autofocus></textarea>
-                                <small class="control-label">Max: 32</small>
+                                <textarea type="text" class="form-control" id="descripcion_add" placeholder="ingresar descripcion del producto" autofocus></textarea>
+                                <small class="control-label">Max: 20</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
                             <!--Drop list de la categoria-->
@@ -79,7 +79,7 @@
                                 <div class="input-group">
                                   <div class="input-group-addon">
                                        <label>Categoria</label>
-                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                    <small class="pull-right" style="color: red;"></small>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcategoria_add" id='fkcategoria_add' required autofocus>
@@ -118,14 +118,15 @@
                         </div>
                         <div class="form-group has-warning">
                             <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                <small class="pull-right" style="color: red;"></i></small>
                             </div>
                             <div class="col-sm-11">
                                 <div class="input-group">
                                     <div class="input-group-addon">
+                                         <label>Nombre</label>
                                         <i class="fa fa-sticky-note"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar carrera" autofocus>
+                                    <input type="text" class="form-control" id="nombre_edit" placeholder="ingresar nombre producto" autofocus>
                                 </div> 
                                 <textarea type="text" class="form-control" id="descripcion_edit" placeholder="ingresar Descripcion" autofocus></textarea>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>    
@@ -133,11 +134,11 @@
                         </div>
                         <div class="form-group has-warning">
                             <div class="col-sm-1">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                <small class="pull-right" style="color: red;"></i></small>
                             </div>
                             <div class="col-sm-11">
                                 <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                name="fkestado_edit" id='fkestado_edit' required autofocus>
+                                name="fkcategoria_edit" id='fkcategoria_edit' required autofocus>
                                 </select> 
                                 <p class="errorEstado text-center alert alert-danger hidden"></p>               
                             </div>
@@ -158,7 +159,7 @@
 
     <!-- AJAX CRUD operations -->
     <script type="text/javascript">
-        var table = "";
+        var id = 0;
         //dropdownlist
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
@@ -168,7 +169,7 @@
         $(document).ready(function() {
             table = $('#info-table').DataTable({
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 ajax: '{!! route('producto.getdata') !!}',
                 columns: [
                     { data: 'producto', name: 'producto' },
@@ -188,11 +189,11 @@
             $('.errorCategoria').addClass('hidden');
             $('#addModal').modal('show');
 
-            $.get("/gestionadministrativa/inventario/producto/dropcategoria"+5,function(response,id){
+            $.get("/gestionadministrativa/inventario/producto/dropcategoria/"+5,function(response,id){
                 $("#fkcategoria_add").empty();
                 $("#fkcategoria_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcategoria_add").append("<option value='"+response[i].id+"'> "+response[i].categoria+" </option>");
+                    $("#fkcategoria_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcategoria_add').val('').trigger('change.select2'); 
                 }
             });              
@@ -202,11 +203,11 @@
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/gestionadministrativa/inventario/producto/',
+                url: '/gestionadministrativa/inventario/producto',
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'fknombre': $('#fknombre_add').val(),
-                    'descripcion': $('#descripcion_add').val(),
+                    'nombre': $('#nombre_add').val(),
+                    'descripcion': $('#descripcion_add').val(),  // asignacion de valores en los campos
                     'fkcategoria': $('#fkcategoria_add').val(),
                 },
                 success: function(data) {
@@ -249,9 +250,93 @@
             }); 
         });
 
+    //Edit
+    $(document).on('click', '.edit-modal-producto', function() {    
+        $('#id_edit').addClass('hidden');                               
+        $('.modal-title').text('Editar Informacion');
+        $('.errorNombre').addClass('hidden');
+        $('.errorDescripcion').addClass('hidden');
+        $('.errorCategoria').addClass('hidden')
+       
+                            
+        $('#id_edit').val($(this).data('id'));
+        $('#nombre_edit').val($(this).data('nombre'));
+        $('#descripcion_edit').val($(this).data('descripcion'));
+        fkcat = $(this).data('fkcategoria');
+        id = $('#id_edit').val();
+        $('#editModal').modal('show');
+
+    
+        $.get("/gestionadministrativa/inventario/producto/dropcategoria/"+5,function(response,id){
+            $("#fkcategoria_edit").empty();
+            $("#fkcategoria_edit").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fkcategoria_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fkcategoria_edit').val(fkcat).trigger('change.select2'); 
+            }
+        });      
+    }); 
+     
+          
+
+          $('.modal-footer').on('click', '.edit', function() {
+            $.ajax({
+                type: 'PUT',
+                url: '/gestionadministrativa/inventario/producto/' + id,
+                data: {
+                    '_token':   $('input[name=_token]').val(),
+                    'id':       $("#id_edit").val(),
+                    'nombre':   $('#nombre_edit').val(),
+                    'descripcion':   $('#descripcion_edit').val(),
+                    'fkcategoria': $('#fkcategoria_edit').val()
+                },
+                success: function(data) {
+                    $('.errorNombre').addClass('hidden');
+                    $('.errorDescripcion').addClass('hidden');
+                    $('.errorCategoria').addClass('hidden'); 
+               
+
+                    if ((data.errors)) {
+                        setTimeout(function () {
+                            $('#editModal').modal('show');
+                            swal("Error", "No se modifico la informacion", "error", {
+                              buttons: false,
+                              timer: 2000,
+                            });
+                        }, 500);
+
+                        if (data.errors.nombre) {
+                            $('.errorNombre').removeClass('hidden');
+                            $('.errorNombre').text(data.errors.nombre);
+                        }
+                        if (data.errors.inicio) {
+                            $('.errorInicio').removeClass('hidden');
+                            $('.errorInicio').text(data.errors.inicio);
+                        }
+                        if (data.errors.descripcion) {
+                            $('.errorFin').removeClass('hidden');
+                            $('.errorFin').text(data.errors.fin);
+                        }
+                        if (data.errors.fktipo_periodo) {
+                            $('.errorTipoPeriodo').removeClass('hidden');
+                            $('.errorTipoPeriodo').text(data.errors.fktipo_periodo);
+                        }
+                    } else {
+                        swal("Correcto", "Se modifico la informacion", "success")
+                            .then((value) => {
+                            $("#id_edit").val('');
+                            $('#nombre_edit').val('');
+                            $('#descripcion_edit').val('');
+                            $('#fkcategoria_edit').val('');
+                          table.ajax.reload(); 
+                        });                          
+                    }
+                },
+            }); 
+        });
 
         // delete
-        $(document).on('click', '.delete-modal', function() {
+        $(document).on('click', '.delete-modal-producto', function() {
             id = $(this).data('id');
             swal({
               title: "Esta seguro?",
@@ -264,11 +349,11 @@
               if (willDelete) {
                 $.ajax({
                     type: 'POST',
-                    url: "/mantenimiento/profesion/cambiarEstado",
+                    url: "/gestionadministrativa/inventario/producto/cambiarEstado",
                     data: {
                         '_token': $('input[name=_token]').val(),
-                        'pkprofesion': id,
-                        'estado' : $(this).data('estado')
+                        'id': id,
+                        'fkestado': $(this).data('fkestado')
                     },
                     success: function(data) {                 
                         swal("Correcto", "Se modifico el estado", "success")

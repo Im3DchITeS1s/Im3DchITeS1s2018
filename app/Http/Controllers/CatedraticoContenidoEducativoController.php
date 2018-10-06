@@ -35,6 +35,41 @@ class CatedraticoContenidoEducativoController extends Controller
         return view('/blackboard/cargarcontenidocatedratico');
     }
 
+    public function getdata()
+    {
+        $color_estado = "";
+
+        $query = Catedratico_Contenido_Educativo::dataContenidoEducativoCatedratico();
+
+        return Datatables::of($query)
+            ->addColumn('tarea', function ($data) {
+                if($data->responder == 1)
+                {
+                    return "SI";
+                }
+                else
+                {
+                    return "NO";                    
+                }
+            })          
+            ->addColumn('action', function ($data) {
+                switch ($data->fkestado)
+                 {
+                    case 5:
+                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-up"></span></button>';
+                        break;
+                    case 6:
+                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-titulo="'.$data->titulo.'" data-descripcion="'.$data->descripcion.'" data-responder="'.$data->responder.'" data-formato="'.$data->formato.'"><span class="fa fa-thumbs-down"></span></button>';
+                        break;
+                }
+
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-nombre="'.$data->nombre.'" data-fkestado="'.$data->id_estado.'">
+                    <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
+            })       
+            ->editColumn('id', 'ID: {{$id}}')       
+            ->make(true);
+    }    
+
     public function dropInformacionCatedratico(Request $request)
     {
         if($request->ajax()){

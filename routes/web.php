@@ -173,6 +173,7 @@ Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaControll
 Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
 Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');
 Route::get('/gestionadministrativa/inventario/producto/dropcategoria/{id}', 'ProductoController@dropcategoria');
+Route::post('/gestionadministrativa/inventario/producto/cambiarEstado', 'ProductoController@cambiarEstado');
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
@@ -183,6 +184,7 @@ Route::get('/resolver/cuestionario/seleccionado/blackboard/{id1}', 'ResponderBan
 
 //CargarContenidoCatedratico
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/catedratico', 'CatedraticoContenidoEducativoController');
+Route::get('cargar/contenido_educativo/catedratico/getdata', 'CatedraticoContenidoEducativoController@getdata')->name('contenido_educativo_catedratico.getdata');
 Route::get('/plataforma/blackboard/cargar/dropInformacionCatedratico', 'CatedraticoContenidoEducativoController@dropInformacionCatedratico');
 Route::get('/plataforma/blackboard/cargar/dropFormatoDocumento', 'CatedraticoContenidoEducativoController@dropFormato');
 
