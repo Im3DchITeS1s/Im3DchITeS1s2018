@@ -314,6 +314,11 @@ return [
                         'icon_color' => 'aqua',
                     ],
                     [
+                        'text' => 'Período Académico',
+                        'url'  => '/mantenimiento/periodoacademico',
+                        'icon_color' => 'aqua',
+                    ],
+                    [
                         'text' => 'Carreras y cursos',
                         'url'  => '/mantenimiento/carreracurso',
                         'icon_color' => 'aqua',

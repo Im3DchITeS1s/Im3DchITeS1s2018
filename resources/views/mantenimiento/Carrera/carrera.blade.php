@@ -186,7 +186,7 @@
                             $('.errorNombre').removeClass('hidden');
                             $('.errorNombre').text(data.errors.nombre);
                         }
-                        if (data.errors.nombre) {
+                        if (data.errors.descripcion) {
                             $('.errorDescripcion').removeClass('hidden');
                             $('.errorDescripcion').text(data.errors.descripcion);
                         }
