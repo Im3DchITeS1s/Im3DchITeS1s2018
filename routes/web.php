@@ -117,6 +117,21 @@ Route::get('/mantenimiento/cantidadalumno/dropCantidadCarreraGrado/{id}', 'Canti
 Route::get('/mantenimiento/cantidadalumno/dropCantidadSeccion/{id}', 'CantidadAlumnoController@dropCantidadSeccion');
 Route::post('/mantenimiento/cantidadalumno/cambiarEstado', 'CantidadAlumnoController@cambiarEstado');
 
+//PeriodoAcademico
+Route::resource('/mantenimiento/periodoacademico', 'PeriodoAcademicoController');
+Route::get('periodoacademico/getdata', 'PeriodoAcademicoController@getdata')->name('periodoacademico.getdata');
+Route::get('/mantenimiento/periodoacademico/droptiperiodo/{id}', 'PeriodoAcademicoController@droptiperiodo');
+Route::post('/mantenimiento/periodoacademico/cambiarEstado', 'PeriodoAcademicoController@cambiarEstado');
+
+//Estudiante
+Route::resource('/academico/estudiante/estudiante', 'EstudianteController');
+Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudiante.getdata');
+
+//Estudiante
+Route::resource('/academico/docente/docente', 'DocenteController');
+Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
+
+
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');

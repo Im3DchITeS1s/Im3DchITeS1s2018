@@ -14,7 +14,7 @@ use App\PaisDepartamento;
 use App\Genero;
 use App\Estado;
 
-class EstudianteController extends Controller
+class DocenteController extends Controller
 {
     protected $verificar_insert =
     [
@@ -55,12 +55,12 @@ class EstudianteController extends Controller
 
     public function index()
     {   
-        return view('academico/estudiante/estudiante');
+        return view('academico/docente/docente');
     }
 
     public function getdata()
     {
-        $query = Persona::dataInfoPersona(6);
+        $query = Persona::dataInfoPersona(5);
 
         return Datatables::of($query)
             ->addColumn('nombre_completo', function ($data) {
