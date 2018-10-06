@@ -10,7 +10,7 @@ class CreatePeriodoAcademicoTable extends Migration
     {
         Schema::create('periodo_academico', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre', 75)->unique();
+            $table->string('nombre', 20);
             $table->date('inicio');
             $table->date('fin');
             $table->string('ciclo', 4);

@@ -165,3 +165,7 @@ Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionario
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
 Route::get('/mostrar/cuestionarios/seleccionados/blackboard/{id1}/{id2}', 'ResponderBandejaCuestionarioController@mostrarCuestionariosSeleccionados')->name('cuestionarios.mostrarCuestionariosSeleccionados');
 Route::get('/resolver/cuestionario/seleccionado/blackboard/{id1}', 'ResponderBandejaCuestionarioController@encabezadoCuestionarioSeleccionado')->name('cuestionarios.encabezadoCuestionarioSeleccionado');
+
+
+Route::get('image-view','ImageController@index');
+Route::post('image-view','ImageController@store');
