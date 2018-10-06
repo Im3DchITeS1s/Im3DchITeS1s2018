@@ -269,17 +269,22 @@ return [
             'url'  => '#',
         ],        
         [
-            'text'    => 'Administración de Alumnos',
+            'text'    => 'Administración Estudiantil',
             'icon'    => 'archive',
             'submenu' => [
                 [
                 'text' => 'Ingreso de Alumnos',
-                'url'  => '#',
+                'url'  => '/academico/estudiante/estudiante',
                 'icon_color' => 'red',
                 ],
                 [
-                'text'    => 'Encargados',
+                'text'    => 'Ingreso de Encargados',
                 'url'     => '#',
+                'icon_color' => 'yellow',
+                ],
+                [
+                'text'    => 'Ingreso de Docentes',
+                'url'     => '/academico/docente/docente',
                 'icon_color' => 'yellow',
                 ],
             ],
