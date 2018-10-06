@@ -62,7 +62,7 @@
                                 @foreach($respuestas as $key=>$respuesta)
                                     @if($pregunta->id == $respuesta->fkpregunta)
                                         <div class="col-md-4">
-                                            {!!$pregunta->metadata_inicio!!}value="{{$respuesta->id}}"{!!$pregunta->idetiqueta!!}{{$respuesta->id}}{!!$pregunta->nameetiqueta!!}respuesta[{{++$key}}]{!!$pregunta->cierreetiqueta!!}<label for="{{$respuesta->id}}">{!!$respuesta->descripcion!!}</label>{!!$pregunta->metadata_cierra!!}
+                                            {!!$pregunta->metadata_inicio!!}value="{{$respuesta->id}}"{!!$pregunta->idetiqueta!!}{{$respuesta->id}}{!!$pregunta->nameetiqueta!!}respuesta[{{$pregunta->id}}]{!!$pregunta->cierreetiqueta!!}<label for="{{$respuesta->id}}">{!!$respuesta->descripcion!!}</label>{!!$pregunta->metadata_cierra!!}
                                         </div>
                                     @endif
                                 @endforeach

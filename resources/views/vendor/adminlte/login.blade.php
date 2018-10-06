@@ -39,7 +39,7 @@
     <div class="page-container">
         <div class="login-box">
             <div class="login-logo">
-                <a style="color: white;" href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+                <a style="color: black;" href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
             </div>
 
 
@@ -49,7 +49,7 @@
                         <input type="text" name="email" class="username" value="{{ old('email') }}"
                                placeholder="E-mail / Username">
                         @if ($errors->has('email'))
-                            <span class="help-block">
+                            <span class="help-block" style="color: red;">
                                 <strong>{{ $errors->first('email') }}</strong>
                             </span>
                         @endif
@@ -57,11 +57,11 @@
                         <input type="password" name="password" class="password"
                                placeholder="Password">
                         @if ($errors->has('password'))
-                            <span class="help-block">
+                            <span class="help-block" style="color: red;"
                                 <strong>{{ $errors->first('password') }}</strong>
                             </span>
                         @endif
-                    <div class="error"><span>+</span></div>
+                    <div class="error"><span></span></div>
                     <div class="row">
                         <div class="col-xs-8">
                             <!--<div class="checkbox icheck">
@@ -71,7 +71,7 @@
                             </div>-->
                         </div>
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+                            <button type="submit">Entrar</button>
                         </div>
                     </div>
                 </form>
