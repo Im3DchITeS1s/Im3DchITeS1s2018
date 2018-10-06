@@ -123,6 +123,15 @@ Route::get('periodoacademico/getdata', 'PeriodoAcademicoController@getdata')->na
 Route::get('/mantenimiento/periodoacademico/droptiperiodo/{id}', 'PeriodoAcademicoController@droptiperiodo');
 Route::post('/mantenimiento/periodoacademico/cambiarEstado', 'PeriodoAcademicoController@cambiarEstado');
 
+//Estudiante
+Route::resource('/academico/estudiante/estudiante', 'EstudianteController');
+Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudiante.getdata');
+
+//Estudiante
+Route::resource('/academico/docente/docente', 'DocenteController');
+Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
+
+
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
@@ -172,6 +181,14 @@ Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionario
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
 Route::get('/mostrar/cuestionarios/seleccionados/blackboard/{id1}/{id2}', 'ResponderBandejaCuestionarioController@mostrarCuestionariosSeleccionados')->name('cuestionarios.mostrarCuestionariosSeleccionados');
 Route::get('/resolver/cuestionario/seleccionado/blackboard/{id1}', 'ResponderBandejaCuestionarioController@encabezadoCuestionarioSeleccionado')->name('cuestionarios.encabezadoCuestionarioSeleccionado');
+
+//CargarContenidoCatedratico
+Route::resource('/plataforma/blackboard/cargar/contenido_educativo/catedratico', 'CatedraticoContenidoEducativoController');
+Route::get('/plataforma/blackboard/cargar/dropInformacionCatedratico', 'CatedraticoContenidoEducativoController@dropInformacionCatedratico');
+Route::get('/plataforma/blackboard/cargar/dropFormatoDocumento', 'CatedraticoContenidoEducativoController@dropFormato');
+
+//CargarContenidoAlumno
+Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'AlumnoContenidoEducativoController');
 
 
 Route::get('image-view','ImageController@index');

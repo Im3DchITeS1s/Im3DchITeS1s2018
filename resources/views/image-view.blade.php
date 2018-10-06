@@ -91,6 +91,8 @@
 
             uploadExtraData: function() {
 
+                console.log('sa');
+
                 return {
 
                     _token: $("input[name='_token']").val(),
@@ -108,6 +110,8 @@
             maxFilesNum: 10,
 
             slugCallback: function (filename) {
+
+                console.log('s1');
 
                 return filename.replace('(', '_').replace(']', '_');
 
