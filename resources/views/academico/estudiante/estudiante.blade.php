@@ -243,7 +243,6 @@
                     <h4 class="modal-title"></h4>
                       <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#datospersonales">Datos Personales</a></li>
-                        <li><a data-toggle="tab" href="#profesion">Profesión</a></li>
                         <li><a data-toggle="tab" href="#telefono">Teléfonos</a></li>
                         <li><a data-toggle="tab" href="#email">E-mails</a></li>
                         <li><a data-toggle="tab" href="#usuarios">Usuario</a></li>
@@ -428,46 +427,6 @@
                                     <span class='fa fa-ban'></span>
                                 </button>
                             </div>                            
-                        </div>
-                        <div id="profesion" class="tab-pane fade">
-                            <h4>Profesión <label class="nombre_persona form-label hidden"></label></h4>
-                            <div class="form-group">
-                                <input type="text" class="form-control hidden" id="fkpersona_profesion" disabled>
-                                <input type="text" class="form-control hidden" id="fkprofesion_profesion" disabled>
-                            </div>                             
-                            <div class="form-group has-success">
-                                <div class="col-sm-12">
-                                    <div class="input-group">
-                                       <div class="input-group-addon">
-                                         <i class="fa fa-sticky-note">Profesión</i>
-                                      </div>
-                                        <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                        name="fkprofesion_add_edit" id='fkprofesion_add_edit' required autofocus>
-                                        </select> 
-                                    </div>                                                               
-                                    <p class="errorSeleccionProfecion text-center alert alert-danger hidden"></p>
-                                </div>    
-                            </div> 
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-profesion" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="1%">Profesiones</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div> 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary edit_persona_profesion">
-                                    <span id="" class='fa fa-save'></span>
-                                </button>
-                                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                                    <span class='fa fa-ban'></span>
-                                </button>
-                            </div>
                         </div>
                         <div id="telefono" class="tab-pane fade">
                             <h4>Telefonos <label class="nombre_persona form-label hidden"></label></h4>
@@ -989,32 +948,6 @@
                     $("#codigo_edit").attr("disabled", true); 
                 });               
             });          
-
-            //DataTable Profesion
-            table_profesion = $('#info-table-profesion').DataTable({
-                destroy: true,   
-                processing: true,
-                serverSide: false,
-                paginate: true,
-                searching: true,
-                ajax: {
-                    url: '/personaprofesion/getdata/'+id,
-                    type: 'GET'
-                },
-                columns: [
-                    { data: 'profesion', name: 'profesion' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-                ]
-            }); 
-
-            $.get("/sistema/imedchi/personaprofesion/dropprofesion/"+5,function(response,id){
-                $("#fkprofesion_add_edit").empty();
-                $("#fkprofesion_add_edit").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkprofesion_add_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkprofesion_add_edit').val('').trigger('change.select2'); 
-                }
-            });
 
             //DataTable Email
             table_email = $('#info-table-email').DataTable({
