@@ -29,7 +29,7 @@ class ResponderBandejaCuestionarioController extends Controller
     public function getdata(Request $request, $id)
     {
         if($request->ajax()){
-            $cursosalumnos = Inscripcion::cursosAlumno(3, 5);
+            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, 5);
             return response()->json($cursosalumnos);
         }        
     }

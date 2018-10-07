@@ -131,8 +131,6 @@ Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudian
 Route::resource('/academico/docente/docente', 'DocenteController');
 Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
 
-
-
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
 Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');
