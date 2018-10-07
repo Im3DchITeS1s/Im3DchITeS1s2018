@@ -127,11 +127,9 @@ Route::post('/mantenimiento/periodoacademico/cambiarEstado', 'PeriodoAcademicoCo
 Route::resource('/academico/estudiante/estudiante', 'EstudianteController');
 Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudiante.getdata');
 
-//Estudiante
+//Docente
 Route::resource('/academico/docente/docente', 'DocenteController');
 Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
-
-
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
