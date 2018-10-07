@@ -504,7 +504,7 @@ return [
             'submenu' => [
                  [
                 'text' => 'Categoría',
-                'url'  => '#',
+                'url'  => '/gestionadministrativa/inventario/categoria',
                 'icon_color' => 'red',
                 ],
                 [
