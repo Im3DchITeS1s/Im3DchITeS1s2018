@@ -19,6 +19,7 @@ class CantidadAlumno extends Model
                     ->select(['cantidad_alumno.id as id','cantidad_alumno.cantidad as cantidad','cantidad_alumno.fkcarrera_grado as fkcarrera_grado', 'carrera.nombre as carrera', 'carrera_grado.fkcarrera as fkcarrera', 'grado.nombre as grado', 'carrera_grado.fkgrado as fkgrado','seccion.letra as letra','cantidad_alumno.fkseccion as fkseccion','cantidad_alumno.fkestado as id_estado']);
    	}
 
+
    public static function buscarCantidadAlumno($id){
 		return Carrera::select('id', 'nombre')
             ->where('fkestado', $id)

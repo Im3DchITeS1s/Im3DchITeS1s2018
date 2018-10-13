@@ -39,11 +39,10 @@ class InscripcionController extends Controller
     return view('/academico/inscripcion/inscripcion');   
     }
 
-
     public function getdata()
     {
         $color_estado = "";
-        $query = Insccripcion::dataInscripcion();
+        $query = inscripcion::dataInscripcion();
         return Datatables::of($query)
             ->addColumn('action', function ($inscripcion) {
                 switch ($inscripcion->id_estado) {
@@ -55,20 +54,14 @@ class InscripcionController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$inscripcion->id.'" data-fkcantidad_alumno="'.$inscripcion->fkcantidad_alumno.'" data-fktipo_periodo="'.$inscripcion->fktipo_periodo.'" data-fkpersona="'.$inscripcion->fkpersona.'" data-fkestado="'.$inscripcion->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$inscripcion->id.'" data-fkcarrera_grado="'.$inscripcion->fkcarrera_grado.'" data-fktipo_periodo="'.$inscripcion->fktipo_periodo.'" data-nombre1="'.$inscripcion->nombre1.'" data-nombre2="'.$inscripcion->nombre2.'" data-fkestado="'.$inscripcion->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
 
-    public function dropCantidadCarreraGrado(Request $request, $id)
-        {
-            if($request->ajax()){
-                $estado = CarreraGrado::buscarCarreragrado($id);
-                return response()->json($estado);
-            }        
-        }
+
 
     public function dropTipoperiodo(Request $request, $id)
         {

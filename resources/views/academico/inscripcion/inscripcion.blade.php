@@ -222,8 +222,9 @@
                 searching: true,
                 ajax: '{!! route('inscripcion.getdata') !!}',
                 columns: [
-                    { data: 'cantidad', name: 'cantidad' },
-                    { data: 'grado_carrera_seccion', name: 'grado_carrera_seccion' },
+                    { data: 'carreragrado', name: 'carreragrado' },
+                    { data: 'periodo', name: 'periodo' },
+                     { data: 'nombre1', name: 'nombre1' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -237,15 +238,6 @@
             $('.errorTipoPeriodo').addClass('hidden');
             $('.errorPersona').addClass('hidden');
             $('#addModal').modal('show');
-
-            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response,id){
-                $("#fkcarrera_grado_add").empty();
-                $("#fkcarrera_grado_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkcarrera_grado_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+"/"+response[i].grado+" </option>");
-                    $('#fkcarrera_grado_add').val('').trigger('change.select2'); 
-                }
-            });              
 
 
             $.get("/academico/inscripcion/dropTipoperiodo/"+5,function(response,id){
@@ -271,7 +263,7 @@
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/academico/inscripcion',
+                url: '/academico/inscripcion/inscripcion',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera_grado': $('#fkcarrera_grado_add').val(),
@@ -292,27 +284,27 @@
                             });
                         }, 500);
 
-                     if (data.errors.cantidad) {
-                            $('.errorCantidad').removeClass('hidden');
-                            $('.errorCantidad').text(data.errors.cantidad);
-                        }
-
                      if (data.errors.fkcarrera_grado) {
-                            $('.errorCarreraGrado').removeClass('hidden');
-                            $('.errorCarreraGrado').text(data.errors.fkcarrera_grado);
+                            $('.errorCantidadAlumno').removeClass('hidden');
+                            $('.errorCantidadAlumno').text(data.errors.fkcarrera_grado);
                         }
 
-                    if (data.errors.fkseccion) {
-                            $('.errorSeccion').removeClass('hidden');
-                            $('.errorSeccion').text(data.errors.fkseccion);
+                     if (data.errors.fktipo_periodo) {
+                            $('.errorTipoPeriodo').removeClass('hidden');
+                            $('.errorTipoPeriodo').text(data.errors.fktipo_periodo);
+                        }
+
+                    if (data.errors.fkpersona) {
+                            $('.errorPersona').removeClass('hidden');
+                            $('.errorPersona').text(data.errors.fkpersona);
                         }
 
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
-                            $('#cantidad').val('');
-                            $('#fkcarrera_grado_add').val('');
-                            $('#fkseccion_add').val('');
+                            $('#fkcarrera_grado').val('');
+                            $('#fktipo_periodo').val('');
+                            $('#fkpersona').val('');
                             table.ajax.reload();
                         });                          
                     }
