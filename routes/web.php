@@ -192,5 +192,10 @@ Route::post('/plataforma/blackboard/cargar/contenido_educativo/catedratico/cambi
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'AlumnoContenidoEducativoController');
 
 
+//Categoria
+Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaController');
+Route::get('categoria/getdata', 'CategoriaController@getdata')->name('categoria.getdata');
+Route::post('/gestionadministrativa/inventario/categoria/cambiarEstado', 'CategoriaController@cambiarEstado');
+
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
