@@ -183,8 +183,10 @@ Route::get('/resolver/cuestionario/seleccionado/blackboard/{id1}', 'ResponderBan
 //CargarContenidoCatedratico
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/catedratico', 'CatedraticoContenidoEducativoController');
 Route::get('cargar/contenido_educativo/catedratico/getdata', 'CatedraticoContenidoEducativoController@getdata')->name('contenido_educativo_catedratico.getdata');
+Route::get('/cargar/contenido_educativo/catedratico/getdata/ID/{id}', 'CatedraticoContenidoEducativoController@getdataID');
 Route::get('/plataforma/blackboard/cargar/dropInformacionCatedratico', 'CatedraticoContenidoEducativoController@dropInformacionCatedratico');
 Route::get('/plataforma/blackboard/cargar/dropFormatoDocumento', 'CatedraticoContenidoEducativoController@dropFormato');
+Route::post('/plataforma/blackboard/cargar/contenido_educativo/catedratico/cambiarEstado', 'CatedraticoContenidoEducativoController@cambiarEstado');
 
 //CargarContenidoAlumno
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'AlumnoContenidoEducativoController');

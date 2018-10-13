@@ -1,127 +1,52 @@
-<!DOCTYPE html>
-
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Kukudocs JS Document Viewer | KUKUDOCS</title>
+        <meta name="author" content="KUKUDOCS">
+        <meta name="description"
+              content="Kukudocs JS Document Viewer is a Javascript-based web document viewer that does not require a server.">
+        <meta name="keywords"
+              content="HTML5, javascript, Cloud, Viewer, Document, wysisyg, editor, HTML5 Viewer, Javascript Viewer, document viewer, web editor">
 
-<head>
+        <link href="./css/jsViewer.css" rel="stylesheet" type="text/css">
+    </head>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <body>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+        <div id="header" class="header">
+            <div class="container">
+                <a href="https://www.kukudocs.com">
+                    <div class="logo"><img src="./images/logo.png"></div>
+                </a>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
-
-    <style type="text/css">
-
-        .main-section{
-
-            margin:0 auto;
-
-            padding: 20px;
-
-            margin-top: 100px;
-
-            background-color: #fff;
-
-            box-shadow: 0px 0px 20px #c1c1c1;
-
-        }
-
-        .fileinput-remove,
-
-        .fileinput-upload{
-
-            display: none;
-
-        }
-
-    </style>
-
-</head>
-
-<body class="bg-danger">
-
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-lg-8 col-sm-12 col-11 main-section">
-
-                <h1 class="text-center text-danger">File Input Example</h1><br>
-
-                
-
-                    {!! csrf_field() !!}
-
-                    <div class="form-group">
-
-                        <div class="file-loading">
-
-                            <input id="file-1" type="file" name="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
-
-                        </div>
-
-                    </div>
-
-                
-
+                <div class="contact"><span class="title">Kukudocs JS Document Viewer</span><span class="description">Kukudocs JS Document Viewer is a Javascript-based web document viewer that does not require a server.</span>
+                </div>
             </div>
-
         </div>
 
-    </div>
+        <div class="container main-container">
+            <input id="files" type="file" name="files[]" multiple="false">
+            <button id="upload-btn">Select File</button>
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <div id="modal">
+            <div id="modal-container"><a id="modal-close-btn"></a>
+                <div id="docxjs-wrapper" style="width:100%;height:100%;"></div>
+            </div>
+        </div>
+        
+        <div id="parser-loading"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
+        <!-- Must have jquery library -->
+        <script type="text/javascript" src="./scripts/_lib/jquery.1.12.3.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
+        <script type="text/javascript" src="./scripts/docxjs/DocxJS.bundle.min.js"></script>
+        <script type="text/javascript" src="./scripts/celljs/CellJS.bundle.min.js"></script>
+        <script type="text/javascript" src="./scripts/slidejs/SlideJS.bundle.min.js"></script>
+        <script type="text/javascript" src="./scripts/pdfjs/PdfJS.bundle.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="./scripts/JSViewerLoader.js"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
-
-
-    <script type="text/javascript">
-
-        $("#file-1").fileinput({
-
-            theme: 'fa',
-
-            uploadUrl: "/image-view",
-
-            uploadExtraData: function() {
-
-                console.log('sa');
-
-                return {
-
-                    _token: $("input[name='_token']").val(),
-
-                };
-
-            },
-
-            allowedFileExtensions: [],
-
-            overwriteInitial: false,
-
-            maxFileSize:2000,
-
-            maxFilesNum: 10,
-
-            slugCallback: function (filename) {
-
-                console.log('s1');
-
-                return filename.replace('(', '_').replace(']', '_');
-
-            }
-
-        });
-
-    </script>
-
-
-</body>
+    </body>
 
 </html>
