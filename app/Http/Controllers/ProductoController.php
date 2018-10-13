@@ -104,7 +104,7 @@ class ProductoController extends Controller
     {
         $validator = Validator::make(Input::all(),        
         [
-            'nombre' => 'required|max:50|unique:producto,nombre,'.$request->id,
+            'nombre' => 'required|max:50|unique:producto,nombre,'.$request->id, // el request id valida que el nombre existe y no lo vuelve escribir
             'descripcion' => 'required|max:50',
             'fkcategoria' => 'required|integer',
         ]);
@@ -113,7 +113,7 @@ class ProductoController extends Controller
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $cambiar = Producto::findOrFail($id);              
-            $cambiar->nombre = $request->producto;
+            $cambiar->nombre = $request->nombre;
             $cambiar->descripcion = $request->descripcion; //request = nombres del formulario (derecho)  , objeto = nombre de la tabla (izquierdo)
             $cambiar->fkcategoria = $request->fkcategoria;
             $cambiar->save();

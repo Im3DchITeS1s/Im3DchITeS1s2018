@@ -4,11 +4,7 @@
 
 @section('content_header')
 	<div class="content-header">
-        <h1>CARGAR CONTENIDO EDUCATIVO
-            <button type="button" class="add-modal btn btn-success">
-                <span class="fa fa-search"></span>
-            </button> 
-        </h1>
+        <h1>CARGAR CONTENIDO EDUCATIVO</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="#"> Plataforma Blackboard</a></li>
@@ -39,7 +35,7 @@
                               <div class="input-group-addon">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                               </div>
-                                <select class="form-control js-example-basic-single" style="width: 100%" 
+                                <select class="form-control js-example-basic-single" style="width: 100%" onChange="cargarDataTableID(this)"
                                     name="fkcatedratico_curso_add" id='fkcatedratico_curso_add' required autofocus>
                                 </select>                            
                             </div> 
@@ -71,8 +67,7 @@
                               <div class="input-group-addon">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                               </div>
-                                <select class="form-control js-example-basic-single" name="state" style="width: 100%" onChange="mostrarFile(this)" 
-                                    name="fkformato_documento_add" id='fkformato_documento_add' required autofocus>
+                                <select class="form-control js-example-basic-single" name="state" style="width: 100%" onChange="mostrarFile(this)" name="fkformato_documento_add" id='fkformato_documento_add' required autofocus>
                                 </select> 
                             </div>
                             <p class="errorSeleccionarFormatoDocumentoAdd text-center alert alert-danger hidden"></p>        
@@ -82,6 +77,9 @@
                             <div class="input-group" id="mostrarInputFile">
                                
                             </div>
+                            <div  id="element">
+                               
+                            </div>                            
                             <p class="errorSeleccionarArchivoAdd text-center alert alert-danger hidden"></p>
                         </div>
                       </div>
@@ -183,12 +181,11 @@
                 </div>                   
             </div>
         </div>        
-
-
     </div>  
 
     <!-- AJAX CRUD operations -->
     <script type="text/javascript">
+        var idTabla=0;
         var id = 0;
         var seleccion = 0;
         var archivo;
@@ -197,14 +194,12 @@
             $('.js-example-basic-single').select2({
                 placeholder: "Seleccionar una opcion",
             });
-        }); 
+        });         
 
         $(document).ready(function() {
-            tabla = $('#info-table-contenido').DataTable({ 
+            tabla = $('#info-table-contenido').DataTable({   
                 processing: true,
                 serverSide: false,
-                paginate: true,
-                searching: true,
                 ajax: '{!! route('contenido_educativo_catedratico.getdata') !!}',
                 columns: [
                     { data: 'titulo', name: 'titulo' },
@@ -215,7 +210,7 @@
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
-        });         
+        }); 
 
         $.get("/plataforma/blackboard/cargar/dropInformacionCatedratico",function(response){
             $("#fkcatedratico_curso_add").empty();
@@ -235,11 +230,6 @@
             }
         });  
 
-        $(document).on('click', '.add-modal', function() { 
-        
-          
-        });         
-
         $("#validacion_add").change(function(){
             if($(this).prop("checked") == true){
                seleccion = 1;
@@ -247,6 +237,32 @@
                seleccion = 0;
             }
         });
+
+        function cargarDataTableID(sel) {
+            if(sel.value > 0)
+            {
+                idTabla = sel.value;
+                $('#info-table-contenido').DataTable({
+                    destroy: true,   
+                    processing: true,
+                    serverSide: false,
+                    paginate: true,
+                    searching: true,
+                    ajax: {
+                        url: '/cargar/contenido_educativo/catedratico/getdata/ID/'+sel.value,
+                        type: 'GET'
+                    },
+                    columns: [
+                        { data: 'titulo', name: 'titulo' },
+                        { data: 'descripcion', name: 'descripcion' },
+                        { data: 'formato', name: 'formato' },
+                        { data: 'tarea', name: 'tarea' },
+                        { data: 'created_at', name: 'created_at' },                    
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ]
+                }); 
+            }            
+        }        
 
         function mostrarFile(sel) {
             $("#mostrarInputFile").empty();
@@ -271,10 +287,32 @@
 
             var fileEl=$('input[type=file]');
             $(fileEl).on('change',function () {
-                toBase64(this,function (file,base64) {
-                    archivo = base64;
-                    console.log(base64);
-                });
+                
+                var oFile = document.getElementById("archivo_add").files[0];
+                var extension = ($("#archivo_add").val().substring($("#archivo_add").val().lastIndexOf("."))).toLowerCase();
+
+                if (oFile.size > 2097152) // 2 mb for bytes.
+                {
+                    swal("Error", "El tamaño del archivo es grande", "error", {
+                      buttons: false,
+                      timer: 2000,
+                    });
+
+                    document.getElementById("archivo_add").value = null;
+                }
+                else
+                {
+                    toBase64(this,function (file,base64) {
+                        if(extension == ".pdf")
+                        {
+                            var file = URL.createObjectURL(oFile);
+                            $('#element').empty();
+                            $('#element').append('<a href="' + file + '" target="_blank">' + oFile.name + '</a><br>');
+                        }
+                        archivo = base64;  
+                        //console.log(base64);                    
+                    });
+                }
             });             
         }        
 
@@ -288,10 +326,46 @@
             reader.onerror = function (error) {
                 console.log('Error: ', error);
             };
-        };
+        }; 
+
+        $(document).on('click', '.edit-modal', function() {
+            id = $(this).data('id');
+            $('#titulo_add').val($(this).data('titulo'));
+            $('#descripcion_add').val($(this).data('descripcion'));
+            archivo = $(this).data('archivo');
+            seleccion = $(this).data('responder');
+            fkcatedratico_curso = $(this).data('fkcatedratico_curso');
+            fkformato_documento = $(this).data('fkformato_documento');
+
+            $.get("/plataforma/blackboard/cargar/dropInformacionCatedratico",function(response){
+                $("#fkcatedratico_curso_add").empty();
+                $("#fkcatedratico_curso_add").append("<option value=''> Seleccionar Uno </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkcatedratico_curso_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" / "+response[i].curso+" / "+response[i].grado+" / "+response[i].seccion+" </option>");
+                    $('#fkcatedratico_curso_add').val(fkcatedratico_curso).trigger('change.select2');
+                }
+            });
+
+            $.get("/plataforma/blackboard/cargar/dropFormatoDocumento",function(response){
+                $("#fkformato_documento_add").empty();
+                $("#fkformato_documento_add").append("<option value=''> Seleccionar Uno </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkformato_documento_add").append("<option value='"+response[i].id+"'> "+response[i].formato+" </option>");
+                    $('#fkformato_documento_add').val(fkformato_documento).trigger('change.select2');
+                }
+            });             
+
+            if(seleccion == 1)
+            {
+                $('#validacion_add').prop("checked", true);
+            }
+            else
+            {
+                $('#validacion_add').prop("checked", false);                
+            }
+        });
 
         //usage with jquery            
-
         $('.modal-footer').on('click', '.add', function() {
             if(id > 0)
             {
@@ -353,6 +427,48 @@
                                 $('#archivo').val('');
                                 $('#fkformato_documento_add').val('').trigger('change.select2');
                                 $('#fkcatedratico_curso_add').val('').trigger('change.select2');
+
+                                if(idTabla == 0)
+                                {
+                                    $('#info-table-contenido').DataTable({   
+                                        destroy: true,   
+                                        processing: true,
+                                        serverSide: false,
+                                        paginate: true,
+                                        searching: true,
+                                        ajax: '{!! route('contenido_educativo_catedratico.getdata') !!}',
+                                        columns: [
+                                            { data: 'titulo', name: 'titulo' },
+                                            { data: 'descripcion', name: 'descripcion' },
+                                            { data: 'formato', name: 'formato' },
+                                            { data: 'tarea', name: 'tarea' },
+                                            { data: 'created_at', name: 'created_at' },                    
+                                            { data: 'action', name: 'action', orderable: false, searchable: false}
+                                        ]
+                                    });
+                                }
+                                else
+                                {
+                                    $('#info-table-contenido').DataTable({
+                                        destroy: true,   
+                                        processing: true,
+                                        serverSide: false,
+                                        paginate: true,
+                                        searching: true,
+                                        ajax: {
+                                            url: '/cargar/contenido_educativo/catedratico/getdata/ID/'+idTabla,
+                                            type: 'GET'
+                                        },
+                                        columns: [
+                                            { data: 'titulo', name: 'titulo' },
+                                            { data: 'descripcion', name: 'descripcion' },
+                                            { data: 'formato', name: 'formato' },
+                                            { data: 'tarea', name: 'tarea' },
+                                            { data: 'created_at', name: 'created_at' },                    
+                                            { data: 'action', name: 'action', orderable: false, searchable: false}
+                                        ]
+                                    });
+                                }
                             });                          
                         }
                     },
@@ -415,11 +531,124 @@
                                 $('#archivo').val('');
                                 $('#fkformato_documento_add').val('').trigger('change.select2');
                                 $('#fkcatedratico_curso_add').val('').trigger('change.select2');
+
+                                if(idTabla == 0)
+                                {
+                                    $('#info-table-contenido').DataTable({   
+                                        destroy: true,   
+                                        processing: true,
+                                        serverSide: false,
+                                        paginate: true,
+                                        searching: true,
+                                        ajax: '{!! route('contenido_educativo_catedratico.getdata') !!}',
+                                        columns: [
+                                            { data: 'titulo', name: 'titulo' },
+                                            { data: 'descripcion', name: 'descripcion' },
+                                            { data: 'formato', name: 'formato' },
+                                            { data: 'tarea', name: 'tarea' },
+                                            { data: 'created_at', name: 'created_at' },                    
+                                            { data: 'action', name: 'action', orderable: false, searchable: false}
+                                        ]
+                                    });
+                                }
+                                else
+                                {
+                                    $('#info-table-contenido').DataTable({
+                                        destroy: true,   
+                                        processing: true,
+                                        serverSide: false,
+                                        paginate: true,
+                                        searching: true,
+                                        ajax: {
+                                            url: '/cargar/contenido_educativo/catedratico/getdata/ID/'+idTabla,
+                                            type: 'GET'
+                                        },
+                                        columns: [
+                                            { data: 'titulo', name: 'titulo' },
+                                            { data: 'descripcion', name: 'descripcion' },
+                                            { data: 'formato', name: 'formato' },
+                                            { data: 'tarea', name: 'tarea' },
+                                            { data: 'created_at', name: 'created_at' },                    
+                                            { data: 'action', name: 'action', orderable: false, searchable: false}
+                                        ]
+                                    });
+                                }                                
                             });                          
                         }
                     },
                 }); 
             }
         });    
+
+        // delete
+        $(document).on('click', '.delete-modal', function() {
+            swal({
+              title: "Esta seguro?",
+              text: "modificara el estado de la informacion",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/plataforma/blackboard/cargar/contenido_educativo/catedratico/cambiarEstado",
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'id': $(this).data('id'),
+                    },
+                    success: function(data) {                 
+                        swal("Correcto", "Se modifico el estado", "success")
+                        .then((value) => {
+                            if(idTabla == 0)
+                            {
+                                $('#info-table-contenido').DataTable({   
+                                    destroy: true,   
+                                    processing: true,
+                                    serverSide: false,
+                                    paginate: true,
+                                    searching: true,
+                                    ajax: '{!! route('contenido_educativo_catedratico.getdata') !!}',
+                                    columns: [
+                                        { data: 'titulo', name: 'titulo' },
+                                        { data: 'descripcion', name: 'descripcion' },
+                                        { data: 'formato', name: 'formato' },
+                                        { data: 'tarea', name: 'tarea' },
+                                        { data: 'created_at', name: 'created_at' },                    
+                                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                                    ]
+                                });
+                            }
+                            else
+                            {
+                                $('#info-table-contenido').DataTable({
+                                    destroy: true,   
+                                    processing: true,
+                                    serverSide: false,
+                                    paginate: true,
+                                    searching: true,
+                                    ajax: {
+                                        url: '/cargar/contenido_educativo/catedratico/getdata/ID/'+idTabla,
+                                        type: 'GET'
+                                    },
+                                    columns: [
+                                        { data: 'titulo', name: 'titulo' },
+                                        { data: 'descripcion', name: 'descripcion' },
+                                        { data: 'formato', name: 'formato' },
+                                        { data: 'tarea', name: 'tarea' },
+                                        { data: 'created_at', name: 'created_at' },                    
+                                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                                    ]
+                                });
+                            }
+                        });                                                                         
+                    },
+                });                                           
+              } else {
+                swal("no se realizo el cambio!");
+              }
+            });            
+        });       
     </script>    
 @stop

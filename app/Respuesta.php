@@ -29,7 +29,7 @@ class Respuesta extends Model
 				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.fkpregunta as fkpregunta')
             	->where('pregunta.fkcuestionario', $id)
             	->where('pregunta.fkestado', 5)
-            	->where('respuesta.fkestado', 5)->get(); 
+            	->where('respuesta.fkestado', 5)->inRandomOrder()->get(); 
 	}
 
 	public static function respuestaCorrecta($id)
