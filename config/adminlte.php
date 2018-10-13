@@ -312,7 +312,7 @@ return [
             'submenu' => [
                 [
                 'text' => 'Inscripción de Alumnos',
-                'url'  => '#',
+                'url'  => '/academico/inscripcion/inscripcion',
                 'icon_color' => 'red',
                 ],
                 [

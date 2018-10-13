@@ -40,7 +40,7 @@ class CantidadAlumnoController extends Controller
     public function getdata()
     {
       
-         $color_estado = "";
+        $color_estado = "";
         $query = CantidadAlumno::dataCantidadAlumno();
 
         return Datatables::of($query)

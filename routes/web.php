@@ -131,6 +131,13 @@ Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudian
 Route::resource('/academico/docente/docente', 'DocenteController');
 Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
 
+//Inscripcion
+Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
+Route::get('academico/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
+Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
+Route::get('/academico/inscripcion/dropTipoperiodo/{id}', 'InscripcionController@dropTipoperiodo');
+Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
+
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
 Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');

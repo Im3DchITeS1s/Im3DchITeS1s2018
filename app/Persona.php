@@ -39,6 +39,13 @@ class Persona extends Model
             ->orderBy('apellido1', 'asc')->get();
 	}
 
+	public static function buscarEstudiante($id){
+		return Persona::join('tipo_persona', 'persona.fktipo_persona', '=', 'tipo_persona.id')
+			->select('persona.id as id', 'nombre1', 'nombre2', 'apellido1', 'apellido2', 'nombre')
+			->where('persona.fktipo_persona', 6)
+            ->orderBy('apellido1', 'asc')->get();
+	}
+
     public static function buscarIDPersona($id)
     {
         return Persona::findOrFail($id);       
