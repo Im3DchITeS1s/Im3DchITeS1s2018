@@ -421,7 +421,7 @@
                 $("#fkperiodo_academico_add").empty();
                 $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" - "+response[i].ciclo+" </option>");
+                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" </option>");
                     $('#fkperiodo_academico_add').val('').trigger('change.select2');
                 }
             });
@@ -751,7 +751,7 @@
                 $("#fkperiodo_academico_add").empty();
                 $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" - "+response[i].ciclo+" </option>");
+                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" </option>");
                     $('#fkperiodo_academico_add').val(id_fkperiodo_academico).trigger('change.select2');
                 }
             });
