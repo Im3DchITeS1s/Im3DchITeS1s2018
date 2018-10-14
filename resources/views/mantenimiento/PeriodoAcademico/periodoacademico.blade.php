@@ -35,7 +35,6 @@
                             <th width="15%">Nombre</th>
                             <th width="15%">Inicio</th>
                             <th width="15%">Fin</th>
-                            <th width="15%">Ciclo</th>
                             <th width="15%">Tipo de período</th>
                             <th width="8%">Accion</th>
                         </tr>
@@ -243,7 +242,6 @@
             $('.errorNombre').addClass('hidden');
             $('.errorInicio').addClass('hidden');
             $('.errorFin').addClass('hidden');
-            $('.errorCiclo').addClass('hidden');
             $('.errorTipoPeriodo').addClass('hidden');
             $('#addModal').modal('show');
 
@@ -267,14 +265,12 @@
                     'nombre': $('#nombre_add').val(),
                     'inicio': $('#inicio_add').val(),
                     'fin':    $('#fin_add').val(),
-                    'ciclo':  $('#ciclo_add').val(),
                     'fktipo_periodo':    $('#fktipo_periodo_add').val(),
                 },
                 success: function(data) {
                     $('.errorNombre').addClass('hidden');
                     $('.errorInicio').addClass('hidden');
                     $('.errorFin').addClass('hidden');
-                    $('.errorCiclo').addClass('hidden');
                     $('.errorTipoPeriodo').addClass('hidden');
 
                     if ((data.errors)) {
@@ -300,11 +296,6 @@
                             $('.errorFin').text(data.errors.fin);
                         }
 
-                        if (data.errors.ciclo) {
-                            $('.errorCiclo').removeClass('hidden');
-                            $('.errorCiclo').text(data.errors.ciclo);
-                        }
-
                         if (data.errors.fktipo_periodo) {
                             $('.errorTipoPeriodo').removeClass('hidden');
                             $('.errorTipoPeriodo').text(data.errors.fktipo_periodo);
@@ -316,7 +307,6 @@
                             $('#nombre').val('');
                             $('#inicio').val('');
                             $('#fin').val('');
-                            $('#ciclo').val('');
                             $('#fktipo_periodo').val('');
                             table.ajax.reload();
                         });                          
@@ -332,7 +322,6 @@
             $('.errorNombre').addClass('hidden');
             $('.errorInicio').addClass('hidden');
             $('.errorFin').addClass('hidden');
-            $('.errorCiclo').addClass('hidden');
             $('.errorTipoPeriodo').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));

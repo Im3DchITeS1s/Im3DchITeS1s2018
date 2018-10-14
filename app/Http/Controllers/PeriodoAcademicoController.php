@@ -47,7 +47,7 @@ class PeriodoAcademicoController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$periodoacademico->id.'" data-nombre="'.$periodoacademico->nombre.'" data-inicio="'.$periodoacademico->inicio.'" data-fin="'.$periodoacademico->fin.'" data-ciclo="'.$periodoacademico->ciclo.'" data-fktipo_periodo="'.$periodoacademico->fktipo_periodo.'" data-fkestado="'.$periodoacademico->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$periodoacademico->id.'" data-nombre="'.$periodoacademico->nombre.'" data-inicio="'.$periodoacademico->inicio.'" data-fin="'.$periodoacademico->fin.'" data-fktipo_periodo="'.$periodoacademico->fktipo_periodo.'" data-fkestado="'.$periodoacademico->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
@@ -88,7 +88,6 @@ class PeriodoAcademicoController extends Controller
             $insert->inicio = date("Y-m-d", strtotime($request->inicio));
             $insert->fin = date("Y-m-d", strtotime($request->fin));
 			$insert->fktipo_periodo = $request->fktipo_periodo;
-            $insert->ciclo = date("Y");
             $insert->fkestado = $estado->id;
             $insert->save();
             return response()->json($insert);

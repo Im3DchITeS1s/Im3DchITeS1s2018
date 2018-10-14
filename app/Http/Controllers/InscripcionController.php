@@ -26,7 +26,7 @@ class InscripcionController extends Controller
         'fkcantidad_alumno' => 'required|integer', 
         'fktipo_periodo' => 'required|integer', 
         'fkpersona' => 'required|integer', 
-    ];
+        'ciclo'=>'required|integer', 
 
 
     public function __construct()
@@ -97,7 +97,8 @@ class InscripcionController extends Controller
             $insert = new Inscripcion();            
             $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
             $insert->fktipo_periodo = $request->fktipo_periodo;    
-            $insert->fkpersona = $request->fkpersona;                                
+            $insert->fkpersona = $request->fkpersona; 
+            $insert->ciclo = date("Y");                               
             $insert->save();
             return response()->json($insert);
         }
@@ -117,7 +118,8 @@ class InscripcionController extends Controller
             $cambiar = Inscripcion::findOrFail($id);            
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
-            $cambiar->fkpersona = $request->fkpersona;                                    
+            $cambiar->fkpersona = $request->fkpersona;
+            $insert->ciclo = date("Y");                                     
             $cambiar->save();
             return response()->json($cambiar); 
         }       
