@@ -10,7 +10,7 @@ use Validator;
 use Response;
 use App\Inscripcion;
 use App\CantidadAlumno;
-use App\TipoPeriodo;
+use App\PeriodoAcademico;
 use App\CarreraGrado;
 use App\Carrera;
 use App\Grado;
@@ -36,7 +36,7 @@ class InscripcionController extends Controller
 
     public function index()
     {
-    return view('/academico/inscripcion/inscripcion');   
+        return view('/academico/inscripcion/inscripcion');   
     }
 
     public function getdata()
@@ -63,10 +63,10 @@ class InscripcionController extends Controller
 
 
 
-    public function dropTipoperiodo(Request $request, $id)
+    public function dropPeriodoAcademico(Request $request, $id)
         {
             if($request->ajax()){
-                $estado = TipoPeriodo::buscarTipoPeriodo($id);
+                $estado = PeriodoAcademico::buscarPerAca($id);
                 return response()->json($estado);
             }        
         }

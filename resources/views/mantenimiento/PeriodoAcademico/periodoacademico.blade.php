@@ -231,7 +231,6 @@
                     { data: 'periodo_academico', name: 'periodo_academico' },
                     { data: 'inicio', name: 'inicio' },
                     { data: 'fin', name: 'fin' },
-                    { data: 'ciclo', name: 'ciclo' },
                     { data: 'tipo_periodo', name: 'tipo_periodo' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

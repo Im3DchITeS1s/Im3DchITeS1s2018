@@ -74,7 +74,7 @@
                                 <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
                             </div> 
 
-                            <!--Drop list de la Tipo Período-->
+                            <!--Drop list de la Período Académico-->
                              <div class="col-sm-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">
@@ -82,11 +82,11 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fktipo_periodo_add" id='fktipo_periodo_add' required autofocus>
+                                    name="fkperiodo_academico_add" id='fkperiodo_academico_add' required autofocus>
                                     </select> 
                                 </div>   
                                 <small class="control-label">Debe de seleccionar uno</small>                                                     
-                                <p class="errorTipoPeriodo text-center alert alert-danger hidden"></p>
+                                <p class="errorPeriodo text-center alert alert-danger hidden"></p>
                             </div> 
 
                             <!--Drop list de la Alumno-->
@@ -235,17 +235,17 @@
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCantidadAlumno').addClass('hidden');
-            $('.errorTipoPeriodo').addClass('hidden');
+            $('.errorPeriodo').addClass('hidden');
             $('.errorPersona').addClass('hidden');
             $('#addModal').modal('show');
 
 
-            $.get("/academico/inscripcion/dropTipoperiodo/"+5,function(response,id){
-                $("#fktipo_periodo_add").empty();
-                $("#fktipo_periodo_add").append("<option value=''> seleccionar </option>");
+            $.get("/academico/inscripcion/dropPeriodoAcademico/"+5,function(response,id){
+                $("#fkperiodo_academico_add").empty();
+                $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fktipo_periodo_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fktipo_periodo_add').val('').trigger('change.select2'); 
+                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+ response[i].ciclo+" </option>");
+                    $('#fkperiodo_academico_add').val('').trigger('change.select2'); 
                 }
             });    
 
@@ -267,7 +267,7 @@
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera_grado': $('#fkcarrera_grado_add').val(),
-                    'fktipo_periodo': $('#fktipo_periodo_add').val(),
+                    'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
                 },
                 success: function(data) {
@@ -289,9 +289,9 @@
                             $('.errorCantidadAlumno').text(data.errors.fkcarrera_grado);
                         }
 
-                     if (data.errors.fktipo_periodo) {
-                            $('.errorTipoPeriodo').removeClass('hidden');
-                            $('.errorTipoPeriodo').text(data.errors.fktipo_periodo);
+                     if (data.errors.fkperiodo_academico) {
+                            $('.errorPeriodo').removeClass('hidden');
+                            $('.errorPeriodo').text(data.errors.fkperiodo_academico);
                         }
 
                     if (data.errors.fkpersona) {

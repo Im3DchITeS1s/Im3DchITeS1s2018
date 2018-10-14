@@ -8,7 +8,7 @@ class PeriodoAcademico extends Model
 {
 	protected $table = 'periodo_academico';
 	protected $guarded = ['id', 'fkestado', 'fktipo_periodo'];
-	protected $fillable = ['nombre', 'inicio', 'fin', 'ciclo'];
+	protected $fillable = ['nombre', 'inicio', 'fin'];
 
 	public static function dataPeriodoAcademico(){
 		return PeriodoAcademico::join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')
@@ -16,12 +16,13 @@ class PeriodoAcademico extends Model
             ->orderBy('periodo_academico.nombre', 'asc');
 	}
 
-	public static function buscarPeriodoAcademico($id){
-		return PeriodoAcademico::join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')
-			->select('periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'periodo_academico.ciclo as ciclo', 'tipo_periodo.nombre as tipo_periodo')
-            ->where('periodo_academico.fkestado', $id)
+	public static function buscarPerAca($id){
+		return PeriodoAcademico::join('tipo_periodo','periodo_academico.fktipo_periodo', 'tipo_periodo.id')
+			->select('periodo_academico.id as id','periodo_academico.ciclo as ciclo')
             ->where('periodo_academico.ciclo', date("Y"))
-            ->orderBy('periodo_academico.nombre', 'asc')->get();
+            ->where('periodo_academico.nombre', 'Primer')
+            ->where('periodo_academico.fkestado', $id)
+            ->get();
 	}
 
 	public static function buscarTipoPeriodo($id){
