@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inscripcion extends Model
 {
    	protected $table = 'inscripcion';
-	protected $guarded = ['id', 'fkcantidad_alumno', 'fkperiodo_academico', 'fkpersona', 'fkestado'];
+	protected $guarded = ['id', 'fkcantidad_alumno', 'fkperiodo_academico', 'fkpersona','ciclo', 'pago', 'fkestado'];
 
 	public static function carrerasAlumnos($id){
 		return Inscripcion::join('cantidad_alumno', 'inscripcion.fkcantidad_alumno', 'cantidad_alumno.id')
@@ -46,7 +46,7 @@ class Inscripcion extends Model
 			->join('persona','inscripcion.fkpersona','persona.id')					
 			->join('estado','inscripcion.fkestado','estado.id')		
 			->whre('periodo_academico.ciclo',date('Y'))		
-			->select(['inscripcion.id as id','inscripcion.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','inscripcion.fkperiodo_academico', 'periodo_academico.nombre as periodo','persona.id as id','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','inscripcion.fkestado as fk estado','estado.id as id']);
+			->select(['inscripcion.id as id','inscripcion.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','inscripcion.fkperiodo_academico', 'periodo_academico.nombre as periodo','persona.id as id','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2', 'inscripcion.ciclo','inscripcion.pago','inscripcion.fkestado as fk estado','estado.id as id']);
 	}
 	
 	public static function buscarIDInscripcion($id)
