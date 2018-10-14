@@ -135,7 +135,7 @@ Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getd
 Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
 Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
 Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
-Route::get('/academico/inscripcion/dropTipoperiodo/{id}', 'InscripcionController@dropTipoperiodo');
+Route::get('/academico/inscripcion/dropPeriodoAcademico/{id}', 'InscripcionController@dropPeriodoAcademico');
 Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
 
 //Sistema Rol Usuario

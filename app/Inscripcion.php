@@ -48,13 +48,6 @@ class Inscripcion extends Model
 			->whre('periodo_academico.ciclo',date('Y'))		
 			->select(['inscripcion.id as id','inscripcion.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','inscripcion.fkperiodo_academico', 'periodo_academico.nombre as periodo','persona.id as id','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','inscripcion.fkestado as fk estado','estado.id as id']);
 	}
-
-	public static function buscarPeriodo($id){
-		return PeriodoAcademico::join('tipo_persona', 'persona.fktipo_persona', '=', 'tipo_persona.id')
-			->select('persona.id as id', 'nombre1', 'nombre2', 'apellido1', 'apellido2', 'nombre')
-			->where('persona.fktipo_persona', 6)
-            ->orderBy('apellido1', 'asc')->get();
-	}
 	
 	public static function buscarIDInscripcion($id)
     {
