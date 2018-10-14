@@ -60,10 +60,10 @@
                       
                            
                              <!--Drop list de la Carrera Grado-->
-                             <div class="col-sm-6">
+                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Carrera Grado</label>
+                                        <label>Carrera, Grado y Sección</label>
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
@@ -74,11 +74,26 @@
                                 <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
                             </div> 
 
-                            <!--Drop list de la Período Académico-->
-                             <div class="col-sm-6">
+                            <!--Drop list de la Alumno-->
+                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Tipo Período</label>
+                                        <label>Estudiante</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkpersona_add" id='fkpersona_add' required autofocus>
+                                    </select> 
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorPersona text-center alert alert-danger hidden"></p>
+                            </div> 
+
+                            <!--Drop list de la Período Académico-->
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Período Académico</label>
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
@@ -89,20 +104,19 @@
                                 <p class="errorPeriodo text-center alert alert-danger hidden"></p>
                             </div> 
 
-                            <!--Drop list de la Alumno-->
-                             <div class="col-sm-6">
+                            <!--Campo de pago-->
+                            <div class="col-sm-4">
                                 <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Alumno</label>
-                                        <i class="fa fa-sticky-note"></i>
+                                  <div class="input-group-addon">
+                                   <label>Pago Q</label>
                                   </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkpersona_add" id='fkpersona_add' required autofocus>
-                                    </select> 
-                                </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
-                                <p class="errorPersona text-center alert alert-danger hidden"></p>
-                            </div> 
+                                  <input type="text" class="form-control" id="pago_add" placeholder="Pago" autofocus maxlength="4">
+                                </div>                                                               
+                                <small class="control-label">Max: 4| </small>
+                                <p class="errorPago text-center alert alert-danger hidden"></p>
+                            </div>  
+                            
+
                      </div> 
                     </form>
                 </div>
@@ -237,14 +251,23 @@
             $('.errorCantidadAlumno').addClass('hidden');
             $('.errorPeriodo').addClass('hidden');
             $('.errorPersona').addClass('hidden');
+            $('.errorPago').addClass('hidden');
             $('#addModal').modal('show');
 
+            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+                $("#fkcantidad_alumno_add").empty();
+                $("#fkcantidad_alumno_add").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkcantidad_alumno_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" / "+response[i].grado+" / "+response[i].letra+" </option>");
+                    $('#fkcantidad_alumno_add').val('').trigger('change.select2'); 
+                }
+            });
 
-            $.get("/academico/inscripcion/dropPeriodoAcademico/"+5,function(response,id){
+            $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response,id){
                 $("#fkperiodo_academico_add").empty();
                 $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+ response[i].ciclo+" </option>");
+                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+"</option>");
                     $('#fkperiodo_academico_add').val('').trigger('change.select2'); 
                 }
             });    
@@ -266,14 +289,16 @@
                 url: '/academico/inscripcion/inscripcion',
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'fkcarrera_grado': $('#fkcarrera_grado_add').val(),
+                    'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
                     'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
+                    'pago': $('#pago_add').val(),
                 },
                 success: function(data) {
                     $('.errorCantidadAlumno').addClass('hidden');
                     $('.errorTipoPeriodo').addClass('hidden');
                     $('.errorPersona').addClass('hidden');
+                    $('.errorPago').addClass('hidden');
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -284,9 +309,9 @@
                             });
                         }, 500);
 
-                     if (data.errors.fkcarrera_grado) {
+                     if (data.errors.fkcantidad_alumno) {
                             $('.errorCantidadAlumno').removeClass('hidden');
-                            $('.errorCantidadAlumno').text(data.errors.fkcarrera_grado);
+                            $('.errorCantidadAlumno').text(data.errors.fkcantidad_alumno);
                         }
 
                      if (data.errors.fkperiodo_academico) {
@@ -299,12 +324,17 @@
                             $('.errorPersona').text(data.errors.fkpersona);
                         }
 
+                    if (data.errors.pago) {
+                            $('.errorPersona').removeClass('hidden');
+                            $('.errorPersona').text(data.errors.pago);
+                        }
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
                             $('#fkcarrera_grado').val('');
                             $('#fktipo_periodo').val('');
                             $('#fkpersona').val('');
+                            $('#pago').val('');
                             table.ajax.reload();
                         });                          
                     }

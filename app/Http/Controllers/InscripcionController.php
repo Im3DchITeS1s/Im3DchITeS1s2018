@@ -21,14 +21,13 @@ use App\Estado;
 class InscripcionController extends Controller
 {
     
-     protected $verificar_insert =
+    protected $verificar_insert =
     [
         'fkcantidad_alumno' => 'required|integer', 
-        'fktipo_periodo' => 'required|integer', 
+        'fkperiodo_academico' => 'required|integer', 
         'fkpersona' => 'required|integer', 
-        'ciclo'=>'required|integer', 
-        'pagos'=>'required|integer', 
-
+        'pago'=>'required|integer', 
+    ];
 
     public function __construct()
     {
@@ -63,11 +62,18 @@ class InscripcionController extends Controller
     }
 
 
+    public function dropCantidadCarreraGrado(Request $request, $id)
+    {
+        if($request->ajax()){
+            $data = CantidadAlumno::dropCantidadAlumno($id);
+            return response()->json($data);
+        }        
+    }  
 
     public function dropPeriodoAcademico(Request $request, $id)
         {
             if($request->ajax()){
-                $estado = PeriodoAcademico::buscarPerAca($id);
+                $estado = PeriodoAcademico::buscarPeriodoAcademico($id);
                 return response()->json($estado);
             }        
         }
@@ -89,7 +95,7 @@ class InscripcionController extends Controller
 
    public function store(Request $request)
     {
-        $estado = Estado::buscarIDEstado(5);
+        $estado = Estado::buscarIDEstado(25);
 
         $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
@@ -97,15 +103,17 @@ class InscripcionController extends Controller
         } else {            
             $insert = new Inscripcion();            
             $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
-            $insert->fktipo_periodo = $request->fktipo_periodo;    
+            $insert->fkperiodo_academico = $request->fkperiodo_academico;    
             $insert->fkpersona = $request->fkpersona; 
-            $insert->ciclo = date("Y");                               
+            $insert->ciclo = date("Y");   
+            $insert->pago = $request->pago;     
+            $insert->fkestado = $estado->id;                                       
             $insert->save();
             return response()->json($insert);
         }
     }  
 
-    public function show(Inscripcion $inscripcion)
+    public function show()
     {
        
     }
@@ -120,7 +128,9 @@ class InscripcionController extends Controller
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
             $cambiar->fkpersona = $request->fkpersona;
-            $insert->ciclo = date("Y");                                     
+            $cambiar->ciclo = date("Y");   
+            $cambiar->pago = $request->pago;
+            $cambiar->fkestado = $estado->id;
             $cambiar->save();
             return response()->json($cambiar); 
         }       

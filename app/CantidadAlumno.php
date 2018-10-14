@@ -42,4 +42,15 @@ class CantidadAlumno extends Model
     {
         return CantidadAlumno::findOrFail($id);       
     } 
+
+	public static function dropCantidadAlumno($id){
+	    return CantidadAlumno::join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+					->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+					->join('grado', 'carrera_grado.fkgrado', 'grado.id') 
+					->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+					->join('estado', 'cantidad_alumno.fkestado', 'estado.id')
+					->where('cantidad_alumno.fkestado', $id)
+                    ->select('cantidad_alumno.id as id','carrera.nombre as carrera','grado.nombre as grado','seccion.letra as letra')
+                    ->get();
+   	}    
 }
