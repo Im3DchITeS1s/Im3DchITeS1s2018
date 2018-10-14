@@ -16,11 +16,9 @@ class PeriodoAcademico extends Model
             ->orderBy('periodo_academico.nombre', 'asc');
 	}
 
-	public static function buscarPerAca($id){
+	public static function buscarPeriodoAcademico($id){
 		return PeriodoAcademico::join('tipo_periodo','periodo_academico.fktipo_periodo', 'tipo_periodo.id')
-			->select('periodo_academico.id as id')
-            ->where('periodo_academico.ciclo')
-            ->where('periodo_academico.nombre', 'Primer')
+			->select('periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo')
             ->where('periodo_academico.fkestado', $id)
             ->get();
 	}
