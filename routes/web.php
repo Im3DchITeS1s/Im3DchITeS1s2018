@@ -182,6 +182,7 @@ Route::post('/gestionadministrativa/inventario/producto/cambiarEstado', 'Product
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
+Route::get('/bandeja/responder/carrera', 'ResponderBandejaCuestionarioController@getdataCarrera');
 Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionarioController@getdata');
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
 Route::get('/mostrar/cuestionarios/seleccionados/blackboard/{id1}/{id2}', 'ResponderBandejaCuestionarioController@mostrarCuestionariosSeleccionados')->name('cuestionarios.mostrarCuestionariosSeleccionados');

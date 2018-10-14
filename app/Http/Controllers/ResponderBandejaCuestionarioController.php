@@ -22,14 +22,22 @@ class ResponderBandejaCuestionarioController extends Controller
     }
 
     public function index()
-    {      
+    {            
         return view('/blackboard/bandejacuestionario');
     }
+
+    public function getdataCarrera(Request $request)
+    {
+        if($request->ajax()){
+            $cursosalumnos = Inscripcion::carrerasAlumnos(Auth::user()->fkpersona);
+            return response()->json($cursosalumnos);
+        }        
+    }    
 
     public function getdata(Request $request, $id)
     {
         if($request->ajax()){
-            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, 5);
+            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, $id);
             return response()->json($cursosalumnos);
         }        
     }
