@@ -32,9 +32,9 @@
                 <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
                     <thead >
                         <tr>
-                             <th width="25%">Carrera Grado</th>
-                             <th width="25%">Tipo Perido</th>
                              <th width="25%">Alumno</th>
+                             <th width="25%">Carrera Grado Sección</th>
+                             <th width="25%">Periodo Académico</th>
                             <th width="8%">Accion</th>
                         </tr>
                     </thead>
@@ -97,7 +97,7 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkperiodo_academico_add" id='fkperiodo_academico_add' required autofocus>
+                                    name="fktipo_periodo_add" id='fktipo_periodo_add' required autofocus>
                                     </select> 
                                 </div>   
                                 <small class="control-label">Debe de seleccionar uno</small>                                                     
@@ -150,58 +150,63 @@
                             <div class="col-sm-12">
                                 <small class="pull-right" style="color:orange;"></small>
                             </div>
-                            <div class="col-sm-6">
+                         
+                         <!--Carrera Grado Sección-->
+                        <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Nombre</label>
+                                        <label>Carrera, Grado y Sección</label>
                                         <i class="fa fa-sticky-note"></i>
-                                    </div>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkcantidad_alumno_edit" id='fkcantidad_alumno_edit' required autofocus>
+                                    </select> 
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
+                            </div> 
 
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="editar nombre" autofocus>
-                                </div>     
-                            </div>
-                        
-                        <!--Drop actualizar carreragrado-->
-                        
-                            <div class="col-sm-6">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-6">
+                    <!--Drop list de la Alumno-->
+                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Tipo Período</label>
+                                        <label>Estudiante</label>
                                         <i class="fa fa-sticky-note"></i>
-                                    </div>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkpersona_edit" id='fkpersona_edit' required autofocus>
+                                    </select> 
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorPersona text-center alert alert-danger hidden"></p>
+                            </div> 
+
+                            <!--Drop list de la Período Académico-->
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Período Académico</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fktipo_periodo_edit" id='fktipo_periodo_edit' required autofocus>
                                     </select> 
-                                </div>     
-                            </div>
-                    
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorPeriodo text-center alert alert-danger hidden"></p>
+                            </div> 
 
-                    <!--Inicio-->
-                        <div class="col-sm-6">
-                                <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
-                                            <label>Inicio</label>
-                                        <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="inicio_edit" name="inicio_edit" placeholder="dd/mm/yyyy" autofocus>
+                            <!--Campo de pago-->
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                   <label>Pago Q</label>
+                                  </div>
+                                  <input type="text" class="form-control" id="pago_edit" placeholder="Pago" autofocus maxlength="4">
                                 </div>                                                               
-                                    <p class="errorInicio text-center alert alert-danger hidden"></p>
-                        </div>
-
-                             <!--Fin-->
-                        <div class="col-sm-6">
-                                 <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
-                                            <label>Fin</label>
-                                        <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="fin_edit" name="fin_edit" placeholder="dd/mm/yyyy" autofocus>
-                                 </div>                                                               
-                                    <p class="errorFin text-center alert alert-danger hidden"></p>
-                        </div>
+                                <small class="control-label">Max: 4| </small>
+                                <p class="errorPago text-center alert alert-danger hidden"></p>
+                            </div>  
                     </div>
                     </form>
                     <div class="modal-footer">
@@ -236,9 +241,9 @@
                 searching: true,
                 ajax: '{!! route('inscripcion.getdata') !!}',
                 columns: [
-                    { data: 'carreragrado', name: 'carreragrado' },
-                    { data: 'periodo', name: 'periodo' },
-                     { data: 'nombre1', name: 'nombre1' },
+                    { data: 'alumno', name: 'alumno' },
+                    { data: 'gradocarreraseccion', name: 'gradocarreraseccion' },
+                    { data: 'tipo_periodo', name: 'tipo_periodo' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -263,14 +268,14 @@
                 }
             });
 
-            $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response,id){
-                $("#fkperiodo_academico_add").empty();
-                $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
+             $.get("/mantenimiento/periodoacademico/droptiperiodo/"+5,function(response,id){
+                $("#fktipo_periodo_add").empty();
+                $("#fktipo_periodo_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+"</option>");
-                    $('#fkperiodo_academico_add').val('').trigger('change.select2'); 
+                $("#fktipo_periodo_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fktipo_periodo_add').val('').trigger('change.select2'); 
                 }
-            });    
+            });  
 
              $.get("/academico/inscripcion/dropestudiante/"+7,function(response,id){
                 $("#fkpersona_add").empty();
@@ -290,9 +295,11 @@
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
-                    'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
+                    'fktipo_periodo': $('#fktipo_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
                     'pago': $('#pago_add').val(),
+
+
                 },
                 success: function(data) {
                     $('.errorCantidadAlumno').addClass('hidden');
@@ -314,9 +321,9 @@
                             $('.errorCantidadAlumno').text(data.errors.fkcantidad_alumno);
                         }
 
-                     if (data.errors.fkperiodo_academico) {
+                     if (data.errors.fktipo_periodo) {
                             $('.errorPeriodo').removeClass('hidden');
-                            $('.errorPeriodo').text(data.errors.fkperiodo_academico);
+                            $('.errorPeriodo').text(data.errors.fktipo_periodo);
                         }
 
                     if (data.errors.fkpersona) {
@@ -342,60 +349,68 @@
             }); 
         });
 
-        //Edit
+     //Edit
             $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
-            $('.errorCantidad').addClass('hidden');
-            $('.errorCarreraGrado').addClass('hidden');
-            $('.errorSeccion').addClass('hidden');
+            $('.errorCantidadAlumno').addClass('hidden');
+            $('.errorPeriodo').addClass('hidden');
+            $('.errorPersona').addClass('hidden');
+            $('.errorPago').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
-            $('#cantidad_edit').val($(this).data('cantidad'));
-            $('#fkcarrera_grado_edit').val($(this).data('fkcarrera_grado'));
-            $('#fkseccion_edit').val($(this).data('fkseccion'));
+            $('#pago_edit').val($(this).data('pago'));
             id = $('#id_edit').val();
-            fkcarrera_grado = $(this).data('fkcarrera_grado');
-            fkseccion = $(this).data('fkseccion');
+            fkcantidad_alumno = $(this).data('fkcantidad_alumno');
+            fktipo_periodo = $(this).data('fktipo_periodo');
+            fkpersona = $(this).data('fkpersona');
             $('#editModal').modal('show');
 
-            
-            $.get("/mantenimiento/cantidadalumno/dropCantidadCarreraGrado/"+5,function(response,id){
-                $("#fkcarrera_grado_edit").empty();
-                $("#fkcarrera_grado_edit").append("<option value=''> seleccionar </option>");
+            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+                $("#fkcantidad_alumno_edit").empty();
+                $("#fkcantidad_alumno_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcarrera_grado_edit").append("<option value='"+response[i].id+"'> "+response[i].carrera+"/"+response[i].grado+" </option>");
-                    $('#fkcarrera_grado_edit').val('').trigger('change.select2'); 
+                    $("#fkcantidad_alumno_edit").append("<option value='"+response[i].id+"'> "+response[i].carrera+" / "+response[i].grado+" / "+response[i].letra+" </option>");
+                    $('#fkcantidad_alumno_edit').val(fkcantidad_alumno).trigger('change.select2'); 
                 }
-                  });
-            }); 
+            });
 
-
-            $.get("/mantenimiento/cantidadalumno/dropCantidadSeccion/"+5,function(response,id){
-                $("#fkseccion_edit").empty();
-                $("#fkseccion_edit").append("<option value=''> seleccionar </option>");
+             $.get("/mantenimiento/periodoacademico/droptiperiodo/"+5,function(response,id){
+                $("#fktipo_periodo_edit").empty();
+                $("#fktipo_periodo_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkseccion_edit").append("<option value='"+response[i].id+"'> "+response[i].letra+" </option>");
-                    $('#fkseccion_edit').val('').trigger('change.select2'); 
+                $("#fktipo_periodo_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fktipo_periodo_edit').val(fktipo_periodo).trigger('change.select2'); 
                 }
-            });        
-          
+            });     
+
+             $.get("/academico/inscripcion/dropestudiante/"+7,function(response,id){
+                $("#fkpersona_edit").empty();
+                $("#fkpersona_edit").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkpersona_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" | "+ response[i].nombre1+" "+ response[i].nombre2+" "+ response[i].apellido1+" "+ response[i].apellido2+" </option>");
+                    $('#fkpersona_edit').val(fkpersona).trigger('change.select2'); 
+                }
+            });      
+     });
 
           $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
-                url: '/mantenimiento/cantidadalumno/' + id,
+                url: '/academico/inscripcion/inscripcion/' + id,
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'id': $("#id_edit").val(),
-                    'cantidad': $('#cantidad_edit').val(),
-                    'fkcarrera_grado': $('#fkcarrera_grado_edit').val(),
-                    'fkseccion': $('#fkseccion_edit').val()
+                    'fkcantidad_alumno': $('#fkcantidad_alumno_edit').val(),
+                    'fktipo_periodo': $('#fktipo_periodo_edit').val(),
+                    'fkpersona': $('#fkpersona_edit').val(),
+                    'pago': $('#pago_edit').val()
                 },
                 success: function(data) {
-                    $('.errorCantidad').addClass('hidden');
-                    $('.errorCarreraGrado').addClass('hidden');
-                    $('.errorSeccion').addClass('hidden');
+                    $('.errorCantidadAlumno').addClass('hidden');
+                    $('.errorPeriodo').addClass('hidden');
+                    $('.errorPersona').addClass('hidden');
+                    $('.errorPago').addClass('hidden');
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -406,34 +421,41 @@
                             });
                         }, 500);
 
-                        if (data.errors.cantidad) {
-                            $('.errorCantidad').removeClass('hidden');
-                            $('.errorCantidad').text(data.errors.cantidad);
+                    if (data.errors.fkcantidad_alumno) {
+                            $('.errorCantidadAlumno').removeClass('hidden');
+                            $('.errorCantidadAlumno').text(data.errors.fkcantidad_alumno);
                         }
-                        if (data.errors.fkcarrera_grado) {
-                            $('.errorCarreraGrado').removeClass('hidden');
-                            $('.errorCarreraGrado').text(data.errors.fkcarrera_grado);
+
+                     if (data.errors.fktipo_periodo) {
+                            $('.errorPeriodo').removeClass('hidden');
+                            $('.errorPeriodo').text(data.errors.fktipo_periodo);
                         }
-                        if (data.errors.fkseccion) {
-                            $('.errorSeccion').removeClass('hidden');
-                            $('.errorSeccion').text(data.errors.fkseccion);
+
+                    if (data.errors.fkpersona) {
+                            $('.errorPersona').removeClass('hidden');
+                            $('.errorPersona').text(data.errors.fkpersona);
                         }
-                    } else {
-                        swal("Correcto", "Se modifico la informacion", "success")
-                            .then((value) => {
-                            $("#id_edit").val('');
-                            $('#cantidad_edit').val('');
+
+                    if (data.errors.pago) {
+                            $('.errorPago').removeClass('hidden');
+                            $('.errorPago').text(data.errors.pago);
+                        }
+                     } else {
+                        swal("Correcto", "Se modificó la informacion", "success")
+                        .then((value) => {
                             $('#fkcarrera_grado_edit').val('');
-                            $('#fkseccion_edit').val('');
+                            $('#fktipo_periodo_edit').val('');
+                            $('#fkpersona_edit').val('');
+                            $('#pago_edit').val('');
+                            table.ajax.reload();
                           table.ajax.reload(); 
                         });                          
                     }
                 },
             }); 
         });
- 
 
-        // delete
+// delete
         $(document).on('click', '.delete-modal', function() {
             id = $(this).data('id');
             swal({
@@ -445,18 +467,19 @@
             })
             .then((willDelete) => {
               if (willDelete) {
+
                 $.ajax({
                     type: 'POST',
-                    url: "/mantenimiento/cantidadalumno/cambiarEstado",
+                    url: "/academico/inscripcion/cambiarEstado",
                     data: {
                         '_token': $('input[name=_token]').val(),
-                        'pkcantidadalumno': id,
-                        'estado' : $(this).data('estado')
+                        'id': id,
+                        'accion' : $(this).data('accion')
                     },
                     success: function(data) {                 
                         swal("Correcto", "Se modifico el estado", "success")
                         .then((value) => {
-                          table.ajax.reload();
+                          table.ajax.reload(); 
                         });                                                  
                     },
                 });                                           
@@ -464,8 +487,7 @@
                 swal("no se realizo el cambio!");
               }
             });            
-        });
-       
+        }); 
 
 
        
