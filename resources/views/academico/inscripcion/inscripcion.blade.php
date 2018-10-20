@@ -110,9 +110,9 @@
                                   <div class="input-group-addon">
                                    <label>Pago Q</label>
                                   </div>
-                                  <input type="text" class="form-control" id="pago_add" placeholder="Pago" autofocus maxlength="4">
+                                  <input type="text" class="form-control" id="pago_add" placeholder="Pago" autofocus maxlength="6">
                                 </div>                                                               
-                                <small class="control-label">Max: 4| </small>
+                                <small class="control-label"> </small>
                                 <p class="errorPago text-center alert alert-danger hidden"></p>
                             </div>  
                             

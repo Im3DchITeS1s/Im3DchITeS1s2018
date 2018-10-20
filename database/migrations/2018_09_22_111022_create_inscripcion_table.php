@@ -15,7 +15,7 @@ class CreateInscripcionTable extends Migration
             $table->unsignedInteger('fktipo_periodo');
             $table->unsignedInteger('fkpersona');
             $table->string('ciclo', 4);
-            $table->decimal('pago', 4,2);
+            $table->string('pago', 4);
             $table->unsignedInteger('fkestado');
             
             $table->foreign('fkcantidad_alumno')->references('id')->on('cantidad_alumno')->onUpdate('cascade');

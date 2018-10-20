@@ -269,48 +269,42 @@ class DocenteController extends Controller
         //
     }
 
-    public static function crearCodigo($id)
+   public static function crearCodigo($id)
     {
         $correlativo = 0;
 
         $tipo_persona = TipoPersona::buscarIDTipoPersona($id);
         $incial =  strtoupper(substr($tipo_persona->nombre, 0, 3));
 
-        $persona = Persona::where('codigo', 'LIKE', $incial.'%')->orderby('created_at','DESC')->take(1)->first();
+        $persona = Persona::where('fktipo_persona', $id)->orderby('codigo','DESC')->take(1)->first();
 
         if(count($persona) > 0) {
             $correlativo = substr($persona->codigo, 4, 7);
+            $numero=$correlativo+1;
         }
-
-        if($correlativo > 9999999){
-            $numero = $correlativo+1;
+        if($numero > 999999){
             $correlativo = $numero;
-        }
-        if($correlativo > 999999){
-            $numero = $correlativo+1;
+        } 
+        if($numero > 99999){
             $correlativo = "0" . $numero;
-        }  
-        if($correlativo > 99999){
-            $numero = $correlativo+1;
+        } 
+        if($numero > 9999){
             $correlativo = "00" . $numero;
         } 
-        if($correlativo > 9999){
-            $numero = $correlativo+1;
+        if($numero > 999){
             $correlativo = "000" . $numero;
-        } 
-        if($correlativo > 999){
-            $numero = $correlativo+1;
-            $correlativo = "0000" . $numero;
         }        
-        if($correlativo > 99){
-            $numero = $correlativo+1;
+        if($numero > 99){
+            $correlativo = "0000" . $numero;
+        }       
+        if($numero > 9){
             $correlativo = "00000" . $numero;
-        }                              
-        else{
-            $numero = $correlativo+1;
+        }                            
+        if ($numero>0 && $numero<10) {
             $correlativo = "000000" . $numero;
         }
 
         return strtoupper($incial.'-'.$correlativo);
     }
+}
 }

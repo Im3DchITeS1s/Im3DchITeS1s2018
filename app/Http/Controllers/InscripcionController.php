@@ -27,7 +27,7 @@ class InscripcionController extends Controller
         'fkcantidad_alumno' => 'required|integer', 
         'fktipo_periodo' => 'required|integer', 
         'fkpersona' => 'required|integer', 
-        'pago'=>'required|integer', 
+        'pago'=>'required', 
     ];
 
     public function __construct()
