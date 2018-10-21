@@ -27,7 +27,7 @@ class InscripcionController extends Controller
         'fkcantidad_alumno' => 'required|integer', 
         'fktipo_periodo' => 'required|integer', 
         'fkpersona' => 'required|integer', 
-        'pago'=>'required', 
+        'pago'=>'numeric|required|between:0,1000.99', 
     ];
 
     public function __construct()
@@ -56,20 +56,21 @@ class InscripcionController extends Controller
             })                                           
             ->addColumn('action', function ($data) {
                 switch ($data->fkestado) {
+                 
                     case 25:
-                        $color_estado = '<button class="btn btn-primary btn-xs" type="button" data-id="'.$data->id.'" data-estado="Inscrito"><span class="fa fa-thumbs-down"></span></button>';
+                         $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="Inscrito"><span class="fa fa-thumbs-up"></span></button>';
                         break;
                     case 26:
                         $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="Papeleria Incompleta"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                      case 27:
-                        $color_estado = '<button class="btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-estado="No Inscrito"><span class="fa fa-thumbs-down"></span></button>';
+                        $color_estado = '<button class="btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-id="No Inscrito"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                     case 28:
                         $color_estado = '<button class="btn btn-info btn-xs" type="button" data-id="'.$data->id.'" data-estado="Graduado"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                      case 29:
-                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="Graduado"><span class="fa fa-thumbs-down"></span></button>';
+                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="Ciclo Finalizado"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                 }
                 return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->ciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
@@ -97,6 +98,14 @@ class InscripcionController extends Controller
                 return response()->json($data);
             }        
         }  
+
+     public function dropencargado(Request $request, $id)
+        {
+            if($request->ajax()){
+                $data = Persona::buscarEncargado($id);
+                return response()->json($data);
+            }        
+        } 
 
      public function droptiperiodo(Request $request, $id)
     {

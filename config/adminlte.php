@@ -295,8 +295,13 @@ return [
                 'icon_color' => 'red',
                 ],
                 [
+                'text'    => 'Encargado de Estudiantes',
+                'url'     => '/academico/encargadoalumno/encargadoalumno',
+                'icon_color' => 'yellow',
+                ],
+                [
                 'text'    => 'Ingreso de Encargados',
-                'url'     => '#',
+                'url'     => '/academico/encargado/encargado',
                 'icon_color' => 'yellow',
                 ],
                 [

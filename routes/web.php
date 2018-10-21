@@ -129,14 +129,24 @@ Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudian
 
 //Docente
 Route::resource('/academico/docente/docente', 'DocenteController');
-Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
+Route::get('docente/getdata', 'DocenteController@getdata')->name('docente.getdata');
+
+//Encargado y Encargado de Estudiantes
+Route::resource('/academico/encargado/encargado', 'EncargadoController');
+Route::get('encargado/getdata', 'EncargadoController@getdata')->name('encargado.getdata');
+Route::resource('/academico/encargadoalumno/encargadoalumno', 'EncargadoAlumnoController');
+
+Route::post('/academico/encargadoalumno/cambiarEstado', 'EncargadoAlumnoController@cambiarEstado');
+Route::get('EncargadoAlumno/getdata', 'EncargadoController@getdata')->name('EncargadoAlumno.getdata');
+Route::get('/academico/inscripcion/dropencargado/{id}', 'InscripcionController@dropencargado');
+
+
 
 //Inscripcion
 Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
 Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
 Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
 Route::get('/academico/inscripcion/droptiperiodo/{id}', 'InscripcionController@droptiperiodo');
-
 Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
 Route::post('/academico/inscripcion/cambiarEstado', 'InscripcionController@cambiarEstado');
 

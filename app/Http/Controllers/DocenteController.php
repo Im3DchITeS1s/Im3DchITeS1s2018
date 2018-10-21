@@ -307,4 +307,3 @@ class DocenteController extends Controller
         return strtoupper($incial.'-'.$correlativo);
     }
 }
-}
