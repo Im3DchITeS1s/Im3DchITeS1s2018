@@ -12,6 +12,7 @@ class CreateCatedraticoCursoTable extends Migration
             $table->increments('id');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin')->nullable();
+            $table->smallInteger('cantidad_periodo')->default(0);
 
             $table->unsignedInteger('fkpersona');
             $table->unsignedInteger('fkcantidad_alumno');

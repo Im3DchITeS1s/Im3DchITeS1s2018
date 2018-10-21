@@ -17,10 +17,11 @@ class Inscripcion extends Model
 			->join('grado', 'carrera_grado.fkgrado', 'grado.id')
             ->select('inscripcion.fkcantidad_alumno as fkcantidad_alumno', 'carrera_grado.id as fkcarrera_grado', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'inscripcion.fktipo_periodo as fktipo_periodo')
 			->where('inscripcion.fkpersona', $id)
+			->where('inscripcion.ciclo', date('Y'))
             ->orderBy('carrera.nombre', 'asc')->get();
 	}	
 
-	public static function cursosAlumno($id, $fktipo_periodo){
+	public static function cursosAlumno($id, $fkcantidad_alumno){
 		return Inscripcion::join('cantidad_alumno', 'inscripcion.fkcantidad_alumno', 'cantidad_alumno.id')
 			->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
 			->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
@@ -30,7 +31,8 @@ class Inscripcion extends Model
 			->join('curso', 'carrera_curso.fkcurso', 'curso.id')
             ->select('inscripcion.fkcantidad_alumno as fkcantidad_alumno', 'carrera_curso.id as fkcarrera_curso', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')			
 			->where('inscripcion.fkpersona', $id)
-			->where('inscripcion.fktipo_periodo', $fktipo_periodo)
+			->where('inscripcion.ciclo', date('Y'))
+			->where('inscripcion.fkcantidad_alumno', $fkcantidad_alumno)
             ->orderBy('curso.nombre', 'asc')->get();
 	}	
 
