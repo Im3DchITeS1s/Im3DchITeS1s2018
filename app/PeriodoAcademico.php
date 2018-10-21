@@ -29,6 +29,13 @@ class PeriodoAcademico extends Model
             ->orderBy('nombre', 'asc')->get();
 	}
 
+	public static function verficiarFechaPeriodo($inicio, $fin)
+    {
+        return PeriodoAcademico::where('inicio', '>=', $inicio)
+        						->where('fin', '>=', $fin)
+        						->select('id')->get();   
+    } 	
+
 	public static function buscarIDPeriodoAcademico($id)
     {
         return PeriodoAcademico::findOrFail($id);       
