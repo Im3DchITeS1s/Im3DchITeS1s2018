@@ -47,7 +47,7 @@
                         @foreach($encabezados as $encabezado)
                             <div class="row">
                                 <input type="text" value="{{$encabezado->id}}" name="idEncuesta" style="visibility: hidden;">
-                                <div class="col-md-12">                                    
+                                <div class="col-md-12">                                  
                                     <h4><b>{{$encabezado->descripcion}}</b></h4>
                                 </div>                               
                             </div>
@@ -61,9 +61,15 @@
                                 </div>
                                 @foreach($respuestas as $key=>$respuesta)
                                     @if($pregunta->id == $respuesta->fkpregunta)
-                                        <div class="col-md-4">
-                                            {!!$pregunta->metadata_inicio!!}value="{{$respuesta->id}}"{!!$pregunta->idetiqueta!!}{{$respuesta->id}}{!!$pregunta->nameetiqueta!!}respuesta[{{$pregunta->id}}]{!!$pregunta->cierreetiqueta!!}<label for="{{$respuesta->id}}">{!!$respuesta->descripcion!!}</label>{!!$pregunta->metadata_cierra!!}
-                                        </div>
+                                        @if($respuesta->tipo == 'única')
+                                            <div class="col-md-3">unica
+                                                {!!$pregunta->metadata_inicio!!}value="{{$respuesta->id}}"{!!$pregunta->idetiqueta!!}{{$respuesta->id}}{!!$pregunta->nameetiqueta!!}respuesta_unica[{{$pregunta->id}}]{!!$pregunta->cierreetiqueta!!}<label for="{{$respuesta->id}}">{!!$respuesta->descripcion!!}</label>{!!$pregunta->metadata_cierra!!}
+                                            </div>                          
+                                        @elseif($respuesta->tipo == 'multiple')
+                                            <div class="col-md-3">multiple
+                                                {!!$pregunta->metadata_inicio!!}value="{{$respuesta->id}}"{!!$pregunta->idetiqueta!!}{{$respuesta->id}}{!!$pregunta->nameetiqueta!!}respuesta_multiple[][{{$pregunta->id}}]{!!$pregunta->cierreetiqueta!!}<label for="{{$respuesta->id}}">{!!$respuesta->descripcion!!}</label>{!!$pregunta->metadata_cierra!!}
+                                            </div>                              
+                                        @endif
                                     @endif
                                 @endforeach
                                 <br>

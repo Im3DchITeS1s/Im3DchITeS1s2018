@@ -4,11 +4,7 @@
 
 @section('content_header')
 	<div class="content-header">
-        <h1>Cuestionario
-            <button type="button" class="add-modal btn btn-success">
-                <span class="fa fa-search"></span>
-            </button> 
-        </h1>
+        <h1>Cuestionario</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="#"> Plataforma Blackboard</a></li>
@@ -55,47 +51,47 @@
                         <p class="errorSeleccionarCatedraticoAdd text-center alert alert-danger hidden"></p>
                     </div> 
                     <div class="col-sm-9">
+                        <small>nombre cuestionario</small>
                         <div class="input-group">
                           <div class="input-group-addon">
                             <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                           </div>
                           <input type="text" class="form-control" id="titulo_add" placeholder="titulo" required autofocus>
                         </div>
-                        <small class="control-label">required|max:100</small>
                         <p class="errorTitutloAdd text-center alert alert-danger hidden"></p>                  
                     </div>
                     <div class="col-sm-3">
-                        <div class="input-group">
-                          <div class="input-group-addon">
-                            <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                          </div>
-                          <input type="text" class="form-control" id="punteo_add" placeholder="punteo" required autofocus>
-                        </div>
-                        <small class="control-label">required|numeric|between:0,100</small>
-                        <p class="errorPunteoAdd text-center alert alert-danger hidden"></p>                  
-                    </div>                    
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                          <div class="input-group-addon">
-                            <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                          </div>
-                          <textarea type="text" class="form-control" id="descripcion_add" placeholder="descripcion" required autofocus></textarea>
-                        </div>
-                        <small class="control-label">required|max:1000</small>
-                        <p class="errorDescripcionAdd text-center alert alert-danger hidden"></p>                  
-                    </div>
-                    <div class="col-sm-4">
                         <small>escoger tipo de cuestionario</small>
                         <div class="input-group">
                           <div class="input-group-addon">
                             <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                           </div>
                             <select class="form-control js-example-basic-single" name="state" style="width: 100%" 
-                                name="fktipo_cuestionario_add" id='fktipo_cuestionario_add' required autofocus>
+                                name="fktipo_cuestionario_add" id='fktipo_cuestionario_add' onChange="mostrarPunteo(this)" required autofocus>
                             </select> 
                         </div>
-                        <p class="errorSeleccionarTipoCuestionarioAdd text-center alert alert-danger hidden"></p>                  
+                        <p class="errorSeleccionarTipoCuestionarioAdd text-center alert alert-danger hidden"></p>
+                    </div>                                      
+                    <div class="col-sm-12">
+                        <small>descripción del cuestionario</small>
+                        <div class="input-group">
+                          <div class="input-group-addon">
+                            <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                          </div>
+                          <textarea type="text" class="form-control" id="descripcion_add" placeholder="descripcion" required autofocus></textarea>
+                        </div>
+                        <p class="errorDescripcionAdd text-center alert alert-danger hidden"></p>                  
                     </div>
+                    <div class="col-sm-4" id="mostrarEtiquetaPunteo">
+                        <small>punteo del cuestionario</small>
+                        <div class='input-group'>
+                            <div class='input-group-addon'>
+                                <small class='pull-right' style='color: red;'><i class='fa fa-asterisk'></i></small>
+                            </div>
+                            <input type='text' class='form-control' id='punteo_add' placeholder='punteo' required autofocus>
+                        </div>
+                        <p class='errorPunteoAdd text-center alert alert-danger hidden'></p>  
+                    </div>                       
                     <div class="col-sm-4">
                         <small>escoger periodo academico</small>
                         <div class="input-group">
@@ -120,6 +116,26 @@
                         </div>
                         <p class="errorSeleccionarPrioridadAdd text-center alert alert-danger hidden"></p>                  
                     </div>
+                    <div class="col-sm-4">
+                        <small>escoger fecha de activación</small>
+                        <div class="input-group date" data-provide="datepicker">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control" id="inicio_add" name="inicio_add" placeholder="dd/mm/yyyy" autofocus>
+                        </div>                                                               
+                        <p class="erroInicioAdd text-center alert alert-danger hidden"></p>
+                    </div> 
+                    <div class="col-sm-4">
+                        <small>escoger fecha de desactivación</small>
+                        <div class="input-group date" data-provide="datepicker">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control" id="fin_add" name="fin_add" placeholder="dd/mm/yyyy" autofocus>
+                        </div>                                                               
+                        <p class="erroFinAdd text-center alert alert-danger hidden"></p>
+                    </div>                                        
                   </div>
                 </div>
 
@@ -156,7 +172,6 @@
                           </div>
                           <input type="text" class="form-control" id="pregunta_add" placeholder="pregunta" required autofocus>
                         </div>
-                        <small class="control-label">required|min:500</small>
                         <p class="errorPreguntaAdd text-center alert alert-danger hidden"></p>                  
                     </div>
                     <div class="col-sm-4">
@@ -208,7 +223,6 @@
                         <li><a data-toggle="tab" href="#listo">Listo<span id="cantidadListos" class="label label-primary pull-right"></span></a></li>
                         <li><a data-toggle="tab" href="#publicado">Publicado<span id="cantidadPublicados" class="label label-primary pull-right"></span></a></li>
                         <li><a data-toggle="tab" href="#restringido">Restringido<span id="cantidadRestringidos" class="label label-primary pull-right"></span></a></li>
-                        <li><a data-toggle="tab" href="#inactivo">Inactivo<span id="cantidadInactivos" class="label label-primary pull-right"></span></a></li>
                     </ul>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -227,6 +241,7 @@
                                             <th width="1%">Documento</th>
                                             <th width="1%">Titulo</th>
                                             <th width="1%">Carrera - Grado</th>
+                                            <th width="1%">Fechas</th>
                                             <th width="1%">Accion</th>
                                         </tr>
                                     </thead>
@@ -240,6 +255,7 @@
                                             <th width="1%">Documento</th>
                                             <th width="1%">Titulo</th>
                                             <th width="1%">Carrera - Grado</th>
+                                            <th width="1%">Fechas</th>
                                             <th width="1%">Accion</th>
                                         </tr>
                                     </thead>
@@ -253,6 +269,7 @@
                                             <th width="1%">Documento</th>
                                             <th width="1%">Titulo</th>
                                             <th width="1%">Carrera - Grado</th>
+                                            <th width="1%">Fechas</th>
                                             <th width="1%">Accion</th>
                                         </tr>
                                     </thead>
@@ -266,6 +283,7 @@
                                             <th width="1%">Documento</th>
                                             <th width="1%">Titulo</th>
                                             <th width="1%">Carrera - Grado</th>
+                                            <th width="1%">Fechas</th>
                                             <th width="1%">Accion</th>
                                         </tr>
                                     </thead>
@@ -279,19 +297,7 @@
                                             <th width="1%">Documento</th>
                                             <th width="1%">Titulo</th>
                                             <th width="1%">Carrera - Grado</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>                                 
-                            </div>
-                            <div id="inactivo" class="tab-pane fade">
-                                <h3>INACTIVO</h3>
-                                <table class="table table-bordered table-hover dataTable" id="info-table-inactivo" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Documento</th>
-                                            <th width="1%">Titulo</th>
-                                            <th width="1%">Carrera - Grado</th>
+                                            <th width="1%">Fechas</th>
                                             <th width="1%">Accion</th>
                                         </tr>
                                     </thead>
@@ -333,7 +339,6 @@
                                   </div>
                                   <input type="text" class="form-control" id="respuesta_add" placeholder="respuesta" required autofocus>
                                 </div>
-                                <small class="control-label">required|min:150</small>
                                 <p class="errorRespuestaAdd text-center alert alert-danger hidden"></p>                  
                             </div>           
                         </div>
@@ -388,8 +393,11 @@
         var id_pregunta = 0;
         var id_respuesta = 0;
         var seleccion = 0;
+      
 
         $(document).ready(function() {
+            $('#punteo_add').addClass('hidden');
+            
             $('.js-example-basic-multiple').select2({
                 placeholder: "Seleccionar una o mas opciones",
             });
@@ -399,42 +407,39 @@
             });
         }); 
 
-        $(document).on('click', '.add-modal', function() { 
-        
-            $.get("/plataforma/blackboard/cuestionario/dropcarreracatedratico/"+0,function(response){
-                $("#fkcatedratico_curso_add").empty();
-                for(i=0; i<response.length; i++){
-                    $("#fkcatedratico_curso_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" / "+response[i].curso+" / "+response[i].grado+" / "+response[i].seccion+" </option>");
-                }
-            });
+        $.get("/plataforma/blackboard/cuestionario/dropcarreracatedratico/"+0,function(response){
+            $("#fkcatedratico_curso_add").empty();
+            for(i=0; i<response.length; i++){
+                $("#fkcatedratico_curso_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" / "+response[i].curso+" / "+response[i].grado+" / "+response[i].seccion+" </option>");
+            }
+        });
 
-            $.get("/plataforma/blackboard/cuestionario/droptipocuestionario/"+5,function(response){
-                $("#fktipo_cuestionario_add").empty();
-                $("#fktipo_cuestionario_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fktipo_cuestionario_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fktipo_cuestionario_add').val('').trigger('change.select2');
-                }
-            });
+        $.get("/plataforma/blackboard/cuestionario/droptipocuestionario/"+5,function(response){
+            $("#fktipo_cuestionario_add").empty();
+            $("#fktipo_cuestionario_add").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fktipo_cuestionario_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fktipo_cuestionario_add').val('').trigger('change.select2');
+            }
+        });
 
-            $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response){
-                $("#fkperiodo_academico_add").empty();
-                $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" </option>");
-                    $('#fkperiodo_academico_add').val('').trigger('change.select2');
-                }
-            });
+        $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response){
+            $("#fkperiodo_academico_add").empty();
+            $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" </option>");
+                $('#fkperiodo_academico_add').val('').trigger('change.select2');
+            }
+        });
 
-            $.get("/plataforma/blackboard/cuestionario/dropprioridad/"+5,function(response){
-                $("#fkprioridad_add").empty();
-                $("#fkprioridad_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkprioridad_add").append("<option value='"+response[i].id+"'> <i class='fa fa-circle-o text-"+response[i].color+"'>"+response[i].nombre+"</i>"+" </option>");
-                    $('#fkprioridad_add').val('').trigger('change.select2');
-                }
-            }); 
-        });       
+        $.get("/plataforma/blackboard/cuestionario/dropprioridad/"+5,function(response){
+            $("#fkprioridad_add").empty();
+            $("#fkprioridad_add").append("<option value=''> seleccionar </option>");
+            for(i=0; i<response.length; i++){
+                $("#fkprioridad_add").append("<option value='"+response[i].id+"'> <i class='fa fa-circle-o text-"+response[i].color+"'>"+response[i].nombre+"</i>"+" </option>");
+                $('#fkprioridad_add').val('').trigger('change.select2');
+            }
+        });      
 
         $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+18,function(response, id){
             $('#cantidadCreados').text(response);
@@ -451,9 +456,21 @@
         $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+22,function(response, id){
             $('#cantidadRestringidos').text(response);
         });
-        $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+23,function(response, id){
-            $('#cantidadInactivos').text(response);
-        });
+
+
+        function mostrarPunteo(sel) {
+            $('#punteo_add').addClass('hidden');
+
+            if(sel.value == 1)
+            {
+                $('#punteo_add').removeClass('hidden');                                    
+            }   
+            if(sel.value == 2)
+            {
+                $("punteo_add").val('0');                                        
+            }                      
+        } 
+
 
 
         $(document).ready(function() {
@@ -470,6 +487,7 @@
                     { data: 'documento', name: 'documento' },
                     { data: 'titulo', name: 'titulo' },
                     { data: 'carrera_grado', name: 'carrera_grado' },
+                    { data: 'fecha', name: 'fecha' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -484,6 +502,7 @@
                     { data: 'documento', name: 'documento' },
                     { data: 'titulo', name: 'titulo' },
                     { data: 'carrera_grado', name: 'carrera_grado' },
+                    { data: 'fecha', name: 'fecha' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -498,6 +517,7 @@
                     { data: 'documento', name: 'documento' },
                     { data: 'titulo', name: 'titulo' },
                     { data: 'carrera_grado', name: 'carrera_grado' },
+                    { data: 'fecha', name: 'fecha' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -512,6 +532,7 @@
                     { data: 'documento', name: 'documento' },
                     { data: 'titulo', name: 'titulo' },
                     { data: 'carrera_grado', name: 'carrera_grado' },
+                    { data: 'fecha', name: 'fecha' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });   
@@ -526,20 +547,7 @@
                     { data: 'documento', name: 'documento' },
                     { data: 'titulo', name: 'titulo' },
                     { data: 'carrera_grado', name: 'carrera_grado' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-                ]
-            });
-
-            tableInactivo = $('#info-table-inactivo').DataTable({ 
-                processing: true,
-                serverSide: false,
-                paginate: true,
-                searching: true,
-                ajax: '{!! route('cuestionario.getdataCuestionarioInactivo') !!}',
-                columns: [
-                    { data: 'documento', name: 'documento' },
-                    { data: 'titulo', name: 'titulo' },
-                    { data: 'carrera_grado', name: 'carrera_grado' },
+                    { data: 'fecha', name: 'fecha' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });                                                         
@@ -548,171 +556,244 @@
         $('.modal-footer').on('click', '.add', function() {
             if(id > 0)
             {
-                $.ajax({
-                    type: 'PUT',
-                    url: '/plataforma/blackboard/cuestionario/'+id,
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'id': id,
-                        'titulo': $('#titulo_add').val(),
-                        'descripcion': $('#descripcion_add').val(),
-                        'punteo': $('#punteo_add').val(),
-                        'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
-                        'fktipo_cuestionario': $('#fktipo_cuestionario_add').val(),
-                        'fkprioridad': $('#fkprioridad_add').val(), 
-                        'fkcatedratico_curso': $('#fkcatedratico_curso_edit').val(),                    
-                    },
-                    success: function(data) {
-                        $('.errorTitutloAdd').addClass('hidden');
-                        $('.errorDescripcionAdd').addClass('hidden');
-                        $('.errorPunteoAdd').addClass('hidden');
-                        $('.errorSeleccionarPeriodoAcademicoAdd').addClass('hidden');
-                        $('.errorSeleccionarTipoCuestionarioAdd').addClass('hidden');
-                        $('.errorSeleccionarPrioridadAdd').addClass('hidden');
-                        $('.errorSeleccionarCatedraticoAdd').addClass('hidden');
+                var info = $('#inicio_add').val().split('/');
+                var inicio = info[2] + '-' + info[1] + '-' + info[0];
+                var infor = $('#fin_add').val().split('/');
+                var fin = infor[2] + '-' + infor[1] + '-' + infor[0];
+                $.get("/plataforma/blackboard/verificar/fecha/"+inicio+"/"+fin,function(response){
+                    for(i=0; i<response.length; i++)
+                    {
+                        if(response[i].id == $('#fkperiodo_academico_add').val())
+                        {
+                            $.ajax({
+                                type: 'PUT',
+                                url: '/plataforma/blackboard/cuestionario/'+id,
+                                data: {
+                                    '_token': $('input[name=_token]').val(),
+                                    'id': id,
+                                    'titulo': $('#titulo_add').val(),
+                                    'descripcion': $('#descripcion_add').val(),
+                                    'punteo': $('#punteo_add').val(),
+                                    'inicio': inicio,
+                                    'fin': fin,                          
+                                    'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
+                                    'fktipo_cuestionario': $('#fktipo_cuestionario_add').val(),
+                                    'fkprioridad': $('#fkprioridad_add').val(), 
+                                    'fkcatedratico_curso': $('#fkcatedratico_curso_edit').val(),                    
+                                },
+                                success: function(data) {
+                                    $('.errorTitutloAdd').addClass('hidden');
+                                    $('.errorDescripcionAdd').addClass('hidden');
+                                    $('.errorPunteoAdd').addClass('hidden');
+                                    $('.errorSeleccionarPeriodoAcademicoAdd').addClass('hidden');
+                                    $('.errorSeleccionarTipoCuestionarioAdd').addClass('hidden');
+                                    $('.errorSeleccionarPrioridadAdd').addClass('hidden');
+                                    $('.errorSeleccionarCatedraticoAdd').addClass('hidden');
+                                    $('.erroInicioAdd').addClass('hidden');
+                                    $('.erroFinAdd').addClass('hidden');                        
 
-                        if ((data.errors)) {
-                            setTimeout(function () {
-                                $('#addModal').modal('show');
-                                swal("Error", "No se ingreso la informacion", "error", {
-                                  buttons: false,
-                                  timer: 2000,
-                                });
-                            }, 500);
+                                    if ((data.errors)) {
+                                        setTimeout(function () {
+                                            $('#addModal').modal('show');
+                                            swal("Error", "No se ingreso la informacion", "error", {
+                                              buttons: false,
+                                              timer: 2000,
+                                            });
+                                        }, 500);
 
-                            if (data.errors.titulo) {
-                                $('.errorTitutloAdd').removeClass('hidden');
-                                $('.errorTitutloAdd').text(data.errors.titulo);
-                            }
+                                        if (data.errors.titulo) {
+                                            $('.errorTitutloAdd').removeClass('hidden');
+                                            $('.errorTitutloAdd').text(data.errors.titulo);
+                                        }
 
-                            if (data.errors.descripcion) {
-                                $('.errorDescripcionAdd').removeClass('hidden');
-                                $('.errorDescripcionAdd').text(data.errors.descripcion);
-                            }      
-                            if (data.errors.punteo) {
-                                $('.errorPunteoAdd').removeClass('hidden');
-                                $('.errorPunteoAdd').text(data.errors.punteo);
-                            }    
-                            if (data.errors.fkperiodo_academico) {
-                                $('.errorSeleccionarPeriodoAcademicoAdd').removeClass('hidden');
-                                $('.errorSeleccionarPeriodoAcademicoAdd').text(data.errors.fkperiodo_academico);
-                            } 
-                            if (data.errors.fktipo_cuestionario) {
-                                $('.errorSeleccionarTipoCuestionarioAdd').removeClass('hidden');
-                                $('.errorSeleccionarTipoCuestionarioAdd').text(data.errors.fktipo_cuestionario);
-                            } 
-                            if (data.errors.prioridad) {
-                                $('.errorSeleccionarPrioridadAdd').removeClass('hidden');
-                                $('.errorSeleccionarPrioridadAdd').text(data.errors.prioridad);
-                            } 
-                            if (data.errors.fkcatedratico_curso) {
-                                $('.errorSeleccionarCatedraticoAdd').removeClass('hidden');
-                                $('.errorSeleccionarCatedraticoAdd').text(data.errors.fkcatedratico_curso);
-                            }                         
-                        } else {
-                            swal("Correcto", "Se ingreso la informacion", "success")
-                            .then((value) => {
-                                id = 0;
-                                $('#titulo_add').val('');
-                                $('#descripcion_add').val('');
-                                $('#punteo_add').val('');
-                                $('#fkperiodo_academico_add').val('').trigger('change.select2');
-                                $('#fktipo_cuestionario_add').val('').trigger('change.select2');
-                                $('#fkprioridad_add').val('').trigger('change.select2');
-                                $('#fkcatedratico_curso_edit').val('').trigger('change.select2');
+                                        if (data.errors.descripcion) {
+                                            $('.errorDescripcionAdd').removeClass('hidden');
+                                            $('.errorDescripcionAdd').text(data.errors.descripcion);
+                                        }      
+                                        if (data.errors.punteo) {
+                                            $('.errorPunteoAdd').removeClass('hidden');
+                                            $('.errorPunteoAdd').text(data.errors.punteo);
+                                        }    
+                                        if (data.errors.fkperiodo_academico) {
+                                            $('.errorSeleccionarPeriodoAcademicoAdd').removeClass('hidden');
+                                            $('.errorSeleccionarPeriodoAcademicoAdd').text(data.errors.fkperiodo_academico);
+                                        } 
+                                        if (data.errors.fktipo_cuestionario) {
+                                            $('.errorSeleccionarTipoCuestionarioAdd').removeClass('hidden');
+                                            $('.errorSeleccionarTipoCuestionarioAdd').text(data.errors.fktipo_cuestionario);
+                                        } 
+                                        if (data.errors.fkprioridad) {
+                                            $('.errorSeleccionarPrioridadAdd').removeClass('hidden');
+                                            $('.errorSeleccionarPrioridadAdd').text(data.errors.fkprioridad);
+                                        } 
+                                        if (data.errors.fkcatedratico_curso) {
+                                            $('.errorSeleccionarCatedraticoAdd').removeClass('hidden');
+                                            $('.errorSeleccionarCatedraticoAdd').text(data.errors.fkcatedratico_curso);
+                                        } 
+                                        if (data.errors.inicio) {
+                                            $('.erroInicioAdd').removeClass('hidden');
+                                            $('.erroInicioAdd').text(data.errors.inicio);
+                                        } 
+                                        if (data.errors.fin) {
+                                            $('.erroFinAdd').removeClass('hidden');
+                                            $('.erroFinAdd').text(data.errors.fin);
+                                        }                                                    
+                                    } else {
+                                        swal("Correcto", "Se ingreso la informacion", "success")
+                                        .then((value) => {
+                                            id = 0;
+                                            $('#titulo_add').val('');
+                                            $('#descripcion_add').val('');
+                                            $('#punteo_add').val('');
+                                            $('#inicio_add').val('');
+                                            $('#fin_add').val('');                                
+                                            $('#fkperiodo_academico_add').val('').trigger('change.select2');
+                                            $('#fktipo_cuestionario_add').val('').trigger('change.select2');
+                                            $('#fkprioridad_add').val('').trigger('change.select2');
+                                            $('#fkcatedratico_curso_edit').val('').trigger('change.select2');
 
-                                $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+18,function(response, id){
-                                    $('#cantidadCreados').text(response);
-                                });                              
-                                tableCreado.ajax.reload();
-                                $('#addCatedratico').removeClass('hidden');            
-                                $('#editCatedratico').addClass('hidden');                                
-                            });                          
+                                            $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+18,function(response, id){
+                                                $('#cantidadCreados').text(response);
+                                            });                              
+                                            tableCreado.ajax.reload();
+                                            $('#addCatedratico').removeClass('hidden');            
+                                            $('#editCatedratico').addClass('hidden');                                
+                                        });                          
+                                    }
+                                },
+                            });
                         }
-                    },
-                });
+                        else
+                        {
+                            swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
+                            .then((value) => {
+                                $('#inicio_add').val('');
+                                $('#fin_add').val(''); 
+                            });
+                            break;
+                        } 
+                    } 
+                });                                                   
             }
             else
             {
-                $.ajax({
-                    type: 'POST',
-                    url: '/plataforma/blackboard/cuestionario',
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'titulo': $('#titulo_add').val(),
-                        'descripcion': $('#descripcion_add').val(),
-                        'punteo': $('#punteo_add').val(),
-                        'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
-                        'fktipo_cuestionario': $('#fktipo_cuestionario_add').val(),
-                        'fkprioridad': $('#fkprioridad_add').val(), 
-                        'fkcatedratico_curso': $('#fkcatedratico_curso_add').val(),                    
-                    },
-                    success: function(data) {
-                        $('.errorTitutloAdd').addClass('hidden');
-                        $('.errorDescripcionAdd').addClass('hidden');
-                        $('.errorPunteoAdd').addClass('hidden');
-                        $('.errorSeleccionarPeriodoAcademicoAdd').addClass('hidden');
-                        $('.errorSeleccionarTipoCuestionarioAdd').addClass('hidden');
-                        $('.errorSeleccionarPrioridadAdd').addClass('hidden');
-                        $('.errorSeleccionarCatedraticoAdd').addClass('hidden');
+                var info = $('#inicio_add').val().split('/');
+                var inicio = info[2] + '-' + info[1] + '-' + info[0];
+                var infor = $('#fin_add').val().split('/');
+                var fin = infor[2] + '-' + infor[1] + '-' + infor[0];
+                $.get("/plataforma/blackboard/verificar/fecha/"+inicio+"/"+fin,function(response){
+                    for(i=0; i<response.length; i++)
+                    {
+                        if(response[i].id == $('#fkperiodo_academico_add').val())
+                        {
+                            console.log(response[i].id);
+                            console.log($('#fkperiodo_academico_add').val());
+                            $.ajax({
+                                type: 'POST',
+                                url: '/plataforma/blackboard/cuestionario',
+                                data: {
+                                    '_token': $('input[name=_token]').val(),
+                                    'titulo': $('#titulo_add').val(),
+                                    'descripcion': $('#descripcion_add').val(),
+                                    'punteo': $('#punteo_add').val(),
+                                    'inicio': inicio,
+                                    'fin': fin,                        
+                                    'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
+                                    'fktipo_cuestionario': $('#fktipo_cuestionario_add').val(),
+                                    'fkprioridad': $('#fkprioridad_add').val(), 
+                                    'fkcatedratico_curso': $('#fkcatedratico_curso_add').val(),                    
+                                },
+                                success: function(data) {
+                                    $('.errorTitutloAdd').addClass('hidden');
+                                    $('.errorDescripcionAdd').addClass('hidden');
+                                    $('.errorPunteoAdd').addClass('hidden');
+                                    $('.errorSeleccionarPeriodoAcademicoAdd').addClass('hidden');
+                                    $('.errorSeleccionarTipoCuestionarioAdd').addClass('hidden');
+                                    $('.errorSeleccionarPrioridadAdd').addClass('hidden');
+                                    $('.errorSeleccionarCatedraticoAdd').addClass('hidden');
+                                    $('.erroInicioAdd').addClass('hidden');
+                                    $('.erroFinAdd').addClass('hidden');   
 
-                        if ((data.errors)) {
-                            setTimeout(function () {
-                                $('#addModal').modal('show');
-                                swal("Error", "No se ingreso la informacion", "error", {
-                                  buttons: false,
-                                  timer: 2000,
-                                });
-                            }, 500);
+                                    if ((data.errors)) {
+                                        setTimeout(function () {
+                                            $('#addModal').modal('show');
+                                            swal("Error", "No se ingreso la informacion", "error", {
+                                              buttons: false,
+                                              timer: 2000,
+                                            });
+                                        }, 500);
 
-                            if (data.errors.titulo) {
-                                $('.errorTitutloAdd').removeClass('hidden');
-                                $('.errorTitutloAdd').text(data.errors.titulo);
-                            }
+                                        if (data.errors.titulo) {
+                                            $('.errorTitutloAdd').removeClass('hidden');
+                                            $('.errorTitutloAdd').text(data.errors.titulo);
+                                        }
 
-                            if (data.errors.descripcion) {
-                                $('.errorDescripcionAdd').removeClass('hidden');
-                                $('.errorDescripcionAdd').text(data.errors.descripcion);
-                            }      
-                            if (data.errors.punteo) {
-                                $('.errorPunteoAdd').removeClass('hidden');
-                                $('.errorPunteoAdd').text(data.errors.punteo);
-                            }    
-                            if (data.errors.fkperiodo_academico) {
-                                $('.errorSeleccionarPeriodoAcademicoAdd').removeClass('hidden');
-                                $('.errorSeleccionarPeriodoAcademicoAdd').text(data.errors.fkperiodo_academico);
-                            } 
-                            if (data.errors.fktipo_cuestionario) {
-                                $('.errorSeleccionarTipoCuestionarioAdd').removeClass('hidden');
-                                $('.errorSeleccionarTipoCuestionarioAdd').text(data.errors.fktipo_cuestionario);
-                            } 
-                            if (data.errors.prioridad) {
-                                $('.errorSeleccionarPrioridadAdd').removeClass('hidden');
-                                $('.errorSeleccionarPrioridadAdd').text(data.errors.prioridad);
-                            } 
-                            if (data.errors.fkcatedratico_curso) {
-                                $('.errorSeleccionarCatedraticoAdd').removeClass('hidden');
-                                $('.errorSeleccionarCatedraticoAdd').text(data.errors.fkcatedratico_curso);
-                            }                         
-                        } else {
-                            swal("Correcto", "Se ingreso la informacion", "success")
-                            .then((value) => {
-                                $('#titulo_add').val('');
-                                $('#descripcion_add').val('');
-                                $('#punteo_add').val('');
-                                $('#fkperiodo_academico_add').val('').trigger('change.select2');
-                                $('#fktipo_cuestionario_add').val('').trigger('change.select2');
-                                $('#fkprioridad_add').val('').trigger('change.select2');
-                                $('#fkcatedratico_curso_add').val('').trigger('change.select2');
+                                        if (data.errors.descripcion) {
+                                            $('.errorDescripcionAdd').removeClass('hidden');
+                                            $('.errorDescripcionAdd').text(data.errors.descripcion);
+                                        }      
+                                        if (data.errors.punteo) {
+                                            $('.errorPunteoAdd').removeClass('hidden');
+                                            $('.errorPunteoAdd').text(data.errors.punteo);
+                                        }    
+                                        if (data.errors.fkperiodo_academico) {
+                                            $('.errorSeleccionarPeriodoAcademicoAdd').removeClass('hidden');
+                                            $('.errorSeleccionarPeriodoAcademicoAdd').text(data.errors.fkperiodo_academico);
+                                        } 
+                                        if (data.errors.fktipo_cuestionario) {
+                                            $('.errorSeleccionarTipoCuestionarioAdd').removeClass('hidden');
+                                            $('.errorSeleccionarTipoCuestionarioAdd').text(data.errors.fktipo_cuestionario);
+                                        } 
+                                        if (data.errors.fkprioridad) {
+                                            $('.errorSeleccionarPrioridadAdd').removeClass('hidden');
+                                            $('.errorSeleccionarPrioridadAdd').text(data.errors.fkprioridad);
+                                        } 
+                                        if (data.errors.fkcatedratico_curso) {
+                                            $('.errorSeleccionarCatedraticoAdd').removeClass('hidden');
+                                            $('.errorSeleccionarCatedraticoAdd').text(data.errors.fkcatedratico_curso);
+                                        } 
+                                        if (data.errors.inicio) {
+                                            $('.erroInicioAdd').removeClass('hidden');
+                                            $('.erroInicioAdd').text(data.errors.inicio);
+                                        } 
+                                        if (data.errors.fin) {
+                                            $('.erroFinAdd').removeClass('hidden');
+                                            $('.erroFinAdd').text(data.errors.fin);
+                                        }                                                        
+                                    } else {
+                                        swal("Correcto", "Se ingreso la informacion", "success")
+                                        .then((value) => {
+                                            $('#titulo_add').val('');
+                                            $('#descripcion_add').val('');
+                                            $('#punteo_add').val('');
+                                            $('#inicio_add').val('');
+                                            $('#fin_add').val('');                                   
+                                            $('#fkperiodo_academico_add').val('').trigger('change.select2');
+                                            $('#fktipo_cuestionario_add').val('').trigger('change.select2');
+                                            $('#fkprioridad_add').val('').trigger('change.select2');
+                                            $('#fkcatedratico_curso_add').val('').trigger('change.select2');
 
-                                $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+18,function(response, id){
-                                    $('#cantidadCreados').text(response);
-                                });                              
-                                tableCreado.ajax.reload();
-                            });                          
+                                            $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+18,function(response, id){
+                                                $('#cantidadCreados').text(response);
+                                            });                              
+                                            tableCreado.ajax.reload();
+                                        });                          
+                                    }
+                                },
+                            }); 
+                            break;
                         }
-                    },
-                }); 
+                        else
+                        {
+                            swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
+                            .then((value) => {
+                                $('#inicio_add').val('');
+                                $('#fin_add').val(''); 
+                            });
+                            break;
+                        }
+                    } 
+                });                
             }
         }); 
 
@@ -724,11 +805,13 @@
             id = $(this).data('id');
             $('#titulo_add').val($(this).data('titulo'));
             $('#descripcion_add').val($(this).data('descripcion'));
-            $('#punteo_add').val($(this).data('punteo'));
-            id_fkcatedratico_curso = $(this).data('fkcatedratico_curso');
             id_fktipo_cuestionario = $(this).data('fktipo_cuestionario');
+            $('#inicio_add').val($(this).data('inicio'));
+            $('#fin_add').val($(this).data('fin'));            
+            id_fkcatedratico_curso = $(this).data('fkcatedratico_curso');
             id_fkperiodo_academico = $(this).data('fkperiodo_academico');
             id_fkprioridad = $(this).data('fkprioridad');
+            $("#punteo_add").val($(this).data('punteo'));   
 
             $.get("/plataforma/blackboard/cuestionario/dropcarreracatedratico/"+0,function(response){
                 $("#fkcatedratico_curso_edit").empty();
@@ -743,8 +826,8 @@
                 $("#fktipo_cuestionario_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fktipo_cuestionario_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fktipo_cuestionario_add').val(id_fktipo_cuestionario).trigger('change.select2');
-                }
+                    $('#fktipo_cuestionario_add').val(id_fktipo_cuestionario).trigger('change.select2');                      
+                }            
             });
 
             $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response){
@@ -763,7 +846,7 @@
                     $("#fkprioridad_add").append("<option value='"+response[i].id+"'> <i class='fa fa-circle-o text-"+response[i].color+"'>"+response[i].nombre+"</i>"+" </option>");
                     $('#fkprioridad_add').val(id_fkprioridad).trigger('change.select2');
                 }
-            });            
+            });                             
         });   
 
         $(document).on('click', '.delete-modal', function() {
@@ -783,7 +866,7 @@
                     data: {
                         '_token': $('input[name=_token]').val(),
                         'id': id,
-                        'fkestado' : $(this).data('fkestado')
+                        'palabra' : $(this).data('palabra'),
                     },
                     success: function(data) {  
 
@@ -802,9 +885,6 @@
                         $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+22,function(response, id){
                             $('#cantidadRestringidos').text(response);
                         });
-                        $.get("/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/"+23,function(response, id){
-                            $('#cantidadInactivos').text(response);
-                        });
 
                         swal("Correcto", "Se modifico el estado", "success")
                         .then((value) => {
@@ -814,8 +894,7 @@
                             tableEdicion.ajax.reload(); 
                             tableListo.ajax.reload(); 
                             tablePublicado.ajax.reload(); 
-                            tableRestringido.ajax.reload(); 
-                            tableInactivo.ajax.reload();                                                        
+                            tableRestringido.ajax.reload();                              
                         });                                                  
                     },
                 });                                           
@@ -953,8 +1032,7 @@
                                     $("#fketiqueta_add").empty();
                                     $("#fketiqueta_add").append("<option value=''> seleccionar </option>");
                                     for(i=0; i<response.length; i++){
-                                        $("#fketiqueta_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"/"+response[i].color+" </option>");                      
-                                        $('#fketiqueta_add').val('').trigger('change.select2');  
+                                        $("#fketiqueta_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"/"+response[i].tipo+"/"+response[i].color+" </option>");                      
                                     }
                                 });                            
                                 table_pregunta.ajax.reload();                                
@@ -1019,13 +1097,14 @@
             $('#etiquetaPregunta').empty();
             id_pregunta = $(this).data('id');
 
-            $('.modal-title').text('Agregar Respuesta');5
+            $('.modal-title').text('Agregar Respuesta');
             $('#addRespuestaModal').modal({show: true, backdrop: 'static'});  
             $('#nombrePregunta').text($(this).data('pregunta'));
 
             $.get("/plataforma/blackboard/pregunta/buscaretiqueta/"+id_pregunta,function(response){
                 for(i=0; i<response.length; i++){
-                    $('#etiquetaPregunta').append(response[i].metadata_inicio+response[i].idetiqueta+'someCheckboxId'+response[i].nameetiqueta+'nameetiqueta'+response[i].cierreetiqueta+'<label for="someCheckboxId">Etiqueta</label>'+response[i].metadata_cierra);
+                    $('#etiquetaPregunta').append(response[i].metadata_inicio+response[i].idetiqueta+'someCheckboxId'+response[i].nameetiqueta+'nameetiqueta'+response[i].cierreetiqueta+'<label id="etiquetaPinta" for="someCheckboxId">'+response[i].tipo_etiqueta+'</label>'+response[i].metadata_cierra);
+                    text_etiqueta = response[i].tipo_etiqueta;
                 }
             });
 
@@ -1059,92 +1138,225 @@
         $('.modal-footer').on('click', '.addRespuesta', function() {
             if(id_respuesta > 0)
             {
-                $.ajax({
-                    type: 'PUT',
-                    url: '/plataforma/blackboard/respuesta/'+id_respuesta,
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'id': id_respuesta,
-                        'descripcion': $('#respuesta_add').val(),
-                        'validar': seleccion,                   
-                    },
-                    success: function(data) {
-                        $('.errorRespuestaAdd').addClass('hidden');
-                        $('.errorValidarAdd').addClass('hidden');
+                $.get("/plataforma/blackboard/respuesta/valida/"+id_pregunta+"/"+text_etiqueta+"/"+seleccion,function(response){
 
-                        if ((data.errors)) {
-                            setTimeout(function () {
-                                swal("Error", "No se ingreso la informacion", "error", {
-                                  buttons: false,
-                                  timer: 2000,
-                                });
-                            }, 500);
+                    if(text_etiqueta == "única" && seleccion == 1)
+                    {
+                        if(response.length === 0)
+                        {
 
-                            if (data.errors.descripcion) {
-                                $('.errorRespuestaAdd').removeClass('hidden');
-                                $('.errorRespuestaAdd').text(data.errors.descripcion);
-                            }
+                            $.ajax({
+                                type: 'PUT',
+                                url: '/plataforma/blackboard/respuesta/'+id_respuesta,
+                                data: {
+                                    '_token': $('input[name=_token]').val(),
+                                    'id': id_respuesta,
+                                    'descripcion': $('#respuesta_add').val(),
+                                    'validar': seleccion,                   
+                                },
+                                success: function(data) {
+                                    $('.errorRespuestaAdd').addClass('hidden');
+                                    $('.errorValidarAdd').addClass('hidden');
 
-                            if (data.errors.validar) {
-                                $('.errorValidarAdd').removeClass('hidden');
-                                $('.errorValidarAdd').text(data.errors.validar);
-                            }                           
-                        } else {
-                            swal("Correcto", "Se ingreso la informacion", "success")
-                            .then((value) => {
-                                id_respuesta = 0;
-                                $('#respuesta_add').val('');
-                                $('#validacion_add').prop("checked", false);     
-                                tabla_respuesta.ajax.reload();                                
-                            });                          
+                                    if ((data.errors)) {
+                                        setTimeout(function () {
+                                            swal("Error", "No se ingreso la informacion", "error", {
+                                              buttons: false,
+                                              timer: 2000,
+                                            });
+                                        }, 500);
+
+                                        if (data.errors.descripcion) {
+                                            $('.errorRespuestaAdd').removeClass('hidden');
+                                            $('.errorRespuestaAdd').text(data.errors.descripcion);
+                                        }
+
+                                        if (data.errors.validar) {
+                                            $('.errorValidarAdd').removeClass('hidden');
+                                            $('.errorValidarAdd').text(data.errors.validar);
+                                        }                           
+                                    } else {
+                                        swal("Correcto", "Se ingreso la informacion", "success")
+                                        .then((value) => {
+                                            id_respuesta = 0;
+                                            $('#respuesta_add').val('');
+                                            $('#validacion_add').prop("checked", false);     
+                                            tabla_respuesta.ajax.reload();                                
+                                        });                          
+                                    }
+                                },
+                            });                            
+
                         }
-                    },
-                });
+                        else
+                        {
+                            swal("Advertencia", "Ya existe una respuesta correcta para la pregunta", "warning", {
+                              buttons: false,
+                              timer: 2000,
+                            });                             
+                        }
+                    }
+                    else
+                    {
+
+                        $.ajax({
+                            type: 'PUT',
+                            url: '/plataforma/blackboard/respuesta/'+id_respuesta,
+                            data: {
+                                '_token': $('input[name=_token]').val(),
+                                'id': id_respuesta,
+                                'descripcion': $('#respuesta_add').val(),
+                                'validar': seleccion,                   
+                            },
+                            success: function(data) {
+                                $('.errorRespuestaAdd').addClass('hidden');
+                                $('.errorValidarAdd').addClass('hidden');
+
+                                if ((data.errors)) {
+                                    setTimeout(function () {
+                                        swal("Error", "No se ingreso la informacion", "error", {
+                                          buttons: false,
+                                          timer: 2000,
+                                        });
+                                    }, 500);
+
+                                    if (data.errors.descripcion) {
+                                        $('.errorRespuestaAdd').removeClass('hidden');
+                                        $('.errorRespuestaAdd').text(data.errors.descripcion);
+                                    }
+
+                                    if (data.errors.validar) {
+                                        $('.errorValidarAdd').removeClass('hidden');
+                                        $('.errorValidarAdd').text(data.errors.validar);
+                                    }                           
+                                } else {
+                                    swal("Correcto", "Se ingreso la informacion", "success")
+                                    .then((value) => {
+                                        id_respuesta = 0;
+                                        $('#respuesta_add').val('');
+                                        $('#validacion_add').prop("checked", false);     
+                                        tabla_respuesta.ajax.reload();                                
+                                    });                          
+                                }
+                            },
+                        });                        
+                        
+                    }
+
+                });                
             }
             else
             {
-                $.ajax({
-                    type: 'POST',
-                    url: '/plataforma/blackboard/respuesta',
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'fkpregunta': id_pregunta,
-                        'descripcion': $('#respuesta_add').val(),
-                        'validar': seleccion,                   
-                    },
-                    success: function(data) {
-                        $('.errorRespuestaAdd').addClass('hidden');
-                        $('.errorValidarAdd').addClass('hidden');
+                $.get("/plataforma/blackboard/respuesta/valida/"+id_pregunta+"/"+text_etiqueta+"/"+seleccion,function(response){
 
-                        if ((data.errors)) {
-                            setTimeout(function () {
-                                swal("Error", "No se ingreso la informacion", "error", {
-                                  buttons: false,
-                                  timer: 2000,
-                                });
-                            }, 500);
+                    if(text_etiqueta == "única" && seleccion == 1)
+                    {
+                        if(response.length === 0)
+                        {
 
-                            if (data.errors.descripcion) {
-                                $('.errorRespuestaAdd').removeClass('hidden');
-                                $('.errorRespuestaAdd').text(data.errors.descripcion);
-                            }
+                            $.ajax({
+                                type: 'POST',
+                                url: '/plataforma/blackboard/respuesta',
+                                data: {
+                                    '_token': $('input[name=_token]').val(),
+                                    'fkpregunta': id_pregunta,
+                                    'descripcion': $('#respuesta_add').val(),
+                                    'validar': seleccion,                   
+                                },
+                                success: function(data) {
+                                    $('.errorRespuestaAdd').addClass('hidden');
+                                    $('.errorValidarAdd').addClass('hidden');
 
-                            if (data.errors.validar) {
-                                $('.errorValidarAdd').removeClass('hidden');
-                                $('.errorValidarAdd').text(data.errors.validar);
-                            }                           
-                        } else {
-                            $('#validacion_add').prop("checked", false);
-                            swal("Correcto", "Se ingreso la informacion", "success")
-                            .then((value) => {
-                                $('#respuesta_add').val('');
-                                $('#validacion_add').prop("checked", false);       
+                                    if ((data.errors)) {
+                                        setTimeout(function () {
+                                            swal("Error", "No se ingreso la informacion", "error", {
+                                              buttons: false,
+                                              timer: 2000,
+                                            });
+                                        }, 500);
 
-                                tabla_respuesta.ajax.reload();                                
-                            });                          
+                                        if (data.errors.descripcion) {
+                                            $('.errorRespuestaAdd').removeClass('hidden');
+                                            $('.errorRespuestaAdd').text(data.errors.descripcion);
+                                        }
+
+                                        if (data.errors.validar) {
+                                            $('.errorValidarAdd').removeClass('hidden');
+                                            $('.errorValidarAdd').text(data.errors.validar);
+                                        }                           
+                                    } else {
+                                        $('#validacion_add').prop("checked", false);
+                                        swal("Correcto", "Se ingreso la informacion", "success")
+                                        .then((value) => {
+                                            $('#respuesta_add').val('');
+                                            $('#validacion_add').prop("checked", false);       
+
+                                            tabla_respuesta.ajax.reload();                                
+                                        });                          
+                                    }
+                                },
+                            });
+
                         }
-                    },
-                });
+                        else
+                        {
+                            console.log("entroelse");
+                            swal("Advertencia", "Ya existe una respuesta correcta para la pregunta", "warning", {
+                              buttons: false,
+                              timer: 2000,
+                            });                            
+                        }
+
+                    }
+                    else
+                    {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/plataforma/blackboard/respuesta',
+                            data: {
+                                '_token': $('input[name=_token]').val(),
+                                'fkpregunta': id_pregunta,
+                                'descripcion': $('#respuesta_add').val(),
+                                'validar': seleccion,                   
+                            },
+                            success: function(data) {
+                                $('.errorRespuestaAdd').addClass('hidden');
+                                $('.errorValidarAdd').addClass('hidden');
+
+                                if ((data.errors)) {
+                                    setTimeout(function () {
+                                        swal("Error", "No se ingreso la informacion", "error", {
+                                          buttons: false,
+                                          timer: 2000,
+                                        });
+                                    }, 500);
+
+                                    if (data.errors.descripcion) {
+                                        $('.errorRespuestaAdd').removeClass('hidden');
+                                        $('.errorRespuestaAdd').text(data.errors.descripcion);
+                                    }
+
+                                    if (data.errors.validar) {
+                                        $('.errorValidarAdd').removeClass('hidden');
+                                        $('.errorValidarAdd').text(data.errors.validar);
+                                    }                           
+                                } else {
+                                    $('#validacion_add').prop("checked", false);
+                                    swal("Correcto", "Se ingreso la informacion", "success")
+                                    .then((value) => {
+                                        $('#respuesta_add').val('');
+                                        $('#validacion_add').prop("checked", false);       
+
+                                        tabla_respuesta.ajax.reload();                                
+                                    });                          
+                                }
+                            },
+                        });
+
+                    }
+                });                
+
             }           
         });
 

@@ -59,6 +59,14 @@ class RespuestaController extends Controller
             ->make(true);
     }
 
+    public function validarRespuesta(Request $request, $id, $tipo, $seleccion)
+    {
+        if($request->ajax()){
+            $estado = Respuesta::existeRespuestaPregunta($id, $tipo, $seleccion);
+            return response()->json($estado);
+        }          
+    }
+
     public function create()
     {
         //
