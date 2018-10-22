@@ -197,5 +197,14 @@ Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaControl
 Route::get('categoria/getdata', 'CategoriaController@getdata')->name('categoria.getdata');
 Route::post('/gestionadministrativa/inventario/categoria/cambiarEstado', 'CategoriaController@cambiarEstado');
 
+//Stock 
+Route::resource('/gestionadministrativa/inventario/stock', 'InventarioStockProductoController');
+Route::get('InventarioStockProducto/getdata', 'InventarioStockProductoController@getdata')->name('stock.getdata');
+
+//Alta Producto
+Route::resource('/gestionadministrativa/inventario/altaproducto', 'AltaProductoController');
+Route::get('/gestionadministrativa/inventario/altaproducto/dropproducto/{id}', 'AltaProductoController@dropProducto');
+Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
+
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
