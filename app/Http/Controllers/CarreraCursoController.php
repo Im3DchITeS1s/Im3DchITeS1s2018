@@ -19,8 +19,7 @@ class CarreraCursoController extends Controller
      protected $verificar_insert =
     [
         'fkcarrera' => 'required|integer', 
-        'fkcurso' => 'required|integer',
-                                                                              
+        'fkcurso' => 'required|integer',    
     ];
 
     public function __construct()

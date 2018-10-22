@@ -13,6 +13,8 @@ class CreateCuestionarioTable extends Migration
             $table->string('titulo', 100);
             $table->string('descripcion', 1000);
             $table->decimal('punteo', 5,2);
+            $table->date('inicio');
+            $table->date('fin');
 
             $table->unsignedInteger('fkcatedratico_curso');
             $table->unsignedInteger('fkperiodo_academico');

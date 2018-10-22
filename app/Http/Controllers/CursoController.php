@@ -15,12 +15,12 @@ class CursoController extends Controller
 {
     protected $verificar_insert =
     [
-        'nombre' => 'required|max:50|unique:curso',
+        'nombre' => 'required|max:75|unique:curso',
     ];
 
     protected $verificar_update =
     [
-        'nombre' => 'required|max:32|unique:curso,nombre,$id',
+        'nombre' => 'required|max:75|unique:curso,nombre,$id',
     ];    
 
     public function __construct()

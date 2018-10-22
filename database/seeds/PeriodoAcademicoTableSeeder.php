@@ -11,7 +11,6 @@ class PeriodoAcademicoTableSeeder extends Seeder
         $nuevo->nombre = 'Primer';
         $nuevo->inicio = '2018-01-01';
         $nuevo->fin = '2018-12-31';
-        $nuevo->ciclo = '2018';
         $nuevo->fktipo_periodo = 1;        
         $nuevo->fkestado = 5;
         $nuevo->save();
@@ -20,7 +19,6 @@ class PeriodoAcademicoTableSeeder extends Seeder
         $nuevo->nombre = 'Segundo';
         $nuevo->inicio = '2018-01-01';
         $nuevo->fin = '2018-12-31';
-        $nuevo->ciclo = '2018';
         $nuevo->fktipo_periodo = 1;        
         $nuevo->fkestado = 5;
         $nuevo->save();

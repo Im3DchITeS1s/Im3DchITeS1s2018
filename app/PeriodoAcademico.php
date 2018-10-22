@@ -8,20 +8,19 @@ class PeriodoAcademico extends Model
 {
 	protected $table = 'periodo_academico';
 	protected $guarded = ['id', 'fkestado', 'fktipo_periodo'];
-	protected $fillable = ['nombre', 'inicio', 'fin', 'ciclo'];
+	protected $fillable = ['nombre', 'inicio', 'fin'];
 
 	public static function dataPeriodoAcademico(){
 		return PeriodoAcademico::join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')
-			->select(['periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'periodo_academico.ciclo as ciclo', 'tipo_periodo.nombre as tipo_periodo', 'periodo_academico.fkestado as id_estado', 'periodo_academico.inicio as inicio', 'periodo_academico.fin as fin'])
+			->select(['periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'periodo_academico.fkestado as id_estado', 'periodo_academico.inicio as inicio', 'periodo_academico.fin as fin'])
             ->orderBy('periodo_academico.nombre', 'asc');
 	}
 
 	public static function buscarPeriodoAcademico($id){
-		return PeriodoAcademico::join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')
-			->select('periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'periodo_academico.ciclo as ciclo', 'tipo_periodo.nombre as tipo_periodo')
+		return PeriodoAcademico::join('tipo_periodo','periodo_academico.fktipo_periodo', 'tipo_periodo.id')
+			->select('periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo')
             ->where('periodo_academico.fkestado', $id)
-            ->where('periodo_academico.ciclo', date("Y"))
-            ->orderBy('periodo_academico.nombre', 'asc')->get();
+            ->get();
 	}
 
 	public static function buscarTipoPeriodo($id){
@@ -29,6 +28,13 @@ class PeriodoAcademico extends Model
             ->where('fkestado', $id)
             ->orderBy('nombre', 'asc')->get();
 	}
+
+	public static function verficiarFechaPeriodo($inicio, $fin)
+    {
+        return PeriodoAcademico::where('inicio', '>=', $inicio)
+        						->where('fin', '>=', $fin)
+        						->select('id')->get();   
+    } 	
 
 	public static function buscarIDPeriodoAcademico($id)
     {

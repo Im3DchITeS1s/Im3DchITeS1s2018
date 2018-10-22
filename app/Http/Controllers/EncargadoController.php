@@ -14,7 +14,7 @@ use App\PaisDepartamento;
 use App\Genero;
 use App\Estado;
 
-class PersonaController extends Controller
+class EncargadoController extends Controller
 {
     protected $verificar_insert =
     [
@@ -54,13 +54,13 @@ class PersonaController extends Controller
     }
 
     public function index()
-    {
-        return view('PersonaSistema/persona');
+    {   
+        return view('academico/encargado/encargado');
     }
 
     public function getdata()
     {
-        $query = Persona::dataPersona();
+        $query = Persona::dataInfoEncargado(7);
 
         return Datatables::of($query)
             ->addColumn('nombre_completo', function ($data) {
@@ -195,7 +195,7 @@ class PersonaController extends Controller
             $insert->apellido3 = $request->apellido3;    
             $insert->lugar = $request->lugar;
             $insert->fecha_nacimiento = date("Y-m-d", strtotime($request->fecha_nacimiento));    
-            $insert->fktipo_persona = $request->fktipo_persona;
+            $insert->fktipo_persona = $request->fktipo_person;
             $insert->fkpais_departamento = $request->fkpais_departamento;   
             $insert->fkgenero = $request->fkgenero;
             $insert->fkestado = $estado->id;                                                                           
@@ -269,9 +269,10 @@ class PersonaController extends Controller
         //
     }
 
-    public static function crearCodigo($id)
+   public static function crearCodigo($id)
     {
         $correlativo = 0;
+
         $tipo_persona = TipoPersona::buscarIDTipoPersona($id);
         $incial =  strtoupper(substr($tipo_persona->nombre, 0, 3));
 
@@ -281,10 +282,6 @@ class PersonaController extends Controller
             $correlativo = substr($persona->codigo, 4, 7);
             $numero=$correlativo+1;
         }
-        if(count($persona) == 0) {
-            $numero=1;
-        }        
-
         if($numero > 999999){
             $correlativo = $numero;
         } 

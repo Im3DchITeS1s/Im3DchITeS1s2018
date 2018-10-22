@@ -26,7 +26,8 @@ class Respuesta extends Model
 	public static function respuestaCuestionarioPregunta($id)
 	{
 		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
-				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.fkpregunta as fkpregunta')
+				->join('etiqueta', 'pregunta.fketiqueta', 'etiqueta.id')
+				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.fkpregunta as fkpregunta', 'etiqueta.tipo as tipo')
             	->where('pregunta.fkcuestionario', $id)
             	->where('pregunta.fkestado', 5)
             	->where('respuesta.fkestado', 5)->inRandomOrder()->get(); 
@@ -35,5 +36,16 @@ class Respuesta extends Model
 	public static function respuestaCorrecta($id)
 	{
 		return Respuesta::find($id); 
-	}				
+	}
+
+	public static function existeRespuestaPregunta($id, $tipo, $seleccion)
+	{
+		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
+				->join('etiqueta', 'pregunta.fketiqueta', '=', 'etiqueta.id')
+				->select('respuesta.id as id', 'etiqueta.tipo as tipo')
+		        ->where('respuesta.validar', $seleccion)
+            	->where('respuesta.fkpregunta', $id)
+            	->where('etiqueta.tipo', $tipo)
+            	->where('respuesta.fkestado', 5)->get(); 
+	}					
 }

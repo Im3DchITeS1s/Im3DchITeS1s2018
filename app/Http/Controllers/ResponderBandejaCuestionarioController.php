@@ -22,14 +22,22 @@ class ResponderBandejaCuestionarioController extends Controller
     }
 
     public function index()
-    {      
+    {            
         return view('/blackboard/bandejacuestionario');
     }
+
+    public function getdataCarrera(Request $request)
+    {
+        if($request->ajax()){
+            $cursosalumnos = Inscripcion::carrerasAlumnos(Auth::user()->fkpersona);
+            return response()->json($cursosalumnos);
+        }        
+    }    
 
     public function getdata(Request $request, $id)
     {
         if($request->ajax()){
-            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, 5);
+            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, $id);
             return response()->json($cursosalumnos);
         }        
     }
@@ -65,10 +73,12 @@ class ResponderBandejaCuestionarioController extends Controller
     public function store(Request $request)
     {  
         $contar_respuesta = 0;
-        $menu = array();
-        $menu = array_merge($menu, $request->respuesta);
+        $respuesta_unica = array();
+        $respuesta_unica = array_merge($respuesta_unica, $request->respuesta_unica);
 
-        foreach ($request->respuesta as $value) {
+        dd($request->respuesta_multiple);
+
+        foreach ($request->respuesta_unica as $value) {
             $respuesta = Respuesta::respuestaCorrecta($value);
 
             if ($respuesta->validar == 1) {

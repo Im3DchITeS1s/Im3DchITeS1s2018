@@ -129,7 +129,26 @@ Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudian
 
 //Docente
 Route::resource('/academico/docente/docente', 'DocenteController');
-Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
+Route::get('docente/getdata', 'DocenteController@getdata')->name('docente.getdata');
+
+//Encargado y Encargado de Estudiantes
+Route::resource('/academico/encargado/encargado', 'EncargadoController');
+Route::get('encargado/getdata', 'EncargadoController@getdata')->name('encargado.getdata');
+Route::resource('/academico/encargadoalumno/encargadoalumno', 'EncargadoAlumnoController');
+
+Route::post('/academico/encargadoalumno/cambiarEstado', 'EncargadoAlumnoController@cambiarEstado');
+Route::get('EncargadoAlumno/getdata', 'EncargadoController@getdata')->name('EncargadoAlumno.getdata');
+Route::get('/academico/inscripcion/dropencargado/{id}', 'InscripcionController@dropencargado');
+
+
+
+//Inscripcion
+Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
+Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
+Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
+Route::get('/academico/inscripcion/droptiperiodo/{id}', 'InscripcionController@droptiperiodo');
+Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
+Route::post('/academico/inscripcion/cambiarEstado', 'InscripcionController@cambiarEstado');
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
@@ -145,13 +164,13 @@ Route::get('cuestionario/getdataCuestionarioEdicion', 'CuestionarioController@ge
 Route::get('cuestionario/getdataCuestionarioListo', 'CuestionarioController@getdataCuestionarioListo')->name('cuestionario.getdataCuestionarioListo');
 Route::get('cuestionario/getdataCuestionarioPublicado', 'CuestionarioController@getdataCuestionarioPublicado')->name('cuestionario.getdataCuestionarioPublicado');
 Route::get('cuestionario/getdataCuestionarioRestringido', 'CuestionarioController@getdataCuestionarioRestringido')->name('cuestionario.getdataCuestionarioRestringido');
-Route::get('cuestionario/getdataCuestionarioInactivo', 'CuestionarioController@getdataCuestionarioInactivo')->name('cuestionario.getdataCuestionarioInactivo');
 Route::get('/plataforma/blackboard/cuestionario/contadorEstadoCuestionario/{id}', 'CuestionarioController@contadorEstadoCuestionario');
 Route::post('/plataforma/blackboard/cuestionario/cambiarEstado', 'CuestionarioController@cambiarEstado');
 Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
 Route::get('/plataforma/blackboard/cuestionario/droptipocuestionario/{id}', 'CuestionarioController@droptipocuestionario');
 Route::get('/plataforma/blackboard/cuestionario/dropperiodoacademico/{id}', 'CuestionarioController@dropperiodoacademico');
 Route::get('/plataforma/blackboard/cuestionario/dropprioridad/{id}', 'CuestionarioController@dropprioridad');
+Route::get('/plataforma/blackboard/verificar/fecha/{inicio}/{fin}', 'CuestionarioController@verificarFecha');
 
 //Etiquetas
 Route::get('/plataforma/blackboard/etiqueta/etiquetaestado/{id}', 'EtiquetaController@etiquetaestado');
@@ -166,6 +185,7 @@ Route::post('/plataforma/blackboard/pregunta/cambiarEstado', 'PreguntaController
 Route::resource('/plataforma/blackboard/respuesta', 'RespuestaController');
 Route::get('/respuesta/getdata/{id}', 'RespuestaController@getdata');
 Route::post('/plataforma/blackboard/respuesta/cambiarEstado', 'RespuestaController@cambiarEstado');
+Route::get('/plataforma/blackboard/respuesta/valida/{id}/{tipo}/{seleccion}', 'RespuestaController@validarRespuesta');
 
 //Producto
 Route::resource('/gestionadministrativa/inventario/producto', 'ProductoController');
@@ -175,6 +195,7 @@ Route::post('/gestionadministrativa/inventario/producto/cambiarEstado', 'Product
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
+Route::get('/bandeja/responder/carrera', 'ResponderBandejaCuestionarioController@getdataCarrera');
 Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionarioController@getdata');
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
 Route::get('/mostrar/cuestionarios/seleccionados/blackboard/{id1}/{id2}', 'ResponderBandejaCuestionarioController@mostrarCuestionariosSeleccionados')->name('cuestionarios.mostrarCuestionariosSeleccionados');
