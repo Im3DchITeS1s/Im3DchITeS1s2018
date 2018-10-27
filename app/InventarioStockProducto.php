@@ -16,5 +16,5 @@ class InventarioStockProducto extends Model
 					 ->select(['inventario_stock.id as id','inventario_stock.cantidad as cantidad','producto.nombre as producto','producto.descripcion as descripcion']);
 	}
 
-   
-}
+
+} #Fin Clase 

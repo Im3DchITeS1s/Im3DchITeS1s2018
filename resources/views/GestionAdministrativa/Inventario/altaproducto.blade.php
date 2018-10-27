@@ -45,7 +45,7 @@
                                   <div class="input-group-addon">
                                     <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                                   </div>
-                                  <input type="number" class="form-control" id="titulo_add" placeholder="Cantidad" required autofocus>
+                                  <input type="number" class="form-control" id="cantidad_add" placeholder="Cantidad" required autofocus>
                                 </div>
                                 <small class="control-label">required|max:100</small>
                                 <p class="errorTitutloAdd text-center alert alert-danger hidden"></p>                  
@@ -55,7 +55,7 @@
                               <div class="input-group-addon">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                               </div>
-                              <textarea type="text" class="form-control" id="descripcion_add" placeholder="Observaciones" required autofocus></textarea>
+                              <textarea type="text" class="form-control" id="observacion_add" placeholder="Observaciones" required autofocus></textarea>
                             </div>
                             <small class="control-label">required|max:1000</small>
                             <p class="errorDescripcionAdd text-center alert alert-danger hidden"></p>                  
