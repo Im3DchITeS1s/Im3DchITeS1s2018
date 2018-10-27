@@ -20,28 +20,6 @@ class CantidadAlumno extends Model
    	}
 
 
-   public static function buscarCantidadAlumno($id){
-		return Carrera::select('id', 'nombre')
-            ->where('fkestado', $id)
-            ->orderBy('nombre', 'asc')->get();
-	}
-
-	public static function buscarCantidadAlumn($id){
-		return Grado::select('id', 'nombre')
-            ->where('fkestado', $id)
-            ->orderBy('nombre', 'asc')->get();
-	}
-	
- 	public static function buscarCantidadSeccion($id){
-		return Seccion::select('id', 'letra')
-            ->where('fkestado', $id)
-            ->orderBy('letra', 'asc')->get();
-	}
-
-	public static function buscarIDCantidadAlumno($id)
-    {
-        return CantidadAlumno::findOrFail($id);       
-    } 
 
 	public static function dropCantidadAlumno($id){
 	    return CantidadAlumno::join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
