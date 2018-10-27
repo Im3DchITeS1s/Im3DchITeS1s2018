@@ -37,7 +37,7 @@
                                     name="fkproducto_add" id='fkproducto_add' required autofocus>
                                     </select> 
                                 </div>                                                              
-                                <p class="errorCategoria text-center alert alert-danger hidden"></p>
+                                <p class="errorSeleccionarProducto text-center alert alert-danger hidden"></p>
                             </div>
                        
                             <div class="col-sm-2">
@@ -47,19 +47,19 @@
                                   </div>
                                   <input type="number" class="form-control" id="cantidad_add" placeholder="Cantidad" required autofocus>
                                 </div>
-                                <small class="control-label">required|max:100</small>
-                                <p class="errorTitutloAdd text-center alert alert-danger hidden"></p>                  
+                                <p class="errorCantidad text-center alert alert-danger hidden"></p>                  
                             </div>                    
-                        <div class="col-sm-12">
-                            <div class="input-group">
-                              <div class="input-group-addon">
-                                <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
-                              </div>
-                              <textarea type="text" class="form-control" id="observacion_add" placeholder="Observaciones" required autofocus></textarea>
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
+                                  </div>
+                                  <textarea type="text" class="form-control" id="observacion_add" placeholder="Observaciones" required autofocus></textarea>
+                                </div>
+                                <p class="errorObservacion text-center alert alert-danger hidden"></p>                  
                             </div>
-                            <small class="control-label">required|max:1000</small>
-                            <p class="errorDescripcionAdd text-center alert alert-danger hidden"></p>                  
                         </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary add">
                             <span id="" class='fa fa-save'></span>
@@ -71,6 +71,8 @@
                 </div>             
             </div>
         </div>
+    </div>
+
     <script type="text/javascript">
 
          //Leer
@@ -105,8 +107,63 @@
                 }
         });  
 
+        $('.modal-footer').on('click', '.add', function() {
+            $.ajax({
+                type: 'POST',
+                url: '/gestionadministrativa/inventario/altaproducto',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'fkproducto': $('#fkproducto_add').val(),
+                    'cantidad': $('#cantidad_add').val(),
+                    'observacion': $('#observacion_add').val(),
+                },
+                success: function(data) {
+                    $('.errorSeleccionarProducto').addClass('hidden');
+                    $('.errorCantidad').addClass('hidden');
+                    $('.errorObservacion').addClass('hidden');
+
+                    if ((data.errors)) {
+                        setTimeout(function () {
+                            swal("Error", "No se ingreso la informacion", "error", {
+                              buttons: false,
+                              timer: 2000,
+                            });
+                        }, 500);
+
+                     if (data.errors.fkproducto) {
+                            $('.errorSeleccionarProducto').removeClass('hidden');
+                            $('.errorSeleccionarProducto').text(data.errors.fkproducto);
+                        }
+
+                     if (data.errors.cantidad) {
+                            $('.errorCantidad').removeClass('hidden');
+                            $('.errorCantidad').text(data.errors.cantidad);
+                        }
+
+                    if (data.errors.observacion) {
+                            $('.errorObservacion').removeClass('hidden');
+                            $('.errorObservacion').text(data.errors.observacion);
+                        }
+
+                     } else {
+                        swal("Correcto", "Se ingreso la informacion", "success")
+                        .then((value) => {
+                           $.get("/gestionadministrativa/inventario/altaproducto/dropproducto/"+5,function(response,id){
+                                    $("#fkproducto_add").empty();
+                                    $("#fkproducto_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#fkproducto_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                                        $('#fkproducto_add').val('').trigger('change.select2'); 
+                                    }
+                            });
+                            $('#cantidad_add').val('');
+                            $('#observacion_add').val('');
+                        });                          
+                    }
+                },
+            }); 
+        });       
+
     </script>
 
-
-    
 @stop

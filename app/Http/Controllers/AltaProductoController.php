@@ -10,13 +10,14 @@ use Validator;
 use Response;
 use App\Producto;
 use App\AltaProducto;
+use App\InventarioStockProducto;
 
 class AltaProductoController extends Controller
 {
      #Verificacion  del Insert
     protected $verificar_insert = 
     [
-        'cantidad' => 'required|interger',
+        'cantidad' => 'required|integer',
         'observacion' => 'required|max:150',
         'fkproducto' => 'required|integer',
     ];
@@ -45,8 +46,25 @@ class AltaProductoController extends Controller
             $insert->cantidad = $request->cantidad;
             $insert->observacion = $request->observacion;
             $insert->fkproducto = $request->fkproducto;                                                                                    
-            $insert->save();
-            return response()->json($insert);
+            if($insert->save())
+            {
+                $verificar_existe = InventarioStockProducto::where('fkproducto', $request->fkproducto)->first();
+                if(!is_null($verificar_existe))
+                {
+                    $update = InventarioStockProducto::findOrFail($verificar_existe->id);
+                    $update->cantidad = $update->cantidad + $request->cantidad;
+                    $update->save();
+                    return response()->json($insert);
+                }
+                else
+                {
+                    $new = new InventarioStockProducto();
+                    $new->fkproducto = $request->fkproducto;
+                    $new->cantidad = $request->cantidad;
+                    $new->save();  
+                    return response()->json($insert);                  
+                }
+            }
         }        
     }
 
