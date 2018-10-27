@@ -297,16 +297,21 @@ return [
                 [
                 'text'    => 'Encargado de Estudiantes',
                 'url'     => '/academico/encargadoalumno/encargadoalumno',
-                'icon_color' => 'yellow',
+                'icon_color' => 'red',
                 ],
                 [
                 'text'    => 'Ingreso de Encargados',
                 'url'     => '/academico/encargado/encargado',
-                'icon_color' => 'yellow',
+                'icon_color' => 'red',
                 ],
                 [
                 'text'    => 'Ingreso de Docentes',
                 'url'     => '/academico/docente/docente',
+                'icon_color' => 'yellow',
+                ],
+                [
+                'text'    => 'Cursos Docentes',
+                'url'     => '/academico/catedraticocurso/catedraticocurso',
                 'icon_color' => 'yellow',
                 ],
             ],

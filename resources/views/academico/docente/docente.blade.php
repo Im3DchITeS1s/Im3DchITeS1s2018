@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'SISMEDCHI - Docente')
+@section('title', 'SISMEDCHI - Catedratico')
 
 @section('content_header')
     <div class="content-header">
-        <h1>Docente
+        <h1>Catedratico
             <button type="button" class="add-modal btn btn-success">
                 <span class="fa fa-plus-circle"></span>
             </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Docente</li>
+            <li class="active">Catedratico</li>
         </ol>                      
     </div>    
 @stop

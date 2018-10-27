@@ -16,6 +16,19 @@ class CarreraCurso extends Model
                     ->select(['carrera_curso.id as id', 'carrera.nombre as carrera', 'carrera_curso.fkcarrera as fkcarrera', 'curso.nombre as curso', 'carrera_curso.fkcurso as fkcurso', 'carrera_curso.fkestado as id_estado']);
 	}
 
+
+
+	public static function buscarcarreracurso($id){
+		return CarreraCurso::join('carrera', 'carrera_curso.fkcarrera', 'carrera.id')
+			->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+            ->where('carrera_curso.fkestado', $id)
+            ->select('carrera_curso.id as id', 'carrera.nombre as carrera', 'curso.nombre as curso')
+            ->orderBy('carrera.nombre', 'asc')->get();
+	}
+
+
+
+
 	public static function buscarIDCarreraCurso($id)
     {
         return CarreraCurso::findOrFail($id);       

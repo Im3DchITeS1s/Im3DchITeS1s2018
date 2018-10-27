@@ -127,15 +127,22 @@ Route::post('/mantenimiento/periodoacademico/cambiarEstado', 'PeriodoAcademicoCo
 Route::resource('/academico/estudiante/estudiante', 'EstudianteController');
 Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudiante.getdata');
 
-//Docente
+//Docente y Docente Curso
 Route::resource('/academico/docente/docente', 'DocenteController');
 Route::get('docente/getdata', 'DocenteController@getdata')->name('docente.getdata');
+
+Route::resource('/academico/catedraticocurso/catedraticocurso', 'CatedraticoCursoController');
+Route::get('catedraticocurso/getdata', 'CatedraticoCursoController@getdata')->name('catedraticocurso.getdata');
+Route::get('/academico/catedraticocurso/dropcarreracurso/{id}', 'CatedraticoCursoController@dropcarreracurso');
+Route::get('/academico/catedraticocurso/dropdocente/{id}', 'CatedraticoCursoController@dropdocente');
+Route::get('/academico/catedraticocurso/dropcarreracatedratico/{id}', 'CatedraticoCursoController@dropcarreracatedratico');
+
+
 
 //Encargado y Encargado de Estudiantes
 Route::resource('/academico/encargado/encargado', 'EncargadoController');
 Route::get('encargado/getdata', 'EncargadoController@getdata')->name('encargado.getdata');
 Route::resource('/academico/encargadoalumno/encargadoalumno', 'EncargadoAlumnoController');
-
 Route::post('/academico/encargadoalumno/cambiarEstado', 'EncargadoAlumnoController@cambiarEstado');
 Route::get('EncargadoAlumno/getdata', 'EncargadoController@getdata')->name('EncargadoAlumno.getdata');
 Route::get('/academico/inscripcion/dropencargado/{id}', 'InscripcionController@dropencargado');
