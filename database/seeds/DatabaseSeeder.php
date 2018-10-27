@@ -39,7 +39,10 @@ class DatabaseSeeder extends Seeder
         //Gestion Administrativa 
         $this->call(MesTableSeeder::class); 
         $this->call(CategoriaTableSeeder::class); 
-        $this->call(ProductoTableSeeder::class); 
+        $this->call(ProductoTableSeeder::class);
+        $this->call(InventarioStockProductoTableSeeder::class);
+        $this->call(BajaProductoTableSeeder::class);
+        $this->call(AltaProductoTableSeeder::class);
 
     }
     

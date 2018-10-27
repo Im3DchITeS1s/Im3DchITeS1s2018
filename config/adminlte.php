@@ -523,10 +523,20 @@ return [
                 'icon_color' => 'red',
                 ],
                 [
-                'text'    => 'Descargar',
-                'url'     => '#',
+                'text'    => 'Alta Producto',
+                'url'     => '/gestionadministrativa/inventario/altaproducto',
                 'icon_color' => 'yellow',
-                ],          
+                ],     
+                [
+                'text'    => 'Baja Producto',
+                'url'     => '/gestionadministrativa/inventario/bajaproducto',
+                'icon_color' => 'yellow',
+                ], 
+                [
+                'text'    => 'Stock',
+                'url'     => '/gestionadministrativa/inventario/stock',
+                'icon_color' => 'yellow',
+                ],      
             ],                                                       
         ],
     ],    
