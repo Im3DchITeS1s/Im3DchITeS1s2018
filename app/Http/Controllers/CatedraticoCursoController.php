@@ -41,33 +41,35 @@ class CatedraticoCursoController extends Controller
 
     public function index()
     {
-        return view('/academico/catedraticocurso/catedraticocurso');   
+       return view('/academico/catedraticocurso/catedraticocurso');   
     }
 
    public function getdata()
     {
       
         $color_estado = "";
-        $query = catedraticocurso::dataCatedraticoCurso();
-
+        $query = CatedraticoCurso::dataCatedraticoCurso();
         return Datatables::of($query)
-            ->addColumn('grado_carrera_curso', function ($data) {
-                return $data->carrera.' '.$grado.' '.$data->curso;
+            ->addColumn('catedratico', function ($data) {
+                return $data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2;
             }) 
-
-
-            ->addColumn('action', function ($data) {
-                 
+            ->addColumn('datos_carreras', function ($data) {
+                return $data->carrera.' '.$data->grado.' '.$data->curso;
+            }) 
+            ->addColumn('fecha', function ($data) {
+                return $data->fecha_inicio." / ".$data->fecha_fin;
+            }) 
+           ->addColumn('action', function ($data) {
                 switch ($data->id_estado) {
-                    case 5:
+                            case 5:
                         $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
                         break;
-                    case 6:
+                            case 6:
                         $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'"data-cantidad="'.$data->cantidad.'" data-fkcarrera_grado="'.$data->fkcarrera_grado.'" data-fkgrado="'.$data->fkseccion.'" data-fkestado="'.$data->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'"data-fkpersona="'.$data->fkpersona.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fecha_inicio="'.$data->fecha_inicio.'" data-fecha_fin="'.$data->fecha_fin.'" data-cantidad_periodo="'.$data->cantidad_periodo.'" data-id_estado="'.$data->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
@@ -155,22 +157,20 @@ class CatedraticoCursoController extends Controller
         }        
     }
 
-  public function cambiarEstado(Request $request)
+    public function destroy($id)
+    {
+        //
+    }
+    
+      public function cambiarEstado(Request $request)
     {
         if($request->estado == "activo")
             $estado = Estado::buscarIDEstado(6);
         else
             $estado = Estado::buscarIDEstado(5);
-
-        $cambiar = CarreraGrado::findOrFail($request->pkcatedraticocurso); 
+        $cambiar = CatedraticoCurso::findOrFail($request->pkcatedraticocurso); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
     }
-
-    public function destroy($id)
-    {
-        //
-    }
-        //
     }

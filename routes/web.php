@@ -132,10 +132,11 @@ Route::resource('/academico/docente/docente', 'DocenteController');
 Route::get('docente/getdata', 'DocenteController@getdata')->name('docente.getdata');
 
 Route::resource('/academico/catedraticocurso/catedraticocurso', 'CatedraticoCursoController');
-Route::get('catedraticocurso/getdata', 'CatedraticoCursoController@getdata')->name('catedraticocurso.getdata');
+Route::get('CatedraticoCurso/getdata', 'CatedraticoCursoController@getdata')->name('CatedraticoCurso.getdata');
 Route::get('/academico/catedraticocurso/dropcarreracurso/{id}', 'CatedraticoCursoController@dropcarreracurso');
 Route::get('/academico/catedraticocurso/dropdocente/{id}', 'CatedraticoCursoController@dropdocente');
 Route::get('/academico/catedraticocurso/dropcarreracatedratico/{id}', 'CatedraticoCursoController@dropcarreracatedratico');
+Route::post('/academico/catedraticocurso/catedraticocurso/cambiarEstado', 'CatedraticoCursoController@cambiarEstado');
 
 
 
