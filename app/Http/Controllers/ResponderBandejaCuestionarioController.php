@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
 use Response;
+use App\CatedraticoCurso;
 use App\Inscripcion;
 use App\Cuestionario;
 use App\Pregunta;
 use App\Respuesta;
+use App\Resultado_Cuestionario;
+use App\Alumno_Cuestionario_Respuesta;
 use Auth;
 
 class ResponderBandejaCuestionarioController extends Controller
@@ -22,7 +25,7 @@ class ResponderBandejaCuestionarioController extends Controller
     }
 
     public function index()
-    {            
+    {          
         return view('/blackboard/bandejacuestionario');
     }
 
@@ -59,11 +62,36 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function encabezadoCuestionarioSeleccionado($id)
     {
-        $encabezados = Cuestionario::dataEncabezadoCuestionario($id);
-        $preguntas = Pregunta::preguntaEncuesta($id);
-        $respuestas = Respuesta::respuestaCuestionarioPregunta($id);
-        return view('/blackboard/resolvercuestionario', compact('encabezados', 'preguntas', 'respuestas'));      
-    }    
+        $verificar = Resultado_Cuestionario::buscarCuestionarioResuelto(Auth::user()->fkpersona, 5);
+        
+        if(count($verificar) != 0)
+        {
+            $id = 0;
+        }
+
+        $encabezados = Cuestionario::dataEncabezadoCuestionario($id, 21);
+        $preguntas = Pregunta::preguntaEncuesta($id, 21);
+        $respuestas = Respuesta::respuestaCuestionarioPregunta($id, 21);
+        $total = 0;
+
+        return view('/blackboard/resolvercuestionario', compact('encabezados', 'preguntas', 'respuestas', 'total'));      
+    }  
+
+    public function buscarRespuestas(Request $request, $id)
+    {
+        if($request->ajax()){
+            $query = Respuesta::respuestaPregunta($id);
+            return response()->json($query);
+        }         
+    }     
+
+    public function buscarRespuestasPorPregunta(Request $request, $id)
+    {
+        if($request->ajax()){
+            $query = Respuesta::respuestasPorPregunta($id);
+            return response()->json($query);
+        }         
+    }  
 
     public function create()
     {
@@ -72,22 +100,29 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function store(Request $request)
     {  
-        $contar_respuesta = 0;
-        $respuesta_unica = array();
-        $respuesta_unica = array_merge($respuesta_unica, $request->respuesta_unica);
+        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona);
 
-        dd($request->respuesta_multiple);
+        if(!is_null($inscrito))
+        {
+            foreach ($request->respuesta_unica as $value) {
+                $respuesta = Respuesta::respuestaCorrecta($value);
 
-        foreach ($request->respuesta_unica as $value) {
-            $respuesta = Respuesta::respuestaCorrecta($value);
+                $insert = new Alumno_Cuestionario_Respuesta();
+                $insert->fkcuestionario = $request->idEncuesta;
+                $insert->fkinscripcion = $inscrito->id;
+                $insert->fkpregunta = $respuesta->fkpregunta;
+                $insert->fkrespuesta = $respuesta->id;    
+                $insert->save();        
+            } 
 
-            if ($respuesta->validar == 1) {
-                $contar_respuesta++;
-            }
+            $this->calcularPunteoObtenido($request->idEncuesta, Auth::user()->fkpersona);
+
+            return redirect()->route('obtenida.show', [$request->idEncuesta]); 
         }
-
-        $encuesta = Cuestionario::punteoCuestionario($request->idEncuesta);
-        dd($encuesta->punteo/$contar_respuesta);
+        else
+        {
+            return view('errores.500');  
+        }            
     }
 
     public function show($id)
@@ -113,5 +148,49 @@ class ResponderBandejaCuestionarioController extends Controller
     public function destroy($id)
     {
 
-    }              
+    }     
+
+    public function calcularPunteoObtenido($fkencuesta, $fkpersona)
+    {
+        $total_uno = 0;
+        $total_dos = 0;
+        $cuestionario = Cuestionario::punteoCuestionario($fkencuesta);
+        $preguntas = Pregunta::preguntaEncuestaImprimir($fkencuesta, 21);
+
+        $punteo_respuesta_valida = $cuestionario->punteo/count($preguntas);
+
+        $buscarRespuestasCuestionario = Alumno_Cuestionario_Respuesta::respuestasDelCuestionario($fkencuesta, $fkpersona);
+
+        foreach ($buscarRespuestasCuestionario as $valor) {
+            $respuestas = Respuesta::respustasTipoMultiple($fkencuesta, $valor->fkpregunta);
+
+            switch ($valor->tipo) {
+                case 'única':
+                    if($valor->validar == 1)
+                    {
+                        $total_uno = $punteo_respuesta_valida + $total_uno;
+                    }
+                    break;
+                case 'multiple':      
+                    $distribucion_multiple_punteo = $punteo_respuesta_valida/count($respuestas);              
+                    if($valor->validar == 1)
+                    {
+                        $total_dos = $distribucion_multiple_punteo + $total_dos;
+                    }
+                    break;                        
+            }
+
+        }
+
+        $curso = Cuestionario::cursoPerteneceAlCuestionario($fkencuesta);
+        $inscrito = Inscripcion::alumnoInscrito($fkpersona);
+
+        $insert = new Resultado_Cuestionario();
+        $insert->fkcuestionario = $fkencuesta;
+        $insert->fkinscripcion = $inscrito->id;
+        $insert->fkcarrera_curso = $curso->id;
+        $insert->fkestado = 5;
+        $insert->punteo = $total_uno + $total_dos;
+        $insert->save();
+    }         
 }

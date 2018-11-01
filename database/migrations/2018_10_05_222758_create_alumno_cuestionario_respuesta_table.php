@@ -13,10 +13,12 @@ class CreateAlumnoCuestionarioRespuestaTable extends Migration
 
             $table->unsignedInteger('fkcuestionario');
             $table->unsignedInteger('fkinscripcion');
+            $table->unsignedInteger('fkpregunta');              
             $table->unsignedInteger('fkrespuesta');          
 
             $table->foreign('fkcuestionario')->references('id')->on('cuestionario')->onUpdate('cascade');
             $table->foreign('fkinscripcion')->references('id')->on('inscripcion')->onUpdate('cascade');
+            $table->foreign('fkpregunta')->references('id')->on('pregunta')->onUpdate('cascade');            
             $table->foreign('fkrespuesta')->references('id')->on('respuesta')->onUpdate('cascade');
 
             $table->timestamps();

@@ -93,13 +93,12 @@
                         <p class='errorPunteoAdd text-center alert alert-danger hidden'></p>  
                     </div>                       
                     <div class="col-sm-4">
-                        <small>escoger periodo academico</small>
+                        <small>escoger periodo academico </small><small id="mostrarFecha" style="text-align: center;"></small>
                         <div class="input-group">
                           <div class="input-group-addon">
                             <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                           </div>
-                            <select class="form-control js-example-basic-single" name="state" style="width: 100%" 
-                                name="fkperiodo_academico_add" id='fkperiodo_academico_add' required autofocus>
+                            <select class="form-control js-example-basic-single" name="state" style="width: 100%" onChange="mostrarFechaPeriodoAcademico(this)" name="fkperiodo_academico_add" id='fkperiodo_academico_add' required autofocus>
                             </select> 
                         </div>
                         <p class="errorSeleccionarPeriodoAcademicoAdd text-center alert alert-danger hidden"></p>                  
@@ -192,7 +191,7 @@
                     <button type="button" class="btn btn-primary addPregunta">
                         <span id="" class='fa fa-save'></span>
                     </button>
-                    <button type="button" class="btn btn-danger pull-left">
+                    <button type="button" class="cancelPregunta btn btn-danger pull-left">
                         <span class='fa fa-ban'></span>
                     </button>
                 </div>
@@ -213,6 +212,20 @@
                 </div>
             </div>              
         </div>
+
+        <div class="col-md-12">
+            <div class="box-footer no-border">
+              <div class="row">
+                <div class="col-xs-12 text-center" style="border-right: 1px solid #f4f4f4">
+                  <div style="display:inline;width:60px;height:60px;">
+                    <input type="text" value="{{ $contar_vencidos }}" class="dial">
+                  </div>
+
+                  <div class="knob-label">Cuestionarios / Evaluaciones caducaron</div>
+                </div>
+              </div>
+            </div>            
+        </div>        
 
         <div class="col-md-12">
             <div class="box box-info">
@@ -394,6 +407,9 @@
         var id_respuesta = 0;
         var seleccion = 0;
       
+    $(function() {
+        $(".dial").knob();
+    });
 
         $(document).ready(function() {
             $('#punteo_add').addClass('hidden');
@@ -471,7 +487,22 @@
             }                      
         } 
 
+        function mostrarFechaPeriodoAcademico(sel) {
+            $('#mostrarFecha').empty();
 
+            $.get("/plataforma/blackboard/cuestionario/mostrarfecha/"+sel.value,function(response){
+
+                for(i=0; i<response.length; i++){
+
+                    var II = response[i].inicio.split('-');
+                    var I = II[2] + '/' + II[1] + '/' + II[0];
+                    var FF = response[i].fin.split('-');
+                    var F = FF[2] + '/' + FF[1] + '/' + FF[0];
+
+                    $("#mostrarFecha").append('<strong> Inicio: '+I+' - Fin: '+F+'</strong>');
+                }
+            });                      
+        }        
 
         $(document).ready(function() {
             $('#mostrarAddPregunta').addClass('hidden');
@@ -554,13 +585,23 @@
         });        
 
         $('.modal-footer').on('click', '.add', function() {
+            var chivo = 0;
             if(id > 0)
             {
                 var info = $('#inicio_add').val().split('/');
                 var inicio = info[2] + '-' + info[1] + '-' + info[0];
                 var infor = $('#fin_add').val().split('/');
                 var fin = infor[2] + '-' + infor[1] + '-' + infor[0];
-                $.get("/plataforma/blackboard/verificar/fecha/"+inicio+"/"+fin,function(response){
+                $.get("/plataforma/blackboard/verificar/fecha/"+inicio+"/"+fin+"/"+$('#fkperiodo_academico_add').val(),function(response){
+
+                    if(response.length === 0){
+                        swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
+                        .then((value) => {
+                            $('#inicio_add').val('');
+                            $('#fin_add').val(''); 
+                        });                          
+                    }
+
                     for(i=0; i<response.length; i++)
                     {
                         if(response[i].id == $('#fkperiodo_academico_add').val())
@@ -662,16 +703,22 @@
                                     }
                                 },
                             });
+
+                            chivo = 0;
                         }
                         else
                         {
-                            swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
-                            .then((value) => {
-                                $('#inicio_add').val('');
-                                $('#fin_add').val(''); 
-                            });
-                            break;
+                            chivo = 1;
                         } 
+                    }
+
+                    if(chivo == 1)
+                    {
+                        swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
+                        .then((value) => {
+                            $('#inicio_add').val('');
+                            $('#fin_add').val(''); 
+                        });                        
                     } 
                 });                                                   
             }
@@ -681,13 +728,20 @@
                 var inicio = info[2] + '-' + info[1] + '-' + info[0];
                 var infor = $('#fin_add').val().split('/');
                 var fin = infor[2] + '-' + infor[1] + '-' + infor[0];
-                $.get("/plataforma/blackboard/verificar/fecha/"+inicio+"/"+fin,function(response){
+                $.get("/plataforma/blackboard/verificar/fecha/"+inicio+"/"+fin+"/"+$('#fkperiodo_academico_add').val(),function(response){
+
+                    if(response.length === 0){
+                        swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
+                        .then((value) => {
+                            $('#inicio_add').val('');
+                            $('#fin_add').val(''); 
+                        });                          
+                    }
+
                     for(i=0; i<response.length; i++)
                     {
                         if(response[i].id == $('#fkperiodo_academico_add').val())
                         {
-                            console.log(response[i].id);
-                            console.log($('#fkperiodo_academico_add').val());
                             $.ajax({
                                 type: 'POST',
                                 url: '/plataforma/blackboard/cuestionario',
@@ -781,18 +835,22 @@
                                     }
                                 },
                             }); 
-                            break;
+                            chivo = 0;
                         }
                         else
                         {
-                            swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
-                            .then((value) => {
-                                $('#inicio_add').val('');
-                                $('#fin_add').val(''); 
-                            });
-                            break;
+                            chivo = 1;
                         }
                     } 
+
+                    if(chivo == 1)
+                    {
+                        swal("Advertencia", "La fecha ingresada no coincide con el Periodo Acádemico seleccionado", "warning")
+                        .then((value) => {
+                            $('#inicio_add').val('');
+                            $('#fin_add').val(''); 
+                        });                        
+                    }
                 });                
             }
         }); 
@@ -860,6 +918,11 @@
             })
             .then((willDelete) => {
               if (willDelete) {
+                id_cuestionario = 0;
+                $('#mostrarAddPregunta').addClass('hidden');
+                $('#nombreCuestionario').text("");  
+
+                
                 $.ajax({
                     type: 'POST',
                     url: "/plataforma/blackboard/cuestionario/cambiarEstado",
@@ -935,6 +998,12 @@
                 ]
             });                                         
         }); 
+
+        $(document).on('click', '.cancelPregunta', function() {
+            id_cuestionario = 0;
+            $('#mostrarAddPregunta').addClass('hidden');
+            $('#nombreCuestionario').text("");                  
+        });        
 
         $('.modal-footer').on('click', '.addPregunta', function() {
             if(id_pregunta > 0)
@@ -1180,7 +1249,8 @@
                                         .then((value) => {
                                             id_respuesta = 0;
                                             $('#respuesta_add').val('');
-                                            $('#validacion_add').prop("checked", false);     
+                                            $('#validacion_add').prop("checked", false);
+                                            seleccion = 0;     
                                             tabla_respuesta.ajax.reload();                                
                                         });                          
                                     }
@@ -1234,7 +1304,8 @@
                                     .then((value) => {
                                         id_respuesta = 0;
                                         $('#respuesta_add').val('');
-                                        $('#validacion_add').prop("checked", false);     
+                                        $('#validacion_add').prop("checked", false);
+                                        seleccion = 0;     
                                         tabla_respuesta.ajax.reload();                                
                                     });                          
                                 }
@@ -1290,7 +1361,7 @@
                                         .then((value) => {
                                             $('#respuesta_add').val('');
                                             $('#validacion_add').prop("checked", false);       
-
+                                            seleccion = 0;
                                             tabla_respuesta.ajax.reload();                                
                                         });                          
                                     }
@@ -1347,7 +1418,7 @@
                                     .then((value) => {
                                         $('#respuesta_add').val('');
                                         $('#validacion_add').prop("checked", false);       
-
+                                        seleccion = 0;
                                         tabla_respuesta.ajax.reload();                                
                                     });                          
                                 }

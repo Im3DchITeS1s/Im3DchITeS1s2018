@@ -20,6 +20,7 @@
     </div>
 
     <div class="content">
+        <div class="row" id="mostrarNombreCarreraSeleccionada" style="text-align: center;"></div>
         <div class="row" id="mostrarCarreraGradoSeccion" style="text-align: center;"></div>
         <br>
         <div class="row" id="mostrarCursos"></div>
@@ -27,7 +28,9 @@
 
     <!-- AJAX CRUD operations -->
     <script type="text/javascript"> 
+
         $.get("/bandeja/responder/carrera",function(response){
+            $("#mostrarCarreras").empty();
             for(i=0; i<response.length; i++){
                 $("#mostrarCarreras").append("<div class='info-box bg-aqua'><span class='info-box-icon'><button class='carrera-modal info-box bg-aqua' type='button' data-fkcantidad_alumno='"+response[i].fkcantidad_alumno+"' data-fkcarrera_grado='"+response[i].fkcarrera_grado+"'><i class='ion-ios-chatbubble-outline'></i></button></span><div class='info-box-content'><span class='info-box-number'>"+response[i].carrera+" "+response[i].grado+" "+response[i].seccion+"</span></div></div>");                 
             }
@@ -36,12 +39,21 @@
 
         $(document).on('click', '.carrera-modal', function() {
             $.get("/bandeja/responder/cuestionario/"+$(this).data('fkcantidad_alumno'),function(response, id){
+                $("#mostrarCursos").empty();
                 for(i=0; i<response.length; i++){
                     $("#mostrarCursos").append("<div class='col-md-6 col-sm-6 col-xs-12'><div class='info-box'><span class='info-box-icon bg-aqua'><button class='cuestionarios-modal info-box-icon bg-aquabuscar-cuestionarios' type='button' data-fkcantidad_alumno='"+response[i].fkcantidad_alumno+"' data-fkcarrera_curso='"+response[i].fkcarrera_curso+"'><i class='fa fa-file-text-o'></i></button></span><div class='info-box-content' id='numeroMostrar"+i+"'><span class='info-box-text'>"+response[i].curso+"</span></div></div></div>"); 
 
                     contarCuestionarios(i, response[i].fkcantidad_alumno, response[i].fkcarrera_curso);
                 }
             });
+
+            $.get("/bandeja/responder/cuestionario/"+$(this).data('fkcantidad_alumno'),function(response, id){
+                $("#mostrarNombreCarreraSeleccionada").empty();
+                for(i=0; i<response.length; i++){
+                    $("#mostrarNombreCarreraSeleccionada").append("<h3><strong>"+response[i].grado+" "+response[i].carrera+" / Sección: "+response[i].seccion+"</strong></h3>"); 
+                    break;
+                }
+            });            
         });  
 
         function contarCuestionarios(correlativo, cantidad, curso)

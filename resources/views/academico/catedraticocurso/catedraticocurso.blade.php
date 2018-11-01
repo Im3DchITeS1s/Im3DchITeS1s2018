@@ -35,7 +35,6 @@
                             <th width="25%">Catedrático</th>
                             <th width="25%">Carrera Grado Cursos</th>
                             <th width="25%">Fecha (Inicio-Fin)</th>
-                            <th width="25%">No. Períodos</th>
                             <th width="8%">Accion</th>
                         </tr>
                     </thead>
@@ -112,20 +111,18 @@
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Carreras|GyS</label>
+                                        <label>Carreras Grados</label>
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
                                     name="fkcantidad_alumno_add" id='fkcantidad_alumno_add' required autofocus>
                                     </select> 
                                 </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <small class="control-label">Debe de seleccionar uno</small>                                       
                                 <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
                             </div> 
 
                             <!--Drop list de la Carrera Grado-->
-                            
-                        
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
@@ -133,13 +130,12 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarreracurso_add" id='fkcarreracurso_add' required autofocus>
+                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' onchange="curso"  required autofocus>
                                     </select> 
                                 </div>                                                               
                                 <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
                             </div> 
                         </div> 
-
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -249,10 +245,11 @@
                 serverSide: false,
                 paginate: true,
                 searching: true,
-                ajax: '{!! route('catedraticocurso.getdata') !!}',
+                ajax: '{!! route('CatedraticoCurso.getdata') !!}',
                 columns: [
-                    { data: 'cantidad', name: 'cantidad' },
-                    { data: 'grado_carrera_seccion', name: 'grado_carrera_seccion' },
+                    { data: 'catedratico', name: 'catedratico' },
+                    { data: 'datos_carreras', name: 'datos_carreras' },
+                    { data: 'fecha', name: 'fecha' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -289,17 +286,21 @@
             });
 
          $.get("/academico/catedraticocurso/dropcarreracurso/"+5,function(response, id){
-                $("#fkcarreracurso_add").empty();
-                $("#fkcarreracurso_add").append("<option value=''> seleccionar </option>");
+                $("#fkcarrera_curso_add").empty();
+                $("#fkcarrera_curso_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcarreracurso_add").append("<option value='"+response[i].id+"'> "+response[i].curso+"</option>");
-                    $('#fkcarreracurso_add').val('').trigger('change.select2'); 
+                    $("#fkcarrera_curso_add").append("<option value='"+response[i].id+"'> "+response[i].curso+"</option>");
+                    $('#fkcarrera_curso_add').val('').trigger('change.select2'); 
                 }
             });
-             
 
-
-        });        
+         function curso(id){
+            if(id.value=fkcantidad_alumno)
+            {
+                $($fkcarrera_curso).data(curso);
+            }
+                            }
+       });        
 
         
 
@@ -314,7 +315,7 @@
                     'cantidad_periodo': $('#cantidad_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
-                    'fkcarreracurso': $('#fkcarreracurso_add').val(),
+                    'fkcarrera_curso': $('#fkcarrera_curso_add').val(),
                 },
                 success: function(data) {
                     $('.errorInicio').addClass('hidden');
@@ -358,9 +359,9 @@
                             $('.errorCantidadAlumno').text(data.errors.fkcantidad_alumno);
                         }
 
-                    if (data.errors.fkcarreracurso) {
+                    if (data.errors.fkcarrera_curso) {
                             $('.errorCarreraCurso').removeClass('hidden');
-                            $('.errorCarreraCurso').text(data.errors.fkcarreracurso);
+                            $('.errorCarreraCurso').text(data.errors.fkcarrera_curso);
                         }
 
                      } else {
@@ -395,7 +396,7 @@
               if (willDelete) {
                 $.ajax({
                     type: 'POST',
-                    url: "/academico/catedraticocurso/cambiarEstado",
+                    url: "/academico/catedraticocurso/catedraticocurso/cambiarEstado",
                     data: {
                         '_token': $('input[name=_token]').val(),
                         'pkcatedraticocurso': id,

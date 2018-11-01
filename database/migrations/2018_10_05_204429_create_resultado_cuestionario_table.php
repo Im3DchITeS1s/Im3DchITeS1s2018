@@ -15,7 +15,7 @@ class CreateResultadoCuestionarioTable extends Migration
             $table->unsignedInteger('fkcuestionario');
             $table->unsignedInteger('fkinscripcion');
             $table->unsignedInteger('fkcarrera_curso');
-            $table->unsignedInteger('fkestado');            
+            $table->unsignedInteger('fkestado')->default(5);           
 
             $table->foreign('fkcuestionario')->references('id')->on('cuestionario')->onUpdate('cascade');
             $table->foreign('fkinscripcion')->references('id')->on('inscripcion')->onUpdate('cascade');
