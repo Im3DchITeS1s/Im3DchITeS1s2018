@@ -234,5 +234,11 @@ Route::resource('/gestionadministrativa/inventario/altaproducto', 'AltaProductoC
 Route::get('/gestionadministrativa/inventario/altaproducto/dropproducto/{id}', 'AltaProductoController@dropProducto');
 Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
 
+//Baja Producto
+Route::resource('/gestionadministrativa/inventario/bajaproducto', 'BajaProductoController');
+Route::get('/gestionadministrativa/inventario/bajaproducto/dropproducto/{id}', 'BajaProductoController@dropProducto');
+Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
+
+
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
