@@ -127,16 +127,34 @@ Route::post('/mantenimiento/periodoacademico/cambiarEstado', 'PeriodoAcademicoCo
 Route::resource('/academico/estudiante/estudiante', 'EstudianteController');
 Route::get('estudiante/getdata', 'EstudianteController@getdata')->name('estudiante.getdata');
 
-//Docente
+//Docente y Docente Curso
 Route::resource('/academico/docente/docente', 'DocenteController');
-Route::get('academico/getdata', 'DocenteController@getdata')->name('docente.getdata');
+Route::get('docente/getdata', 'DocenteController@getdata')->name('docente.getdata');
+
+Route::resource('/academico/catedraticocurso/catedraticocurso', 'CatedraticoCursoController');
+Route::get('CatedraticoCurso/getdata', 'CatedraticoCursoController@getdata')->name('CatedraticoCurso.getdata');
+Route::get('/academico/catedraticocurso/dropcarreracurso/{id}', 'CatedraticoCursoController@dropcarreracurso');
+Route::get('/academico/catedraticocurso/dropdocente/{id}', 'CatedraticoCursoController@dropdocente');
+Route::get('/academico/catedraticocurso/dropcarreracatedratico/{id}', 'CatedraticoCursoController@dropcarreracatedratico');
+Route::post('/academico/catedraticocurso/catedraticocurso/cambiarEstado', 'CatedraticoCursoController@cambiarEstado');
+
+
+
+//Encargado y Encargado de Estudiantes
+Route::resource('/academico/encargado/encargado', 'EncargadoController');
+Route::get('encargado/getdata', 'EncargadoController@getdata')->name('encargado.getdata');
+Route::resource('/academico/encargadoalumno/encargadoalumno', 'EncargadoAlumnoController');
+Route::post('/academico/encargadoalumno/cambiarEstado', 'EncargadoAlumnoController@cambiarEstado');
+Route::get('EncargadoAlumno/getdata', 'EncargadoController@getdata')->name('EncargadoAlumno.getdata');
+Route::get('/academico/inscripcion/dropencargado/{id}', 'InscripcionController@dropencargado');
+
+
 
 //Inscripcion
 Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
 Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
 Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
 Route::get('/academico/inscripcion/droptiperiodo/{id}', 'InscripcionController@droptiperiodo');
-
 Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
 Route::post('/academico/inscripcion/cambiarEstado', 'InscripcionController@cambiarEstado');
 
@@ -219,6 +237,15 @@ Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'Alu
 Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaController');
 Route::get('categoria/getdata', 'CategoriaController@getdata')->name('categoria.getdata');
 Route::post('/gestionadministrativa/inventario/categoria/cambiarEstado', 'CategoriaController@cambiarEstado');
+
+//Stock 
+Route::resource('/gestionadministrativa/inventario/stock', 'InventarioStockProductoController');
+Route::get('InventarioStockProducto/getdata', 'InventarioStockProductoController@getdata')->name('stock.getdata');
+
+//Alta Producto
+Route::resource('/gestionadministrativa/inventario/altaproducto', 'AltaProductoController');
+Route::get('/gestionadministrativa/inventario/altaproducto/dropproducto/{id}', 'AltaProductoController@dropProducto');
+Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
 
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');

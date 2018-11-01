@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'SISMEDCHI - Catedratico')
+@section('title', 'SISMEDCHI - Encargado')
 
 @section('content_header')
     <div class="content-header">
-        <h1>Catedratico
+        <h1>Encargado
             <button type="button" class="add-modal btn btn-success">
                 <span class="fa fa-plus-circle"></span>
             </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Catedratico</li>
+            <li class="active">Encargado</li>
         </ol>                      
     </div>    
 @stop
@@ -683,7 +683,7 @@
             table = $('#info-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('docente.getdata') !!}',
+                ajax: '{!! route('encargado.getdata') !!}',
                 columns: [
                     { data: 'codigo', name: 'codigo' },
                     { data: 'nombre1', name: 'nombre1' },
@@ -718,7 +718,7 @@
                 $("#fktipo_persona_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fktipo_persona_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fktipo_persona_add').val('5').trigger('change.select2'); 
+                    $('#fktipo_persona_add').val('7').trigger('change.select2'); 
                 }
             }); 
             $.get("/sistema/imedchi/persona/droppaisdepartamento/"+0,function(response,id){

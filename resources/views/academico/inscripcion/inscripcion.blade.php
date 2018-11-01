@@ -63,7 +63,7 @@
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Carrera, Grado y Sección</label>
+                                        <label>Carreras|GyS</label>
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
@@ -155,7 +155,7 @@
                         <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Carrera, Grado y Sección</label>
+                                        <label>Carreras|GyS</label>
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
@@ -202,7 +202,7 @@
                                   <div class="input-group-addon">
                                    <label>Pago Q</label>
                                   </div>
-                                  <input type="text" class="form-control" id="pago_edit" placeholder="Pago" autofocus maxlength="4">
+                                  <input type="text" class="form-control" id="pago_edit" placeholder="Pago" autofocus maxlength="7">
                                 </div>                                                               
                                 <small class="control-label">Max: 4| </small>
                                 <p class="errorPago text-center alert alert-danger hidden"></p>
@@ -285,7 +285,6 @@
                     $('#fkpersona_add').val('').trigger('change.select2'); 
                 }
             });      
-
         });        
 
         $('.modal-footer').on('click', '.add', function() {
@@ -303,7 +302,7 @@
                 },
                 success: function(data) {
                     $('.errorCantidadAlumno').addClass('hidden');
-                    $('.errorTipoPeriodo').addClass('hidden');
+                    $('.errorPeriodo').addClass('hidden');
                     $('.errorPersona').addClass('hidden');
                     $('.errorPago').addClass('hidden');
 
@@ -332,16 +331,16 @@
                         }
 
                     if (data.errors.pago) {
-                            $('.errorPersona').removeClass('hidden');
-                            $('.errorPersona').text(data.errors.pago);
+                            $('.errorPago').removeClass('hidden');
+                            $('.errorPago').text(data.errors.pago);
                         }
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
-                            $('#fkcarrera_grado').val('');
-                            $('#fktipo_periodo').val('');
-                            $('#fkpersona').val('');
-                            $('#pago').val('');
+                            $('#fkcarrera_grado_add').val('');
+                            $('#fktipo_periodo_add').val('');
+                            $('#fkpersona_add').val('');
+                            $('#pago_add').val('');
                             table.ajax.reload();
                         });                          
                     }

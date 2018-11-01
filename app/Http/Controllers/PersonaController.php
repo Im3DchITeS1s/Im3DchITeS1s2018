@@ -272,7 +272,6 @@ class PersonaController extends Controller
     public static function crearCodigo($id)
     {
         $correlativo = 0;
-
         $tipo_persona = TipoPersona::buscarIDTipoPersona($id);
         $incial =  strtoupper(substr($tipo_persona->nombre, 0, 3));
 
@@ -282,6 +281,10 @@ class PersonaController extends Controller
             $correlativo = substr($persona->codigo, 4, 7);
             $numero=$correlativo+1;
         }
+        if(count($persona) == 0) {
+            $numero=1;
+        }        
+
         if($numero > 999999){
             $correlativo = $numero;
         } 
