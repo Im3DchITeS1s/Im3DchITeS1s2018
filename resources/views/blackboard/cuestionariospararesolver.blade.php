@@ -30,8 +30,8 @@
                         @foreach($cuestionarios as $cuestionario)
                           <div class="progress-group">
                             <span class="progress-text"><button class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</button></span>
-                            <div class="progress sm">
-                              <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'></div>
+                            <div class="progress sm" style="height: 20px;">
+                              <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'><strong>{{ $cuestionario->prioridad }}</strong></div>
                             </div>
                           </div>
                           <br>

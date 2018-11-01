@@ -24,11 +24,24 @@ class Pregunta extends Model
             ->where('pregunta.id', $id)->get(); 
 	}
 
-	public static function preguntaEncuesta($id)
+	public static function preguntaEncuesta($id, $estado)
 	{
 		return Pregunta::join('etiqueta', 'pregunta.fketiqueta', '=', 'etiqueta.id')
+			->join('cuestionario', 'pregunta.fkcuestionario', '=', 'cuestionario.id')
 			->select('pregunta.id as id', 'pregunta.descripcion as descripcion','etiqueta.nombre as etiqueta', 'etiqueta.tipo as tipo_etiqueta', 'etiqueta.color as etiqueta_color', 'etiqueta.metadata_inicio as metadata_inicio', 'etiqueta.idetiqueta as idetiqueta', 'etiqueta.nameetiqueta as nameetiqueta', 'etiqueta.cierreetiqueta as cierreetiqueta', 'etiqueta.metadata_cierra as metadata_cierra')
             ->where('pregunta.fkcuestionario', $id)
+            ->where('cuestionario.fkestado', $estado)
+            ->where('pregunta.fkestado', 5)->inRandomOrder()->get(); 
+	}	
+
+	public static function preguntaEncuestaImprimir($id, $estado)
+	{
+		return Pregunta::join('etiqueta', 'pregunta.fketiqueta', '=', 'etiqueta.id')
+			->join('cuestionario', 'pregunta.fkcuestionario', '=', 'cuestionario.id')
+			->select('pregunta.id as id', 'pregunta.descripcion as descripcion','etiqueta.nombre as etiqueta', 'etiqueta.tipo as tipo_etiqueta', 'etiqueta.color as etiqueta_color', 'etiqueta.metadata_inicio as metadata_inicio', 'etiqueta.idetiqueta as idetiqueta', 'etiqueta.nameetiqueta as nameetiqueta', 'etiqueta.cierreetiqueta as cierreetiqueta', 'etiqueta.metadata_cierra as metadata_cierra')
+            ->where('pregunta.fkcuestionario', $id)
+            ->where('cuestionario.fkestado', $estado)
+            ->Orwhere('cuestionario.fkestado', 22)
             ->where('pregunta.fkestado', 5)->inRandomOrder()->get(); 
 	}	
 }

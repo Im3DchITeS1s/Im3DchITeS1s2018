@@ -18,19 +18,78 @@ class Respuesta extends Model
 
 	public static function respuestaPregunta($id)
 	{
-		return Respuesta::select('id','descripcion')
+		return Respuesta::select('id','descripcion', 'validar')
             	->where('fkpregunta', $id)
             	->where('fkestado', 5)->get(); 
 	}
 
-	public static function respuestaCuestionarioPregunta($id)
+	public static function respuestaCuestionarioPregunta($id, $estado)
 	{
 		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
 				->join('etiqueta', 'pregunta.fketiqueta', 'etiqueta.id')
+				->join('cuestionario', 'pregunta.fkcuestionario', 'cuestionario.id')
 				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.fkpregunta as fkpregunta', 'etiqueta.tipo as tipo')
             	->where('pregunta.fkcuestionario', $id)
+            	->where('cuestionario.fkestado', $estado)
             	->where('pregunta.fkestado', 5)
             	->where('respuesta.fkestado', 5)->inRandomOrder()->get(); 
+	}
+
+	public static function respuestaCuestionarioPreguntaImprimir($id, $estado)
+	{
+		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
+				->join('etiqueta', 'pregunta.fketiqueta', 'etiqueta.id')
+				->join('cuestionario', 'pregunta.fkcuestionario', 'cuestionario.id')
+				->select('respuesta.*', 'etiqueta.tipo as tipo')
+            	->where('pregunta.fkcuestionario', $id)
+            	->where('cuestionario.fkestado', $estado)
+            	->Orwhere('cuestionario.fkestado', 22)
+            	->where('pregunta.fkestado', 5)
+            	->where('respuesta.fkestado', 5)->inRandomOrder()->get(); 
+	}	
+
+	public static function respustas($cuestionario, $pregunta)
+	{
+		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
+				->join('cuestionario', 'pregunta.fkcuestionario', 'cuestionario.id')
+				->select('respuesta.*')
+            	->where('pregunta.fkcuestionario', $cuestionario)
+            	->where('pregunta.id', $pregunta)
+            	->where('cuestionario.fkestado', 21)
+            	->Orwhere('cuestionario.fkestado', 22)
+            	->where('pregunta.fkestado', 5)
+            	->where('respuesta.fkestado', 5)->get(); 
+	}	
+
+	public static function respustasTipoUnica($cuestionario)
+	{
+		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
+		        ->join('etiqueta', 'pregunta.fketiqueta', 'etiqueta.id')
+				->join('cuestionario', 'pregunta.fkcuestionario', 'cuestionario.id')
+				->select('respuesta.*')
+            	->where('pregunta.fkcuestionario', $cuestionario)
+            	->where('etiqueta.tipo', 'única')
+            	->where('respuesta.validar', 1)
+            	->where('cuestionario.fkestado', 21)
+            	->Orwhere('cuestionario.fkestado', 22)
+            	->where('pregunta.fkestado', 5)
+            	->where('respuesta.fkestado', 5)->get(); 
+	}
+
+	public static function respustasTipoMultiple($cuestionario, $pregunta)
+	{
+		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
+		        ->join('etiqueta', 'pregunta.fketiqueta', 'etiqueta.id')
+				->join('cuestionario', 'pregunta.fkcuestionario', 'cuestionario.id')
+				->select('respuesta.*')
+            	->where('pregunta.fkcuestionario', $cuestionario)
+            	->where('pregunta.id', $pregunta)
+            	->where('etiqueta.tipo', 'multiple')
+            	->where('respuesta.validar', 1)
+            	->where('cuestionario.fkestado', 21)
+            	->Orwhere('cuestionario.fkestado', 22)
+            	->where('pregunta.fkestado', 5)
+            	->where('respuesta.fkestado', 5)->get(); 
 	}
 
 	public static function respuestaCorrecta($id)
@@ -47,5 +106,13 @@ class Respuesta extends Model
             	->where('respuesta.fkpregunta', $id)
             	->where('etiqueta.tipo', $tipo)
             	->where('respuesta.fkestado', 5)->get(); 
-	}					
+	}	
+
+	public static function respuestasPorPregunta($id)
+	{
+		return Respuesta::select('id')
+				->where('validar', 1)
+            	->where('fkpregunta', $id)
+            	->where('fkestado', 5)->get(); 
+	}		
 }

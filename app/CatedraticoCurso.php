@@ -40,4 +40,9 @@ class CatedraticoCurso extends Model
 					->orderBy('carrera.nombre', 'asc')
 					->get();
 	}	
+
+	public static function seleccionarCursoGradoID($id)
+	{
+		return CatedraticoCurso::find($id)->first();
+	}
 }

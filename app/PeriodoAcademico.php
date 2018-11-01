@@ -23,16 +23,24 @@ class PeriodoAcademico extends Model
             ->get();
 	}
 
+	public static function buscarFechaInicioFin($id){
+		return PeriodoAcademico::select('inicio', 'fin')
+            ->where('id', $id)
+            ->get();
+	}	
+
 	public static function buscarTipoPeriodo($id){
 		return TipoPeriodo::select('id', 'nombre')
             ->where('fkestado', $id)
             ->orderBy('nombre', 'asc')->get();
 	}
 
-	public static function verficiarFechaPeriodo($inicio, $fin)
+	public static function verficiarFechaPeriodo($inicio, $fin, $id)
     {
-        return PeriodoAcademico::where('inicio', '>=', $inicio)
+        return PeriodoAcademico::where('inicio', '<=', $inicio)
         						->where('fin', '>=', $fin)
+        						->where('id', $id)
+        						->where('fkestado', 5)
         						->select('id')->get();   
     } 	
 
