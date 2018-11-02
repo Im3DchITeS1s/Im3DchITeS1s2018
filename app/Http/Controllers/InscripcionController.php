@@ -17,6 +17,7 @@ use App\Carrera;
 use App\Grado;
 use App\Seccion;
 use App\Persona;
+use App\Ciclo;
 use App\Estado;
 
 class InscripcionController extends Controller
@@ -27,6 +28,7 @@ class InscripcionController extends Controller
         'fkcantidad_alumno' => 'required|integer', 
         'fktipo_periodo' => 'required|integer', 
         'fkpersona' => 'required|integer', 
+        'fkciclo' => 'required|integer', 
         'pago'=>'numeric|required|between:0,1000.99', 
     ];
 
@@ -73,7 +75,7 @@ class InscripcionController extends Controller
                         $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="Ciclo Finalizado"><span class="fa fa-thumbs-down"></span></button>';
                         break;
                 }
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->ciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->fkciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
@@ -115,6 +117,14 @@ class InscripcionController extends Controller
         }        
     }  
         
+
+     public function dropciclo(Request $request, $id)
+        {
+            if($request->ajax()){
+                $data = Ciclo::buscarCiclo($id);
+                return response()->json($data);
+            }        
+        }  
     
     public function create()
     {
@@ -133,7 +143,7 @@ class InscripcionController extends Controller
             $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
             $insert->fktipo_periodo = $request->fktipo_periodo;    
             $insert->fkpersona = $request->fkpersona; 
-            $insert->ciclo = date("Y");   
+            $insert->fkciclo = $request->fkciclo;   
             $insert->pago = $request->pago;     
             $insert->fkestado = $estado->id;                                       
             $insert->save();
@@ -156,7 +166,7 @@ class InscripcionController extends Controller
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
             $cambiar->fkpersona = $request->fkpersona;
-            $cambiar->ciclo = date("Y");   
+            $cambiar->ciclo = $request->fkciclo;   
             $cambiar->pago = $request->pago;
             $cambiar->save();
             return response()->json($cambiar); 
