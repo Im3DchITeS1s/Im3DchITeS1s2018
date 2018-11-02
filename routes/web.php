@@ -252,6 +252,12 @@ Route::resource('/gestionadministrativa/inventario/bajaproducto', 'BajaProductoC
 Route::get('/gestionadministrativa/inventario/bajaproducto/dropproducto/{id}', 'BajaProductoController@dropProducto');
 Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
 
+// Tipo Pago 
+
+Route::resource('/gestionadministrativa/controlpago/tipopago', 'TipoPagoController');
+Route::get('TipoPago/getdata', 'TipoPagoController@getdata')->name('tipopago.getdata');
+Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPagoController@cambiarEstado');
+
 
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
