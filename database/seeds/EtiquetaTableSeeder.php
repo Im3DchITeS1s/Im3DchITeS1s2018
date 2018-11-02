@@ -96,8 +96,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'primary';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -110,8 +110,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'primary';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -122,8 +122,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'Clouds';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -134,8 +134,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'default';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -146,8 +146,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'success';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -158,8 +158,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'info';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -170,8 +170,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'warning';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';
@@ -182,8 +182,8 @@ class EtiquetaTableSeeder extends Seeder
         $insert->nombre = 'Click';
         $insert->tipo = 'multiple';
         $insert->color = 'danger';
-        $insert->metadata_inicio = '<div class="icheck-primary"><input type="checkbox"';
-        $insert->idetiqueta = ' id="';
+        $insert->metadata_inicio = '<div class="';
+        $insert->idetiqueta = ' icheck-primary"><input type="checkbox" id="';
         $insert->nameetiqueta = '" name="';     
         $insert->cierreetiqueta = '" />';
         $insert->metadata_cierra = '</div>';

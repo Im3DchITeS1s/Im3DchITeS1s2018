@@ -13,6 +13,7 @@ class CreateBajaProductoTable extends Migration
             
             $table->increments('id');
             $table->integer('cantidad');
+            $table->string('observacion');
             $table->unsignedInteger('fkinventario_stock');
             $table->timestamps();
             $table->foreign('fkinventario_stock')->references('id')->on('inventario_stock')->onUpdate('cascade');

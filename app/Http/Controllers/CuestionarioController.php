@@ -37,7 +37,21 @@ class CuestionarioController extends Controller
 
     public function index()
     {
-        return view('blackboard/cuestionario');
+        $contar_vencidos = 0;
+        $estado = Estado::buscarIDEstado(22);
+        $cuestionarios_vencidos = Cuestionario::verificarCuestionariosVencidos(date('Y-m-d'));
+
+        if(count($cuestionarios_vencidos) > 0)
+            $contar_vencidos = count($cuestionarios_vencidos);
+           
+        foreach ($cuestionarios_vencidos as $cuestionario) 
+        {
+            $cambiar = Cuestionario::findOrFail($cuestionario->id); 
+            $cambiar->fkestado = $estado->id;
+            $cambiar->save();
+        }
+
+        return view('blackboard/cuestionario', compact('contar_vencidos'));
     }
 
     public function getdataCuestionarioCreado()
@@ -222,7 +236,15 @@ class CuestionarioController extends Controller
             $data = PeriodoAcademico::buscarPeriodoAcademico($id);
             return response()->json($data);
         }        
-    }   
+    }  
+
+    public function mostrarFechaPeriodoAcademico(Request $request, $id)
+    {
+        if($request->ajax()){
+            $data = PeriodoAcademico::buscarFechaInicioFin($id);
+            return response()->json($data);
+        }        
+    }      
 
     public function dropprioridad(Request $request, $id)
     {
@@ -232,10 +254,10 @@ class CuestionarioController extends Controller
         }        
     }     
 
-    public function verificarFecha(Request $request, $inicio, $fin)
+    public function verificarFecha(Request $request, $inicio, $fin, $id)
     {
         if($request->ajax()){
-            $data = PeriodoAcademico::verficiarFechaPeriodo($inicio, $fin);
+            $data = PeriodoAcademico::verficiarFechaPeriodo($inicio, $fin, $id);
             return response()->json($data);
         }          
     }   

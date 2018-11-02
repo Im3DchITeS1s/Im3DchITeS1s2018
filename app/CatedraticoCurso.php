@@ -52,8 +52,16 @@ class CatedraticoCurso extends Model
 					->orderBy('carrera.nombre', 'asc')
 					->get();
 	}	
+<<<<<<< HEAD
+
+	public static function seleccionarCursoGradoID($id)
+	{
+		return CatedraticoCurso::find($id)->first();
+	}
+=======
 		public static function buscarIDCatedraticoCurso($id)
     {
         return Inscripcion::findOrFail($id);       
     } 
+>>>>>>> 259712ffc26cef6f1cf939f377abe4f2f1743714
 }

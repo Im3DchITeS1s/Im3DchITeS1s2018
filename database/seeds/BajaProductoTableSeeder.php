@@ -11,6 +11,7 @@ class BajaProductoTableSeeder extends Seeder
     {
         $nuevo = new BajaProducto();
         $nuevo->cantidad = 10;
+        $nuevo->observacion = 'por ganas';
     	$nuevo->fkinventario_stock = 1;
     	$nuevo-> save();
     }

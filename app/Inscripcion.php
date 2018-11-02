@@ -72,4 +72,9 @@ class Inscripcion extends Model
     {
         return Inscripcion::findOrFail($id);       
     } 
+
+	public static function alumnoInscrito($id)
+    {
+        return Inscripcion::where('fkpersona', $id)->where('ciclo', date('Y'))->first();       
+    }     
 }

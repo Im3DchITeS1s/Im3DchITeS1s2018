@@ -306,4 +306,8 @@ class DocenteController extends Controller
 
         return strtoupper($incial.'-'.$correlativo);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 259712ffc26cef6f1cf939f377abe4f2f1743714

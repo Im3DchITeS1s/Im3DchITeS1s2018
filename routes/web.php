@@ -177,8 +177,9 @@ Route::post('/plataforma/blackboard/cuestionario/cambiarEstado', 'CuestionarioCo
 Route::get('/plataforma/blackboard/cuestionario/dropcarreracatedratico/{id}', 'CuestionarioController@dropcarreracatedratico');
 Route::get('/plataforma/blackboard/cuestionario/droptipocuestionario/{id}', 'CuestionarioController@droptipocuestionario');
 Route::get('/plataforma/blackboard/cuestionario/dropperiodoacademico/{id}', 'CuestionarioController@dropperiodoacademico');
+Route::get('/plataforma/blackboard/cuestionario/mostrarfecha/{id}', 'CuestionarioController@mostrarFechaPeriodoAcademico');
 Route::get('/plataforma/blackboard/cuestionario/dropprioridad/{id}', 'CuestionarioController@dropprioridad');
-Route::get('/plataforma/blackboard/verificar/fecha/{inicio}/{fin}', 'CuestionarioController@verificarFecha');
+Route::get('/plataforma/blackboard/verificar/fecha/{inicio}/{fin}/{id}', 'CuestionarioController@verificarFecha');
 
 //Etiquetas
 Route::get('/plataforma/blackboard/etiqueta/etiquetaestado/{id}', 'EtiquetaController@etiquetaestado');
@@ -208,6 +209,17 @@ Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionario
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
 Route::get('/mostrar/cuestionarios/seleccionados/blackboard/{id1}/{id2}', 'ResponderBandejaCuestionarioController@mostrarCuestionariosSeleccionados')->name('cuestionarios.mostrarCuestionariosSeleccionados');
 Route::get('/resolver/cuestionario/seleccionado/blackboard/{id1}', 'ResponderBandejaCuestionarioController@encabezadoCuestionarioSeleccionado')->name('cuestionarios.encabezadoCuestionarioSeleccionado');
+Route::get('/respuestas/de/la/preguntas/{id}', 'ResponderBandejaCuestionarioController@buscarRespuestas');
+Route::get('/respuestas/por/pregunta/{id}', 'ResponderBandejaCuestionarioController@buscarRespuestasPorPregunta');
+
+//CuestionarioPreguntasRespuestas
+Route::resource('/cuestionario/pregunta/respuesta', 'AlumnoCuestionarRespuestaController');
+Route::get('/cuestionarios/preguntas/respuestas/{id}', 'AlumnoCuestionarRespuestaController@cuestionariosPreguntasRespuestas');
+
+//CuestionarioResuelto
+Route::resource('/cuestionario/resuelto/alumno/nota/obtenida', 'ResultadoCuestionarioController');
+Route::get('/nota/cuestionario/alumno/{id}', 'ResultadoCuestionarioController@existeCuestionarioResuelto');
+Route::get('/grafica/resultados/cuestionario/{id}', 'ResultadoCuestionarioController@mostrarGraficaResultado');
 
 //CargarContenidoCatedratico
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/catedratico', 'CatedraticoContenidoEducativoController');
@@ -234,6 +246,12 @@ Route::get('InventarioStockProducto/getdata', 'InventarioStockProductoController
 Route::resource('/gestionadministrativa/inventario/altaproducto', 'AltaProductoController');
 Route::get('/gestionadministrativa/inventario/altaproducto/dropproducto/{id}', 'AltaProductoController@dropProducto');
 Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
+
+//Baja Producto
+Route::resource('/gestionadministrativa/inventario/bajaproducto', 'BajaProductoController');
+Route::get('/gestionadministrativa/inventario/bajaproducto/dropproducto/{id}', 'BajaProductoController@dropProducto');
+Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
+
 
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
