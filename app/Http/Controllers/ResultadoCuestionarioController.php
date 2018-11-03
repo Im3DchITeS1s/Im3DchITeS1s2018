@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
+use App\Inscripcion;
 use App\Pregunta;
 use App\Respuesta;
 use App\Cuestionario;
 use App\Resultado_Cuestionario;
 use App\Alumno_Cuestionario_Respuesta;
 use Auth;
+use PDF;
 
 class ResultadoCuestionarioController extends Controller
 {
@@ -77,7 +79,10 @@ class ResultadoCuestionarioController extends Controller
         $respuestas_encuesta_original = Respuesta::respuestaCuestionarioPreguntaImprimir($id, 21);
         $catedratico = Cuestionario::cursoPerteneceAlCuestionario($id);
 
-        return view('blackboard.calificacion', compact('fecha_impresion', 'resultado_encuesta', 'respuesta_encuesta', 'preguntas_encuesta_original', 'respuestas_encuesta_original', 'catedratico', 'correcto', 'incorrecto', 'total'));
+        $pdf = PDF::loadView('blackboard.reporte.constancia', compact('fecha_impresion', 'resultado_encuesta', 'respuesta_encuesta', 'preguntas_encuesta_original', 'respuestas_encuesta_original', 'catedratico', 'correcto', 'incorrecto', 'total'));
+         return $pdf->download('invoice.pdf');
+
+        //return view('blackboard.reporte.constancia', compact('fecha_impresion', 'resultado_encuesta', 'respuesta_encuesta', 'preguntas_encuesta_original', 'respuestas_encuesta_original', 'catedratico', 'correcto', 'incorrecto', 'total'));
     }
 
     public function edit($id)

@@ -32,7 +32,7 @@ class ResponderBandejaCuestionarioController extends Controller
     public function getdataCarrera(Request $request)
     {
         if($request->ajax()){
-            $cursosalumnos = Inscripcion::carrerasAlumnos(Auth::user()->fkpersona);
+            $cursosalumnos = Inscripcion::carrerasAlumnos(Auth::user()->fkpersona, date('Y'));
             return response()->json($cursosalumnos);
         }        
     }    
@@ -40,7 +40,7 @@ class ResponderBandejaCuestionarioController extends Controller
     public function getdata(Request $request, $id)
     {
         if($request->ajax()){
-            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, $id);
+            $cursosalumnos = Inscripcion::cursosAlumno(Auth::user()->fkpersona, $id, date('Y'));
             return response()->json($cursosalumnos);
         }        
     }
@@ -48,16 +48,21 @@ class ResponderBandejaCuestionarioController extends Controller
     public function contadorCuestionarios(Request $request, $carrega_grado_seccion, $carrera_curso)
     {
         if($request->ajax()){
+            $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
+
+            $query1 = Resultado_Cuestionario::cuestionariosResueltos(date('Y'), $carrega_grado_seccion, $carrera_curso, $inscrito->id);
+
             $query = Cuestionario::dataBandejaCuestionario($carrega_grado_seccion, $carrera_curso);
-            $data = count($query);
+            $data = count($query) - count($query1);
             return response()->json($data);
         }        
     } 
 
     public function mostrarCuestionariosSeleccionados($carrega_grado_seccion, $carrera_curso)
     {
+        $cuestionarios_resueltos = Resultado_Cuestionario::todosResultados(date('Y'), $carrega_grado_seccion, $carrera_curso);
         $cuestionarios = Cuestionario::dataBandejaCuestionario($carrega_grado_seccion, $carrera_curso);
-        return view('/blackboard/cuestionariospararesolver', compact('cuestionarios'));      
+        return view('/blackboard/cuestionariospararesolver', compact('cuestionarios_resueltos', 'cuestionarios'));      
     }
 
     public function encabezadoCuestionarioSeleccionado($id)
@@ -100,8 +105,8 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function store(Request $request)
     {  
-        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona);
-
+        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
+        
         if(!is_null($inscrito))
         {
             foreach ($request->respuesta_unica as $value) {
@@ -114,7 +119,7 @@ class ResponderBandejaCuestionarioController extends Controller
                 $insert->fkrespuesta = $respuesta->id;    
                 $insert->save();        
             } 
-
+            
             $this->calcularPunteoObtenido($request->idEncuesta, Auth::user()->fkpersona);
 
             return redirect()->route('obtenida.show', [$request->idEncuesta]); 
@@ -183,7 +188,7 @@ class ResponderBandejaCuestionarioController extends Controller
         }
 
         $curso = Cuestionario::cursoPerteneceAlCuestionario($fkencuesta);
-        $inscrito = Inscripcion::alumnoInscrito($fkpersona);
+        $inscrito = Inscripcion::alumnoInscrito($fkpersona, date('Y'));
 
         $insert = new Resultado_Cuestionario();
         $insert->fkcuestionario = $fkencuesta;
