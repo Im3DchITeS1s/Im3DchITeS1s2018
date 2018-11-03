@@ -259,7 +259,7 @@ return [
                     ],
                     [
                         'text'    => 'Cuestionarios Resueltos',
-                        'url'     => '#',
+                        'url'     => '/plataforma/blackboard/cuestionario/historicos/alumnohistorico',
                         'icon_color' => 'yellow',
                     ],
                 ],
@@ -453,7 +453,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Mensualidad',
-                        'url'  => '#',
+                        'url'  => 'gestionadministrativa/controlpago/pago',
                         'icon_color' => 'yellow',
                     ],
                     [

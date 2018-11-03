@@ -8,7 +8,7 @@ class PagoTableSeeder extends Seeder
     
     public function run()
     {
-		$nuevo = new Pago();
+		/*$nuevo = new Pago();
     	$nuevo->pago = 50;
     	$nuevo->fktipo_pago = 2;
         $nuevo->fkmes = 2;
@@ -17,4 +17,5 @@ class PagoTableSeeder extends Seeder
     	$nuevo->save();
         
     }
+    */
 }# Fin de la clase 
