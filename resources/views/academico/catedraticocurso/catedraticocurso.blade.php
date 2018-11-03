@@ -293,18 +293,8 @@
                     $('#fkcarrera_curso_add').val('').trigger('change.select2'); 
                 }
             });
-<<<<<<< HEAD
 
-         function curso(id){
-            if(id.value=fkcantidad_alumno)
-            {
-                $($fkcarrera_curso).data(curso);
-            }
-                            }
-       });        
-
-=======
->>>>>>> parent of 5e1b22f... cambio
+       });       
         
 
         $('.modal-footer').on('click', '.add', function() {
