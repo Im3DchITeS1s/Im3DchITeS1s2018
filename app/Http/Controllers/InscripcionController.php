@@ -47,11 +47,9 @@ class InscripcionController extends Controller
     public function getdata()
     {
         $color_estado = "";
-<<<<<<< HEAD
+
         $query = inscripcion::dataInscripcion(date('Y'));
-=======
-        $query = inscripcion::dataInscripcion();;
->>>>>>> b9c047feba51f1fcd6933a9389606f12cb549ae3
+
         return Datatables::of($query)
             ->addColumn('alumno', function ($data) {
                 return $data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2;
