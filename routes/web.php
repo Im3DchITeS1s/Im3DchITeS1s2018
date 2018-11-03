@@ -256,6 +256,7 @@ Route::resource('/gestionadministrativa/controlpago/tipopago', 'TipoPagoControll
 Route::get('TipoPago/getdata', 'TipoPagoController@getdata')->name('tipopago.getdata');
 Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPagoController@cambiarEstado');
 
+<<<<<<< HEAD
 
 // Pago  
 
@@ -269,6 +270,8 @@ Route::get('Pago/getdata', 'PagoController@getdata')->name('pago.getdata');
 Route::get('/plataforma/blackboard/cuestionario/historicos/alumnohistorico', 'CuestionarioHistoricoAlumno@index')->name('alumnohistorico.index');
 Route::get('get/historicos/alumnohistorico/{carrera}/{curso}/{anio}', 'CuestionarioHistoricoAlumno@getdata')->name('alumnohistorico.getdata');
 Route::get('/filtrar/curso/carrera/{id}', 'CuestionarioHistoricoAlumno@dropCurso');
+=======
+>>>>>>> 722fdd02cae9a582fafe55aadb5b7e369426b03e
 
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
