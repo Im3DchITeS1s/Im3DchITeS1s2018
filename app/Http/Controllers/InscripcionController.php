@@ -43,6 +43,7 @@ class InscripcionController extends Controller
         return view('/academico/inscripcion/inscripcion');   
     }
 
+
     public function getdata()
     {
         $color_estado = "";
@@ -91,7 +92,7 @@ class InscripcionController extends Controller
                         $accion = 'Retirado(A)';                          
                         break;               
                 }
-                
+
                $btn_estado = '<button class="delete-modal btn btn-'.$colot_btn.' btn-xs" type="button" data-id="'.$data->id.'" data-accion="'.$accion.'"><span class="'.$icon.'"></span></button>';
 
                 $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->fkciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">

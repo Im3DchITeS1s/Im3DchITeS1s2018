@@ -259,7 +259,7 @@ return [
                     ],
                     [
                         'text'    => 'Cuestionarios Resueltos',
-                        'url'     => '/plataforma/blackboard/cuestionario/historicos/alumnohistorico',
+                        'url'     => '#',
                         'icon_color' => 'yellow',
                     ],
                 ],

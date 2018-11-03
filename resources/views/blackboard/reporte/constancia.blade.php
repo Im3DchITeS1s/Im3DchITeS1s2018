@@ -1,160 +1,134 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html>
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'> 
-    <style>
-        #divPrincipal{
-            width: 99%; align-items: center; align-content: center; align-self: center;
-        }
-        #divLogo{
-            align-content: center; align-items: center;  text-align: center;
-        }
-        #divDerecha{
-            text-align: right;
-        }
-        #divInstruccion{
-            border: 1px solid; border: 2px solid red; padding: 10px; border-radius: 25px; color: black;
-        }
-        #divTitulo{
-            text-align: center;
-        }
-        #pInstruccion{
-            margin-left: 20px; margin-right: 20px; color: black;
-        }
-        #label30{
-            font-size: 30px;
-        }
-        #label40{
-            font-size: 40px;
-        }        
-        #label12{
-            font-size: 12px;
-        }
-        #tableContenido{
-            width: 100%; border-collapse: collapse; padding: 15px;
-        }
-        #pEstadistica{
-            text-align: center; font-size: 24px;
-        }
-        thead{
-            font-size: 20px;
-        }
-        th{
-            text-align: center;
-        }
-        tbody{
-            font-size: 16px;
-        }
-        #tablaEstadistica{
-            style='width: 25%; border-collapse: collapse; padding: 15px; margin: auto;'
-        }
-     </style>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
+
 <body>
 
-    <div id="divPrincipal">
-        
-        <div id="divLogo">
-            <img src='img/imedchi.jpg' height='100px'>
-            <br>
-            <label id="label30"><b>Instituto, IMEDCHI.</b></label>
-            <br>
-            <label id="label12"><b>{{ $fecha_impresion }}</b></label>
-        </div>     
-        <br>
-        <address>
-            <strong>Alumno, </strong>{{$resultado_encuesta->nombre1}} {{$resultado_encuesta->nombre2}} {{$resultado_encuesta->apellido1}} {{$resultado_encuesta->apellido2}}.<br>
-            <strong>Carrera, </strong>{{$resultado_encuesta->grado}} {{$resultado_encuesta->carrera}} Sección {{$resultado_encuesta->seccion}}.<br>
-            <strong>Catedrático, </strong>{{$catedratico->nombre1}} {{$catedratico->nombre2}} {{$catedratico->apellido1}} {{$catedratico->apellido2}}.<br>
-            <strong>Curso, </strong>{{$resultado_encuesta->curso}}.<br>
-            <strong>Curso, </strong>{{$resultado_encuesta->curso}}.<br>   
-            <strong>Periodo Académico, </strong>{{$resultado_encuesta->periodo_academico}} {{$resultado_encuesta->tipo_periodo}}.<br>   
-            <strong>Fecha, </strong> del {{ date('d/m/Y', strtotime($resultado_encuesta->cuestionario_inicia)) }} hasta {{ date('d/m/Y', strtotime($resultado_encuesta->cuestionario_finaliza)) }}.<br>  
-            <strong>Prioridad, </strong> {{$resultado_encuesta->prioridad}}.<br>  
-            <strong>Ciclo Escolar, </strong> {{$resultado_encuesta->ciclo}}.<br>
-        </address>
-        <br>
+    <div style="width: 99%; align-items: center; align-content: center; align-self: center;">
 
-        <div id="divDerecha"><label id="label40">Punteo <b>{{$resultado_encuesta->punteo_obtenido}} / {{$resultado_encuesta->punteo_cuestionario}}</b></label></div>
+        <div class="col-md-12">
+          <br><br><br>
+          <div class="row">
+            <div class="col-xs-12" style="align-content: center; align-items: center;  text-align: center;">
+                <img src="{{ asset('img/imedchi.jpg') }}" height="100px">
+                <h4><b> Instituto, IMEDCHI.</b></h4>
+                <h5>{{ $fecha_impresion }}</h5>
+            </div>     
+          </div>
 
-        <hr>
+          <div class="row">
+            <div class="col-sm-12">
+              <address>
+                <strong>Alumno, </strong>{{$resultado_encuesta->nombre1}} {{$resultado_encuesta->nombre2}} {{$resultado_encuesta->apellido1}} {{$resultado_encuesta->apellido2}}.<br>
+                <strong>Carrera, </strong>{{$resultado_encuesta->grado}} {{$resultado_encuesta->carrera}} Sección {{$resultado_encuesta->seccion}}.<br>
+                <strong>Catedrático, </strong>{{$catedratico->nombre1}} {{$catedratico->nombre2}} {{$catedratico->apellido1}} {{$catedratico->apellido2}}.<br>
+                <strong>Curso, </strong>{{$resultado_encuesta->curso}}.<br>
+                <strong>Curso, </strong>{{$resultado_encuesta->curso}}.<br>   
+                <strong>Periodo Académico, </strong>{{$resultado_encuesta->periodo_academico}} {{$resultado_encuesta->tipo_periodo}}.<br>   
+                <strong>Fecha, </strong> del {{ date('d/m/Y', strtotime($resultado_encuesta->cuestionario_inicia)) }} hasta {{ date('d/m/Y', strtotime($resultado_encuesta->cuestionario_finaliza)) }}.<br>  
+                <strong>Prioridad, </strong> {{$resultado_encuesta->prioridad}}.<br>  
+                <strong>Ciclo Escolar, </strong> {{$resultado_encuesta->ciclo}}.<br>
+              </address>
+              <h2 style="text-align: right;">Punteo <b>{{$resultado_encuesta->punteo_obtenido}} / {{$resultado_encuesta->punteo_cuestionario}}</b></h2>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-12" style="text-align: center;">
+              <h3><b>{{$resultado_encuesta->titulo}}</b></h3>
+            </div>
 
-        <div id="divTitulo">
-            <label id="label30"><b>{{$resultado_encuesta->titulo}}</b></label>
-        </div>
-        <br>
-        <div id="divInstruccion">
-          <p id="pInstruccion">
-            <label id="label12"><strong>Instrucciones: </strong>{{$resultado_encuesta->descripcion}}</label> 
-          </p>
-        </div>    
+            <div class="col-xs-12">
+              <p class="text-muted well" style="margin-top: 10px;">
+                <strong>Instrucciones: </strong>{{$resultado_encuesta->descripcion}}
+              </p>
+            </div>    
+          </div>
+          <hr>
 
-        <hr>
-        <br>
-        <div>
-            <table id="tableContenido">
+          <div class="row">
+            <div class="col-xs-12 table-responsive">
+              <table class="table">
                 <thead>
                   <tr>
-                    <th>Pregunta</th>
-                    <th>Respuesta</th>
+                    <th style="text-align: center;">Pregunta</th>
+                    <th style="text-align: center;">Respuesta</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach($preguntas_encuesta_original as $pregunta)
-                    <tr style='border-top: solid; border-width: 1px;'>
-                      <td width='64%'><strong>{{ $total = 1 + $total }}.</strong>  {{ $pregunta->descripcion }}</td>
+                    <tr>
+                      <td><strong>{{ $total = 1 + $total }}.</strong>  {{ $pregunta->descripcion }}</td>
                       <td>
-                        <br>
-                        <table id="tableContenido">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th style="text-align: center;">Nombre</th>
+                              <th style="text-align: center;">Correcta</th>
+                            </tr>
+                          </thead>
                           <tbody>
                             @foreach($respuestas_encuesta_original as $respuesta)
                               @if($respuesta->fkpregunta == $pregunta->id)
-                              
+                              <tr>
+                                <td>{{ $respuesta->descripcion }}</td>
                                 @foreach($respuesta_encuesta as $respuesta_cuestionario)
                                   @if($respuesta_cuestionario->fkrespuesta == $respuesta->id)
-                                  <tr>
                                     @if($respuesta_cuestionario->validar == 1)
-                                      <td>{{ $respuesta->descripcion }} <img src='img/bueno.jpg' height='10px'></td>
+                                      <td style="text-align: right;"><img src="{{ asset('img/bueno.png') }}" height="20px"></td>
                                     @else
-                                      <td>{{ $respuesta->descripcion }} <img src='img/malo.jpg' height='10px'></td>
+                                      <td style="text-align: right;"><img src="{{ asset('img/malo.png') }}" height="20px"></td>
                                     @endif
                                   @endif
-                                  </tr>
                                 @endforeach
-                              
+                              </tr>
                               @endif
                             @endforeach
                           </tbody>
                         </table>
-                        <br>
                       </td>
                     </tr>
                   @endforeach
                 </tbody>
+              </table>
+            </div>
+
+            <table>
+                <tr>
+                    <td>
+                      <p class="lead">Estadística del Cuestionario</p>
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <th style="width:50%">Cantidad Correctas:</th>
+                              <td>{{ count($correcto) }}</td>
+                            </tr>
+                            <tr>
+                              <th>Cantidad Incorrectas:</th>
+                              <td>{{ count($incorrecto) }}</td>
+                            </tr>
+                            <tr>
+                              <th>Total:</th>
+                              <td>{{ count($correcto) + count($incorrecto) }}</td>
+                            </tr>
+                          </tbody>
+                        </table>                        
+                    </td>
+                </tr>
             </table>
-        </div>
-        <br>
-        <div>
-          <p id="pEstadistica"><b>Estadística del Cuestionario</b></p>
-            <table id="tablaEstadistica">
-                <tr>
-                  <th style='width: 60%; font-size: 18px;'>Cantidad Correctas:</th>
-                  <td style='width: 50%; font-size: 18px;'> {{ count($correcto) }}</td>
-                </tr>
-                <tr>
-                  <th style='width: 60%; font-size: 18px;'>Cantidad Incorrectas:</th>
-                  <td style='width: 50%; font-size: 18px;'>{{ count($incorrecto) }}</td>
-                </tr>
-                <tr>
-                  <th style='width: 60%; font-size: 18px;'>Total:</th>
-                  <td style='width: 50%; font-size: 18px;'>{{ count($correcto) + count($incorrecto) }}</td>
-                </tr>
-            </table>                        
-        </div>
- 
+  
+          </div>
+
+        </div>  
+
     </div>
-    
+
+
+    <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
+
 </body>
 </html>

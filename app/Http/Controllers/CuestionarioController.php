@@ -13,7 +13,6 @@ use App\PeriodoAcademico;
 use App\TipoCuestionario;
 use App\Prioridad;
 use App\Estado;
-use App\Resultado_Cuestionario;
 use Auth;
 
 class CuestionarioController extends Controller
@@ -193,13 +192,10 @@ class CuestionarioController extends Controller
                 return 'Inicio: '.$data->inicio.' ---------- Finaliza: '.$data->fin;
             })                           
             ->addColumn('action', function ($data) {
-                $resueltos = Resultado_Cuestionario::buscarCuestionariosResueltosPorID($data->id);
 
                 $prioridad = '<button class="btn btn-'.$data->color_prioridad.' btn-xs" type="button">'.$data->prioridad.'</button>';
 
-                $ver = '<button class="btn btn-success btn-xs" type="button">'.count($resueltos).'</button>';
-
-                return $prioridad .' '. $ver;
+                return $prioridad;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
