@@ -130,7 +130,7 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' required autofocus>
+                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' onchange="curso"  required autofocus>
                                     </select> 
                                 </div>                                                               
                                 <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
@@ -293,6 +293,13 @@
                     $('#fkcarrera_curso_add').val('').trigger('change.select2'); 
                 }
             });
+
+         function curso(id){
+            if(id.value=fkcantidad_alumno)
+            {
+                $($fkcarrera_curso).data(curso);
+            }
+                            }
        });        
 
         
