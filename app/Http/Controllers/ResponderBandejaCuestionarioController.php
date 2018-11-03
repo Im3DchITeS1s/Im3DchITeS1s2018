@@ -53,15 +53,7 @@ class ResponderBandejaCuestionarioController extends Controller
             $query1 = Resultado_Cuestionario::cuestionariosResueltos(date('Y'), $carrega_grado_seccion, $carrera_curso, $inscrito->id);
 
             $query = Cuestionario::dataBandejaCuestionario($carrega_grado_seccion, $carrera_curso);
-            if(count($query) > 0)
-            {
-                $data = count($query) - count($query1);
-            }
-            else
-            {
-                $data = count($query);
-            }
-
+            $data = count($query) - count($query1);
             return response()->json($data);
         }        
     } 

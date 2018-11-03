@@ -55,23 +55,6 @@ class Inscripcion extends Model
 			->select(['inscripcion.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'seccion.id as fkseccion','seccion.letra as seccion','periodo_academico.id as fktipo_periodo', 'tipo_periodo.nombre as tipo_periodo','inscripcion.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2', 'ciclo.nombre as ciclo','inscripcion.pago as pago','inscripcion.fkestado as fkestado','inscripcion.fkcantidad_alumno as fkcantidad_alumno']);
 	}
 
-	public static function dataInscripcion2($ciclo)
-	{
-		return Inscripcion::join('cantidad_alumno','inscripcion.fkcantidad_alumno','cantidad_alumno.id')
-			->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
-			->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
-			->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
-			->join('grado', 'carrera_grado.fkgrado', 'grado.id')		
-			->join('periodo_academico','inscripcion.fktipo_periodo','periodo_academico.id')	
-			->join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')		
-			->join('persona','inscripcion.fkpersona','persona.id')					
-			->join('estado','inscripcion.fkestado','estado.id')		
-			->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
-			->select(['inscripcion.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'seccion.id as fkseccion','seccion.letra as seccion','periodo_academico.id as fktipo_periodo', 'tipo_periodo.nombre as tipo_periodo','inscripcion.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2', 'ciclo.nombre as ciclo','inscripcion.pago as pago','inscripcion.fkestado as fkestado','inscripcion.fkcantidad_alumno as fkcantidad_alumno']);
-	}
-
-
-
 	public static function buscarGradoCarrrera($id){
 		return Inscripcion::join('carrera_curso', 'inscripcion.fkcarrera_curso', '=', 'carrera_curso.id')
 			->join('carrera', 'carrera_curso.fkcarrera', '=', 'carrera.id')
