@@ -293,6 +293,7 @@
                     $('#fkcarrera_curso_add').val('').trigger('change.select2'); 
                 }
             });
+<<<<<<< HEAD
 
          function curso(id){
             if(id.value=fkcantidad_alumno)
@@ -302,6 +303,8 @@
                             }
        });        
 
+=======
+>>>>>>> parent of 5e1b22f... cambio
         
 
         $('.modal-footer').on('click', '.add', function() {

@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-xs-12">
       <h2 class="page-header">
-        <i class="fa fa-globe"></i> <b>Instituto, IMEDCHI.</b>
+        <img src="{{ asset('img/imedchi.jpg') }}" height='50px'> <b>Instituto, IMEDCHI.</b>
         <small class="pull-right" style="color: black;">{{ $fecha_impresion }}</small>
       </h2>
     </div>
@@ -145,9 +145,7 @@
 
   <div class="row no-print">
     <div class="col-xs-12">
-      <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-        <i class="fa fa-download"></i> Generate PDF
-      </button>
+      <a href="{{ route('obtenida.edit', ['id' => $resultado_encuesta->fkcuestionario]) }}" class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</a>
     </div>
   </div>
 </section>  
