@@ -256,13 +256,6 @@ Route::resource('/gestionadministrativa/controlpago/tipopago', 'TipoPagoControll
 Route::get('TipoPago/getdata', 'TipoPagoController@getdata')->name('tipopago.getdata');
 Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPagoController@cambiarEstado');
 
-// Tipo Pago 
-
-Route::resource('/gestionadministrativa/controlpago/pago', 'PagoController');
-Route::get('Pago/getdata', 'PagoController@getdata')->name('pago.getdata');
-//Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPagoController@cambiarEstado');
-
-
 
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');

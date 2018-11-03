@@ -453,7 +453,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Mensualidad',
-                        'url'  => 'gestionadministrativa/controlpago/pago',
+                        'url'  => '#',
                         'icon_color' => 'yellow',
                     ],
                     [
