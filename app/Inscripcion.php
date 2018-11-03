@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inscripcion extends Model
 {
    	protected $table = 'inscripcion';
-	protected $guarded = ['id', 'fkcantidad_alumno', 'fktipo_periodo', 'fkpersona','ciclo', 'pago', 'fkestado'];
+	protected $guarded = ['id', 'fkcantidad_alumno', 'fktipo_periodo', 'fkpersona','fkciclo', 'pago', 'fkestado'];
 
 	public static function carrerasAlumnos($id){
 		return Inscripcion::join('cantidad_alumno', 'inscripcion.fkcantidad_alumno', 'cantidad_alumno.id')
@@ -43,12 +43,12 @@ class Inscripcion extends Model
 			->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
 			->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
 			->join('grado', 'carrera_grado.fkgrado', 'grado.id')		
-			->join('periodo_academico','inscripcion.fktipo_periodo','periodo_academico.id')
+			->join('periodo_academico','inscripcion.fktipo_periodo','periodo_academico.id')	
 			->join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')		
-			->join('persona','inscripcion.fkpersona','persona.id')					
-			->join('estado','inscripcion.fkestado','estado.id')		
-			->where('inscripcion.ciclo',date('Y'))		
-			->select(['inscripcion.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'seccion.id as fkseccion','seccion.letra as seccion','periodo_academico.id as fktipo_periodo', 'tipo_periodo.nombre as tipo_periodo','inscripcion.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2', 'inscripcion.ciclo as ciclo','inscripcion.pago as pago','inscripcion.fkestado as fkestado','inscripcion.fkcantidad_alumno as fkcantidad_alumno']);
+			->join('persona','inscripcion.fkpersona','persona.id')	
+			->join('ciclo', 'inscripcion.fkciclo','ciclo.id')			
+			->join('estado','inscripcion.fkestado','estado.id')			
+			->select(['inscripcion.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'seccion.id as fkseccion','seccion.letra as seccion','periodo_academico.id as fktipo_periodo', 'tipo_periodo.nombre as tipo_periodo','inscripcion.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','ciclo.nombre as ciclo','inscripcion.pago as pago','inscripcion.fkestado as fkestado','inscripcion.fkcantidad_alumno as fkcantidad_alumno']);
 
 	}
 

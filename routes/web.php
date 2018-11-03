@@ -81,18 +81,15 @@ Route::resource('/mantenimiento/curso', 'CursoController');
 Route::get('Curso/getdata', 'CursoController@getdata')->name('curso.getdata');
 Route::post('/mantenimiento/curso/cambiarEstado', 'CursoController@cambiarEstado');
 
-
 //Grado
 Route::resource('/mantenimiento/grado', 'GradoController');
 Route::get('grado/getdata', 'GradoController@getdata')->name('grado.getdata');
 Route::post('/mantenimiento/grado/cambiarEstado', 'GradoController@cambiarEstado');
 
-
 //Carrera
 Route::resource('/mantenimiento/carrera', 'CarreraController');
 Route::get('Carrera/getdata', 'CarreraController@getdata')->name('Carrera.getdata');
 Route::post('/mantenimiento/carrera/cambiarEstado', 'CarreraController@cambiarEstado');
-
 
 //CarreraCurso
 Route::resource('/mantenimiento/carreracurso', 'CarreraCursoController');
@@ -156,6 +153,7 @@ Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscri
 Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
 Route::get('/academico/inscripcion/droptiperiodo/{id}', 'InscripcionController@droptiperiodo');
 Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
+Route::get('/academico/inscripcion/dropciclo/{id}', 'InscripcionController@dropciclo');
 Route::post('/academico/inscripcion/cambiarEstado', 'InscripcionController@cambiarEstado');
 
 //Sistema Rol Usuario
