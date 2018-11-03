@@ -457,8 +457,8 @@ return [
                         'icon_color' => 'yellow',
                     ],
                     [
-                        'text'    => 'Descuento',
-                        'url'     => '#',
+                        'text'    => 'Tipo Pago',
+                        'url'     => 'gestionadministrativa/controlpago/tipopago',
                         'icon_color' => 'yellow',
                     ],                    
                 ],                 
