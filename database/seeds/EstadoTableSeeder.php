@@ -158,6 +158,11 @@ class EstadoTableSeeder extends Seeder
         $nuevo->save(); 
 
         $nuevo = new Estado();
+        $nuevo->nombre = 'Retirado(A)';
+        $nuevo->idpadre = 24;
+        $nuevo->save();      
+
+        $nuevo = new Estado();
         $nuevo->nombre = 'Ciclo Finalizado';
         $nuevo->idpadre = 24;
         $nuevo->save();                                                                                   

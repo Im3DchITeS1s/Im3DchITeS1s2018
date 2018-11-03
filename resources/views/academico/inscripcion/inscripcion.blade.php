@@ -25,17 +25,17 @@
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
         </div>
-
         <div class="box-body">
           <div class="row">
             <div class="col-sm-12">
                 <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
                     <thead >
                         <tr>
-                             <th width="25%">Alumno</th>
-                             <th width="25%">Carrera Grado Sección</th>
-                             <th width="25%">Periodo Académico</th>
-                            <th width="8%">Accion</th>
+                            <th width="15%">Alumno</th>
+                            <th width="15%">Carrera Grado Sección</th>
+                            <th width="15%">Periodo Académico</th>
+                            <th width="15%">Ciclo</th>
+                            <th width="15%">Accion</th>
                         </tr>
                     </thead>
                 </table>         
@@ -43,7 +43,6 @@
           </div>
         </div>
     </div>
-
 
    <!-- Modal Agregar -->
     <div id="addModal" class="modal fade" role="dialog">
@@ -58,7 +57,6 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
                       
-                           
                              <!--Drop list de la Carrera Grado-->
                              <div class="col-sm-12">
                                 <div class="input-group">
@@ -115,6 +113,21 @@
                                 <small class="control-label"> </small>
                                 <p class="errorPago text-center alert alert-danger hidden"></p>
                             </div>  
+
+                            <!--Drop list de la Ciclo-->
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Ciclo</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkciclo_add" id='fkciclo_add' required autofocus>
+                                    </select> 
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorCiclo text-center alert alert-danger hidden"></p>
+                            </div> 
                             
 
                      </div> 
@@ -196,6 +209,21 @@
                                 <p class="errorPeriodo text-center alert alert-danger hidden"></p>
                             </div> 
 
+                            <!--Drop list de la Ciclo-->
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Ciclo</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkciclo_edit" id='fkciclo_edit' required autofocus>
+                                    </select> 
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorCiclo text-center alert alert-danger hidden"></p>
+                            </div> 
+
                             <!--Campo de pago-->
                             <div class="col-sm-4">
                                 <div class="input-group">
@@ -244,6 +272,7 @@
                     { data: 'alumno', name: 'alumno' },
                     { data: 'gradocarreraseccion', name: 'gradocarreraseccion' },
                     { data: 'tipo_periodo', name: 'tipo_periodo' },
+                    { data: 'ciclo', name: 'ciclo' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
@@ -256,6 +285,7 @@
             $('.errorCantidadAlumno').addClass('hidden');
             $('.errorPeriodo').addClass('hidden');
             $('.errorPersona').addClass('hidden');
+            $('errorCiclo').addClass('hidden');
             $('.errorPago').addClass('hidden');
             $('#addModal').modal('show');
 
@@ -284,7 +314,16 @@
                     $("#fkpersona_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" | "+ response[i].nombre1+" "+ response[i].nombre2+" "+ response[i].apellido1+" "+ response[i].apellido2+" </option>");
                     $('#fkpersona_add').val('').trigger('change.select2'); 
                 }
-            });      
+            });   
+
+             $.get("/academico/inscripcion/dropciclo/"+5,function(response,id){
+                $("#fkciclo_add").empty();
+                $("#fkciclo_add").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                $("#fkciclo_add").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fkciclo_add').val('').trigger('change.select2'); 
+                }
+            });   
         });        
 
         $('.modal-footer').on('click', '.add', function() {
@@ -296,6 +335,7 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
                     'fktipo_periodo': $('#fktipo_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
+                    'fkciclo': $('#fkciclo_add').val(),
                     'pago': $('#pago_add').val(),
 
 
@@ -330,6 +370,11 @@
                             $('.errorPersona').text(data.errors.fkpersona);
                         }
 
+                     if (data.errors.fkciclo) {
+                            $('.errorCiclo').removeClass('hidden');
+                            $('.errorCiclo').text(data.errors.fkciclo);
+                        }
+
                     if (data.errors.pago) {
                             $('.errorPago').removeClass('hidden');
                             $('.errorPago').text(data.errors.pago);
@@ -340,6 +385,7 @@
                             $('#fkcarrera_grado_add').val('');
                             $('#fktipo_periodo_add').val('');
                             $('#fkpersona_add').val('');
+                            $('#fkciclo_add').val('');
                             $('#pago_add').val('');
                             table.ajax.reload();
                         });                          
@@ -390,7 +436,16 @@
                     $("#fkpersona_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" | "+ response[i].nombre1+" "+ response[i].nombre2+" "+ response[i].apellido1+" "+ response[i].apellido2+" </option>");
                     $('#fkpersona_edit').val(fkpersona).trigger('change.select2'); 
                 }
-            });      
+            });   
+
+            $.get("/academico/inscripcion/dropciclo/"+5,function(response,id){
+                $("#fkciclo_edit").empty();
+                $("#fkciclo_edit").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                $("#fkciclo_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                $('#fkciclo_edit').val('').trigger('change.select2'); 
+                }
+            });    
      });
 
           $('.modal-footer').on('click', '.edit', function() {
@@ -403,12 +458,14 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_edit').val(),
                     'fktipo_periodo': $('#fktipo_periodo_edit').val(),
                     'fkpersona': $('#fkpersona_edit').val(),
+                    'fkciclo': $('fkpersona_edit').val(),
                     'pago': $('#pago_edit').val()
                 },
                 success: function(data) {
                     $('.errorCantidadAlumno').addClass('hidden');
                     $('.errorPeriodo').addClass('hidden');
                     $('.errorPersona').addClass('hidden');
+                    $('errorCiclo').addClass('hidden');
                     $('.errorPago').addClass('hidden');
 
                     if ((data.errors)) {
@@ -435,6 +492,12 @@
                             $('.errorPersona').text(data.errors.fkpersona);
                         }
 
+
+                    if (data.errors.fkciclo) {
+                            $('.errorCiclo').removeClass('hidden');
+                            $('.errorCiclo').text(data.errors.fkciclo);
+                        }
+
                     if (data.errors.pago) {
                             $('.errorPago').removeClass('hidden');
                             $('.errorPago').text(data.errors.pago);
@@ -445,6 +508,7 @@
                             $('#fkcarrera_grado_edit').val('');
                             $('#fktipo_periodo_edit').val('');
                             $('#fkpersona_edit').val('');
+                            $('fkciclo_edit').val('');
                             $('#pago_edit').val('');
                             table.ajax.reload();
                           table.ajax.reload(); 
@@ -454,7 +518,7 @@
             }); 
         });
 
-// delete
+  // delete
         $(document).on('click', '.delete-modal', function() {
             id = $(this).data('id');
             swal({
@@ -487,7 +551,6 @@
               }
             });            
         }); 
-
 
        
     </script>

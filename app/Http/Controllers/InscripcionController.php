@@ -20,6 +20,7 @@ use App\Persona;
 use App\Ciclo;
 use App\Estado;
 
+
 class InscripcionController extends Controller
 {
     
@@ -42,10 +43,15 @@ class InscripcionController extends Controller
         return view('/academico/inscripcion/inscripcion');   
     }
 
+
     public function getdata()
     {
         $color_estado = "";
+<<<<<<< HEAD
         $query = inscripcion::dataInscripcion(date('Y'));
+=======
+        $query = inscripcion::dataInscripcion();;
+>>>>>>> b9c047feba51f1fcd6933a9389606f12cb549ae3
         return Datatables::of($query)
             ->addColumn('alumno', function ($data) {
                 return $data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2;
@@ -54,34 +60,51 @@ class InscripcionController extends Controller
                 return $data->carrera." ".$data->grado." ".$data->seccion;
             })    
             ->addColumn('tipo_periodo', function ($data) {
-                return $data->tipo_periodo." ".$data->ciclo;
+                return $data->tipo_periodo;
             })                                           
             ->addColumn('action', function ($data) {
+                    $color_estado = "";
+                    $colot_btn = "";
+                    $icon = "";                
+                    $accion = "";
+
                 switch ($data->fkestado) {
-                 
-                    case 25:
-                         $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="Inscrito"><span class="fa fa-thumbs-up"></span></button>';
+                       case 25:
+                        $color_estado = 'success';
+                        $colot_btn = 'success';
+                        $icon = ' fa-check-circle';
+                        $accion = 'Inscrito';
                         break;
                     case 26:
-                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="Papeleria Incompleta"><span class="fa fa-thumbs-down"></span></button>';
+                        $color_estado = 'primary';
+                        $colot_btn = 'danger';
+                        $icon = ' fa-file-text-o';
+                        $accion = 'Papeleria Incompleta';                        
                         break;
-                     case 27:
-                        $color_estado = '<button class="btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-id="No Inscrito"><span class="fa fa-thumbs-down"></span></button>';
-                        break;
+                    case 27:
+                        $color_estado = 'danger';
+                        $colot_btn = 'success';
+                        $icon = ' fa-angle-double-down';
+                        $accion = 'No Inscrito';                          
+                        break;  
                     case 28:
-                        $color_estado = '<button class="btn btn-info btn-xs" type="button" data-id="'.$data->id.'" data-estado="Graduado"><span class="fa fa-thumbs-down"></span></button>';
-                        break;
-                     case 29:
-                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="Ciclo Finalizado"><span class="fa fa-thumbs-down"></span></button>';
-                        break;
+                        $color_estado = 'warning';
+                        $colot_btn = 'primary';
+                        $icon = 'fa-graduation-cap';
+                        $accion = 'Retirado(A)';                          
+                        break;               
                 }
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->fkciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
-                    <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
+
+               $btn_estado = '<button class="delete-modal btn btn-'.$colot_btn.' btn-xs" type="button" data-id="'.$data->id.'" data-accion="'.$accion.'"><span class="'.$icon.'"></span></button>';
+
+                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->fkciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
+                    <span class="glyphicon glyphicon-edit"></span></button> ';         
+
+                return  '<small class="label label-'.$color_estado.'">'.$data->estado.'</small> '.$accion.' '.$btn_edit.' '.$btn_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
-
 
     public function dropCantidadCarreraGrado(Request $request, $id)
     {
@@ -90,7 +113,6 @@ class InscripcionController extends Controller
             return response()->json($data);
         }        
     }  
-
 
 
     public function dropestudiante(Request $request, $id)
@@ -124,8 +146,8 @@ class InscripcionController extends Controller
                 $data = Ciclo::buscarCiclo($id);
                 return response()->json($data);
             }        
-        }  
-    
+        } 
+
     public function create()
     {
       
@@ -173,29 +195,24 @@ class InscripcionController extends Controller
         }       
     }     
 
-     public function cambiarEstado(Request $request)
+    public function cambiarEstado(Request $request)
     {
         switch ($request->accion) {
-            
             case 'Inscrito':
-                $estado = Estado::buscarIDEstado(25);
-                break;
-
-            case 'Papeleria Incompleta':
                 $estado = Estado::buscarIDEstado(26);
                 break;
-
-            case 'No Inscrito':
+            
+             case 'Papeleria Incompleta':
                 $estado = Estado::buscarIDEstado(27);
-                break;    
+                break;
 
-            case 'Graduado':
+             case 'No Inscrito':
                 $estado = Estado::buscarIDEstado(28);
-                break;  
+                break;
 
-            case 'Ciclo Finalizado':
-                $estado = Estado::buscarIDEstado(29);
-                break;                           
+          case 'Retirado(A)':
+                $estado = Estado::buscarIDEstado(25);
+                break;                         
         }
 
         $cambiar = Inscripcion::findOrFail($request->id); 

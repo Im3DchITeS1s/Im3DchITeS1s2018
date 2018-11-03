@@ -104,11 +104,8 @@ class PersonaController extends Controller
                     data-fktipo_persona="'.$data->fktipo_persona.'" data-fkpais_departamento="'.$data->fkpais_departamento.'" data-fkgenero="'.$data->fkgenero.'" data-fkestado="'.$data->fkestado.'" data-codigo="'.$data->codigo.'" data-dpi="'.$data->dpi.'">
                     <span class="glyphicon glyphicon-edit"></span></button>';           
 
-                $btn_show = '<button class="show-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-nombre1="'.$data->nombre1.'" data-nombre2="'.$data->nombre2.'" data-nombre3="'.$data->nombre3.'" data-apellido1="'.$data->apellido1.'" data-apellido2="'.$data->apellido2.'" data-apellido3="'.$data->apellido3.'" data-lugar="'.$data->lugar.'" data-fecha_nacimiento="'.$data->fecha_nacimiento.'"
-                    data-fktipo_persona="'.$data->fktipo_persona.'" data-fkpais_departamento="'.$data->fkpais_departamento.'" data-fkgenero="'.$data->fkgenero.'" data-fkestado="'.$data->fkestado.'" data-codigo="'.$data->codigo.'" data-dpi="'.$data->dpi.'">
-                    <span class="glyphicon glyphicon-eye-open"></span></button>'; 
 
-                return '<small class="label label-'.$color_estado.'">'.$data->estado.'</small> '.$btn_edit.' '.$btn_show.' '.$btn_estado;
+                return '<small class="label label-'.$color_estado.'">'.$data->estado.'</small> '.$btn_edit.' '.$btn_estado;
             })                  
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
