@@ -17,7 +17,6 @@
 @stop
 
 @section('content')
-    
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">INFORMACION</h3>
@@ -25,6 +24,7 @@
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
         </div>
+        <select name="datos" id="uno">uno</select>
         <div class="box-body">
           <div class="row">
             <div class="col-sm-12">
