@@ -10,6 +10,31 @@ class Resultado_Cuestionario extends Model
 	protected $guarded = ['id', 'fkcuestionario', 'fkinscripcion', 'fkcarrera_curso', 'fkestado'];
 	protected $fillable = ['punteo'];
 
+	public static function cuestionariosResueltos($ciclo, $carrera_grado_seccion, $carrera_curso, $inscripcion)
+	{
+		return Resultado_Cuestionario::join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+				->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+				->join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+				->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+				->where('Resultado_Cuestionario.fkinscripcion', $inscripcion)
+				->where('ciclo.nombre', $ciclo)
+	            ->where('catedratico_curso.fkcantidad_alumno', $carrera_grado_seccion)
+	            ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)				
+				->select('resultado_cuestionario.fkcuestionario as fkcuestionario')->get();
+	}	
+
+	public static function todosResultados($ciclo, $carrera_grado_seccion, $carrera_curso)
+	{
+		return Resultado_Cuestionario::join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+				->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+				->join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+				->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+				->where('ciclo.nombre', $ciclo)
+	            ->where('catedratico_curso.fkcantidad_alumno', $carrera_grado_seccion)
+	            ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)				
+				->select('resultado_cuestionario.fkcuestionario as fkcuestionario')->get();
+	}
+
 	public static function buscarCuestionarioResuelto($id, $estado)
 	{
 		return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
@@ -28,6 +53,7 @@ class Resultado_Cuestionario extends Model
 			->join('tipo_cuestionario', 'cuestionario.fktipo_cuestionario', 'tipo_cuestionario.id')
 			->join('prioridad', 'cuestionario.fkprioridad', 'prioridad.id')
 			->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+			->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
 			->join('cantidad_alumno', 'inscripcion.fkcantidad_alumno', 'cantidad_alumno.id')
 			->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
 			->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
@@ -35,11 +61,11 @@ class Resultado_Cuestionario extends Model
 			->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
 			->join('persona', 'inscripcion.fkpersona', 'persona.id')			
 			->join('estado', 'inscripcion.fkestado', 'estado.id')		
-			->join('carrera_curso', 'resultado_cuestionario.fkcarrera_curso', '=', 'carrera_curso.id')
+			->join('carrera_curso', 'resultado_cuestionario.fkcarrera_curso', 'carrera_curso.id')
 		    ->join('curso', 'carrera_curso.fkcurso', '=', 'curso.id')
 			->where('resultado_cuestionario.fkestado', $estado)
 			->where('inscripcion.fkpersona', $fkpersona)
 			->where('cuestionario.id', $fkcuestionario)
-			->select('resultado_cuestionario.id as id', 'resultado_cuestionario.punteo as punteo_obtenido', 'cuestionario.id as fkcuestionario', 'cuestionario.titulo as titulo', 'cuestionario.descripcion as descripcion', 'cuestionario.punteo as punteo_cuestionario', 'cuestionario.inicio as cuestionario_inicia', 'cuestionario.fin as cuestionario_finaliza', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'prioridad.nombre as prioridad', 'prioridad.color as prioridad_color', 'carrera.nombre as carrera', 'grado.nombre as nombre', 'seccion.letra as seccion', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'inscripcion.ciclo as ciclo', 'estado.nombre as estado', 'curso.nombre as curso')->first();
+			->select('resultado_cuestionario.id as id', 'resultado_cuestionario.punteo as punteo_obtenido', 'cuestionario.id as fkcuestionario', 'cuestionario.titulo as titulo', 'cuestionario.descripcion as descripcion', 'cuestionario.punteo as punteo_cuestionario', 'cuestionario.inicio as cuestionario_inicia', 'cuestionario.fin as cuestionario_finaliza', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'prioridad.nombre as prioridad', 'prioridad.color as prioridad_color', 'carrera.nombre as carrera', 'grado.nombre as nombre', 'seccion.letra as seccion', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'ciclo.nombre as ciclo', 'estado.nombre as estado', 'curso.nombre as curso')->first();
 	}
 }

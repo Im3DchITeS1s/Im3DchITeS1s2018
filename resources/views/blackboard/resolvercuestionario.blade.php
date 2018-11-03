@@ -80,7 +80,7 @@
                     <div class="box-footer">
                         <a class="btn btn-default" href="{{ route('cuestionario.index') }}">Cancelar</a>
                         @if(!$preguntas->isEmpty())
-                            <button type="submit" id="enviar" class="btn btn-info pull-right">Calificar</button>                        
+                            <button type="submit" id="enviar" class="btn btn-info pull-right">Calificar</button>
                         @endif
                     </div>           
                 </form>                    

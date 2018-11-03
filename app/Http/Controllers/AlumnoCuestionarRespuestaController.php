@@ -32,7 +32,7 @@ class AlumnoCuestionarRespuestaController extends Controller
     public function cuestionariosPreguntasRespuestas(Request $request, $id)
     {
         if($request->ajax()){
-            $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona);
+            $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
             if(!is_null($inscrito))
             {
                 $data = Alumno_Cuestionario_Respuesta::resuletoCuestionarioPreguntaRespuestas($id, $inscrito->id);
@@ -56,7 +56,7 @@ class AlumnoCuestionarRespuestaController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona);
+            $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
             if(!is_null($inscrito))
             {
                 $insert = new Alumno_Cuestionario_Respuesta();
@@ -88,7 +88,7 @@ class AlumnoCuestionarRespuestaController extends Controller
 
     public function destroy($id)
     {
-        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona);
+        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
 
         if(!is_null($inscrito))
         {
