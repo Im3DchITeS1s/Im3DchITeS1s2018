@@ -18,6 +18,6 @@ class Pago extends Model
                     ->orderBy('tipo_pago.id','asc');
     }
 
-*/
+	*/
 
 }
