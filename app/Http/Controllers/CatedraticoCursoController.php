@@ -26,8 +26,8 @@ class CatedraticoCursoController extends Controller
      
     protected $verificar_insert =
     [
-        'fecha_inicio' => 'required|integer', 
-        'fecha_fin' => 'required|integer', 
+        'fecha_inicio' => 'required', 
+        'fecha_fin' => 'required', 
         'cantidad_periodo' => 'required|integer', 
         'fkpersona'=>'numeric|required|intiger', 
         'fkcantidad_alumno'=>'numeric|required|intiger', 

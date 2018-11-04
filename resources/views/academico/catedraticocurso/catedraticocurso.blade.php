@@ -130,7 +130,7 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' onchange="curso"  required autofocus>
+                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' required autofocus>
                                     </select> 
                                 </div>                                                               
                                 <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
@@ -327,14 +327,14 @@
                             });
                         }, 500);
 
-                     if (data.errors.inicio) {
+                     if (data.errors.fecha_inicio) {
                             $('.errorInicio').removeClass('hidden');
-                            $('.errorInicio').text(data.errors.inicio);
+                            $('.errorInicio').text(data.errors.fecha_inicio);
                         }
 
-                     if (data.errors.fin) {
+                     if (data.errors.fecha_fin) {
                             $('.errorFin').removeClass('hidden');
-                            $('.errorFin').text(data.errors.fin);
+                            $('.errorFin').text(data.errors.fecha_fin);
                         }
 
                     if (data.errors.cantidad_periodo) {
