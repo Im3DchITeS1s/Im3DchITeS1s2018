@@ -30,7 +30,7 @@ class InscripcionController extends Controller
         'fktipo_periodo' => 'required|integer', 
         'fkpersona' => 'required|integer', 
         'fkciclo' => 'required|integer', 
-        'pago'=>'numeric|required|between:0,1000.99', 
+        'pago'=>'numeric|required|between:1,1000.99', 
     ];
 
     public function __construct()
