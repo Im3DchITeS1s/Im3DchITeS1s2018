@@ -79,8 +79,6 @@ class ResultadoCuestionarioController extends Controller
         $respuestas_encuesta_original = Respuesta::respuestaCuestionarioPreguntaImprimir($id, 21);
         $catedratico = Cuestionario::cursoPerteneceAlCuestionario($id);
 
-        $pdf = PDF::loadView('blackboard.reporte.constancia', ['fecha_impresion' => $fecha_impresion, 'resultado_encuesta' => $resultado_encuesta, 'respuesta_encuesta' => $respuesta_encuesta, 'preguntas_encuesta_original' => $preguntas_encuesta_original, 'respuestas_encuesta_original' => $respuestas_encuesta_original, 'catedratico' => $catedratico, 'correcto' => $correcto, 'incorrecto' => $incorrecto, 'total' => $total]); 
-
         return view('blackboard.calificacion', compact('fecha_impresion', 'resultado_encuesta', 'respuesta_encuesta', 'preguntas_encuesta_original', 'respuestas_encuesta_original', 'catedratico', 'correcto', 'incorrecto', 'total'));
     }
 

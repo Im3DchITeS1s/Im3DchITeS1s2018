@@ -168,7 +168,7 @@ return [
         [
             'text'    => 'Dashboard',
             'icon'    => 'tachometer',
-            'url'  => '#',
+            'url'  => '/dashboard/blackboard',
         ],        
         [
             'text'    => 'Administración',
@@ -177,34 +177,24 @@ return [
                 [
                 'text'    => 'Contenido Educativo',
                 'url'     => '#',
-                'icon_color' => 'yellow',
+                'icon_color' => 'red',
                 'submenu' => [
                     [
                         'text' => 'Cargar Contenido',
                         'url'  => '/plataforma/blackboard/cargar/contenido_educativo/catedratico',
-                        'icon_color' => 'yellow',
-                    ],
-                    [
-                        'text'    => 'Admin2.1',
-                        'url'     => '#',
-                        'icon_color' => 'yellow',
+                        'icon_color' => 'red',
                     ],
                 ],
                 ],
                 [
                 'text'    => 'Contenido Educativo',
                 'url'     => '#',
-                'icon_color' => 'red',
+                'icon_color' => 'yellow',
                 'submenu' => [
                     [
                         'text' => 'Cargar Contenido',
                         'url'  => '/plataforma/blackboard/cargar/contenido_educativo/alumno',
-                        'icon_color' => 'red',
-                    ],
-                    [
-                        'text'    => 'Admin2.1',
-                        'url'     => '#',
-                        'icon_color' => 'red',
+                        'icon_color' => 'yellow',
                     ],
                 ],
                 ],                
@@ -215,26 +205,14 @@ return [
             'icon'    => 'graduation-cap',
             'submenu' => [
                 [
-                'text' => 'Gestión1',
+                'text' => 'Información Catedrático',
                 'url'  => '#',
                 'icon_color' => 'red',
                 ],
                 [
-                'text'    => 'Gestión2',
-                'url'     => '#',
+                'text' => 'Información Alumno',
+                'url'  => '#',
                 'icon_color' => 'yellow',
-                'submenu' => [
-                    [
-                        'text' => 'Gestión2.1',
-                        'url'  => '#',
-                        'icon_color' => 'yellow',
-                    ],
-                    [
-                        'text'    => 'Gestión2.1',
-                        'url'     => '#',
-                        'icon_color' => 'yellow',
-                    ],
-                ],
                 ],
             ],
         ],  

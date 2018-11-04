@@ -219,7 +219,7 @@
     }   
 
     $(document).on('click', '.ver-modal', function() {
-        id = $(this).data('id');
+        id = $(this).data('id_cuestionario');
 
         let ruta_original = null;
 

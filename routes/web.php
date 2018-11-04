@@ -273,5 +273,8 @@ Route::get('/plataforma/blackboard/cuestionario/historicos/catedraticohistorico'
 Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('alumnohistorico.getdata');
 Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
 
+// Dashboard Blackboard
+Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
+
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
