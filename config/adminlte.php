@@ -32,7 +32,7 @@ return [
 
     'logo' => '<b>Sistema</b>IMEDCHI',
 
-    'logo_mini' => '<b>SIS</b>',
+    'logo_mini' => '<img src="img/imedchi.jpg" height="48px">',
 
     /*
     |--------------------------------------------------------------------------
