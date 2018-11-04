@@ -38,7 +38,7 @@ class CuestionarioHistoricoAlumno extends Controller
 
     public function getdata($carrera, $curso, $anio)
     {
-        $query = Resultado_Cuestionario::cuestionarioHistorico(Auth::user()->fkpersona, $carrera, $curso, $anio);
+        $query = Resultado_Cuestionario::cuestionarioHistoricoAlumnos(Auth::user()->fkpersona, $carrera, $curso, $anio);
 
         return Datatables::of($query)
             ->addColumn('punteo', function ($data) {
@@ -63,34 +63,4 @@ class CuestionarioHistoricoAlumno extends Controller
             return response()->json($data);
         }        
     }       
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

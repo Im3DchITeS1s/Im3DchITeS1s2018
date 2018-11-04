@@ -216,6 +216,7 @@ Route::get('/cuestionarios/preguntas/respuestas/{id}', 'AlumnoCuestionarRespuest
 
 //CuestionarioResuelto
 Route::resource('/cuestionario/resuelto/alumno/nota/obtenida', 'ResultadoCuestionarioController');
+Route::get('/imprimir/constancia/cuestionario/{alumno}/{cuestionario}', 'ResultadoCuestionarioController@imprimirCuestiionarioAlumno')->name('imprimir.imprimirCuestiionarioAlumno');
 Route::get('/nota/cuestionario/alumno/{id}', 'ResultadoCuestionarioController@existeCuestionarioResuelto');
 Route::get('/grafica/resultados/cuestionario/{id}', 'ResultadoCuestionarioController@mostrarGraficaResultado');
 
@@ -266,6 +267,11 @@ Route::get('Pago/getdata', 'PagoController@getdata')->name('pago.getdata');
 Route::get('/plataforma/blackboard/cuestionario/historicos/alumnohistorico', 'CuestionarioHistoricoAlumno@index')->name('alumnohistorico.index');
 Route::get('get/historicos/alumnohistorico/{carrera}/{curso}/{anio}', 'CuestionarioHistoricoAlumno@getdata')->name('alumnohistorico.getdata');
 Route::get('/filtrar/curso/carrera/{id}', 'CuestionarioHistoricoAlumno@dropCurso');
+
+// Cuestionarios Historicos Catedratico
+Route::get('/plataforma/blackboard/cuestionario/historicos/catedraticohistorico', 'CuestionarioHistoricoCatedratico@index')->name('catedraticohistorico.index');
+Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('alumnohistorico.getdata');
+Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
 
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');

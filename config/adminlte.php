@@ -32,7 +32,7 @@ return [
 
     'logo' => '<b>Sistema</b>IMEDCHI',
 
-    'logo_mini' => '<img src="img/imedchi.jpg" height="48px">',
+    'logo_mini' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -243,10 +243,23 @@ return [
             'icon'    => 'file',
             'submenu' => [
                 [
-                'text' => 'Cuestionario',
-                'url'  => '/plataforma/blackboard/cuestionario',
+                'text'    => 'Crear Cuestionario',
+                'url'     => '#',
                 'icon_color' => 'red',
+                'submenu' => [
+                    [
+                        'text' => 'Cuestionario',
+                        'url'  => '/plataforma/blackboard/cuestionario',
+                        'icon_color' => 'red',
+                    ],
+                    [
+                        'text'    => 'Cuestionarios Finalizados',
+                        'url'     => '/plataforma/blackboard/cuestionario/historicos/catedraticohistorico',
+                        'icon_color' => 'red',
+                    ],
                 ],
+                ],
+
                 [
                 'text'    => 'Bandeja de Cuestionario',
                 'url'     => '#',
@@ -263,11 +276,6 @@ return [
                         'icon_color' => 'yellow',
                     ],
                 ],
-                ],
-                [
-                'text' => 'Evaluación3',
-                'url'  => '#',
-                'icon_color' => 'aqua',
                 ],
             ],                       
         ],

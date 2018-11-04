@@ -198,7 +198,7 @@ class CuestionarioController extends Controller
 
                 $prioridad = '<button class="btn btn-'.$data->color_prioridad.' btn-xs" type="button">'.$data->prioridad.'</button>';
 
-                $ver = '<button class="btn btn-success btn-xs" type="button">'.count($resueltos).'</button>';
+                $ver = '<button class="mostrar-listado btn-success btn-xs" btn-'.$data->id.' type="button">'.count($resueltos).'</button>';
 
                 return $prioridad .' '. $ver;
             })       
