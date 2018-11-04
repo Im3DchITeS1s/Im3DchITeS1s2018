@@ -92,14 +92,10 @@ class Resultado_Cuestionario extends Model
 	}	
 
 
-	public static function cuestionarioHistorico($persona, $carrera, $curso, $año)
+	public static function cuestionarioHistorico($persona, $carrera, $curso, $anio)
 	{
 
-		/*if(!is_null($carrera)) $filtro1 = "where('carrera_curso.fkcarrera', ".$carrera.")";
-		if(!is_null($curso)) $filtro2 = "where('carrera_curso.fkcurso', ".$curso.")";
-		if(!is_null($año)) $filtro3 = "where('ciclo.nombre', ".$año.")";*/
-
-		if($carrera == 0 && $curso == 0 && $año == 0)
+		if($carrera == 0 && $curso == 0 && $anio == 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
         	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
@@ -111,7 +107,7 @@ class Resultado_Cuestionario extends Model
 		}
 
 
-		if($carrera > 0)
+		if($carrera > 0 && $curso == 0 && $anio == 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
         	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
@@ -122,7 +118,78 @@ class Resultado_Cuestionario extends Model
         	->where('carrera_curso.fkcarrera', $carrera)
         	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
 		}
+		if($carrera > 0 && $curso > 0 && $anio == 0)
+		{
+			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+        	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+        	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+        	->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+        	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+        	->where('inscripcion.fkpersona', $persona)
+        	->where('carrera_curso.fkcarrera', $carrera)
+        	->where('carrera_curso.fkcurso', $curso)
+        	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
+		}
+		if($carrera == 0 && $curso > 0 && $anio == 0)
+		{
+			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+        	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+        	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+        	->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+        	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+        	->where('inscripcion.fkpersona', $persona)
+        	->where('carrera_curso.fkcurso', $curso)
+        	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
+		}
+		if($carrera == 0 && $curso > 0 && $anio > 0)
+		{
+			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+        	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+        	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+        	->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+        	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+        	->where('inscripcion.fkpersona', $persona)
+        	->where('carrera_curso.fkcurso', $curso)
+        	->where('ciclo.nombre', $anio)
+        	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
+		}
+		if($carrera > 0 && $curso == 0 && $anio > 0)
+		{
+			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+        	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+        	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+        	->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+        	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+        	->where('inscripcion.fkpersona', $persona)
+        	->where('carrera_curso.fkcarrera', $carrera)
+        	->where('ciclo.nombre', $anio)
+        	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
+		}
+		if($carrera == 0 && $curso == 0 && $anio > 0)
+		{
+			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+        	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+        	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+        	->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+        	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+        	->where('inscripcion.fkpersona', $persona)
+        	->where('ciclo.nombre', $anio)
+        	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
+		}		
 
+		if($carrera > 0 && $curso > 0 && $anio > 0)
+		{
+			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
+        	->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
+        	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+        	->join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
+        	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+        	->where('inscripcion.fkpersona', $persona)
+        	->where('carrera_curso.fkcarrera', $carrera)
+        	->where('carrera_curso.fkcurso', $curso)
+        	->where('ciclo.nombre', $anio)
+        	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
+		}		
 
 	}		
 }
