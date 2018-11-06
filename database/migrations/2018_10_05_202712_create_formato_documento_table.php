@@ -11,7 +11,7 @@ class CreateFormatoDocumentoTable extends Migration
         Schema::create('formato_documento', function (Blueprint $table) {
             $table->increments('id');
             $table->string('formato',15)->unique();
-            $table->string('icono',20)->unique();
+            $table->string('icono',50)->unique();
             $table->timestamps();
         });
     }
