@@ -10,8 +10,8 @@ class CreateCatedraticoCursoTable extends Migration
     {
         Schema::create('catedratico_curso', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin')->nullable();
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin')->nullable();
             $table->smallInteger('cantidad_periodo')->default(0);
 
             $table->unsignedInteger('fkpersona');

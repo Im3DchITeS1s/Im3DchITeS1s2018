@@ -303,8 +303,8 @@
                 url: '/academico/catedraticocurso/catedraticocurso',
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'fecha_inicio_add': $('#fecha_inicio_add').val(),
-                    'fecha_fin_add': $('#fecha_fin_add').val(),
+                    'fecha_inicio': $('#fecha_inicio_add').val(),
+                    'fecha_fin': $('#fecha_fin_add').val(),
                     'cantidad_periodo': $('#cantidad_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
@@ -372,7 +372,6 @@
                 },
             }); 
         });
-
 
 
         // delete

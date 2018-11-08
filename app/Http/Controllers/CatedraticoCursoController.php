@@ -28,10 +28,10 @@ class CatedraticoCursoController extends Controller
     [
         'fecha_inicio' => 'required', 
         'fecha_fin' => 'required', 
-        'cantidad_periodo' => 'required|integer', 
-        'fkpersona'=>'numeric|required|intiger', 
-        'fkcantidad_alumno'=>'numeric|required|intiger', 
-        'fkcarrera_curso'=>'numeric|required|intiger', 
+        'cantidad_periodo' =>'required|integer', 
+        'fkpersona'=>'required|integer', 
+        'fkcantidad_alumno'=>'required|integer', 
+        'fkcarrera_curso'=>'required|integer', 
     ];
 
     public function __construct()
@@ -48,7 +48,7 @@ class CatedraticoCursoController extends Controller
     {
       
         $color_estado = "";
-        $query = CatedraticoCurso::dataCatedraticoCurso();
+        $query = CatedraticoCurso::dataCatedraticoCurso(5);
         return Datatables::of($query)
             ->addColumn('catedratico', function ($data) {
                 return $data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2;
