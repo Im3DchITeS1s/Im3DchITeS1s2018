@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Seccion extends Model
 {
@@ -26,4 +27,25 @@ class Seccion extends Model
         return Seccion::findOrFail($id);       
     } 
 
+    public static function boot() {
+
+        parent::boot();
+
+        static::created(function($data) {
+            Event::fire('seccion.created', $data);
+        });
+
+        static::updated(function($data) {
+            Event::fire('seccion.updated', $data);
+        });
+
+        static::updating(function($data) {
+            Event::fire('seccion.updating', $data);
+        });     
+
+        static::deleted(function($data) {
+            Event::fire('seccion.deleted', $data);
+        });
+
+    }    
 }

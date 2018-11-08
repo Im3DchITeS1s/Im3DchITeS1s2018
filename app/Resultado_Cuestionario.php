@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Resultado_Cuestionario extends Model
 {
@@ -302,5 +303,27 @@ class Resultado_Cuestionario extends Model
 				->select(['cuestionario.id as id_cuestionario', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_original', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'persona.id as id_persona', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha', 'curso.nombre as curso', 'carrera.nombre as carrera']);
 		}					
 		
+	}	
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('resultadocuestionario.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('resultadocuestionario.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('resultadocuestionario.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('resultadocuestionario.deleted', $data);
+	    });
+
 	}		
 }

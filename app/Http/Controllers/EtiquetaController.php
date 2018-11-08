@@ -7,6 +7,18 @@ use App\Etiqueta;
 
 class EtiquetaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['index', 'store', 'update', 'destroy']]);
+        $this->middleware('director', ['only' => ['index', 'store', 'update', 'destroy']]);
+        $this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'destroy']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'destroy']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'destroy']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'destroy']]);
+    }    
+
     public function index()
     {
         //

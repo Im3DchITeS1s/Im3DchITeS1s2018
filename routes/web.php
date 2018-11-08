@@ -4,6 +4,9 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+//ConfirmarResetPassword
+Route::resource('/usuario/reset/password/confirmar', 'ConfirmarResetPasswordController');
+
 //Profesion
 Route::resource('/mantenimiento/profesion', 'ProfesionController');
 Route::get('profesion/getdata', 'ProfesionController@getdata')->name('profesion.getdata');
@@ -276,5 +279,7 @@ Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedrati
 // Dashboard Blackboard
 Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
 
-Route::get('image-view','ImageController@index');
-Route::post('image-view','ImageController@store');
+Route::get('/500', ['as' => 'denied', function() {
+	flash('¡Sin Privilegios!')->error()->important();
+    return view('errores.500');
+}]);

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Grado extends Model
 {
@@ -26,4 +27,26 @@ class Grado extends Model
     {
         return Grado::findOrFail($id);       
     } 
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('grado.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('grado.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('grado.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('grado.deleted', $data);
+	    });
+
+	}    
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Cuestionario extends Model
 {
@@ -93,5 +94,27 @@ class Cuestionario extends Model
 			->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
 			->where('cuestionario.id', $id)
 			->select('carrera_curso.id as id', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2')->first();
-	}		
+	}
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('cuestionario.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('cuestionario.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('cuestionario.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('cuestionario.deleted', $data);
+	    });
+
+	}			
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Producto;
+use Event;
 
 class AltaProducto extends Model
 {
@@ -27,5 +28,25 @@ class AltaProducto extends Model
 	            ->orderBy('producto.nombre', 'asc')->get();
 	}
 
+    public static function boot() {
 
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('altaproducto.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('altaproducto.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('altaproducto.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('altaproducto.deleted', $data);
+	    });
+
+	}
 }	

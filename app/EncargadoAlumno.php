@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class EncargadoAlumno extends Model
 {
@@ -37,5 +38,26 @@ class EncargadoAlumno extends Model
         return EncargadoAlumno::findOrFail($id);       
     } 
 
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('encargadoalumno.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('encargadoalumno.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('encargadoalumno.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('encargadoalumno.deleted', $data);
+	    });
+
+	}
 }
  

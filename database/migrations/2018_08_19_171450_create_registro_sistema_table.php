@@ -10,20 +10,12 @@ class CreateRegistroSistemaTable extends Migration
     {
         Schema::create('registro_sistema', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('fecha_ingreso');
-            $table->dateTime('fecha_egreso');
-            $table->smallInteger('insert');
-            $table->smallInteger('update');
-            $table->smallInteger('delete');
+            $table->boolean('navegando')->default(1);
 
-            $table->unsignedInteger('fksistema');
             $table->unsignedInteger('fkuser');
-            $table->unsignedInteger('fkestado');
-
-            $table->foreign('fksistema')->references('id')->on('sistema')->onUpdate('cascade');
-            $table->foreign('fkuser')->references('id')->on('users')->onUpdate('cascade');
-            $table->foreign('fkestado')->references('id')->on('estado')->onUpdate('cascade');
-                          
+            $table->foreign('fkuser')->references('id')->on('users')->onUpdate('cascade');  
+            
+            $table->timestamps();                       
         });
     }
 

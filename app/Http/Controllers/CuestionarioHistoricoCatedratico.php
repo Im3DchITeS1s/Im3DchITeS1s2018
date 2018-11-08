@@ -18,6 +18,12 @@ class CuestionarioHistoricoCatedratico extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['index']]);
+        $this->middleware('director', ['only' => ['index']]);
+        $this->middleware('secretaria', ['only' => ['index']]);
+        $this->middleware('contador', ['only' => ['index']]);
+        //$this->middleware('catedratico', ['only' => ['index']]);
+        $this->middleware('alumno', ['only' => ['index']]);
     }
 
     public function index()

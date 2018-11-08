@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Event;
 
 class Categoria extends Model
 {
@@ -30,8 +30,26 @@ class Categoria extends Model
     {
         return Categoria::findOrFail($id);       
     } 
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('categoria.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('categoria.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('categoria.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('categoria.deleted', $data);
+	    });
+
+	}    
 }
-
-
-
-

@@ -18,6 +18,12 @@ class SistemaRolUsuarioController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['destroy']]);
+        $this->middleware('director', ['only' => ['destroy']]);
+        $this->middleware('secretaria', ['only' => ['destroy']]);
+        $this->middleware('contador', ['only' => ['destroy']]);
+        $this->middleware('catedratico', ['only' => ['destroy']]);
+        $this->middleware('alumno', ['only' => ['destroy']]);
     }
 
     public function index()

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Producto extends Model
 {
@@ -27,18 +28,40 @@ class Producto extends Model
 				->select('producto.id', 'producto.nombre','producto.fkestado','categoria.nombre')
 	            ->where('fkestado', $id)
 	            ->orderBy('producto. ', 'asc')->get();
-		}
+	}
 
-		public static function buscarCategoria($id){
+	public static function buscarCategoria($id){
 		return Producto::join('categoria','producto.fkcategoria','categoria.id')
 			->select('categoria.nombre')
 			->where('fkestado',$id)
 			->orderBy('nombre','asc')->get();
-		}
+	}
 
-	 public static function buscarIDProducto($id)
+	public static function buscarIDProducto($id)
     {
         return Producto::findOrFail($id);       
     }
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('producto.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('producto.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('producto.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('producto.deleted', $data);
+	    });
+
+	}    
 
 } //FinClaas 

@@ -11,13 +11,11 @@ class CreateBitacoraTable extends Migration
         Schema::create('bitacora', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tabla', 100);
-            $table->string('accion', 8);
-            $table->string('descripcion', 2500);
+            $table->string('modelo', 100);
+            $table->string('accion', 15);
+            $table->string('descripcion', 4500);
             $table->smallInteger('idtabla');
-
-            $table->unsignedInteger('fkuser');
-
-            $table->foreign('fkuser')->references('id')->on('users')->onUpdate('cascade');
+            $table->string('usuario', 50)->default('system');
 
             $table->timestamps();
         });

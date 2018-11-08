@@ -22,6 +22,12 @@ class ResponderBandejaCuestionarioController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['index', 'store']]);
+        $this->middleware('director', ['only' => ['index', 'store']]);
+        $this->middleware('secretaria', ['only' => ['index', 'store']]);
+        $this->middleware('contador', ['only' => ['index', 'store']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store']]);
+        //$this->middleware('alumno', ['only' => ['index', 'store']]);
     }
 
     public function index()

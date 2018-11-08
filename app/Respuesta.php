@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Respuesta extends Model
 {
@@ -114,5 +115,27 @@ class Respuesta extends Model
 				->where('validar', 1)
             	->where('fkpregunta', $id)
             	->where('fkestado', 5)->get(); 
-	}		
+	}
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('respuesta.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('respuesta.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('respuesta.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('respuesta.deleted', $data);
+	    });
+
+	}			
 }

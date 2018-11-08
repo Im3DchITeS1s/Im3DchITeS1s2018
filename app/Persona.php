@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Persona extends Model
 {
@@ -82,5 +83,27 @@ class Persona extends Model
         return Persona::select('nombre1', 'nombre2', 'apellido1', 'apellido2')
         			->where('id', $id)
         			->get();       
-    }     		
+    }  
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('persona.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('persona.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('persona.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('persona.deleted', $data);
+	    });
+
+	}       		
 }
