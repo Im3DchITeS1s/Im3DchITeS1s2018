@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Sistema_Rol extends Model
 {
@@ -16,5 +17,27 @@ class Sistema_Rol extends Model
 			->where('sistema_rol.fksistema', $id)
 			->where('sistema_rol.fkestado', 5)
             ->orderBy('rol', 'asc')->get();
+	}	
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('sistemarol.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('sistemarol.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('sistemarol.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('sistemarol.deleted', $data);
+	    });
+
 	}	
 }

@@ -14,16 +14,20 @@ use App\Estado;
 class CategoriaController extends Controller
 {
     protected $verificar_insert = //validacion de inserts 
-        [
-            'nombre' => 'required|max:50|unique:categoria',
-        ]; 
+    [
+        'nombre' => 'required|max:50|unique:categoria',
+    ]; 
 
-          public function __construct()
-        {
-       
+    public function __construct()
+    {
         $this->middleware('auth');
-        
-        }
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);   
+    }
   
     public function dropseccion(Request $request, $id)
     {

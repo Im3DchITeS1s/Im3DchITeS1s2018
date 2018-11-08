@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Pago extends Model
 {
@@ -18,9 +19,27 @@ class Pago extends Model
 					->join('estado', 'pago.fkestado', '=', 'estado.id')
 
                     ->select(['pago.id as id_pago', 'pago.pago as pago', 'mes.nombre as mes','tipo_pago.nombre as tipo_pago', 'tipo_pago.fkestado as fkestado','persona.id as codigo','persona.nombre1 as nombre1','persona.nombre2 as nombre2','persona.apellido1 as apellido1','persona.apellido2 as apellido2']   
-    }
+    }  
 
+    public static function boot() {
 
-	
-    
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('pago.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('pago.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('pago.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('pago.deleted', $data);
+	    });
+
+	}    
 }

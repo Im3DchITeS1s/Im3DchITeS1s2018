@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Sistema_Rol_Usuario extends Model
 {
@@ -16,5 +17,27 @@ class Sistema_Rol_Usuario extends Model
 			->join('rol', 'sistema_rol.fkrol', 'rol.id')
 			->select(['sistema_rol_usuario.id as id', 'sistema.nombre as sistema', 'rol.nombre as rol'])
 			->where('users.fkpersona', $id);
+	}	
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('sistemarilusuario.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('sistemarilusuario.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('sistemarilusuario.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('sistemarilusuario.deleted', $data);
+	    });
+
 	}	
 }

@@ -28,15 +28,21 @@ class CatedraticoCursoController extends Controller
     [
         'fecha_inicio' => 'required', 
         'fecha_fin' => 'required', 
-        'cantidad_periodo' =>'required|integer', 
-        'fkpersona'=>'required|integer', 
-        'fkcantidad_alumno'=>'required|integer', 
-        'fkcarrera_curso'=>'required|integer', 
+        'cantidad_periodo' => 'required|integer', 
+        'fkpersona'=>'numeric|required|integer', 
+        'fkcantidad_alumno'=>'numeric|required|integer', 
+        'fkcarrera_curso'=>'numeric|required|integer', 
     ];
 
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
     }
 
     public function index()
@@ -57,7 +63,7 @@ class CatedraticoCursoController extends Controller
                 return $data->carrera.' '.$data->grado.' '.$data->curso;
             }) 
             ->addColumn('fecha', function ($data) {
-                return $data->fecha_inicio." / ".$data->fecha_fin;
+                return date("d/m/Y", strtotime($data->fecha_inicio))." - ".date("d/m/Y", strtotime($data->fecha_fin));
             }) 
            ->addColumn('action', function ($data) {
                 switch ($data->id_estado) {
@@ -116,8 +122,8 @@ class CatedraticoCursoController extends Controller
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $insert = new CatedraticoCurso();            
-            $insert->fecha_inicio = $request->fecha_inicio;
-            $insert->fecha_fin = $request->fecha_fin;          
+            $insert->fecha_inicio = date("Y-m-d", strtotime($request->fecha_inicio)); 
+            $insert->fecha_fin = date("Y-m-d", strtotime($request->fecha_fin));           
             $insert->cantidad_periodo = $request->cantidad_periodo;
             $insert->fkpersona = $request->fkpersona;           
             $insert->fkcantidad_alumno = $request->fkcantidad_alumno;

@@ -115,7 +115,7 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcantidad_alumno_add" id='fkcantidad_alumno_add' required autofocus>
+                                    name="fkcantidad_alumno_add" id='fkcantidad_alumno_add' onChange="llenardrop(this);" required autofocus>
                                     </select> 
                                 </div>   
                                 <small class="control-label">Debe de seleccionar uno</small>                                       
@@ -285,7 +285,12 @@
                 }
             });
 
-         $.get("/academico/catedraticocurso/dropcarreracurso/"+5,function(response, id){
+       });       
+        
+
+    function llenardrop(id) {
+
+         $.get("/academico/catedraticocurso/dropcarreracurso/"+id.value,function(response, id){
                 $("#fkcarrera_curso_add").empty();
                 $("#fkcarrera_curso_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
@@ -294,8 +299,8 @@
                 }
             });
 
-       });       
-        
+    }
+
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({

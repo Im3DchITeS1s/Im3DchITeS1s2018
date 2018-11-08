@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 use Auth;
 
 class CatedraticoCurso extends Model
@@ -64,4 +65,25 @@ class CatedraticoCurso extends Model
         return Inscripcion::findOrFail($id);       
     } 
 
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('catedraticocurso.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('catedraticocurso.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('catedraticocurso.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('catedraticocurso.deleted', $data);
+	    });
+
+	}
 }

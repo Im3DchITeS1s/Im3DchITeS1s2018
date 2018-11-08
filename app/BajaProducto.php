@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class BajaProducto extends Model
 {
@@ -20,4 +21,25 @@ class BajaProducto extends Model
 				->select(['baja_producto.id as id','baja_producto.cantidad as cantidad','baja_producto.observacion as observacion, producto.nombre as producto']);
 	}       
 
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('bajaproducto.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('bajaproducto.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('bajaproducto.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('bajaproducto.deleted', $data);
+	    });
+
+	}
 } #Fin clase 

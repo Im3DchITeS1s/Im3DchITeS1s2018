@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Inscripcion extends Model
 {
@@ -96,5 +97,27 @@ class Inscripcion extends Model
 	public static function alumnoInscrito($id, $ciclo)
     {
         return Inscripcion::join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')->where('fkpersona', $id)->where('ciclo.nombre', $ciclo)->select('inscripcion.*')->first();       
-    }     
+    }  
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('inscripcion.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('inscripcion.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('inscripcion.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('inscripcion.deleted', $data);
+	    });
+
+	}       
 }

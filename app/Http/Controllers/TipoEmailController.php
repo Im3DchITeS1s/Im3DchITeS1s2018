@@ -26,6 +26,12 @@ class TipoEmailController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
     }
 
     public function index()
@@ -82,6 +88,7 @@ class TipoEmailController extends Controller
             $insert->nombre = $request->nombre;
             $insert->fkestado = $estado->id;
             $insert->save();
+
             return response()->json($insert);
         }        
     }
@@ -105,6 +112,7 @@ class TipoEmailController extends Controller
             $cambiar = TipoEmail::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
             $cambiar->save();
+
             return response()->json($cambiar);
         }        
     }

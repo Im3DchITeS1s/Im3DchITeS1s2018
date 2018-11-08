@@ -22,7 +22,7 @@
 
           <p>
             Ya estamos trabajando para solucionar el inconveniente.
-            Por favor!, dar click en <a href="../../index.html">retornar al dashboard</a>.
+            Por favor!, dar click en <a href="/">retornar al dashboard</a>.
           </p>
         </div>
     </div>

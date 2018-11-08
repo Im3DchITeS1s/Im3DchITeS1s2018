@@ -68,20 +68,21 @@
                                 @endforeach
 
                             @else
-                                      <div class="progress-group">
-                                        <div class="col-md-11">
-                                            <span class="progress-text"><button class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</button></span>
-                                            <div class="progress sm" style="height: 20px;">
-                                                <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'>
-                                                    <strong>Prioridad: {{ $cuestionario->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario->fin)) }}</strong>
-                                                </div>
-                                            </div>
+                            
+                              <div class="progress-group">
+                                <div class="col-md-11">
+                                    <span class="progress-text"><button class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</button></span>
+                                    <div class="progress sm" style="height: 20px;">
+                                        <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'>
+                                            <strong>Prioridad: {{ $cuestionario->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario->fin)) }}</strong>
                                         </div>
-                                         <div class="col-md-1"> 
-                                            <img src="{{ asset('img/contaestar.png') }}" height="90%;" width="90%;"> 
-                                         </div>
-                
-                                      </div>
+                                    </div>
+                                </div>
+                                 <div class="col-md-1"> 
+                                    <img src="{{ asset('img/contaestar.png') }}" height="90%;" width="90%;"> 
+                                 </div>
+        
+                              </div>
 
                             @endif
 

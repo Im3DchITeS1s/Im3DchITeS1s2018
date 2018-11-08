@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class PeriodoAcademico extends Model
 {
@@ -48,4 +49,26 @@ class PeriodoAcademico extends Model
     {
         return PeriodoAcademico::findOrFail($id);       
     } 
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('periodoacademico.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('periodoacademico.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('periodoacademico.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('periodoacademico.deleted', $data);
+	    });
+
+	}    
 }

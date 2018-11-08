@@ -14,17 +14,23 @@ use App\Inscripcion;
 use App\Estado;
 class PagoController extends Controller
 {
- 	 public function __construct()
+ 	public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'cambiarEstado']]);
     }
 
-      public function index()
+    public function index()
     {   
         return view('GestionAdministrativa/ControlPago/pago');
     }
 
-      public function getdata() //funciones de llenado de la datable
+    public function getdata() //funciones de llenado de la datable
     {
 
         $query = Pago::dataPago();
@@ -52,7 +58,7 @@ class PagoController extends Controller
             ->make(true);
     }
 
-     public function cambiarEstado(Request $request)
+    public function cambiarEstado(Request $request)
     {
         $cambiar = TipoPago::findOrFail($request->id);
         if($request->fkestado == 5)

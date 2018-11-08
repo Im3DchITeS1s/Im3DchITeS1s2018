@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Genero extends Model
 {
@@ -24,5 +25,27 @@ class Genero extends Model
     public static function buscarIDGenero($id)
     {
         return Genero::findOrFail($id);       
-    } 	
+    } 
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('genero.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('genero.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('genero.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('genero.deleted', $data);
+	    });
+
+	}    	
 }

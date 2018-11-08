@@ -19,6 +19,7 @@
 	<div class="row">
 		<div class="col-md-12">
             <div class="box box-info">
+                <h4 class="box-title" style="text-align: center;">Alumno</h4>
             	<h3 class="box-title" style="text-align: center;">{{ $alumno->nombre1 }} {{ $alumno->nombre2 }} {{ $alumno->apellido1 }} {{ $alumno->apellido2 }}</h3>
 
             	<div class="box-header with-border">
@@ -218,7 +219,7 @@
     }   
 
     $(document).on('click', '.ver-modal', function() {
-        id = $(this).data('id');
+        id = $(this).data('id_cuestionario');
 
         let ruta_original = null;
 

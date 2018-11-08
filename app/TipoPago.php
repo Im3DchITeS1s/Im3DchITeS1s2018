@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class TipoPago extends Model
 {
@@ -30,4 +31,25 @@ class TipoPago extends Model
         return TipoPago::findOrFail($id);       
     } 
 	
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('tipopago.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('tipopago.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('tipopago.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('tipopago.deleted', $data);
+	    });
+
+	}	
 }#Fin clase 

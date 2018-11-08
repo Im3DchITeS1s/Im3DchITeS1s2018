@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class SeccionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }     
   
     public function dropseccion(Request $request, $id)
     {
@@ -15,7 +19,7 @@ class SeccionController extends Controller
         }        
     } 
 
-     public function destroy($id)
+    public function destroy($id)
     {
       
     }

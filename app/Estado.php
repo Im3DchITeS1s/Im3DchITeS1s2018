@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Estado extends Model
 {
@@ -20,5 +21,27 @@ class Estado extends Model
     public static function buscarIDEstado($id)
     {
         return Estado::findOrFail($id);       
-    } 	    
+    } 
+
+    public static function boot() {
+
+        parent::boot();
+
+        static::created(function($data) {
+            Event::fire('estado.created', $data);
+        });
+
+        static::updated(function($data) {
+            Event::fire('estado.updated', $data);
+        });
+
+        static::updating(function($data) {
+            Event::fire('estado.updating', $data);
+        });     
+
+        static::deleted(function($data) {
+            Event::fire('estado.deleted', $data);
+        });
+
+    }    	    
 }
