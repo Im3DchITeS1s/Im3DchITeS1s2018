@@ -33,7 +33,7 @@ class DashboardBlackboardController extends Controller
             ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
             ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
             ->where('catedratico_curso.fkpersona', Auth::user()->fkpersona)
-            ->select('catedratico_curso.*', 'cantidad_alumno.cantidad as cantidad', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion')->get();
+            ->select('catedratico_curso.*', 'cantidad_alumno.cantidad as cantidad', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')->get();
 
         $alumno = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
 

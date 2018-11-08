@@ -14,11 +14,13 @@
 @section('content')
 
 	<div class="row">
+
+        
 		<div class="col-md-6">
             
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title" id="titutloContenidoEducativo"></h3>
+                    <h3 class="box-title">Contenido Educativo</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -98,8 +100,10 @@
 
                     @foreach($catedratico_cusos as $catedratico_cuso)
                       <div class="progress-group">
-                        <span class="progress-text">$catedratico_cuso->grado $catedratico_cuso->carrera Seccion $catedratico_cuso->seccion - $catedratico_cuso->curso</span>
-                        <span class="progress-number"><b>Alumnos</b> $catedratico_cuso->cantidad</span>
+                        <hr>
+                            <small><span class="progress-text">{{ $catedratico_cuso->grado }} {{ $catedratico_cuso->carrera }} Seccion {{ $catedratico_cuso->seccion }} - {{ $catedratico_cuso->curso }}</span></small>
+                            <span class="progress-number"><b>Alumnos</b> {{ $catedratico_cuso->cantidad }}</span>
+                        <hr>
                       </div>
                     @endforeach
                     </div>
