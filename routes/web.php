@@ -236,7 +236,7 @@ Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaControl
 Route::get('categoria/getdata', 'CategoriaController@getdata')->name('categoria.getdata');
 Route::post('/gestionadministrativa/inventario/categoria/cambiarEstado', 'CategoriaController@cambiarEstado');
 
-//Stock 
+//Stock
 Route::resource('/gestionadministrativa/inventario/stock', 'InventarioStockProductoController');
 Route::get('InventarioStockProducto/getdata', 'InventarioStockProductoController@getdata')->name('stock.getdata');
 
@@ -250,7 +250,7 @@ Route::resource('/gestionadministrativa/inventario/bajaproducto', 'BajaProductoC
 Route::get('/gestionadministrativa/inventario/bajaproducto/dropproducto/{id}', 'BajaProductoController@dropProducto');
 Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
 
-// Tipo Pago 
+// Tipo Pago
 
 Route::resource('/gestionadministrativa/controlpago/tipopago', 'TipoPagoController');
 Route::get('TipoPago/getdata', 'TipoPagoController@getdata')->name('tipopago.getdata');
@@ -260,7 +260,11 @@ Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPa
 
 Route::resource('/gestionadministrativa/controlpago/pago', 'PagoController');
 Route::get('Pago/getdata', 'PagoController@getdata')->name('pago.getdata');
-//Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPagoController@cambiarEstado');
+//Route::get('producto/getdata', 'ProductoController@getdata')->name('producto.getdata');
+Route::get('/gestionadministrativa/controlpago/pago/dropmes/{id}', 'PagoController@dropmes');
+//Route::post('/gestionadministrativa/controlpago/pago/cambiarEstado', 'PagoController@cambiarEstado');
+
+
 
 // Cuestionarios Historicos Alumno
 Route::get('/plataforma/blackboard/cuestionario/historicos/alumnohistorico', 'CuestionarioHistoricoAlumno@index')->name('alumnohistorico.index');

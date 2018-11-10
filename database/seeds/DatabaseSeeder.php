@@ -45,7 +45,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AltaProductoTableSeeder::class);
         $this->call(TipoPagoTableSeeder::class);
         //$this->call(PagoTableSeeder::class);
-
+        $this->call(TipoMovimientoTableSeeder::class);
     }
     
 }
+    
