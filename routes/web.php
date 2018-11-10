@@ -4,6 +4,9 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+//ConfirmarResetPassword
+Route::resource('/usuario/reset/password/confirmar', 'ConfirmarResetPasswordController');
+
 //Profesion
 Route::resource('/mantenimiento/profesion', 'ProfesionController');
 Route::get('profesion/getdata', 'ProfesionController@getdata')->name('profesion.getdata');
@@ -216,6 +219,7 @@ Route::get('/cuestionarios/preguntas/respuestas/{id}', 'AlumnoCuestionarRespuest
 
 //CuestionarioResuelto
 Route::resource('/cuestionario/resuelto/alumno/nota/obtenida', 'ResultadoCuestionarioController');
+Route::get('/imprimir/constancia/cuestionario/{alumno}/{cuestionario}', 'ResultadoCuestionarioController@imprimirCuestiionarioAlumno')->name('imprimir.imprimirCuestiionarioAlumno');
 Route::get('/nota/cuestionario/alumno/{id}', 'ResultadoCuestionarioController@existeCuestionarioResuelto');
 Route::get('/grafica/resultados/cuestionario/{id}', 'ResultadoCuestionarioController@mostrarGraficaResultado');
 
@@ -271,5 +275,20 @@ Route::get('/plataforma/blackboard/cuestionario/historicos/alumnohistorico', 'Cu
 Route::get('get/historicos/alumnohistorico/{carrera}/{curso}/{anio}', 'CuestionarioHistoricoAlumno@getdata')->name('alumnohistorico.getdata');
 Route::get('/filtrar/curso/carrera/{id}', 'CuestionarioHistoricoAlumno@dropCurso');
 
+<<<<<<< HEAD
 Route::get('image-view','ImageController@index');
 Route::post('image-view','ImageController@store');
+=======
+// Cuestionarios Historicos Catedratico
+Route::get('/plataforma/blackboard/cuestionario/historicos/catedraticohistorico', 'CuestionarioHistoricoCatedratico@index')->name('catedraticohistorico.index');
+Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('alumnohistorico.getdata');
+Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
+
+// Dashboard Blackboard
+Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
+
+Route::get('/500', ['as' => 'denied', function() {
+	flash('¡Sin Privilegios!')->error()->important();
+    return view('errores.500');
+}]);
+>>>>>>> cc848be379663b4e1e0e82862e4c6a8b5a26086e

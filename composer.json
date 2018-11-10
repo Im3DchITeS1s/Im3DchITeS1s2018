@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^0.8.3",
         "fideloper/proxy": "^4.0",
         "jeroennoten/laravel-adminlte": "^1.23",
+        "laracasts/flash": "^3.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "realrashid/sweet-alert": "^1.1",

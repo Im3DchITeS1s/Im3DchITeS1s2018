@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Pregunta extends Model
 {
@@ -43,5 +44,27 @@ class Pregunta extends Model
             ->where('cuestionario.fkestado', $estado)
             ->Orwhere('cuestionario.fkestado', 22)
             ->where('pregunta.fkestado', 5)->inRandomOrder()->get(); 
+	}	
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('pregunta.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('pregunta.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('pregunta.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('pregunta.deleted', $data);
+	    });
+
 	}	
 }

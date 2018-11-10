@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class TipoEmail extends Model
 {
@@ -24,5 +25,27 @@ class TipoEmail extends Model
     public static function buscarIDTipoEmail($id)
     {
         return TipoEmail::findOrFail($id);       
-    } 		
+    } 	
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('tipoemail.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('tipoemail.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('tipoemail.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('tipoemail.deleted', $data);
+	    });
+
+	}    
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Alumno_Cuestionario_Respuesta extends Model
 {
@@ -50,4 +51,26 @@ class Alumno_Cuestionario_Respuesta extends Model
             ->where('alumno_cuestionario_respuesta.fkcuestionario', $id)
             ->select('respuesta.descripcion as respuesta', 'respuesta.validar as validar')->get();
 	}
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('alumnocuestionariorespuesta.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('alumnocuestionariorespuesta.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('alumnocuestionariorespuesta.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('alumnocuestionariorespuesta.deleted', $data);
+	    });
+
+	}	
 }

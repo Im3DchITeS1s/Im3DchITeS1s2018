@@ -20,6 +20,12 @@ class ResultadoCuestionarioController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['show', 'edit']]);
+        $this->middleware('director', ['only' => ['show', 'edit']]);
+        $this->middleware('secretaria', ['only' => ['show', 'edit']]);
+        $this->middleware('contador', ['only' => ['show', 'edit']]);
+        //$this->middleware('catedratico', ['only' => ['show', 'edit']]);
+        //$this->middleware('alumno', ['only' => ['show', 'edit']]);
     } 
 
     public function index()
@@ -79,8 +85,6 @@ class ResultadoCuestionarioController extends Controller
         $respuestas_encuesta_original = Respuesta::respuestaCuestionarioPreguntaImprimir($id, 21);
         $catedratico = Cuestionario::cursoPerteneceAlCuestionario($id);
 
-        $pdf = PDF::loadView('blackboard.reporte.constancia', ['fecha_impresion' => $fecha_impresion, 'resultado_encuesta' => $resultado_encuesta, 'respuesta_encuesta' => $respuesta_encuesta, 'preguntas_encuesta_original' => $preguntas_encuesta_original, 'respuestas_encuesta_original' => $respuestas_encuesta_original, 'catedratico' => $catedratico, 'correcto' => $correcto, 'incorrecto' => $incorrecto, 'total' => $total]); 
-
         return view('blackboard.calificacion', compact('fecha_impresion', 'resultado_encuesta', 'respuesta_encuesta', 'preguntas_encuesta_original', 'respuestas_encuesta_original', 'catedratico', 'correcto', 'incorrecto', 'total'));
     }
 
@@ -101,6 +105,24 @@ class ResultadoCuestionarioController extends Controller
 
         return $pdf->download($resultado_encuesta->nombre1.'_'.$resultado_encuesta->apellido1.' '. date('d-m-Y h:i:s') .'.pdf');
     }
+
+    public function imprimirCuestiionarioAlumno($alumno, $cuestionario)
+    {
+        $correcto = Alumno_Cuestionario_Respuesta::contarRespuestasValidas($alumno, $cuestionario, 1);
+        $incorrecto = Alumno_Cuestionario_Respuesta::contarRespuestasValidas($alumno, $cuestionario, 0);   
+        $total = 0;
+
+        $fecha_impresion = date('d/m/Y h:i:s');
+        $resultado_encuesta = Resultado_Cuestionario::buscarCuestionarioDelAlumno($alumno, $cuestionario, 5);
+        $respuesta_encuesta = Alumno_Cuestionario_Respuesta::respuestasDelCuestionario($alumno, $cuestionario);
+        $preguntas_encuesta_original = Pregunta::preguntaEncuestaImprimir($cuestionario, 21);
+        $respuestas_encuesta_original = Respuesta::respuestaCuestionarioPreguntaImprimir($cuestionario, 21);
+        $catedratico = Cuestionario::cursoPerteneceAlCuestionario($cuestionario);
+
+        $pdf = PDF::loadView('blackboard.reporte.constancia', ['fecha_impresion' => $fecha_impresion, 'resultado_encuesta' => $resultado_encuesta, 'respuesta_encuesta' => $respuesta_encuesta, 'preguntas_encuesta_original' => $preguntas_encuesta_original, 'respuestas_encuesta_original' => $respuestas_encuesta_original, 'catedratico' => $catedratico, 'correcto' => $correcto, 'incorrecto' => $incorrecto, 'total' => $total]);
+
+        return $pdf->download($resultado_encuesta->nombre1.'_'.$resultado_encuesta->apellido1.' '. date('d-m-Y h:i:s') .'.pdf');
+    }    
 
     public function update(Request $request, $id)
     {

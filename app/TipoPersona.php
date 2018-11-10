@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class TipoPersona extends Model
 {
@@ -24,5 +25,27 @@ class TipoPersona extends Model
     public static function buscarIDTipoPersona($id)
     {
         return TipoPersona::findOrFail($id);       
-    } 	
+    }
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('tipopersona.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('tipopersona.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('tipopersona.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('tipopersona.deleted', $data);
+	    });
+
+	}     	
 }

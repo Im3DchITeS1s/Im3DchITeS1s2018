@@ -17,3 +17,5 @@ app/Http/Controllers/ProfesionController.php
 composer.lock
 composer.lock
 composer.lock
+*.lock
+composer.lock

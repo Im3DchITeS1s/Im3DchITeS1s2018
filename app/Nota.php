@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Nota extends Model
 {
@@ -18,5 +19,25 @@ class Nota extends Model
 					->select('nota.id as id', 'inscripcion.id as id', 'inscripcion.fkpersona', 'persona.nombre1', 'persona.nombre2', 'persona.apellido1', 'persona.apellido2', 'inscripcion.fkperiodo_academico','periodo_academico.id as fkperiodo_academico', 'periodo_academico.nombre as periodo_academico','nota.fkestado as fkestado');
 	}
 
+    public static function boot() {
 
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('nota.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('nota.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('nota.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('nota.deleted', $data);
+	    });
+
+	}
 }

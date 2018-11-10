@@ -37,6 +37,12 @@ class CatedraticoContenidoEducativoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('catedratico', ['only' => ['index', 'store', 'update']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
     }
 
     public function index()
@@ -170,7 +176,7 @@ class CatedraticoContenidoEducativoController extends Controller
         }
     }
 
-  public function cambiarEstado(Request $request)
+    public function cambiarEstado(Request $request)
     {
         $estado = Estado::buscarIDEstado(6);
 
@@ -179,9 +185,4 @@ class CatedraticoContenidoEducativoController extends Controller
         $cambiar->save();
         return response()->json($cambiar);          
     }    
-
-    public function destroy($id)
-    {
-        //
-    }
 }

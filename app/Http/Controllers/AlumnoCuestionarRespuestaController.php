@@ -22,6 +22,12 @@ class AlumnoCuestionarRespuestaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['index', 'store', 'destroy']]);
+        $this->middleware('director', ['only' => ['index', 'store', 'destroy']]);
+        $this->middleware('secretaria', ['only' => ['index', 'store', 'destroy']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'destroy']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'destroy']]);
+        //$this->middleware('alumno', ['only' => ['index', 'store', 'update']]);
     }
 
     public function index()

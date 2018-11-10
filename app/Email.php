@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Email extends Model
 {
@@ -25,5 +26,27 @@ class Email extends Model
 			->where('email.fkpersona', $id)
 			->where('email.fkestado', 5)
             ->orderBy('email', 'asc')->get();
+	}	
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('email.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('email.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('email.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('email.deleted', $data);
+	    });
+
 	}	
 }

@@ -115,7 +115,7 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcantidad_alumno_add" id='fkcantidad_alumno_add' required autofocus>
+                                    name="fkcantidad_alumno_add" id='fkcantidad_alumno_add' onChange="llenardrop(this);" required autofocus>
                                     </select> 
                                 </div>   
                                 <small class="control-label">Debe de seleccionar uno</small>                                       
@@ -130,7 +130,7 @@
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' onchange="curso"  required autofocus>
+                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' required autofocus>
                                     </select> 
                                 </div>                                                               
                                 <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
@@ -285,7 +285,12 @@
                 }
             });
 
-         $.get("/academico/catedraticocurso/dropcarreracurso/"+5,function(response, id){
+       });       
+        
+
+    function llenardrop(id) {
+
+         $.get("/academico/catedraticocurso/dropcarreracurso/"+id.value,function(response, id){
                 $("#fkcarrera_curso_add").empty();
                 $("#fkcarrera_curso_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
@@ -293,19 +298,9 @@
                     $('#fkcarrera_curso_add').val('').trigger('change.select2'); 
                 }
             });
-<<<<<<< HEAD
 
-         function curso(id){
-            if(id.value=fkcantidad_alumno)
-            {
-                $($fkcarrera_curso).data(curso);
-            }
-                            }
-       });        
+    }
 
-=======
->>>>>>> parent of 5e1b22f... cambio
-        
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
@@ -313,8 +308,8 @@
                 url: '/academico/catedraticocurso/catedraticocurso',
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'fecha_inicio_add': $('#fecha_inicio_add').val(),
-                    'fecha_fin_add': $('#fecha_fin_add').val(),
+                    'fecha_inicio': $('#fecha_inicio_add').val(),
+                    'fecha_fin': $('#fecha_fin_add').val(),
                     'cantidad_periodo': $('#cantidad_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
@@ -337,14 +332,14 @@
                             });
                         }, 500);
 
-                     if (data.errors.inicio) {
+                     if (data.errors.fecha_inicio) {
                             $('.errorInicio').removeClass('hidden');
-                            $('.errorInicio').text(data.errors.inicio);
+                            $('.errorInicio').text(data.errors.fecha_inicio);
                         }
 
-                     if (data.errors.fin) {
+                     if (data.errors.fecha_fin) {
                             $('.errorFin').removeClass('hidden');
-                            $('.errorFin').text(data.errors.fin);
+                            $('.errorFin').text(data.errors.fecha_fin);
                         }
 
                     if (data.errors.cantidad_periodo) {
@@ -382,7 +377,6 @@
                 },
             }); 
         });
-
 
 
         // delete

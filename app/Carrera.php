@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Carrera extends Model
 {
@@ -26,4 +27,26 @@ class Carrera extends Model
     {
         return Carrera::findOrFail($id);       
     } 
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('carrera.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('carrera.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('carrera.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('carrera.deleted', $data);
+	    });
+
+	}    
 }

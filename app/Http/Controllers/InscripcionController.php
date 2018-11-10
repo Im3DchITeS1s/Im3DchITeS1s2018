@@ -30,12 +30,18 @@ class InscripcionController extends Controller
         'fktipo_periodo' => 'required|integer', 
         'fkpersona' => 'required|integer', 
         'fkciclo' => 'required|integer', 
-        'pago'=>'numeric|required|between:0,1000.99', 
+        'pago'=>'numeric|required|between:1,1000.99', 
     ];
 
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
     }
 
     public function index()
@@ -185,7 +191,7 @@ class InscripcionController extends Controller
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
             $cambiar->fkpersona = $request->fkpersona;
-            $cambiar->ciclo = $request->fkciclo;   
+            $cambiar->fkciclo = $request->fkciclo;   
             $cambiar->pago = $request->pago;
             $cambiar->save();
             return response()->json($cambiar); 

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Event;
 
 class Compania extends Model
 {
@@ -25,4 +26,26 @@ class Compania extends Model
     {
         return Compania::findOrFail($id);       
     } 		
+
+    public static function boot() {
+
+	    parent::boot();
+
+	    static::created(function($data) {
+	        Event::fire('compania.created', $data);
+	    });
+
+	    static::updated(function($data) {
+	        Event::fire('compania.updated', $data);
+	    });
+
+	    static::updating(function($data) {
+	        Event::fire('compania.updating', $data);
+	    });	    
+
+	    static::deleted(function($data) {
+	        Event::fire('compania.deleted', $data);
+	    });
+
+	}    
 }

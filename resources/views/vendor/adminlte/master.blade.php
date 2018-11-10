@@ -28,8 +28,8 @@
         <script src="{{ asset('bower_components/select2/dist/js/select2.min.js') }}"></script>  
         <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
-        <script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="http://code.highcharts.com/modules/exporting.js"></script>        
+        <script src="{{ asset('js/highcharts.js') }}"></script>
+        <script src="{{ asset('js/exporting.js') }}"></script>        
 
         <link href="{{ asset('bower_components/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet" />           
     @endif

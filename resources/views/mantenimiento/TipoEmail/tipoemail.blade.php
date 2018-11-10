@@ -134,8 +134,11 @@
         //Leer
         $(document).ready(function() {
             table = $('#info-table').DataTable({
+                destroy: true,   
                 processing: true,
-                serverSide: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
                 ajax: '{!! route('tipoemail.getdata') !!}',
                 columns: [
                     { data: 'nombre', name: 'nombre' },

@@ -17,17 +17,28 @@ use App\Persona;
 
 class PagoController extends Controller
 {
- 	 public function __construct()
+ 	public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'cambiarEstado']]);
     }
 
+<<<<<<< HEAD
       public function index()
     {
+=======
+    public function index()
+    {   
+>>>>>>> cc848be379663b4e1e0e82862e4c6a8b5a26086e
         return view('GestionAdministrativa/ControlPago/pago');
     }
 
-      public function getdata() //funciones de llenado de la datable
+    public function getdata() //funciones de llenado de la datable
     {
 
         $query = Persona::dataInfoPersona(6);
@@ -56,6 +67,7 @@ class PagoController extends Controller
 
     }
 
+<<<<<<< HEAD
     public function dropmes(Request $request, $id)
      {
        if($request->ajax()){
@@ -66,6 +78,9 @@ class PagoController extends Controller
 
 
      public function cambiarEstado(Request $request)
+=======
+    public function cambiarEstado(Request $request)
+>>>>>>> cc848be379663b4e1e0e82862e4c6a8b5a26086e
     {
         $cambiar = Pago::findOrFail($request->id);
         if($request->fkestado == 5)

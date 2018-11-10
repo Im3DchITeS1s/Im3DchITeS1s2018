@@ -14,18 +14,23 @@ use App\Estado;
 
 class TipoPagoController extends Controller
 {
-	 protected $verificar_insert = //validacion de inserts 
-	    [
-	        'nombre' => 'required|max:50|unique:tipo_pago',
-	    ]; 
+	protected $verificar_insert = //validacion de inserts 
+    [
+        'nombre' => 'required|max:50|unique:tipo_pago',
+    ]; 
 
-	      public function __construct() //autenticacion
-	    {
-	   
-	    	$this->middleware('auth');
-	    
-	    }
-	     public function index()
+    public function __construct() //autenticacion
+    {
+        $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+    }
+
+	public function index()
     {   
         return view('GestionAdministrativa/ControlPago/tipopago');
     }
@@ -58,7 +63,7 @@ class TipoPagoController extends Controller
             ->make(true);
     }
 
-       public function store(Request $request)  // funcion de insert
+    public function store(Request $request)  // funcion de insert
     {
         $estado = Estado::buscarIDEstado(5);
 
@@ -74,7 +79,7 @@ class TipoPagoController extends Controller
         }        
     }
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make(Input::all(),        
         [
@@ -91,7 +96,7 @@ class TipoPagoController extends Controller
         }        
     }
 
-     public function cambiarEstado(Request $request)
+    public function cambiarEstado(Request $request)
     {
         $cambiar = TipoPago::findOrFail($request->id);
         if($request->fkestado == 5)

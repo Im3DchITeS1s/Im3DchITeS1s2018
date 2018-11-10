@@ -35,7 +35,7 @@
 @section('body_class', 'login-page')
 
 @section('body')
-
+@include('flash::message')
     <div class="page-container">
         <div class="login-box">
             <div class="login-logo">
@@ -99,5 +99,8 @@
             });
         });
     </script>
+    <script>
+        $('#flash-overlay-modal').modal();
+    </script>      
     @yield('js')
 @stop
