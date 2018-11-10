@@ -191,7 +191,7 @@ class InscripcionController extends Controller
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
             $cambiar->fkpersona = $request->fkpersona;
-            $cambiar->ciclo = $request->fkciclo;   
+            $cambiar->fkciclo = $request->fkciclo;   
             $cambiar->pago = $request->pago;
             $cambiar->save();
             return response()->json($cambiar); 

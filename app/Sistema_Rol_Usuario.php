@@ -19,6 +19,14 @@ class Sistema_Rol_Usuario extends Model
 			->where('users.fkpersona', $id);
 	}	
 
+	public static function rolPersonaLoguea($fkpersona)
+	{
+		return Sistema_Rol_Usuario::join('sistema_rol', 'sistema_rol_usuario.fksistema_rol', 'sistema_rol.id')
+            ->join('rol', 'sistema_rol.fkrol', 'rol.id')
+            ->where('sistema_rol_usuario.fkuser', $fkpersona)
+            ->select('rol.id as fkrol')->first();
+	}
+
     public static function boot() {
 
 	    parent::boot();

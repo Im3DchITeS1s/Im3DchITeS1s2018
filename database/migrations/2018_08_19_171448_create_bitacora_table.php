@@ -15,7 +15,7 @@ class CreateBitacoraTable extends Migration
             $table->string('accion', 15);
             $table->string('descripcion', 4500);
             $table->smallInteger('idtabla');
-            $table->string('usuario', 50)->default('system');
+            $table->string('usuario', 100)->default('system');
 
             $table->timestamps();
         });

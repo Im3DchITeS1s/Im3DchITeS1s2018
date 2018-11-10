@@ -10,6 +10,11 @@ class VistaContenido extends Model
 	protected $table = 'contenido_visto';
 	protected $guarded = ['id', 'fkinscripcion', 'fkcatedratico_contenido_educativo']; 
 
+	public static function contenidoVistoAlumno($fkinscripcion)
+	{
+		return VistaContenido::where('fkinscripcion', $fkinscripcion)->latest()->take(50)->get(); 
+	}
+
     public static function boot() {
 
 	    parent::boot();

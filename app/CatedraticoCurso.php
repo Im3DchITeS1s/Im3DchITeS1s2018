@@ -60,10 +60,24 @@ class CatedraticoCurso extends Model
 		return CatedraticoCurso::find($id)->first();
 	}
 
-		public static function buscarIDCatedraticoCurso($id)
+	public static function buscarIDCatedraticoCurso($id)
     {
         return Inscripcion::findOrFail($id);       
     } 
+
+    public static function cantidadAlumnoCursoCatedratico($fkpersona)
+    {
+    	return CatedraticoCurso::join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+            ->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+            ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+            ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+            ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+            ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+            ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+            ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+            ->where('catedratico_curso.fkpersona', $fkpersona)
+            ->select('catedratico_curso.*', 'cantidad_alumno.cantidad as cantidad', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')->get();
+    }
 
     public static function boot() {
 

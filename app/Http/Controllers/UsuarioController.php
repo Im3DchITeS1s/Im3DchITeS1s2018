@@ -127,7 +127,22 @@ class UsuarioController extends Controller
                 }else{
                     $incial_apellido2 = substr($persona->apellido2, 0, 1);
                     $username = strtolower(str_replace(' ', '',trim($incial_nombre1.$incial_apellido2.$persona->apellido1)));                
-                }          
+                } 
+
+                $buscar_existe_alumno = User::where('username', $username)->first();
+
+                if(!is_null($buscar_existe_alumno))
+                {
+                    do{
+
+                        $numero = rand(1,100);
+
+                        $username = $username.$numero;
+
+                        $buscar_existe_alumno = User::where('username', $username)->first();
+
+                    }while(!is_null($buscar_existe_alumno));   
+                }      
 
                 $insert = new User();
                 $insert->username = $username;
@@ -208,7 +223,7 @@ class UsuarioController extends Controller
           'persona' => $persona,
           'user' => "Su usuario es: ".$usuario." y su email es: ".$usuario."@imedchi.edu.gt",
           'confirmation' => " se le ha creado una cuenta en el Sistema IMEDCHI y es necesario que confirme su Correo Electrónico y el siguiente",
-          'token' => "Toke: " . $token,
+          'token' => "Código: " . $token,
           'link' => "Ingresar al Siguiente LINK:  http://127.0.0.1:8000/usuario/reset/password/confirmar"
         );
         Mail::send('emails.correo_bienvenida', $data, function ($message) use ($email){

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Catedratico_Contenido_Educativo;
 use App\Inscripcion;
-use App\VistaContenido;
 use App\CatedraticoCurso;
+use App\Sistema_Rol_Usuario;
+use App\VistaContenido;
 use Auth;
 
 class DashboardBlackboardController extends Controller
@@ -24,18 +25,9 @@ class DashboardBlackboardController extends Controller
 
     public function index()
     {
-        $catedratico_cusos = CatedraticoCurso::join('persona', 'catedratico_curso.fkpersona', 'persona.id')
-            ->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
-            ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
-            ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
-            ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
-            ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
-            ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
-            ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
-            ->where('catedratico_curso.fkpersona', Auth::user()->fkpersona)
-            ->select('catedratico_curso.*', 'cantidad_alumno.cantidad as cantidad', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')->get();
-
-        $alumno = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
+        $rol = Sistema_Rol_Usuario::rolPersonaLoguea(Auth::user()->id);
+        $alumno = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));        
+        $catedratico_cusos = CatedraticoCurso::cantidadAlumnoCursoCatedratico(Auth::user()->fkpersona);
 
         if(is_null($alumno)) {
             $fkcantidad_alumno = 0;
@@ -46,20 +38,11 @@ class DashboardBlackboardController extends Controller
             $id = $alumno->id;
         }
 
-        $contenidos = Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
-        ->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
-        ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
-        ->join('carrera', 'carrera_curso.fkcarrera', 'carrera.id')
-        ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
-        ->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
-        ->where('catedratico_contenido_educativo.fkestado', 5)
-        ->where('catedratico_curso.fkcantidad_alumno', $fkcantidad_alumno)
-        ->select('catedratico_contenido_educativo.id as id', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'carrera.nombre as carrera', 'curso.nombre as curso', 'formato_documento.icono as icono', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.responder as responder', 'catedratico_contenido_educativo.descripcion as descripcion', 'catedratico_contenido_educativo.created_at as fecha')
-        ->latest('catedratico_contenido_educativo.created_at')->take(20)->get();
+        $contenidos = Catedratico_Contenido_Educativo::contenidoParaAlumnoLoguea(0, $fkcantidad_alumno);
+        $tareas = Catedratico_Contenido_Educativo::contenidoParaAlumnoLoguea(1, $fkcantidad_alumno);   
+        $vistos = VistaContenido::contenidoVistoAlumno($id);      
 
-        $vistos = VistaContenido::where('fkinscripcion', $id)->latest()->take(50)->get();            
-
-        return view('blackboard.dashboardblackboard', compact('contenidos', 'vistos', 'catedratico_cusos'));
+        return view('blackboard.dashboardblackboard', compact('contenidos', 'tareas', 'vistos', 'catedratico_cusos', 'rol'));
     }
 
     public function create()

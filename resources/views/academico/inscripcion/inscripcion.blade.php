@@ -458,7 +458,7 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_edit').val(),
                     'fktipo_periodo': $('#fktipo_periodo_edit').val(),
                     'fkpersona': $('#fkpersona_edit').val(),
-                    'fkciclo': $('fkpersona_edit').val(),
+                    'fkciclo': $('#fkciclo_edit').val(),
                     'pago': $('#pago_edit').val()
                 },
                 success: function(data) {

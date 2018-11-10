@@ -59,6 +59,16 @@
                                 <br>
                                 <div class="col-md-12">
                                     <h5><strong>{{ $total = 1 + $total }}. </strong><strong>{{$pregunta->descripcion}}</strong></h5>
+
+                                    {{ $subtotal = 0 }}
+                                    @foreach($respuestas as $key=>$respuesta)
+                                        @if($pregunta->id == $respuesta->fkpregunta)
+                                            {{ $subtotal = 1 + $subtotal }}
+                                        @endif
+                                    @endforeach
+
+                                    <small>seleccion {{ $subtotal }} respuestas</small>
+
                                 </div>
                                 @foreach($respuestas as $key=>$respuesta)
                                     @if($pregunta->id == $respuesta->fkpregunta)
