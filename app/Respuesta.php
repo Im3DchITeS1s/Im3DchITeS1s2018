@@ -29,7 +29,7 @@ class Respuesta extends Model
 		return Respuesta::join('pregunta', 'respuesta.fkpregunta', 'pregunta.id')
 				->join('etiqueta', 'pregunta.fketiqueta', 'etiqueta.id')
 				->join('cuestionario', 'pregunta.fkcuestionario', 'cuestionario.id')
-				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.fkpregunta as fkpregunta', 'etiqueta.tipo as tipo')
+				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.validar as validar','respuesta.fkpregunta as fkpregunta', 'etiqueta.tipo as tipo')
             	->where('pregunta.fkcuestionario', $id)
             	->where('cuestionario.fkestado', $estado)
             	->where('pregunta.fkestado', 5)

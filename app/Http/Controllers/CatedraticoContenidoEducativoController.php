@@ -11,6 +11,10 @@ use Response;
 use App\CatedraticoCurso;
 use App\Formato_Documento;
 use App\Estado;
+use App\VistaContenido;
+use App\Alumno_Contenido_Educativo;
+use App\Persona;
+use App\Ciclo;
 use App\Catedratico_Contenido_Educativo;
 use Auth;
 
@@ -37,17 +41,35 @@ class CatedraticoContenidoEducativoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
-        $this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
-        $this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
-        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('admin', ['only' => ['index', 'index_historico', 'index_historico', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('director', ['only' => ['index', 'index_historico', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('secretaria', ['only' => ['index', 'index_historico', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'index_historico', 'store', 'update', 'cambiarEstado']]);
         //$this->middleware('catedratico', ['only' => ['index', 'store', 'update']]);
-        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'index_historico', 'store', 'update', 'cambiarEstado']]);
     }
 
     public function index()
     {
         return view('/blackboard/cargarcontenidocatedratico');
+    }
+
+    public function index_historico()
+    {
+        $catedratico = Persona::where('id', Auth::user()->fkpersona)->first();
+        $carreras = CatedraticoCurso::join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+            ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+            ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+            ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+            ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+            ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+            ->join('curso', 'carrera_curso.fkcurso', 'curso.id')            
+            ->where('catedratico_curso.fkpersona', $catedratico->id)
+            ->where('catedratico_curso.fkestado', 5)
+            ->select('catedratico_curso.id as id', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')
+            ->get();
+        $ciclos = Ciclo::select('id', 'nombre')->get();
+        return view('/blackboard/historicos/contenidoeducativocatedraticohistorico', compact('catedratico', 'carreras', 'ciclos'));
     }
 
     public function getdata()
@@ -66,7 +88,10 @@ class CatedraticoContenidoEducativoController extends Controller
                 {
                     return "NO";                    
                 }
-            })          
+            })     
+            ->addColumn('created_at', function ($data) {
+                return date('d/m/Y h:i:s', strtotime($data->created_at));
+            })                  
             ->addColumn('action', function ($data) {
                 $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-down"></span></button>';
 
@@ -76,6 +101,44 @@ class CatedraticoContenidoEducativoController extends Controller
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
+
+    public function getdataFiltro($catedratico_curso, $anio)
+    {
+        $color_estado = "";
+
+        $query = Catedratico_Contenido_Educativo::filtrarContenidoEducativoCatedratico($catedratico_curso, $anio);
+
+        return Datatables::of($query)
+            ->addColumn('tarea', function ($data) {
+                if($data->responder == 1)
+                {
+                    return "SI";
+                }
+                else
+                {
+                    return "NO";                    
+                }
+            })
+            ->addColumn('created_at', function ($data) {
+                return date('d/m/Y h:i:s', strtotime($data->created_at));
+            })                      
+            ->addColumn('action', function ($data) {
+                $vistos = VistaContenido::contenidoVistoCatedratico($data->id);
+                $tareas = Alumno_Contenido_Educativo::tareasEntregadasGlobal($data->id);
+
+                if($data->responder == 1)
+                {
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($vistos).'</button>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';
+                }
+                else
+                {
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';                  
+                }                
+
+            })       
+            ->editColumn('id', 'ID: {{$id}}')       
+            ->make(true);
+    }    
 
     public function getdataID($id)
     {
@@ -93,7 +156,10 @@ class CatedraticoContenidoEducativoController extends Controller
                 {
                     return "NO";                    
                 }
-            })          
+            }) 
+            ->addColumn('created_at', function ($data) {
+                return date('d/m/Y h:i:s', strtotime($data->created_at));
+            })                       
             ->addColumn('action', function ($data) {
                 $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-down"></span></button>';
 
@@ -137,7 +203,8 @@ class CatedraticoContenidoEducativoController extends Controller
             $insert->titulo = $request->titulo;  
             $insert->descripcion = $request->descripcion; 
             $insert->archivo = $request->archivo;    
-            $insert->responder = $request->responder;                  
+            $insert->responder = $request->responder;      
+            $insert->anio = date('Y');            
             $insert->fkcatedratico_curso = $request->fkcatedratico_curso; 
             $insert->fkformato_documento = $request->fkformato_documento;                   
             $insert->fkestado = $estado->id;                                                                           
@@ -148,12 +215,22 @@ class CatedraticoContenidoEducativoController extends Controller
 
     public function show($id)
     {
-        //
+        $contenido = Catedratico_Contenido_Educativo::seleccionarContenido($id);
+        $vistos = VistaContenido::contenidoVistoCatedratico($id);
+        $tareas = Alumno_Contenido_Educativo::tareasEntregadasGlobal($id);  
+
+        $pdf = \PDF::loadView('blackboard.reporte.contenidoeducativocatedratico', compact('contenido', 'vistos', 'tareas'));
+
+        return $pdf->download($contenido->nombre1.'_'.$contenido->apellido1.' '. date('d-m-Y h:i:s') .'.pdf');              
     }
 
     public function edit($id)
     {
-        //
+        $contenido = Catedratico_Contenido_Educativo::seleccionarContenido($id);
+        $documentos = Alumno_Contenido_Educativo::tareasEntregadasAlumnos($id);
+        $tareas = Alumno_Contenido_Educativo::tareasEntregadasGlobal($id);  
+
+        return view('/blackboard/alumnossubierontarea', compact('documentos', 'contenido', 'tareas'));  
     }
 
     public function update(Request $request, $id)

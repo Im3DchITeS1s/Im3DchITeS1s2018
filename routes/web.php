@@ -225,7 +225,9 @@ Route::get('/grafica/resultados/cuestionario/{id}', 'ResultadoCuestionarioContro
 
 //CargarContenidoCatedratico
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/catedratico', 'CatedraticoContenidoEducativoController');
+Route::get('/plataforma/blackboard/contenido_educativo/catedratico/historico', 'CatedraticoContenidoEducativoController@index_historico')->name('contenido_educativo_catedratico.historico');
 Route::get('cargar/contenido_educativo/catedratico/getdata', 'CatedraticoContenidoEducativoController@getdata')->name('contenido_educativo_catedratico.getdata');
+Route::get('filtro/contenido_educativo/catedratico/{catedratico_curso}/{anio}', 'CatedraticoContenidoEducativoController@getdataFiltro')->name('contenido_educativo_catedratico.getdataFiltro');
 Route::get('/cargar/contenido_educativo/catedratico/getdata/ID/{id}', 'CatedraticoContenidoEducativoController@getdataID');
 Route::get('/plataforma/blackboard/cargar/dropInformacionCatedratico', 'CatedraticoContenidoEducativoController@dropInformacionCatedratico');
 Route::get('/plataforma/blackboard/cargar/dropFormatoDocumento', 'CatedraticoContenidoEducativoController@dropFormato');
@@ -282,4 +284,4 @@ Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
 Route::get('/500', ['as' => 'denied', function() {
 	flash('¡Sin Privilegios!')->error()->important();
     return view('errores.500');
-}]);
+}])->middleware('auth');

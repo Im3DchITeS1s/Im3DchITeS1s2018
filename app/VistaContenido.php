@@ -15,6 +15,14 @@ class VistaContenido extends Model
 		return VistaContenido::where('fkinscripcion', $fkinscripcion)->latest()->take(50)->get(); 
 	}
 
+	public static function contenidoVistoCatedratico($fkcatedratico_contenido_educativo)
+	{
+		return VistaContenido::join('inscripcion', 'contenido_visto.fkinscripcion', 'inscripcion.id')
+			->join('persona', 'inscripcion.fkpersona', 'persona.id')
+			->select('persona.*')
+			->where('fkcatedratico_contenido_educativo', $fkcatedratico_contenido_educativo)->get(); 
+	}	
+
     public static function boot() {
 
 	    parent::boot();

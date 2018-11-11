@@ -37,6 +37,7 @@ class CuestionarioHistoricoCatedratico extends Controller
             ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
             ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
             ->where('catedratico_curso.fkpersona', $catedratico->id)
+            ->where('catedratico_curso.fkestado', 5)
             ->select('catedratico_curso.id as id', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')
             ->get();
         $ciclos = Ciclo::select('id', 'nombre')->get();
@@ -72,7 +73,7 @@ class CuestionarioHistoricoCatedratico extends Controller
     public function dropCuestionario(Request $request, $id)
     {
         if($request->ajax()){
-            $data = Cuestionario::where('fkcatedratico_curso', $id)->select('cuestionario.*')->get();
+            $data = Cuestionario::where('fkcatedratico_curso', $id)->where('fkestado', '!=', 23)->select('cuestionario.*')->get();
             return response()->json($data);
         }        
     }      
