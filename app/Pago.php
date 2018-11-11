@@ -19,6 +19,12 @@ class Pago extends Model
         	->select(['pago.id as id', 'mes.nombre as mes', 'pago.pago as pago', 'pago.fkestado as fkestado']);
 	}	
 
+	public static function buscarIDPago($id)
+    {
+        return Pago::findOrFail($id);       
+    }
+
+
     public static function boot() {
 
 	    parent::boot();

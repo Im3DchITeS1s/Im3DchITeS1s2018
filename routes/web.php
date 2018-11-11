@@ -268,6 +268,9 @@ Route::get('pago/getdata/{fkcantidad_alumno}/{ciclo}', 'PagoController@getdata')
 Route::get('/gestionadministrativa/controlpago/pago/dropcarrerasgrados/{id}', 'PagoController@dropCarrerasGrados');
 Route::get('/meses/pagos/alumno/{id}/{mes}', 'PagoController@dropmespagado');
 Route::get('/gestionadministrativa/controlpago/pago/filtro/secciondecarrera/{id}', 'PagoController@dropSeccionDeCarrera');
+Route::post('/gestionadministrativa/controlpago/pago/cambiarEstado', 'PagoController@cambiarEstado');
+
+
 //Mes
 Route::get('/gestionadministrativa/controlpago/pago/dropmes/{id}', 'MesController@dropMes');
 

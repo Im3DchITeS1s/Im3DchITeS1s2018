@@ -50,9 +50,8 @@ class PagoController extends Controller
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
 
-                $btn_estado = '<button class="pago-modal-pago btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-down"></span></button>';
-
-                return $btn_estado;
+                    $btn_estado = '<button class="delete-modal-pago btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-fkestado="'.$data->fkestado.'"><span class="fa fa-thumbs-down"></span></button>';
+                       return $btn_estado;
             })
             ->editColumn('id', 'ID: {{$id}}')
             ->make(true);
@@ -71,6 +70,7 @@ class PagoController extends Controller
 
                 $btn_edit = '<button class="edit-modal-pago btn btn-success btn-xs" type="button" data-id="'.$data->id.'">
                     <span class="glyphicon glyphicon-folder-open"></span></button>';
+
 
                 return $btn_edit;
             })
@@ -100,7 +100,7 @@ class PagoController extends Controller
 
     public function cambiarEstado(Request $request)
     {
-        $cambiar = Pago::findOrFail($request->id);
+        $cambiar = Pago::findOrFail($request->id); 
         if($request->fkestado == 5)
         {
             $cambiar->fkestado = 6;
@@ -132,7 +132,7 @@ class PagoController extends Controller
     public function dropmespagado(Request $request, $id, $mes)
     {
         if($request->ajax()){
-            $estado = Pago::where('fkinscripcion', $id)->where('fkmes', $mes)->select('pago.*')->get();
+            $estado = Pago::where('fkinscripcion', $id)->where('fkmes', $mes)->where('fkestado', 5)->select('pago.*')->get();
             $data = count($estado);
             return response()->json($data);
         }        

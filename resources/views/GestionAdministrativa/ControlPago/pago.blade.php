@@ -333,6 +333,79 @@
         }); 
     });
 
+     $(document).on('click', '.delete-modal-pago', function() {
+            var idoriginal = $(this).data('id');
+            swal({
+              title: "Esta seguro?",
+              text: "modificara el estado de la informacion",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/gestionadministrativa/controlpago/pago/cambiarEstado",
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'id': idoriginal,
+                        'fkestado': $(this).data('fkestado')
+                    },
+                    success: function(data) {                 
+                        swal("Correcto", "Se modifico el estado", "success")
+                        .then((value) => {
+
+                            $.get("/gestionadministrativa/controlpago/pago/dropmes/"+5,function(response){
+                                $("#fkmes").empty();
+                                $("#fkmes").append("<option value=''> seleccionar </option>");
+                                for(i=0; i<response.length; i++){
+                                    verificarMes(response[i].id, response[i].nombre, id);
+                                }
+                            });
+
+                            function verificarMes(idmes, nombremes, fkinscripcion)
+                            {
+                                $.get("/meses/pagos/alumno/"+fkinscripcion+"/"+idmes,function(data){
+                                    console.log(data);
+                                    if(data === 0)
+                                    {
+                                        $("#fkmes").append("<option value='"+idmes+"'> "+nombremes+" </option>");
+                                        $('#fkmes').val('').trigger('change.select2'); 
+                                    }
+
+                                }); 
+                            }                              
+
+                            let ruta_original = null;
+
+                            ruta_original = "{{ route('pago.getdatapago', ['fkinscripcion' => 'id']) }}";
+
+                            var ruta_pasando_inscripcion = ruta_original.replace('id', id); 
+
+                            table_pago = $('#info-table-pago').DataTable({
+                                destroy: true,   
+                                processing: true,
+                                serverSide: false,
+                                paginate: true,
+                                searching: true,
+                                ajax: ruta_pasando_inscripcion,
+                                columns: [
+                                    { data: 'mes', name: 'mes'},
+                                    { data: 'pago', name: 'pago'},
+                                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                                ]
+                            });
+
+                        });                                                    
+                    },
+                });                                          
+              } else {
+                swal("no se realizo el cambio!");
+              }
+            });            
+        });
+
 
     </script>
 
