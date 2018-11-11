@@ -9,15 +9,23 @@ class Nota extends Model
 {
  
  	protected $table = 'nota';
-	protected $guarded = ['id', 'fkestado'];
-	protected $fillable = ['fkinscripcion', 'fkperiodo_academico', 'nota', 'fecha'];
+	protected $guarded = ['id','fkinscripcion', 'fkperiodo_academico','fkcantidad_alumno','fkcarrera_curso','fkestado'];
+	protected $fillable = [ 'nota'];
 
 	public static function dataNota(){
-			return Nota::join('inscripcion', 'nota.fkinscripcion', 'inscripcion.id')
-					->join('periodo_academico', 'nota.fkperiodo_academico', 'periodo_academico.id')
-					->join('persona', 'nota.fkpersona as fkpersona', 'persona.id')
-					->select('nota.id as id', 'inscripcion.id as id', 'inscripcion.fkpersona', 'persona.nombre1', 'persona.nombre2', 'persona.apellido1', 'persona.apellido2', 'inscripcion.fkperiodo_academico','periodo_academico.id as fkperiodo_academico', 'periodo_academico.nombre as periodo_academico','nota.fkestado as fkestado');
-	}
+			return Nota::join('inscripcion','nota.fkinscripcion','inscripcion.id')
+					->join('persona','inscripcion.fkpersona as fkpersona','persona.id')
+					->join('periodo_academico','nota.fkperiodo_academico','periodo_academico.id')
+					->join('cantidad_alumno','nota.fkcantidad_alumno','cantidad_alumno.id')
+					->join('carrera_grado','cantidad_alumno.fkcarrera_grado','carrera_grado.id')
+					->join('carrera','carrera_grado.fkcarrera','carrera.id')
+					->join('carrera_curso','nota.fkcarrera_curso','carrera_curso.id')
+					->join('curso','carrera_curso.fkcurso','curso.id')	
+					->join('grado','carrera_grado.fkgrado','grado.id')
+					->join('seccion','cantidad_alumno.fkseccion','seccion.id')
+					->join('periodo_academico','nota.fkperiodo_academico','periodo_academico.id')
+					->select('nota.id as id','nota.fkinscripcion','persona.id as id','nombre1','nombre2','persona.apellido1','apellido2','inscripcion.fkperiodo_academico','periodo_academico.id as id','periodo_academico.nombre as periodo_academico','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','nota.nota','nota.fkestado as fkestado');
+						}
 
     public static function boot() {
 

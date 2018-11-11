@@ -243,10 +243,7 @@
                     <h4 class="modal-title"></h4>
                       <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#datospersonales">Datos Personales</a></li>
-                        <li><a data-toggle="tab" href="#profesion">Profesión</a></li>
                         <li><a data-toggle="tab" href="#telefono">Teléfonos</a></li>
-                        <li><a data-toggle="tab" href="#email">E-mails</a></li>
-                        <li><a data-toggle="tab" href="#usuarios">Usuario</a></li>
                       </ul>
                 </div>
                 <div class="modal-body">

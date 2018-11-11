@@ -13,8 +13,10 @@ use App\CantidadAlumno;
 use App\PeriodoAcademico;
 use App\TipoPeriodo;
 use App\CarreraGrado;
+use App\CarreraCurso;
 use App\Carrera;
 use App\Grado;
+use App\Curso;
 use App\Seccion;
 use App\Persona;
 use App\Ciclo;
@@ -100,7 +102,7 @@ class InscripcionController extends Controller
                 
                $btn_estado = '<button class="delete-modal btn btn-'.$colot_btn.' btn-xs" type="button" data-id="'.$data->id.'" data-accion="'.$accion.'"><span class="'.$icon.'"></span></button>';
 
-                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-ciclo="'.$data->fkciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
+                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkpersona="'.$data->fkpersona.'" data-fktipo_periodo="'.$data->fktipo_periodo.'" data-fkciclo="'.$data->fkciclo.'" data-pago="'.$data->pago.'" data-fkestado="'.$data->fkestado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> ';         
 
                 return  '<small class="label label-'.$color_estado.'">'.$data->estado.'</small> '.$accion.' '.$btn_edit.' '.$btn_estado;
@@ -116,7 +118,6 @@ class InscripcionController extends Controller
             return response()->json($data);
         }        
     }  
-
 
     public function dropestudiante(Request $request, $id)
         {
@@ -191,7 +192,7 @@ class InscripcionController extends Controller
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
             $cambiar->fkpersona = $request->fkpersona;
-            $cambiar->ciclo = $request->fkciclo;   
+            $cambiar->fkciclo = $request->fkciclo;   
             $cambiar->pago = $request->pago;
             $cambiar->save();
             return response()->json($cambiar); 

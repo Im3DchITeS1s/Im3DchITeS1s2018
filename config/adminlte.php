@@ -311,11 +311,23 @@ return [
                 'url'  => '/academico/inscripcion/inscripcion',
                 'icon_color' => 'red',
                 ],
-                [
+                  [
                 'text' => 'Planificación de Actividades',
                 'url'  => '#',
                 'icon_color' => 'yellow',
-                ],      
+                'submenu' => [
+                    [
+                        'text' => 'Calendarización',
+                        'url'  => '/academico/agenda/agenda',
+                        'icon_color' => 'yellow',
+                    ],
+                      [
+                        'text' => 'Tipo de actividad ',
+                        'url'  => '/academico/tipoactividad/tipoactividad',
+                        'icon_color' => 'yellow',
+                    ],             
+                ],                
+                ],
                 [
                 'text' => 'Administración de Notas',
                 'url'  => '#',
@@ -323,7 +335,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Control de Notas',
-                        'url'  => '#',
+                        'url'  => '/academico/nota/nota',
                         'icon_color' => 'aqua',
                     ],
                       [
