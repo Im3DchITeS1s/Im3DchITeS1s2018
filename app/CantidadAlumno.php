@@ -31,6 +31,24 @@ class CantidadAlumno extends Model
                  ->orderBy('carrera.id', 'asc')->get();
    	} 
 
+	public static function dropCantidadAlumnoCarrera($id){
+	    return CantidadAlumno::join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+					->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+					->join('grado', 'carrera_grado.fkgrado', 'grado.id') 
+					->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+					->join('estado', 'cantidad_alumno.fkestado', 'estado.id')
+					->where('cantidad_alumno.fkestado', $id)
+                    ->select('cantidad_alumno.fkcarrera_grado as id','carrera.nombre as carrera','grado.nombre as grado','seccion.letra as letra')
+                    ->get();
+   	}   
+
+    public static function buscarSeccionDeCarrera($fkcarrera){
+        return CantidadAlumno::join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+        	->where('cantidad_alumno.fkcarrera_grado', $fkcarrera)
+        	->select('cantidad_alumno.id as id', 'seccion.letra as seccion')->get();
+    }    
+
+
     public static function boot() {
 
 	    parent::boot();

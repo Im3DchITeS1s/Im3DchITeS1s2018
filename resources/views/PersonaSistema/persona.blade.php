@@ -532,7 +532,7 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-font"></i>
                                       </div>
-                                      <input type="text" class="form-control" id="email_add_edit" placeholder="Usuario" autofocus>
+                                      <input type="text" class="form-control" id="email_add_edit" placeholder="email" autofocus>
                                     </div>                                                               
                                     <small class="control-label">Max: 15</small>
                                     <p class="errorEmail text-center alert alert-danger hidden"></p>
@@ -1412,15 +1412,15 @@
                                 $('#email_add_edit').val(''),                            
                                 table_email.ajax.reload();
 
-                                if(existe == false){
-                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
-                                        $("#seleccionar_email_add").empty();
-                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
-                                        for(i=0; i<response.length; i++){
-                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
-                                        }
-                                    });
-                                }                                
+
+                                $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                    $("#email_add").empty();
+                                    $("#email_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                    }
+                                });
+                               
                             });                        
                         }
                     },
@@ -1465,15 +1465,13 @@
                                 $('#email_add_edit').val(''),                                
                                 table_email.ajax.reload();
 
-                                if(existe == false){
-                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
-                                        $("#seleccionar_email_add").empty();
-                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
-                                        for(i=0; i<response.length; i++){
-                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
-                                        }
-                                    });
-                                }                                
+                                $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                    $("#email_add").empty();
+                                    $("#email_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                    }
+                                });                              
                             });                        
                         }
                     },

@@ -35,6 +35,7 @@ class CuestionarioHistoricoAlumno extends Controller
             ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
             ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
             ->where('inscripcion.fkpersona', $alumno->id)
+            ->where('cantidad_alumno.fkestado', 5)
             ->select('carrera.id as id', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion')
             ->get();
         $ciclos = Ciclo::select('id', 'nombre')->get();
@@ -65,7 +66,7 @@ class CuestionarioHistoricoAlumno extends Controller
     {
         if($request->ajax()){
             $data = CarreraCurso::join('curso', 'carrera_curso.fkcurso', 'curso.id')
-            ->where('fkcarrera', $id)->select('curso.*')->get();
+            ->where('fkcarrera', $id)->where('fkcurso', 5)->select('curso.*')->get();
             return response()->json($data);
         }        
     }       

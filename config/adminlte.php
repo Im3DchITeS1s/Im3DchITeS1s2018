@@ -184,6 +184,11 @@ return [
                         'url'  => '/plataforma/blackboard/cargar/contenido_educativo/catedratico',
                         'icon_color' => 'red',
                     ],
+                    [
+                        'text' => 'Contenido Historico',
+                        'url'  => '/plataforma/blackboard/contenido_educativo/catedratico/historico', 'CatedraticoContenidoEducativoController@index_historico',
+                        'icon_color' => 'red',
+                    ],                    
                 ],
                 ],
                 [
@@ -196,26 +201,15 @@ return [
                         'url'  => '/plataforma/blackboard/cargar/contenido_educativo/alumno',
                         'icon_color' => 'yellow',
                     ],
+                    [
+                        'text' => 'Contenido Historico',
+                        'url'  => '/plataforma/blackboard/cargar/contenido_educativo/catedratico/historico', 'CatedraticoContenidoEducativoController@index_historico',
+                        'icon_color' => 'yellow',
+                    ],                      
                 ],
                 ],                
             ],
         ],
-        [
-            'text'    => 'Gestión',
-            'icon'    => 'graduation-cap',
-            'submenu' => [
-                [
-                'text' => 'Información Catedrático',
-                'url'  => '#',
-                'icon_color' => 'red',
-                ],
-                [
-                'text' => 'Información Alumno',
-                'url'  => '#',
-                'icon_color' => 'yellow',
-                ],
-            ],
-        ],  
         [
             'text'    => 'Evaluación',
             'icon'    => 'file',
@@ -416,11 +410,6 @@ return [
                 'url'  => '#',
                 'icon_color' => 'red',
                 ],
-                [
-                'text'    => 'Generar Solvencia',
-                'url'     => '#',
-                'icon_color' => 'yellow',
-                ],
             ],  
         ],        
         [             
@@ -437,11 +426,7 @@ return [
                         'url'  => '#',
                         'icon_color' => 'red',
                     ],
-                    [
-                        'text'    => 'Descuento',
-                        'url'     => '#',
-                        'icon_color' => 'red',
-                    ],                                     
+                                                      
                 ],
             ],
             [

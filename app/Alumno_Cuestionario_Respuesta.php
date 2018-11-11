@@ -10,7 +10,7 @@ class Alumno_Cuestionario_Respuesta extends Model
 	protected $table = 'alumno_cuestionario_respuesta';
 	protected $guarded = ['id', 'fkcuestionario', 'fkinscripcion', 'fkpregunta', 'fkrespuesta'];
 
-	public static function respuestasDelCuestionario($fkcuestionario, $fkpersona)
+	public static function respuestasDelCuestionario($fkpersona, $fkcuestionario)
 	{
 		return Alumno_Cuestionario_Respuesta::join('inscripcion', 'alumno_cuestionario_respuesta.fkinscripcion', 'inscripcion.id')
 				->join('pregunta', 'alumno_cuestionario_respuesta.fkpregunta', 'pregunta.id')

@@ -59,6 +59,18 @@
                                 <br>
                                 <div class="col-md-12">
                                     <h5><strong>{{ $total = 1 + $total }}. </strong><strong>{{$pregunta->descripcion}}</strong></h5>
+
+                                    <label class="hidden">{{ $subtotal = 0 }}</label> 
+                                    @foreach($respuestas as $key=>$respuesta)
+                                        @if($pregunta->id == $respuesta->fkpregunta && $respuesta->validar == 1 && $respuesta->tipo == 'multiple')
+                                            <label class="hidden"> {{ $subtotal = 1 + $subtotal }} </label>
+                                        @endif
+                                    @endforeach
+
+                                    @if($subtotal != 0)
+                                        <small>seleccion {{ $subtotal }} respuestas</small>
+                                    @endif
+
                                 </div>
                                 @foreach($respuestas as $key=>$respuesta)
                                     @if($pregunta->id == $respuesta->fkpregunta)

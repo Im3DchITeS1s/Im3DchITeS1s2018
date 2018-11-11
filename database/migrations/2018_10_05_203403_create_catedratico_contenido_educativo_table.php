@@ -14,6 +14,7 @@ class CreateCatedraticoContenidoEducativoTable extends Migration
             $table->string('descripcion',500);
             $table->longText('archivo');
             $table->boolean('responder')->default(0);
+            $table->string('anio', 6);
 
             $table->unsignedInteger('fkcatedratico_curso');
             $table->unsignedInteger('fkformato_documento');

@@ -240,7 +240,9 @@ Route::get('/grafica/resultados/cuestionario/{id}', 'ResultadoCuestionarioContro
 
 //CargarContenidoCatedratico
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/catedratico', 'CatedraticoContenidoEducativoController');
+Route::get('/plataforma/blackboard/contenido_educativo/catedratico/historico', 'CatedraticoContenidoEducativoController@index_historico')->name('contenido_educativo_catedratico.historico');
 Route::get('cargar/contenido_educativo/catedratico/getdata', 'CatedraticoContenidoEducativoController@getdata')->name('contenido_educativo_catedratico.getdata');
+Route::get('filtro/contenido_educativo/catedratico/{catedratico_curso}/{anio}', 'CatedraticoContenidoEducativoController@getdataFiltro')->name('contenido_educativo_catedratico.getdataFiltro');
 Route::get('/cargar/contenido_educativo/catedratico/getdata/ID/{id}', 'CatedraticoContenidoEducativoController@getdataID');
 Route::get('/plataforma/blackboard/cargar/dropInformacionCatedratico', 'CatedraticoContenidoEducativoController@dropInformacionCatedratico');
 Route::get('/plataforma/blackboard/cargar/dropFormatoDocumento', 'CatedraticoContenidoEducativoController@dropFormato');
@@ -255,7 +257,7 @@ Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaControl
 Route::get('categoria/getdata', 'CategoriaController@getdata')->name('categoria.getdata');
 Route::post('/gestionadministrativa/inventario/categoria/cambiarEstado', 'CategoriaController@cambiarEstado');
 
-//Stock 
+//Stock
 Route::resource('/gestionadministrativa/inventario/stock', 'InventarioStockProductoController');
 Route::get('InventarioStockProducto/getdata', 'InventarioStockProductoController@getdata')->name('stock.getdata');
 
@@ -269,7 +271,7 @@ Route::resource('/gestionadministrativa/inventario/bajaproducto', 'BajaProductoC
 Route::get('/gestionadministrativa/inventario/bajaproducto/dropproducto/{id}', 'BajaProductoController@dropProducto');
 Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
 
-// Tipo Pago 
+// Tipo Pago
 
 Route::resource('/gestionadministrativa/controlpago/tipopago', 'TipoPagoController');
 Route::get('TipoPago/getdata', 'TipoPagoController@getdata')->name('tipopago.getdata');
@@ -278,8 +280,17 @@ Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPa
 // Pago
 
 Route::resource('/gestionadministrativa/controlpago/pago', 'PagoController');
-Route::get('Pago/getdata', 'PagoController@getdata')->name('pago.getdata');
-//Route::post('/gestionadministrativa/controlpago/tipopago/cambiarEstado', 'TipoPagoController@cambiarEstado');
+Route::get('pago/getdata/mes/{fkinscripcion}', 'PagoController@getPago')->name('pago.getdatapago');
+Route::get('pago/getdata/{fkcantidad_alumno}/{ciclo}', 'PagoController@getdata')->name('pago.getdata');
+Route::get('/gestionadministrativa/controlpago/pago/dropcarrerasgrados/{id}', 'PagoController@dropCarrerasGrados');
+Route::get('/meses/pagos/alumno/{id}/{mes}', 'PagoController@dropmespagado');
+Route::get('/gestionadministrativa/controlpago/pago/filtro/secciondecarrera/{id}', 'PagoController@dropSeccionDeCarrera');
+Route::post('/gestionadministrativa/controlpago/pago/cambiarEstado', 'PagoController@cambiarEstado');
+
+
+//Mes
+Route::get('/gestionadministrativa/controlpago/pago/dropmes/{id}', 'MesController@dropMes');
+
 
 // Cuestionarios Historicos Alumno
 Route::get('/plataforma/blackboard/cuestionario/historicos/alumnohistorico', 'CuestionarioHistoricoAlumno@index')->name('alumnohistorico.index');
@@ -291,10 +302,13 @@ Route::get('/plataforma/blackboard/cuestionario/historicos/catedraticohistorico'
 Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('alumnohistorico.getdata');
 Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
 
+
+
 // Dashboard Blackboard
 Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
 
 Route::get('/500', ['as' => 'denied', function() {
 	flash('¡Sin Privilegios!')->error()->important();
     return view('errores.500');
-}]);
+}])->middleware('auth');
+
