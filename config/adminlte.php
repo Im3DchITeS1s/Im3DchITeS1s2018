@@ -398,11 +398,6 @@ return [
                 'url'  => '#',
                 'icon_color' => 'red',
                 ],
-                [
-                'text'    => 'Generar Solvencia',
-                'url'     => '#',
-                'icon_color' => 'yellow',
-                ],
             ],  
         ],        
         [             
@@ -419,11 +414,7 @@ return [
                         'url'  => '#',
                         'icon_color' => 'red',
                     ],
-                    [
-                        'text'    => 'Descuento',
-                        'url'     => '#',
-                        'icon_color' => 'red',
-                    ],                                     
+                                                      
                 ],
             ],
             [

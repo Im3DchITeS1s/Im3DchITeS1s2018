@@ -72,6 +72,36 @@
             </div>
         </div>
     </div>
+     <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">MOVIMIENTOS</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+
+        <div class="box-body">
+          <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                    <thead >
+                        <tr>
+                            <th width="25%">Producto</th>
+                            <th width="25%">Descripcion</th>
+                            <th width="25%">Categoria</th>
+                            <th width="8%">Accion</th>
+                        </tr>
+                    </thead>
+                </table>         
+            </div>                
+          </div>
+        </div>
+
+        <div class="box-footer">
+
+        </div>
+    </div>
+
 
     <script type="text/javascript">
 

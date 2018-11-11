@@ -16,12 +16,6 @@ class Seccion extends Model
                     ->select(['seccion.id as id', 'seccion.letra as letra', 'seccion.fkestado as id_estado']);
     }
 
-    public static function buscarSeccion($id){
-		return Seccion::select('id', 'letra')
-            ->where('fkestado', $id)
-            ->orderBy('letra', 'asc')->get();
-	}
-
     public static function BucarIDSeccion($id)
     {
         return Seccion::findOrFail($id);       
