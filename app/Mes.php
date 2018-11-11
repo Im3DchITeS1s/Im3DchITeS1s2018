@@ -10,6 +10,13 @@ class Mes extends Model
 	protected $table = 'mes';
 	protected $guarded = ['id', 'fkestado'];
 	protected $fillable = ['nombre'];
+	
+	public static function buscarMes($id)
+	{
+		return Mes::select('id', 'nombre')
+            ->where('fkestado', $id)
+            ->orderBy('id', 'asc')->get();
+	}
 
     public static function boot() {
 
