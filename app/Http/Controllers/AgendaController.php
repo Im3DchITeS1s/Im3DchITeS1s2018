@@ -8,36 +8,43 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Validator;
 use Response;
+use App\Agenda;
 use App\TipoActividad;
 use App\Estado;
 
-class TipoActividadController extends Controller
+class AgendaController extends Controller
 {
-  protected $verificar_insert =
+       protected $verificar_insert =
     [
-        'nombre' => 'required|max:75|unique:tipoactividad',
+        'descripcion' => 'required|max:1000',
+       	'fecha_ingresada' => 'required',  
+        'fecha_programada' => 'required', 
+        'fktipoactividad' => 'required|integer'
     ];
 
-    
     public function __construct()
     {
-     
+        $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('director', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        //$this->middleware('secretaria', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('contador', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('catedratico', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
+        $this->middleware('alumno', ['only' => ['index', 'store', 'update', 'cambiarEstado']]);
     }
 
-    public function index()
+     public function index()
     {
-        return view('/academico/tipoactividad/tipoactividad');
+        return view('/academico/agenda/agenda');
     }
 
-    public function getdata()
+     public function getdata()
     {
         $color_estado = "";
-
-        $query = TipoActividad::dataTipoActividad();
-
+        $query = Agenda::dataAgenda();
         return Datatables::of($query)
             ->addColumn('action', function ($data) {
-                switch ($data->id_estado) {
+                switch ($data->fkestado) {
                     case 5:
                         $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
                         break;
@@ -46,16 +53,22 @@ class TipoActividadController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-nombre="'.$data->nombre.'" data-fkestado="'.$data->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-descripcion="'.$data->descripcion.'" data-fecha_ingresada="'.$data->fecha_ingresada.'" data-fecha_programada="'.$data->fecha_programada.'" data-fkactividad="'.$data->fkactividad.'" data-fkestado="'.$data->fkestado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
 
+    public function droptipoactividad(Request $request, $id)
+    {
+        if($request->ajax()){
+            $estado = TipoActividad::buscarActividad($id);
+            return response()->json($estado);
+        }        
+    }  
 
-
-    public function create()
+     public function create()
     {
         //
     }
@@ -68,16 +81,18 @@ class TipoActividadController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new TipoActividad();
-            $insert->nombre = $request->nombre;
+            $insert = new Agenda();
+            $insert->descripcion = $request->descripcion;
+            $insert->fecha_ingresada = date("Y-m-d", strtotime($request->fecha_ingresada));  
+            $insert->fecha_programada = date("Y-m-d", strtotime($request->fecha_programada));
+			$insert->fktipoactividad = $request->fktipoactividad;
             $insert->fkestado = $estado->id;
             $insert->save();
             return response()->json($insert);
         }        
     }
 
-
-    public function show($id)
+	public function show($id)
     {
         //
     }
@@ -93,8 +108,11 @@ class TipoActividadController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = tipoactividad::findOrFail($id);  
-            $cambiar->nombre = $request->nombre;
+            $cambiar = Agenda::findOrFail($id);  
+            $cambiar->descripcion = $request->descripcion;
+            $cambiar->fecha_ingresada = date("Y-m-d", strtotime($request->fecha_ingresada)); 
+            $cambiar->fecha_programada =date("Y-m-d", strtotime($request->fecha_programada)); 
+        	$cambiar->fktipoactividad = $request->fktipoactividad;
             $cambiar->save();
             return response()->json($cambiar);
         }        
@@ -106,8 +124,7 @@ class TipoActividadController extends Controller
             $estado = Estado::buscarIDEstado(6);
         else
             $estado = Estado::buscarIDEstado(5);
-
-        $cambiar = tipoactividad::findOrFail($request->pktipoactividad); 
+        $cambiar = Agenda::findOrFail($request->pkagenda); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          

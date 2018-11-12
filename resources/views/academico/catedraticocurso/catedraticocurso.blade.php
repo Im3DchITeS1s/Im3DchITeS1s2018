@@ -61,7 +61,7 @@
                         <div class="col-sm-5">
                                 <div class="input-group date" data-provide="datepicker">
                                       <div class="input-group-addon">
-                                            <label>Inicio</label>
+                                        <label>Inicio</label>
                                         <i class="fa fa-calendar"></i>
                                       </div>
                                       <input type="text" class="form-control" id="fecha_inicio_add" name="fecha_inicio_add" placeholder="dd/mm/yyyy" autofocus>
@@ -164,55 +164,89 @@
                         <div class="form-group">
                             <input type="text" class="form-control" id="id_edit" disabled>
                         </div>
-                        <div class="form-group has-warning">
-                            <div class="col-sm-11">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Cantidad</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
 
-                                    <input type="text" class="form-control" id="cantidad_edit" placeholder="editar cantidad" autofocus>
-                                </div>     
-                            </div>
-                        </div>
-                        <!--Drop actualizar carreragrado-->
                         <div class="form-group has-warning">
                             <div class="col-sm-11">
                                 <small class="pull-right" style="color:orange;"></small>
                             </div>
-                            <div class="col-sm-11">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Carrera Grado</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_grado_edit" id='fkcarrera_grado_edit' required autofocus>
-                                    </select> 
-                                </div>     
-                            </div>
+                               <!--Inicio-->
+                        <div class="col-sm-5">
+                                <div class="input-group date" data-provide="datepicker">
+                                      <div class="input-group-addon">
+                                            <label>Inicio</label>
+                                        <i class="fa fa-calendar"></i>
+                                      </div>
+                                      <input type="text" class="form-control" id="fecha_inicio_edit" name="fecha_inicio_edit" placeholder="dd/mm/yyyy" autofocus>
+                                </div>                                                               
+                                    <p class="errorInicio text-center alert alert-danger hidden"></p>
                         </div>
+                             <!--Fin-->
+                        <div class="col-sm-5">
+                                 <div class="input-group date" data-provide="datepicker">
+                                      <div class="input-group-addon">
+                                            <label>Fin</label>
+                                        <i class="fa fa-calendar"></i>
+                                      </div>
+                                      <input type="text" class="form-control" id="fecha_fin_edit" name="fecha_fin_edit" placeholder="dd/mm/yyyy" autofocus>
+                                 </div>                                                               
+                                    <p class="errorFin text-center alert alert-danger hidden"></p>
+                        </div>  
+                         <!--Campo de Periodos-->
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                   <label>No. Períodos</label>
+                                  </div>
+                                  <input type="text" class="form-control" id="cantidad_periodo_edit" name ="cantidad_periodo_edit" placeholder="Cantidad de Periodos" autofocus maxlength="6">
+                                </div>                                                               
+                                <small class="control-label"> </small>
+                                <p class="errorCantidad text-center alert alert-danger hidden"></p>
+                            </div>  
 
-                         <!--Drop actualizar carreragrado-->
-                        <div class="form-group has-warning">
-                            <div class="col-sm-11">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-11">
+                             <!--Drop list de la Catedratico-->
+                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Seccion</label>
+                                        <label>Catedratico</label>
                                         <i class="fa fa-sticky-note"></i>
-                                    </div>
+                                  </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkseccion_edit" id='fkseccion_edit' required autofocus>
+                                    name="fkpersona_edit" id='fkpersona_edit' required autofocus>
                                     </select> 
-                                </div>     
-                            </div>
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <p class="errorPersona text-center alert alert-danger hidden"></p>
+                            </div> 
+
+
+                             <!--Drop list de la Carrera Grado-->
+                             <div class="col-sm-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Carreras Grados</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkcantidad_alumno_edit" id='fkcantidad_alumno_edit' onChange="llenardrop(this);" required autofocus>
+                                    </select> 
+                                </div>   
+                                <small class="control-label">Debe de seleccionar uno</small>                                       
+                                <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
+                            </div> 
+
+                            <!--Drop list de la Carrera Grado-->
+                             <div class="col-sm-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Carrera Curso</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                    name="fkcarrera_curso_edit" id='fkcarrera_curso_edit' required autofocus>
+                                    </select> 
+                                </div>                                                               
+                                <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
+                            </div> 
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -377,7 +411,6 @@
                 },
             }); 
         });
-
 
         // delete
         $(document).on('click', '.delete-modal', function() {

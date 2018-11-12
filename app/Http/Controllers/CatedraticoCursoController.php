@@ -52,7 +52,7 @@ class CatedraticoCursoController extends Controller
 
    public function getdata()
     {
-      
+        
         $color_estado = "";
         $query = CatedraticoCurso::dataCatedraticoCurso(5);
         return Datatables::of($query)
@@ -61,7 +61,8 @@ class CatedraticoCursoController extends Controller
             }) 
             ->addColumn('datos_carreras', function ($data) {
                 return $data->carrera.' '.$data->grado.' '.$data->curso;
-            }) 
+
+            })  
             ->addColumn('fecha', function ($data) {
                 return date("d/m/Y", strtotime($data->fecha_inicio))." - ".date("d/m/Y", strtotime($data->fecha_fin));
             }) 

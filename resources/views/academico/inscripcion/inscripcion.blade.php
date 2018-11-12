@@ -335,7 +335,7 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
                     'fktipo_periodo': $('#fktipo_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
-                    'fkciclo': $('#fkciclo_add').val(),
+                    'ciclo': $('#fkciclo_add').val(),
                     'pago': $('#pago_add').val(),
 
 
@@ -394,11 +394,13 @@
             }); 
         });
 
-     //Edit
+
+
+    //Edit
             $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
-            $('.errorCantidadAlumno').addClass('hidden');
+            $('.errorPersona').addClass('hidden');
             $('.errorPeriodo').addClass('hidden');
             $('.errorPersona').addClass('hidden');
             $('.errorPago').addClass('hidden');
@@ -443,7 +445,7 @@
                 $("#fkciclo_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                 $("#fkciclo_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                $('#fkciclo_edit').val('').trigger('change.select2'); 
+                $('#fkciclo_edit').val(ciclo).trigger('change.select2'); 
                 }
             });    
      });
@@ -458,6 +460,7 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_edit').val(),
                     'fktipo_periodo': $('#fktipo_periodo_edit').val(),
                     'fkpersona': $('#fkpersona_edit').val(),
+                    'fkciclo': $('fkciclo_edit').val(),
                     'fkciclo': $('#fkciclo_edit').val(),
                     'pago': $('#pago_edit').val()
                 },
@@ -505,10 +508,10 @@
                      } else {
                         swal("Correcto", "Se modificó la informacion", "success")
                         .then((value) => {
-                            $('#fkcarrera_grado_edit').val('');
+                            $('#fkcantidad_alumno_edit').val('');
                             $('#fktipo_periodo_edit').val('');
                             $('#fkpersona_edit').val('');
-                            $('fkciclo_edit').val('');
+                            $('#fkciclo_edit').val('');
                             $('#pago_edit').val('');
                             table.ajax.reload();
                           table.ajax.reload(); 
