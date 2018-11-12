@@ -209,7 +209,17 @@
     <script>
         function enviarVisto(elemento)
         {
-            alert(elemento.id);
+            $.ajax({
+                type: 'POST',
+                url: '/gurdar/documento/visto/alumo',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'fkcatedratico_contenido_educativo': elemento.value,
+                },
+                success: function(data) {
+                    tabla.ajax.reload();                         
+                },
+            });   
         }
     </script>
 

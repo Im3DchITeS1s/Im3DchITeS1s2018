@@ -11,6 +11,14 @@ class Alumno_Contenido_Educativo extends Model
 	protected $guarded = ['id', 'fkinscripcion', 'fkcatedratico_contenido', 'fkestado'];
 	protected $fillable = ['descripcion', 'archivo'];
 
+	public static function tareaAlumnoGet($fkcatedratico_contenido, $fkinscripcion)
+	{
+		return Alumno_Contenido_Educativo::where('fkcatedratico_contenido', $fkcatedratico_contenido)
+			->where('fkinscripcion', $fkinscripcion)
+			->where('alumno_contenido_educativo.fkestado', 5)
+			->select(['alumno_contenido_educativo.id as id', 'archivo', 'descripcion', 'alumno_contenido_educativo.created_at as created_at', 'fkinscripcion', 'fkestado']);
+	}	
+
 	public static function tareasEntregadasGlobal($fkcatedratico_contenido)
 	{
 		return Alumno_Contenido_Educativo::join('inscripcion', 'alumno_contenido_educativo.fkinscripcion', 'inscripcion.id')

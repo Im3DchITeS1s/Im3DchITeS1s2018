@@ -76,7 +76,7 @@ class CatedraticoContenidoEducativoController extends Controller
     {
         $color_estado = "";
 
-        $query = Catedratico_Contenido_Educativo::dataContenidoEducativoCatedratico();
+        $query = Catedratico_Contenido_Educativo::dataContenidoEducativoCatedratico(Auth::user()->fkpersona);
 
         return Datatables::of($query)
             ->addColumn('tarea', function ($data) {
@@ -128,7 +128,7 @@ class CatedraticoContenidoEducativoController extends Controller
 
                 if($data->responder == 1)
                 {
-                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($vistos).'</button>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($tareas).'</button>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;" target="_blank">Descargar</a>';
                 }
                 else
                 {

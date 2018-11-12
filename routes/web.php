@@ -235,7 +235,10 @@ Route::post('/plataforma/blackboard/cargar/contenido_educativo/catedratico/cambi
 
 //CargarContenidoAlumno
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'AlumnoContenidoEducativoController');
-
+Route::get('getdata/blackboard/ver/todas/tareas/alumno', 'AlumnoContenidoEducativoController@getDataAlumnoLogin')->name('tareasalumno.getdata');
+Route::get('getdata/blackboard/ver/tareas/alumno/{id}', 'AlumnoContenidoEducativoController@getdata')->name('tareas.getdata');
+Route::post('/gurdar/documento/visto/alumo', 'AlumnoContenidoEducativoController@store_verificar');
+Route::post('/blackboard/contenido_alumno/cambiarEstado', 'AlumnoContenidoEducativoController@cambiarEstado');
 
 //Categoria
 Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaController');
@@ -288,12 +291,9 @@ Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}'
 Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
 
 
-
 // Dashboard Blackboard
 Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
 
-Route::get('/500', ['as' => 'denied', function() {
-	flash('¡Sin Privilegios!')->error()->important();
-    return view('errores.500');
-}])->middleware('auth');
-
+// Errores Sistema
+Route::get('/500', 'ErroresSistemaController@error500');
+Route::get('/404', 'ErroresSistemaController@error404');

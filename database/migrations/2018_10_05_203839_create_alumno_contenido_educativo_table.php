@@ -10,7 +10,7 @@ class CreateAlumnoContenidoEducativoTable extends Migration
     {
         Schema::create('alumno_contenido_educativo', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion',500);
+            $table->string('descripcion',100);
             $table->longText('archivo');
 
             $table->unsignedInteger('fkinscripcion');
