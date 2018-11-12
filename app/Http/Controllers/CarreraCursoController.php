@@ -102,12 +102,18 @@ class CarreraCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraCurso();            
-            $insert->fkcarrera = $request->fkcarrera;
-            $insert->fkcurso = $request->fkcurso;           
-            $insert->fkestado = $estado->id;                                                                           
-            $insert->save();
-            return response()->json($insert);
+            $existe = CarreraCurso::where('fkcarrera', $request->fkcarrera)->where('fkcurso', $request->fkcurso)->get();
+
+            if(count($existe) == 0)
+            {
+                $insert = new CarreraCurso();            
+                $insert->fkcarrera = $request->fkcarrera;
+                $insert->fkcurso = $request->fkcurso;           
+                $insert->fkestado = $estado->id;                                                                           
+                $insert->save();
+                return response()->json($insert);
+            }
+            return response()->json($existe);
         }        
     }
 
@@ -127,11 +133,17 @@ class CarreraCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = CarreraCurso::findOrFail($id);              
-            $cambiar->fkcarrera = $request->fkcarrera;
-            $cambiar->fkcurso = $request->fkcurso;
-            $cambiar->save();
-            return response()->json($cambiar);
+            $existe = CarreraCurso::where('fkcarrera', $request->fkcarrera)->where('fkcurso', $request->fkcurso)->get();
+
+            if(count($existe) == 0)
+            {
+                $cambiar = CarreraCurso::findOrFail($id);              
+                $cambiar->fkcarrera = $request->fkcarrera;
+                $cambiar->fkcurso = $request->fkcurso;
+                $cambiar->save();
+                return response()->json($cambiar);                
+            }            
+            return response()->json($existe);
         }        
     }
 

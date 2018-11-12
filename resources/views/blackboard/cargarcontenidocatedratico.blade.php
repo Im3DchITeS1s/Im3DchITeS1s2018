@@ -48,7 +48,6 @@
                               </div>
                               <input type="text" class="form-control" id="titulo_add" placeholder="titulo" required autofocus>
                             </div>
-                            <small class="control-label">required|max:100</small>
                             <p class="errorTitutloAdd text-center alert alert-danger hidden"></p>                  
                         </div>                    
                         <div class="col-sm-12">
@@ -227,19 +226,19 @@
             switch(sel.value)
             {
                 case "1":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.pdf' autofocus required>");                 
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.pdf' autofocus required>");                 
                 break;
 
                 case "2":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.xls, .xlsx' autofocus required>");                
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.xls, .xlsx' autofocus required>");                
                 break;
 
                 case "3":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.docx, .doc' autofocus required>");                
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.docx, .doc' autofocus required>");                
                 break;
 
                 case "4":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.ppt, .ppsx' autofocus required>");                
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.ppt, .ppsx' autofocus required>");                
                 break;                
             }
 

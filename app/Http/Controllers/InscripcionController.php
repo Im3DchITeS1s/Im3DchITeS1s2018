@@ -164,16 +164,22 @@ class InscripcionController extends Controller
         $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
-        } else {            
-            $insert = new Inscripcion();            
-            $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
-            $insert->fktipo_periodo = $request->fktipo_periodo;    
-            $insert->fkpersona = $request->fkpersona; 
-            $insert->fkciclo = $request->fkciclo;   
-            $insert->pago = $request->pago;     
-            $insert->fkestado = $estado->id;                                       
-            $insert->save();
-            return response()->json($insert);
+        } else {
+            $existe = Inscripcion::where('fkpersona', $request->fkpersona)->where('fkciclo', $request->fkciclo)->get();
+            
+            if(count($existe) == 0)
+            {
+                $insert = new Inscripcion();            
+                $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
+                $insert->fktipo_periodo = $request->fktipo_periodo;    
+                $insert->fkpersona = $request->fkpersona; 
+                $insert->fkciclo = $request->fkciclo;   
+                $insert->pago = $request->pago;     
+                $insert->fkestado = $estado->id;                                       
+                $insert->save();
+                return response()->json($insert);                
+            }         
+            return response()->json($existe);    
         }
     }  
 
@@ -188,12 +194,22 @@ class InscripcionController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
+            $existe = Inscripcion::where('fkpersona', $request->fkpersona)->where('fkciclo', $request->fkciclo)->get();
+
             $cambiar = Inscripcion::findOrFail($id);            
-            $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
+
             $cambiar->fkpersona = $request->fkpersona; 
             $cambiar->fkciclo = $request->fkciclo;   
             $cambiar->pago = $request->pago;  
+
+            if(count($existe) == 0)
+            {         
+                $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;               
+                $cambiar->fkpersona = $request->fkpersona;
+                $cambiar->fkciclo = $request->fkciclo;  
+            } 
+            $cambiar->pago = $request->pago;
             $cambiar->save();
             return response()->json($cambiar); 
         }       

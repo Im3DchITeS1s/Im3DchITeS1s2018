@@ -44,7 +44,7 @@
             text-align: center;
         }
         tbody{
-            font-size: 16px;
+            font-size: 12px;
         }
         #tablaEstadistica{
             style='width: 100%;'
@@ -75,22 +75,21 @@
 
     <br>
     <div>
+        <label class="hidden" style="color: white;"> {{ $total = 0 }} </label>
         <table id="tableContenido">
             <thead>
               <tr>
                 <th>Código</th>
                 <th>Alumno</th>
-                <th></th>
+                <th>Información</th>
               </tr>
             </thead>
             <tbody>
-              <label class="hidden"> {{ $total = 0 }} </label>
               @if(count($tareas) > 0)
                   @foreach($tareas as $tarea)
-                    <label class="hidden"> {{ $total = 1 + $total }} </label>
-                    <tr style='border-top: solid; border-width: 1px;'>
-                        <td width='10%'>{{$tarea->codigo}}</td>
-                        <td width='50%'>{{$tarea->nombre1}} {{$tarea->nombre2}} {{$tarea->apellido1}} {{$tarea->apellido2}}</td>
+                    <tr>
+                        <td width='10%' style="text-align: left;">{{$tarea->codigo}} <label class="hidden" style="color: white;"> {{ $total = 1 + $total }} </label></td>
+                        <td width='50%' style="text-align: left;">{{$tarea->nombre1}} {{$tarea->nombre2}} {{$tarea->apellido1}} {{$tarea->apellido2}}</td>
                   @endforeach
                         <td width='40%'>
                             <address>
@@ -103,10 +102,9 @@
                     </tr>                  
               @else
                   @foreach($vistos as $tarea)
-                    <label class="hidden"> {{ $total = 1 + $total }} </label>
-                    <tr style='border-top: solid; border-width: 1px;'>
-                        <td width='10%'>{{$tarea->codigo}}</td>
-                        <td width='60%'>{{$tarea->nombre1}} {{$tarea->nombre2}} {{$tarea->apellido1}} {{$tarea->apellido2}}</td>
+                    <tr>
+                        <td width='10%' style="text-align: left;">{{$tarea->codigo}} <label class="hidden" style="color: white;"> {{ $total = 1 + $total }} </label></td>
+                        <td width='60%' style="text-align: left;">{{$tarea->nombre1}} {{$tarea->nombre2}} {{$tarea->apellido1}} {{$tarea->apellido2}}</td>
                   @endforeach   
                   @if(count($vistos) > 0)
                         <td width='40%'>

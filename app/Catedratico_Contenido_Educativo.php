@@ -12,13 +12,34 @@ class Catedratico_Contenido_Educativo extends Model
 	protected $guarded = ['id', 'fkcatedratico_curso', 'fkformato_documento', 'fkestado'];
 	protected $fillable = ['titulo', 'descripcion', 'archivo', 'responder', 'anio'];
 
-	public static function dataContenidoEducativoCatedratico(){
+	public static function dataContenidoEducativoCatedratico($fkpersona){
 	    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
 					->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
                     ->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.descripcion as descripcion', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'catedratico_contenido_educativo.fkestado as fkestado', 'catedratico_contenido_educativo.created_at as created_at', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.fkformato_documento as fkformato_documento', 'catedratico_contenido_educativo.fkcatedratico_curso as fkcatedratico_curso'])
                     ->where('catedratico_contenido_educativo.fkestado', 5)
+                    ->where('catedratico_curso.fkpersona', $fkpersona)
                     ->where('catedratico_contenido_educativo.anio', date('Y'));
    	}	
+
+	public static function dataContenidoAlumnoLogueado(){
+	    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+	    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+	    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+	    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+	    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+	    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+	    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+	    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+	    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+	    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+	    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+	    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+	    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+	    	->where('ciclo.nombre', date('Y'))
+	    	->where('catedratico_contenido_educativo.fkestado', 5)
+	    	->where('catedratico_contenido_educativo.anio', date('Y'))
+	    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);	    	
+   	}	   	
 
 	public static function dataContenidoEducativoCatedraticoID($id){
 	    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
@@ -109,6 +130,188 @@ class Catedratico_Contenido_Educativo extends Model
 	            ->where('catedratico_contenido_educativo.id', $id)
                 ->select('catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.descripcion as descripcion', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'catedratico_contenido_educativo.created_at as created_at', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'persona.codigo as codigo', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')->first();
    	}
+
+   	public static function seleccionarContenidoAlumno($id)
+   	{
+   		return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+				->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+				->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+				->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+	            ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+	            ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+	            ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+	            ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+	            ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+	            ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+	            ->where('catedratico_contenido_educativo.id', $id)
+                ->select('catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.descripcion as descripcion', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'catedratico_contenido_educativo.created_at as created_at', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'persona.codigo as codigo', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')->first();
+   	}   
+
+	public static function filtrardataContenidoAlumnoLogueado($carrera, $curso, $anio){
+
+
+		if($carrera == 0 && $curso == 0 && $anio == 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);		
+		}
+
+		if($carrera > 0 && $curso == 0 && $anio == 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('carrera_curso.fkcarrera', $carrera)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);		
+		}
+
+		if($carrera > 0 && $curso > 0 && $anio == 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('carrera_curso.fkcarrera', $carrera)
+		    	->where('carrera_curso.fkcurso', $curso)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);		
+		}
+
+		if($carrera == 0 && $curso > 0 && $anio == 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('carrera_curso.fkcurso', $curso)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);			
+		}
+
+		if($carrera == 0 && $curso > 0 && $anio > 0)
+		{
+		
+		}
+
+		if($carrera > 0 && $curso == 0 && $anio > 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('carrera_curso.fkcarrera', $carrera)
+		    	->where('ciclo.nombre', $anio)
+		    	->where('catedratico_contenido_educativo.anio', $anio)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);		
+		}
+		
+		if($carrera == 0 && $curso == 0 && $anio > 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('ciclo.nombre', $anio)
+		    	->where('catedratico_contenido_educativo.anio', $anio)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);				
+		}		
+
+		if($carrera > 0 && $curso > 0 && $anio > 0)
+		{
+		    return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+		    	->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+		    	->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+		    	->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+		    	->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+		    	->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+		    	->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+		    	->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+		    	->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
+		    	->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+		    	->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+		    	->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+		    	->where('inscripcion.fkpersona', Auth::user()->fkpersona)
+		    	->where('carrera_curso.fkcarrera', $carrera)
+		    	->where('carrera_curso.fkcurso', $curso)
+		    	->where('ciclo.nombre', $anio)
+		    	->where('catedratico_contenido_educativo.anio', $anio)
+		    	->where('catedratico_contenido_educativo.fkestado', 5)
+		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);	
+		}	    		    	
+   	}  
+
+   	public static function mostrarContenidoDashboardCatedratico()
+   	{
+			return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+				->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+				->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+				->join('persona', 'inscripcion.fkpersona', 'persona.id')
+				->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+				->where('catedratico_curso.fkpersona', Auth::user()->fkpersona)
+                ->select('catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.descripcion as descripcion', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'formato_documento.icono as icono','catedratico_contenido_educativo.fkestado as fkestado', 'catedratico_contenido_educativo.created_at as fecha', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.fkformato_documento as fkformato_documento', 'catedratico_contenido_educativo.fkcatedratico_curso as fkcatedratico_curso')->groupBy('catedratico_contenido_educativo.id')->take(30)->orderBy('catedratico_contenido_educativo.created_at', 'desc')->get();   		
+   	} 		
 
     public static function boot() {
 

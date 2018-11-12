@@ -203,7 +203,7 @@ return [
                     ],
                     [
                         'text' => 'Contenido Historico',
-                        'url'  => '/plataforma/blackboard/cargar/contenido_educativo/catedratico/historico', 'CatedraticoContenidoEducativoController@index_historico',
+                        'url'  => '/plataforma/blackboard/contenido_educativo/alumno/historico',
                         'icon_color' => 'yellow',
                     ],                      
                 ],
@@ -423,7 +423,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Salario',
-                        'url'  => '#',
+                        'url'  => 'gestionadministrativa/controlpago/salario',
                         'icon_color' => 'red',
                     ],
                                                       

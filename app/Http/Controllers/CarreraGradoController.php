@@ -105,12 +105,18 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraGrado();            
-            $insert->fkcarrera = $request->fkcarrera;
-            $insert->fkgrado = $request->fkgrado;           
-            $insert->fkestado = $estado->id;                                                                           
-            $insert->save();
-            return response()->json($insert);
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->get();
+            
+            if(count($existe) == 0)
+            {
+                $insert = new CarreraGrado();            
+                $insert->fkcarrera = $request->fkcarrera;
+                $insert->fkgrado = $request->fkgrado;           
+                $insert->fkestado = $estado->id;                                                                           
+                $insert->save();
+                return response()->json($insert);
+            }
+            return response()->json($existe);            
         }        
     }
 
@@ -130,11 +136,17 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = CarreraGrado::findOrFail($id);              
-            $cambiar->fkcarrera = $request->fkcarrera;
-            $cambiar->fkgrado = $request->fkgrado;
-            $cambiar->save();
-            return response()->json($cambiar);
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->get();
+            
+            if(count($existe) == 0)
+            {            
+                $cambiar = CarreraGrado::findOrFail($id);              
+                $cambiar->fkcarrera = $request->fkcarrera;
+                $cambiar->fkgrado = $request->fkgrado;
+                $cambiar->save();
+                return response()->json($cambiar);
+            }
+            return response()->json($existe);              
         }        
     }
 

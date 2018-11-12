@@ -122,16 +122,22 @@ class CatedraticoCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CatedraticoCurso();            
-            $insert->fecha_inicio = date("Y-m-d", strtotime($request->fecha_inicio)); 
-            $insert->fecha_fin = date("Y-m-d", strtotime($request->fecha_fin));           
-            $insert->cantidad_periodo = $request->cantidad_periodo;
-            $insert->fkpersona = $request->fkpersona;           
-            $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
-            $insert->fkcarrera_curso = $request->fkcarrera_curso;            
-            $insert->fkestado = $estado->id;                                                                           
-            $insert->save();
-            return response()->json($insert);
+            $existe = CatedraticoCurso::where('fkpersona', $request->fkpersona)->where('fkcantidad_alumno', $request->fkcantidad_alumno)->where('fkcarrera_curso', $request->fkcarrera_curso)->get();
+
+            if(count($existe) == 0)
+            {
+                $insert = new CatedraticoCurso();            
+                $insert->fecha_inicio = date("Y-m-d", strtotime($request->fecha_inicio)); 
+                $insert->fecha_fin = date("Y-m-d", strtotime($request->fecha_fin));           
+                $insert->cantidad_periodo = $request->cantidad_periodo;
+                $insert->fkpersona = $request->fkpersona;           
+                $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
+                $insert->fkcarrera_curso = $request->fkcarrera_curso;            
+                $insert->fkestado = $estado->id;                                                                           
+                $insert->save();
+                return response()->json($insert);                
+            }
+            return response()->json($existe); 
         }        
     }
 
@@ -151,14 +157,18 @@ class CatedraticoCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
+            $existe = CatedraticoCurso::where('fkpersona', $request->fkpersona)->where('fkcantidad_alumno', $request->fkcantidad_alumno)->where('fkcarrera_curso', $request->fkcarrera_curso)->get();
+
             $cambiar = new CatedraticoCurso();            
             $cambiar->fecha_inicio = $request->fecha_inicio;
             $cambiar->fecha_fin = $request->fecha_fin;          
             $cambiar->cantidad_periodo = $request->cantidad_periodo;
-            $cambiar->fkpersona = $request->fkpersona;           
-            $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
-            $cambiar->fkcarrera_curso = $request->fkcarrera_curso;            
-            $cambiar->fkestado = $estado->id;  
+            if(count($existe) == 0)
+            {            
+                $cambiar->fkpersona = $request->fkpersona;           
+                $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
+                $cambiar->fkcarrera_curso = $request->fkcarrera_curso;   
+            }         
             $cambiar->save();
             return response()->json($cambiar);
         }        
