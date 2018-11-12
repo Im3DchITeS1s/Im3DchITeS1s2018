@@ -123,16 +123,22 @@ class CatedraticoContenidoEducativoController extends Controller
                 return date('d/m/Y h:i:s', strtotime($data->created_at));
             })                      
             ->addColumn('action', function ($data) {
+                $imprimir = ' ';
                 $vistos = VistaContenido::contenidoVistoCatedratico($data->id);
                 $tareas = Alumno_Contenido_Educativo::tareasEntregadasGlobal($data->id);
 
+                if(count($vistos) > 0)
+                {
+                    $imprimir = '<button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button>';
+                }
+
                 if($data->responder == 1)
                 {
-                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($tareas).'</button>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;" target="_blank">Descargar</a>';
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($tareas).'</button>  '.$imprimir.' <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;" target="_blank">Descargar</a>';
                 }
                 else
                 {
-                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';                  
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  '.$imprimir.' <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';                  
                 }                
 
             })       

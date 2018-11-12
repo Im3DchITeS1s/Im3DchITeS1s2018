@@ -75,10 +75,12 @@
                                   <td>{{ $tarea->codigo }}</td>
                                   <td>{{ $tarea->nombre1 }} {{ $tarea->nombre2 }} {{ $tarea->apellido1 }} {{ $tarea->apellido2 }}</td>
                                   <td>
-                                  <table class="table table-hover"><tbody><tr>Tarea</tr>
+                                  <table class="table table-hover"><tbody><th>Tarea</th>
                                   @foreach($documentos as $documento)
-                                    @if($tarea->id == $documento->fkinscripcion)
-                                        <td><a href="{{ $documento->archivo }}" class="label label-success">{{ $documento->descripcion }}</a></td>
+                                    @if($tarea->idinscripcion == $documento->fkinscripcion)
+                                        <tr>
+                                          <td><a href="{{ $documento->archivo }}" class="label label-success">{{ $documento->descripcion }}</a></td>
+                                        </tr>
                                     @endif
                                   @endforeach
                                   </tbody></table>

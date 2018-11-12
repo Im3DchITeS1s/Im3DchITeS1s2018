@@ -25,7 +25,7 @@ class Alumno_Contenido_Educativo extends Model
 			->join('persona', 'inscripcion.fkpersona', 'persona.id')
 			->where('fkcatedratico_contenido', $fkcatedratico_contenido)
 			->where('alumno_contenido_educativo.fkestado', 5)
-			->select('inscripcion.id as id', 'alumno_contenido_educativo.created_at as created_at', 'persona.*')->groupBy('alumno_contenido_educativo.fkinscripcion')->get();
+			->select('inscripcion.id as idinscripcion', 'alumno_contenido_educativo.created_at as created_at', 'persona.*')->groupBy('alumno_contenido_educativo.fkinscripcion')->get();
 	}
 
 	public static function tareasEntregadasAlumnos($fkcatedratico_contenido)
