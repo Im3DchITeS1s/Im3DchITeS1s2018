@@ -411,7 +411,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Salario',
-                        'url'  => '#',
+                        'url'  => 'gestionadministrativa/controlpago/salario',
                         'icon_color' => 'red',
                     ],
                                                       

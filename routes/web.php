@@ -277,6 +277,12 @@ Route::post('/gestionadministrativa/controlpago/pago/cambiarEstado', 'PagoContro
 Route::get('/gestionadministrativa/controlpago/pago/dropmes/{id}', 'MesController@dropMes');
 
 
+
+//Salario 
+Route::resource('/gestionadministrativa/controlpago/salario', 'SalarioController');
+Route::post('/gestionadministrativa/controlpago/salario/cambiarEstado', 'SalarioController@cambiarEstado');
+Route::get('salario/getdata', 'SalarioController@getdata')->name('salario.getdata');
+
 // Cuestionarios Historicos Alumno
 Route::get('/plataforma/blackboard/cuestionario/historicos/alumnohistorico', 'CuestionarioHistoricoAlumno@index')->name('alumnohistorico.index');
 Route::get('get/historicos/alumnohistorico/{carrera}/{curso}/{anio}', 'CuestionarioHistoricoAlumno@getdata')->name('alumnohistorico.getdata');
