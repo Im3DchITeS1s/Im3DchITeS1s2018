@@ -100,23 +100,30 @@ class CantidadAlumnoController extends Controller
         //
     }
 
-    public function store(Request $request)
-    {
-        $estado = Estado::buscarIDEstado(5);
+    public function store(Request $request){
+  
+    $estado = Estado::buscarIDEstado(5);
 
         $validator = Validator::make(Input::all(), $this->verificar_insert);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
-        } else {            
-            $insert = new CantidadAlumno();            
-            $insert->cantidad = $request->cantidad;
-            $insert->fkcarrera_grado = $request->fkcarrera_grado;    
-            $insert->fkseccion = $request->fkseccion;        
-            $insert->fkestado = $estado->id;                                                      
-            $insert->save();
-            return response()->json($insert);
+        } else {
+            $existe = CantidadAlumno::where('fkcarrera_grado', $request->fkcarrera_grado)->where('fkseccion', $request->fkseccion)->get();
+
+            if(count($existe) == 0)
+            {
+                $insert = new CantidadAlumno();           
+                $insert->fkcarrera_grado = $request->fkcarrera_grado;
+                $insert->fkseccion = $request->fkseccion;           
+                $insert->fkestado = $estado->id;                                                                           
+                $insert->save();
+                return response()->json($insert);
+            }
+            return response()->json($existe);
+        }        
+
         }
-    }  
+
 
     public function show($id)
     {

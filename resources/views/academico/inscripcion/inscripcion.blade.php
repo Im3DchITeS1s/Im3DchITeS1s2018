@@ -333,7 +333,7 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
                     'fktipo_periodo': $('#fktipo_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
-                    'ciclo': $('#fkciclo_add').val(),
+                    'fkciclo': $('#fkciclo_add').val(),
                     'pago': $('#pago_add').val(),
 
 
