@@ -14,6 +14,7 @@ use App\VistaContenido;
 use App\Inscripcion;
 use App\Estado;
 use App\Persona;
+use App\Ciclo;
 use Auth;
 
 class AlumnoContenidoEducativoController extends Controller
@@ -40,6 +41,22 @@ class AlumnoContenidoEducativoController extends Controller
     {
         return view('/blackboard/cargarcontenidoalumno');
     }
+
+    public function index_historico()
+    {
+        $alumno = Persona::where('id', Auth::user()->fkpersona)->first();
+        $carreras = Inscripcion::join('cantidad_alumno', 'inscripcion.fkcantidad_alumno', 'cantidad_alumno.id')
+            ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+            ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+            ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+            ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+            ->where('inscripcion.fkpersona', $alumno->id)
+            ->where('cantidad_alumno.fkestado', 5)
+            ->select('carrera.id as id', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion')
+            ->get();
+        $ciclos = Ciclo::select('id', 'nombre')->get();
+        return view('/blackboard/historicos/contenidoeducativoalumnohistorico', compact('alumno', 'carreras', 'ciclos'));
+    }    
 
     public function getdata($id)
     {
@@ -127,6 +144,64 @@ class AlumnoContenidoEducativoController extends Controller
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);        
     }
+
+    public function filtrogetdata($carrera, $curso, $anio)
+    {
+        $query = Catedratico_Contenido_Educativo::filtrardataContenidoAlumnoLogueado($carrera, $curso, $anio);
+
+        return Datatables::of($query)
+            ->addColumn('catedratico', function ($data) {
+                return $data->nombre1.' '.$data->nombre2.' '.$data->apellido1.' '.$data->apellido2;
+            })                     
+            ->addColumn('tarea', function ($data) {
+                if($data->responder == 1)
+                {
+                    return "SI";
+                }
+                else
+                {
+                    return "NO";                    
+                }
+            })     
+            ->addColumn('created_at', function ($data) {
+                return date('d/m/Y h:i:s', strtotime($data->created_at));
+            })        
+            ->addColumn('titulo', function ($data) {
+                return $data->titulo.' - '.$data->formato;
+            })                       
+            ->addColumn('action', function ($data) {
+                $imprimir = '';
+                $tarea = '';
+                $idinscripcion = 0;
+
+                $fkinscripcion = Inscripcion::join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')->where('fkpersona', Auth::user()->fkpersona)->where('ciclo.nombre', date('Y'))->first();             
+
+                if(!is_null($fkinscripcion))
+                {
+                    $idinscripcion = $fkinscripcion->id;
+                }
+
+                $tareasexisten = Alumno_Contenido_Educativo::select('archivo')
+                                                         ->where('fkcatedratico_contenido', $data->id)
+                                                         ->where('fkinscripcion', $idinscripcion)
+                                                         ->where('fkestado', 5)->get();
+                $notarea = 0;
+                foreach ($tareasexisten as $tareaexiste) 
+                {
+                    $notarea = $notarea + 1;
+                    $tarea = $tarea.'  <a href="'.$data->archivo.'" class="btn btn-warning btn-xs" style="margin-right: 5px;" target="_blank">Tarea'.$notarea.'</a>';
+                }            
+
+                if($data->responder == 1 && count($tareasexisten) > 0)
+                {
+                    $imprimir = '<button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button>';                        
+                }
+
+                return $tarea.' '.$imprimir.' <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right visto-documento" style="margin-right: 5px;" data-id="'.$data->id.'" target="_blank">Descargar</a>';
+            })       
+            ->editColumn('id', 'ID: {{$id}}')       
+            ->make(true); 
+    }     
 
     public function create()
     {

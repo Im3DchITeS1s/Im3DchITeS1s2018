@@ -118,6 +118,7 @@ class Resultado_Cuestionario extends Model
         	->where('carrera_curso.fkcarrera', $carrera)
         	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
 		}
+
 		if($carrera > 0 && $curso > 0 && $anio == 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
@@ -130,6 +131,7 @@ class Resultado_Cuestionario extends Model
         	->where('carrera_curso.fkcurso', $curso)
         	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
 		}
+
 		if($carrera == 0 && $curso > 0 && $anio == 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
@@ -141,6 +143,7 @@ class Resultado_Cuestionario extends Model
         	->where('carrera_curso.fkcurso', $curso)
         	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
 		}
+
 		if($carrera == 0 && $curso > 0 && $anio > 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
@@ -153,6 +156,7 @@ class Resultado_Cuestionario extends Model
         	->where('ciclo.nombre', $anio)
         	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
 		}
+
 		if($carrera > 0 && $curso == 0 && $anio > 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
@@ -165,6 +169,7 @@ class Resultado_Cuestionario extends Model
         	->where('ciclo.nombre', $anio)
         	->select(['cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.punteo as punteo_total', 'resultado_cuestionario.punteo as punteo_obtenido', 'resultado_cuestionario.created_at as fecha']);			
 		}
+		
 		if($carrera == 0 && $curso == 0 && $anio > 0)
 		{
 			return Resultado_Cuestionario::join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')

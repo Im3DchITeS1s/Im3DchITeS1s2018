@@ -250,10 +250,12 @@ Route::post('/plataforma/blackboard/cargar/contenido_educativo/catedratico/cambi
 
 //CargarContenidoAlumno
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'AlumnoContenidoEducativoController');
+Route::get('/plataforma/blackboard/contenido_educativo/alumno/historico', 'AlumnoContenidoEducativoController@index_historico')->name('contenido_educativo_alumno.historico');
 Route::get('getdata/blackboard/ver/todas/tareas/alumno', 'AlumnoContenidoEducativoController@getDataAlumnoLogin')->name('tareasalumno.getdata');
 Route::get('getdata/blackboard/ver/tareas/alumno/{id}', 'AlumnoContenidoEducativoController@getdata')->name('tareas.getdata');
 Route::post('/gurdar/documento/visto/alumo', 'AlumnoContenidoEducativoController@store_verificar');
 Route::post('/blackboard/contenido_alumno/cambiarEstado', 'AlumnoContenidoEducativoController@cambiarEstado');
+Route::get('get/historicos/contenido/alumno/{carrera}/{curso}/{anio}', 'AlumnoContenidoEducativoController@filtrogetdata')->name('alumnocontenidohistorico.filtrogetdata');
 
 //Categoria
 Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaController');
@@ -308,7 +310,7 @@ Route::get('/filtrar/curso/carrera/{id}', 'CuestionarioHistoricoAlumno@dropCurso
 
 // Cuestionarios Historicos Catedratico
 Route::get('/plataforma/blackboard/cuestionario/historicos/catedraticohistorico', 'CuestionarioHistoricoCatedratico@index')->name('catedraticohistorico.index');
-Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('alumnohistorico.getdata');
+Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('categoriahistorico.getdata');
 Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
 
 

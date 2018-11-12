@@ -95,7 +95,7 @@
     $(document).ready(function() {
         let ruta_original = null;
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', 0);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', 0);
@@ -128,7 +128,7 @@
         var cuestionario_id = $("#cuestionario_id").val();
         var anio_id = $("#anio_id").val();
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);
@@ -170,7 +170,7 @@
         var cuestionario_id = id.value;
         var anio_id = $("#anio_id").val();
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);
@@ -203,7 +203,7 @@
         var cuestionario_id = $("#cuestionario_id").val();
         var anio_id = id.value;
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);
