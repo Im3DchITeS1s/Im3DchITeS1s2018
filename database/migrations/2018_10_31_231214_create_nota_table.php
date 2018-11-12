@@ -14,12 +14,15 @@ class CreateNotaTable extends Migration
 
             $table->unsignedInteger('fkinscripcion');
             $table->unsignedInteger('fkperiodo_academico');
+            $table->unsignedInteger('fkcantidad_alumno');
+            $table->unsignedInteger('fkcarrera_curso');
             $table->unsignedInteger('nota');
-            $table->date('fecha');
             $table->unsignedInteger('fkestado');
 
             $table->foreign('fkinscripcion')->references('id')->on('inscripcion')->onUpdate('cascade');
             $table->foreign('fkperiodo_academico')->references('id')->on('periodo_academico')->onUpdate('cascade');
+            $table->foreign('fkcantidad_alumno')->references('id')->on('cantidad_alumno')->onUpdate('cascade');
+            $table->foreign('fkcarrera_curso')->references('id')->on('carrera_curso')->onUpdate('cascade');
             $table->foreign('fkestado')->references('id')->on('estado')->onUpdate('cascade'); 
 
             $table->timestamps();
@@ -27,7 +30,6 @@ class CreateNotaTable extends Migration
         });
     }
 
-    
     public function down()
     {
         Schema::dropIfExists('nota');

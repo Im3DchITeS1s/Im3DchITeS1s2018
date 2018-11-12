@@ -159,6 +159,21 @@ Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@
 Route::get('/academico/inscripcion/dropciclo/{id}', 'InscripcionController@dropciclo');
 Route::post('/academico/inscripcion/cambiarEstado', 'InscripcionController@cambiarEstado');
 
+//Tipo de Actividad
+Route::resource('/academico/tipoactividad/tipoactividad', 'TipoActividadController');
+Route::get('TipoActividad/getdata', 'TipoActividadController@getdata')->name('TipoActividad.getdata');
+Route::post('/academico/tipoactividad/cambiarEstado', 'TipoActividadController@cambiarEstado');
+//Agenda
+Route::resource('/academico/agenda/agenda', 'AgendaController');
+Route::get('Agenda/getdata', 'AgendaController@getdata')->name('Agenda.getdata');
+Route::get('/academico/agenda/droptipoactividad/{id}', 'AgendaController@droptipoactividad');
+Route::post('/academico/agenda/cambiarEstado', 'AgendaController@cambiarEstado');
+
+//Nota
+Route::resource('/academico/nota/nota', 'NotaController');
+Route::get('Nota/getdata', 'NotaController@getdata')->name('Nota.getdata');
+Route::get('/academico/nota/dropinscrito/{id}', 'NotaController@dropinscrito');
+
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
 Route::get('sistemarolusuario/getdata', 'SistemaRolUsuarioController@getdata')->name('sistemarolusuario.getdata');

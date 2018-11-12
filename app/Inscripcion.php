@@ -56,6 +56,7 @@ class Inscripcion extends Model
 			->select(['inscripcion.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'seccion.id as fkseccion','seccion.letra as seccion','periodo_academico.id as fktipo_periodo', 'tipo_periodo.nombre as tipo_periodo','inscripcion.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2', 'ciclo.nombre as ciclo','inscripcion.pago as pago','inscripcion.fkestado as fkestado','inscripcion.fkcantidad_alumno as fkcantidad_alumno']);
 	}
 
+
 	public static function dataInscripcion2($ciclo)
 	{
 		return Inscripcion::join('cantidad_alumno','inscripcion.fkcantidad_alumno','cantidad_alumno.id')
@@ -70,6 +71,7 @@ class Inscripcion extends Model
 			->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
 			->select(['inscripcion.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'seccion.id as fkseccion','seccion.letra as seccion','periodo_academico.id as fktipo_periodo', 'tipo_periodo.nombre as tipo_periodo','inscripcion.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2', 'ciclo.nombre as ciclo','inscripcion.pago as pago','inscripcion.fkestado as fkestado','inscripcion.fkcantidad_alumno as fkcantidad_alumno']);
 	}
+
 
 	public static function buscarGradoCarrrera($id){
 		return Inscripcion::join('carrera_curso', 'inscripcion.fkcarrera_curso', '=', 'carrera_curso.id')
@@ -86,11 +88,10 @@ class Inscripcion extends Model
 			->get();
 	}
 
-	
 	public static function buscarIDInscripcion($id)
     {
         return Inscripcion::findOrFail($id);       
-    } 
+    }
 
 	public static function alumnoInscrito($id, $ciclo)
     {
@@ -138,7 +139,23 @@ class Inscripcion extends Model
 
 	} 
 
-    public static function boot() {
+	public static function AlumosCarrera($fkcarrera_grado, $ciclo){
+		return Inscripcion::join('cantidad_alumno','inscripcion.fkcantidad_alumno','cantidad_alumno.id')
+			->join('seccion','cantidad_alumno.fkseccion','seccion.id')
+			->join('carrera_grado','cantidad_alumno.fkcarrera_grado','carrera_grado.id')
+			->join('carrera','carrera_grado.fkcarrera','carrera.id')
+			->join('grado','carrera_grado.fkgrado','grado.id')
+			->join('carrera_curso','carrera.id','carrera_curso.fkcarrera')
+			->join('curso','carrera_curso.fkcurso','curso.id')
+			->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+			->join('persona','inscripcion.fkpersona','persona.id')
+            ->select('inscripcion.id as id','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2')
+			->where('carrera_grado.id',$fkcarrera_grado)
+			->where('ciclo.nombre',$ciclo)
+            ->orderBy('apellido1', 'asc')->get();
+	}	
+
+	public static function boot() {
 
 	    parent::boot();
 

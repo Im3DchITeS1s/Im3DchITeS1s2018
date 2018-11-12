@@ -28,7 +28,7 @@ class CantidadAlumno extends Model
 					->join('estado', 'cantidad_alumno.fkestado', 'estado.id')
 					->where('cantidad_alumno.fkestado', $id)
                     ->select('cantidad_alumno.id as id','carrera.nombre as carrera','grado.nombre as grado','seccion.letra as letra')
-                    ->get();
+                 ->orderBy('carrera.id', 'asc')->get();
    	} 
 
 	public static function dropCantidadAlumnoCarrera($id){

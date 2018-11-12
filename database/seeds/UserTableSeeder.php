@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
         $nuevo->token = '1';
         $nuevo->fkpersona = 3;
         $nuevo->fkestado = 11;
-        $nuevo->save();                
+        $nuevo->save();         
 
         /*$nuevo = new User();
         $nuevo->username = 'Liliana';
