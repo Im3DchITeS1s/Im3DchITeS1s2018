@@ -191,9 +191,9 @@ class InscripcionController extends Controller
             $cambiar = Inscripcion::findOrFail($id);            
             $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
             $cambiar->fktipo_periodo = $request->fktipo_periodo;    
-            $cambiar->fkpersona = $request->fkpersona;
+            $cambiar->fkpersona = $request->fkpersona; 
             $cambiar->fkciclo = $request->fkciclo;   
-            $cambiar->pago = $request->pago;
+            $cambiar->pago = $request->pago;  
             $cambiar->save();
             return response()->json($cambiar); 
         }       

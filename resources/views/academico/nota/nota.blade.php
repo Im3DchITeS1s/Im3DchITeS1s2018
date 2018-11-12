@@ -60,7 +60,7 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
 
-                            <!--Drop list de la Cantidad de Alumno-->
+                <!--Drop list de la Cantidad de Alumno que jala solo los Grados-->
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
@@ -90,7 +90,7 @@
                                 <p class="errorInscripcion text-center alert alert-danger hidden"></p>
                             </div> 
 
-                            <!--Drop list de la Carrera Curso-->
+                            <!--Drop list del Curso segun la carrera-->
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">

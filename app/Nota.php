@@ -24,7 +24,7 @@ class Nota extends Model
 					->join('grado','carrera_grado.fkgrado','grado.id')
 					->join('seccion','cantidad_alumno.fkseccion','seccion.id')
 					->join('periodo_academico','nota.fkperiodo_academico','periodo_academico.id')
-					->select('nota.id as id','nota.fkinscripcion','persona.id as id','nombre1','nombre2','persona.apellido1','apellido2','inscripcion.fkperiodo_academico','periodo_academico.id as id','periodo_academico.nombre as periodo_academico','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','nota.nota','nota.fkestado as fkestado');
+					->select('nota.id','nota.fkinscripcion','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','nota.fkperiodo_academico','periodo_academico.nombre as periodo_academico','nota.fkcantidad_alumno','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','carrera_curso.fkcurso','curso.nombre as curso','nota.nota as puento','nota.fkestado as fkestado');
 						}
 
     public static function boot() {

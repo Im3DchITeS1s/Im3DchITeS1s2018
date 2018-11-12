@@ -61,7 +61,7 @@
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Carreras|GyS</label>
+                                       
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
@@ -125,7 +125,7 @@
                                     name="fkciclo_add" id='fkciclo_add' required autofocus>
                                     </select> 
                                 </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <small class="control-label">Debe de seleccionar uno</small>         
                                 <p class="errorCiclo text-center alert alert-danger hidden"></p>
                             </div> 
                             
@@ -259,8 +259,7 @@
             $('.js-example-basic-single').select2();
         });
        
-
-        //Leer
+  //Leer
         $(document).ready(function() {
             table = $('#info-table').DataTable({  
                 processing: true,
@@ -277,7 +276,6 @@
                 ]
             });
         });
-
 
         //Insertar
         $(document).on('click', '.add-modal', function() {
@@ -402,7 +400,7 @@
             $('.modal-title').text('Editar Informacion');
             $('.errorPersona').addClass('hidden');
             $('.errorPeriodo').addClass('hidden');
-            $('.errorPersona').addClass('hidden');
+            $('.errorCiclo').addClass('hidden');
             $('.errorPago').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
@@ -411,6 +409,7 @@
             fkcantidad_alumno = $(this).data('fkcantidad_alumno');
             fktipo_periodo = $(this).data('fktipo_periodo');
             fkpersona = $(this).data('fkpersona');
+            fkciclo = $(this).data('fkciclo');
             $('#editModal').modal('show');
 
             $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
