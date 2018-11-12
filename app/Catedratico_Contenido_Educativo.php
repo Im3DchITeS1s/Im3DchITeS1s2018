@@ -300,7 +300,18 @@ class Catedratico_Contenido_Educativo extends Model
 		    	->where('catedratico_contenido_educativo.fkestado', 5)
 		    	->select(['catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'seccion.letra as seccion', 'carrera.nombre as carrera', 'grado.nombre as grado', 'curso.nombre as curso', 'catedratico_contenido_educativo.created_at as created_at']);	
 		}	    		    	
-   	}   		
+   	}  
+
+   	public static function mostrarContenidoDashboardCatedratico()
+   	{
+			return Catedratico_Contenido_Educativo::join('catedratico_curso', 'catedratico_contenido_educativo.fkcatedratico_curso', 'catedratico_curso.id')
+				->join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+				->join('inscripcion', 'cantidad_alumno.id', 'inscripcion.fkcantidad_alumno')
+				->join('persona', 'inscripcion.fkpersona', 'persona.id')
+				->join('formato_documento', 'catedratico_contenido_educativo.fkformato_documento', 'formato_documento.id')
+				->where('catedratico_curso.fkpersona', Auth::user()->fkpersona)
+                ->select('catedratico_contenido_educativo.id as id', 'catedratico_contenido_educativo.titulo as titulo', 'catedratico_contenido_educativo.descripcion as descripcion', 'catedratico_contenido_educativo.responder as responder', 'formato_documento.formato as formato', 'formato_documento.icono as icono','catedratico_contenido_educativo.fkestado as fkestado', 'catedratico_contenido_educativo.created_at as fecha', 'catedratico_contenido_educativo.archivo as archivo', 'catedratico_contenido_educativo.fkformato_documento as fkformato_documento', 'catedratico_contenido_educativo.fkcatedratico_curso as fkcatedratico_curso')->groupBy('catedratico_contenido_educativo.id')->take(30)->orderBy('catedratico_contenido_educativo.created_at', 'desc')->get();   		
+   	} 		
 
     public static function boot() {
 

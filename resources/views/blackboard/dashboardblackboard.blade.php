@@ -164,6 +164,31 @@
                   <div class="row">
                     <div class="col-md-12">
 
+                        @foreach($contenidoscatedratico as $contenidocatedratico)
+
+                            <ul class="timeline">
+
+                                <li class="time-label">
+                                    <span class="bg-green">
+                                        {{ date('d M Y', strtotime($contenidocatedratico->fecha)) }}
+                                    </span>
+                                </li>
+
+                                <li>
+                                    <i class="{{ $contenidocatedratico->icono }} bg-blue"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> {{ date('h:i:s', strtotime($contenidocatedratico->fecha)) }}</span>
+
+                                        <h3 class="timeline-header"><a href="{{ $contenidocatedratico->archivo }}">{{ $contenidocatedratico->titulo }}</a> <small>{{ $contenidocatedratico->curso }}</small></h3>
+
+                                        <div class="timeline-body">
+                                            {{ $contenidocatedratico->descripcion }}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        @endforeach
 
                     </div>
                   </div>
@@ -176,7 +201,7 @@
             
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Alumnos por Curso</h3>
+                    <h3 class="box-title">Carreras y Cursos</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -194,7 +219,6 @@
                       <div class="progress-group">
                         <hr>
                             <small><span class="progress-text">{{ $catedratico_cuso->grado }} {{ $catedratico_cuso->carrera }} Seccion {{ $catedratico_cuso->seccion }} - {{ $catedratico_cuso->curso }}</span></small>
-                            <span class="progress-number"><b>Alumnos</b> {{ $catedratico_cuso->cantidad }}</span>
                         <hr>
                       </div>
                     @endforeach
