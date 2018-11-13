@@ -246,7 +246,7 @@ class NotaController extends Controller
     {
         $estado = Estado::buscarIDEstado(6);
 
-        $cambiar = CatedraticoCurso::findOrFail($request->pknota); 
+        $cambiar = Nota::findOrFail($request->pknota); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
