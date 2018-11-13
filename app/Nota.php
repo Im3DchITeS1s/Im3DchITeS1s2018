@@ -9,23 +9,18 @@ class Nota extends Model
 {
  
  	protected $table = 'nota';
-	protected $guarded = ['id','fkinscripcion', 'fkperiodo_academico','fkcantidad_alumno','fkcarrera_curso','fkestado'];
+	protected $guarded = ['id','fkinscripcion', 'fkperiodo_academico','fkcarrera_curso','fkestado'];
 	protected $fillable = [ 'nota'];
 
-	public static function dataNota(){
-			return Nota::join('inscripcion','nota.fkinscripcion','inscripcion.id')
-					->join('persona','inscripcion.fkpersona as fkpersona','persona.id')
-					->join('periodo_academico','nota.fkperiodo_academico','periodo_academico.id')
-					->join('cantidad_alumno','nota.fkcantidad_alumno','cantidad_alumno.id')
-					->join('carrera_grado','cantidad_alumno.fkcarrera_grado','carrera_grado.id')
-					->join('carrera','carrera_grado.fkcarrera','carrera.id')
-					->join('carrera_curso','nota.fkcarrera_curso','carrera_curso.id')
-					->join('curso','carrera_curso.fkcurso','curso.id')	
-					->join('grado','carrera_grado.fkgrado','grado.id')
-					->join('seccion','cantidad_alumno.fkseccion','seccion.id')
-					->join('periodo_academico','nota.fkperiodo_academico','periodo_academico.id')
-					->select('nota.id','nota.fkinscripcion','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','nota.fkperiodo_academico','periodo_academico.nombre as periodo_academico','nota.fkcantidad_alumno','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado','carrera_curso.fkcurso','curso.nombre as curso','nota.nota as puento','nota.fkestado as fkestado');
-						}
+	public static function buscarNotaAluno($fkinscripcion, $fkperiodo_academico, $fkcarrera_curso)
+	{
+			return Nota::select('id', 'nota', 'fkestado')->where('fkinscripcion', $fkinscripcion)->where('fkperiodo_academico', $fkperiodo_academico)->where('fkcarrera_curso', $fkcarrera_curso)->where('fkestado', 5)->first();
+	}
+
+	public static function buscarNotaAlumnoPromedio($fkinscripcion, $fkcarrera_curso)
+	{
+			return Nota::select('id', 'nota')->where('fkinscripcion', $fkinscripcion)->where('fkcarrera_curso', $fkcarrera_curso)->where('fkestado', 5)->get();
+	}	
 
     public static function boot() {
 

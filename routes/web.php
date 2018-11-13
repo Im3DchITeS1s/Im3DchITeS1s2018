@@ -171,8 +171,9 @@ Route::post('/academico/agenda/cambiarEstado', 'AgendaController@cambiarEstado')
 
 //Nota
 Route::resource('/academico/nota/nota', 'NotaController');
-Route::get('Nota/getdata', 'NotaController@getdata')->name('Nota.getdata');
-Route::get('/academico/nota/dropinscrito/{id}', 'NotaController@dropinscrito');
+Route::get('nota/getdata/{carrera}/{curso}/{anio}/{bimestre}', 'NotaController@getdata')->name('nota.getdata');
+Route::post('/academico/nota/estado', 'NotaController@cambiarEstado');
+Route::get('/filtrar/curso/carrera/nota/{id}', 'NotaController@dropCurso');
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');

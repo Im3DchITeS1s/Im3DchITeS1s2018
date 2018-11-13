@@ -125,7 +125,31 @@
 
         var carrera_id = id.value;
         var curso_id = $("#curso_id").val();
-        var anio_id = $("#anio_id").val();      
+        var anio_id = $("#anio_id").val();  
+
+        ruta_original = "{{ route('alumnocontenidohistorico.filtrogetdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id']) }}";
+
+        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
+        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', curso_id);
+        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', anio_id);    
+
+        $('#info-table').DataTable({ 
+
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: ruta_pasando_anio,
+                columns: [
+                    { data: 'catedratico', name: 'catedratico' },
+                    { data: 'titulo', name: 'titulo' },
+                    { data: 'tarea', name: 'tarea' },
+                    { data: 'created_at', name: 'created_at' },                    
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+
+        });            
 
         $.get("/filtrar/curso/carrera/"+id.value,function(response){
             $("#curso_id").empty();

@@ -278,7 +278,7 @@
 
 
         // delete
-        $(document).on('click', '.delete-modal', function() {
+        $(document).on('click', '.eliminar-nota', function() {
             id = $(this).data('id');
             swal({
               title: "Esta seguro?",

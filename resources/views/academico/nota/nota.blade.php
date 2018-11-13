@@ -27,24 +27,66 @@
         </div>
 
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="25%">Alumno</th>
-                            <th width="25%">Carrera Grado</th>
-                            <th width="25%">Bimestre</th>
-                            <th width="25%">Curso</th>
-                            <th width="25%">Puento</th>
-                            <th width="8%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <small>Carrera Grado / Sección</small>
+                    <select class="form-control" name="carrera_id" id="carrera_id" onChange="mostrarCursosDeCarrera(this);">
+                      <option value="0">seleccione carrera</option>
+                        @foreach ($carreras as $carrera)
+                          <option value="{{$carrera->id}}">{{$carrera->carrera}} {{$carrera->grado}} / {{$carrera->seccion}}</option>
+                        @endforeach
+                    </select>
+                </div>  
+
+                <div class="col-md-3">
+                    <small>Curso</small>
+                    <select class="form-control" name="curso_id" id="curso_id" onChange="filtrarCurso(this);">
+                      <option value="0">seleccione carrera</option>
+                    </select>
+                </div>                                              
+
+                <div class="col-md-2">
+                    <small>Año</small> 
+                    <select class="form-control" name="anio_id" id="anio_id" onChange="filtrarAnio(this);">
+                      <option value="0">seleccione año</option>
+                        @foreach ($ciclos as $ciclo)
+                          <option value="{{$ciclo->nombre}}">{{$ciclo->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>  
+
+                <div class="col-md-2">
+                    <small>Bimestre</small>
+                    <select class="form-control" name="bimestre_id" id="bimestre_id" onChange="filtrarPeriodo(this);">
+                      <option value="0">seleccione bimestre</option>
+                        @foreach ($periodos as $periodo)
+                          <option value="{{$periodo->id}}">{{$periodo->periodo_academico}} {{$periodo->tipo_periodo}}</option>
+                        @endforeach
+                    </select>
+                </div>                                   
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                        <thead >
+                            <tr>
+                                <th width="25%">Alumno</th>
+                                <th width="5%">Primer Nota</th>
+                                <th width="5%">Segunda Nota</th>
+                                <th width="5%">Tercera Nota</th>
+                                <th width="5%">Cuarta Nota</th>
+                                <th width="5%">Promedio Actual</th>
+                                <th width="5%">Promedio Final</th>
+                                <th width="8%">Accion</th>
+                            </tr>
+                        </thead>
+                    </table>         
+                </div>                
+            </div>
         </div>
     </div>
+
 
 
     <!-- Modal Agregar -->
@@ -58,79 +100,21 @@
 
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
-                        <div class="form-group has-success">
-
-                <!--Drop list de la Cantidad de Alumno que jala solo los Grados-->
-                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Carreras Grados</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcantidad_alumno_add" id='fkcantidad_alumno_add' onChange="llenardrop(this); " required autofocus>
-                                    </select> 
-                                </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                       
-                                <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
-                            </div> 
-
-                             <!--Drop list de la Alumno-->
-                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Alumno</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkinscripcion_add" id='fkinscripcion_add' required autofocus>
-                                    </select> 
-                                </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
-                                <p class="errorInscripcion text-center alert alert-danger hidden"></p>
-                            </div> 
-
-                            <!--Drop list del Curso segun la carrera-->
-                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Curso</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_curso_add" id='fkcarrera_curso_add' required autofocus>
-                                    </select> 
-                                </div>                                                               
-                                <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
-                            </div> 
-
-                               <!--Drop list de la Tipo Período-->
-                                  <div class="col-sm-6">
+                        <h2 class="alumno-nombre"></h2>
+                        <div class="col-sm-12">
                             <div class="input-group">
-                          <div class="input-group-addon">
-                            <label>Periodo Academico</label>
-                            <i class="fa fa-note"></i>
-                          </div>
-                            <select class="form-control js-example-basic-single" name="state" style="width: 100% name="fkperiodo_academico_add" id='fkperiodo_academico_add' required autofocus>
-                            </select> 
+                              <div class="input-group-addon">
+                                <label>Nota</label>
+                                <i class="fa fa-sticky-note"></i>
+                              </div>
+                              <input type="text" class="form-control" id="nota_add" placeholder="Ingresar Nota" autofocus>
+                            </div>                                                               
+                            <p class="errorNota text-center alert alert-danger hidden"></p>
                         </div>
-                        <p class="errorPeriodoAcademico text-center alert alert-danger hidden"></p>                  
-                    </div>
-                            <!--Nota-->
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                  <div class="input-group-addon">
-                                    <label>Nota</label>
-                                    <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                  <input type="text" class="form-control" id="nota_add" placeholder="Ingresar Nota" autofocus>
-                                </div>                                                               
-                                <small class="control-label">Max: 32</small>
-                                <p class="errorNota text-center alert alert-danger hidden"></p>
-                            </div>
-                        </div> 
+ 
                     </form>
                 </div>
+                <br><br>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary add" data-dismiss="modal">
                         <span id="" class='fa fa-save'></span>
@@ -141,229 +125,346 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>  
 
 
- <!-- Modal Editar -->
-    <div id="editModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="id_edit" disabled>
-                        </div>
-                        <div class="form-group has-warning">
-                            <div class="col-sm-11">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Cantidad</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-                                    <input type="text" class="form-control" id="cantidad_edit" placeholder="editar cantidad" autofocus>
-                                </div>     
-                            </div>
-                        </div>
-
-                        <!--Drop actualizar carreragrado-->
-                        <div class="form-group has-warning">
-                            <div class="col-sm-11">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Carrera Grado</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_grado_edit" id='fkcarrera_grado_edit' required autofocus>
-                                    </select> 
-                                </div>     
-                            </div>
-                        </div>
-
-                         <!--Drop actualizar carreragrado-->
-                        <div class="form-group has-warning">
-                            <div class="col-sm-11">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-11">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Seccion</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkseccion_edit" id='fkseccion_edit' required autofocus>
-                                    </select> 
-                                </div>     
-                            </div>
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>     
 
       <!-- AJAX CRUD operations -->
     <script type="text/javascript">
-        var table = "";
+        var fkperiodo = 0;
+        var fkinscripcion = 0;
+        var fkcurso = 0;
 
-        //dropdownlist
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
-       
-        //Leer
-        $(document).ready(function() {
-            table = $('#info-table').DataTable({  
+    $(document).ready(function() {
+        let ruta_original = null;
+
+        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
+
+        var ruta_pasando_carrera = ruta_original.replace('carrera_id', 0);
+        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', 0);
+        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', 0);    
+        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', 0); 
+
+        $('#info-table').DataTable({ 
+
+                destroy: true,   
                 processing: true,
                 serverSide: false,
-                paginate:   true,
-                searching:  true,
-                ajax: '{!! route('Nota.getdata') !!}',
+                paginate: true,
+                searching: true,
+                ajax: ruta_pasando_bimestre,
                 columns: [
                     { data: 'alumno', name: 'alumno' },
-                    { data: 'datos_carreras', name: 'datos_carreras' },
-                    { data: 'periodo_academico', name: 'periodo_academico' },
-                    { data: 'punteo', name: 'punteo' },
+                    { data: 'nota1', name: 'nota1' },
+                    { data: 'nota2', name: 'nota2' },
+                    { data: 'nota3', name: 'nota3' },
+                    { data: 'nota4', name: 'nota4' },
+                    { data: 'promedio_actual', name: 'promedio_actual' },
+                    { data: 'promedio_final', name: 'promedio_final' },                                         
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
-            }); 
+
         });
+    });    
+    
+    function mostrarCursosDeCarrera(id) {
+        let ruta_original = null;
 
-        //Insertar
-        $(document).on('click', '.add-modal', function() {
-            $('.modal-title').text('Agregar Informacion');
-            $('.errorInscripcion').addClass('hidden');
-            $('.errorCantidadAlumno').addClass('hidden');
-            $('.errorPeriodoAcademico').addClass('hidden');
-            $('.errorCarreraCurso').addClass('hidden');
-            $('.errorNota').addClass('hidden');
-            $('#addModal').modal('show');
-  
-          $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
-                $("#fkcantidad_alumno_add").empty();
-                $("#fkcantidad_alumno_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkcantidad_alumno_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+"  "+ response[i].grado+"  "+ response[i].letra+"</option>");
-                    $('#fkcantidad_alumno_add').val('').trigger('change.select2'); 
-                }
-            });
+        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
 
-          $.get("/plataforma/blackboard/cuestionario/dropperiodoacademico/"+5,function(response){
-            $("#fkperiodo_academico_add").empty();
-            $("#fkperiodo_academico_add").append("<option value=''> seleccionar </option>");
+        var carrera_id = id.value;
+        var curso_id = $("#curso_id").val();
+        var anio_id = $("#anio_id").val();      
+        var bimestre_id = $("#bimestre_id").val();  
+
+        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
+        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', curso_id);
+        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', anio_id);    
+        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', bimestre_id);         
+
+        $('#info-table').DataTable({ 
+
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: ruta_pasando_bimestre,
+                columns: [
+                    { data: 'alumno', name: 'alumno' },
+                    { data: 'nota1', name: 'nota1' },
+                    { data: 'nota2', name: 'nota2' },
+                    { data: 'nota3', name: 'nota3' },
+                    { data: 'nota4', name: 'nota4' },
+                    { data: 'promedio_actual', name: 'promedio_actual' },
+                    { data: 'promedio_final', name: 'promedio_final' },                                         
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+
+        });        
+
+        $.get("/filtrar/curso/carrera/nota/"+id.value,function(response){
+            $("#curso_id").empty();
+            $("#curso_id").append('<option value="0">seleccione curso</option>'); 
             for(i=0; i<response.length; i++){
-                $("#fkperiodo_academico_add").append("<option value='"+response[i].id+"'> "+response[i].periodo_academico+" "+response[i].tipo_periodo+" </option>");
-                $('#fkperiodo_academico_add').val('').trigger('change.select2');
+                $("#curso_id").append('<option value="'+response[i].id+'">'+response[i].nombre+'</option>'); 
             }
-        });
-       });       
-        
-    function llenardrop(id) {
-         $.get("/academico/catedraticocurso/dropcarreracurso/"+id.value,function(response, id){
-                $("#fkcarrera_curso_add").empty();
-                $("#fkcarrera_curso_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkcarrera_curso_add").append("<option value='"+response[i].id+"'> "+response[i].curso+"</option>");
-                    $('#fkcarrera_curso_add').val('').trigger('change.select2'); 
-                }
-            });
-
-         $.get("/academico/nota/dropinscrito/"+id.value,function(response){   
-                $("#fkinscripcion_add").empty();
-                $("#fkinscripcion_add").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                    $("#fkinscripcion_add").append("<option value='"+response[i].id+"'> "+ response[i].nombre1+" "+ response[i].nombre2+" "+ response[i].apellido1+" "+ response[i].apellido2+" </option>");
-                    $('#fkinscripcion_add').val('').trigger('change.select2'); 
-                }
-            });      
+        });     
     }
 
-        $('.modal-footer').on('click', '.add', function() {
-            $.ajax({
-                type: 'POST',
-                url: '/academico/nota/nota',
-                data: {
-                    '_token': $('input[name=_token]').val(),
-                    'fkinscripcion': $('#fkinscripcion_add').val(),
-                    'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
-                    'fkcarrera_curso': $('#fkcarrera_curso_add').val(),
-                    'fkperiodo_academico': $('#fkperiodo_academico_add').val(),
-                    'nota': $('#nota_add').val(),
-                },
-                success: function(data) {
-                    $('.errorInscripcion').addClass('hidden');
-                    $('errorCantidadAlumno').addClass('hidden');
-                    $('errorPeriodoAcademico').addClass('hidden');
-                    $('.errorNota').addClass('hidden');
-                    $('.errorCarreraCurso').addClass('hidden');
+    function filtrarCurso(id) {
+        let ruta_original = null;
 
-                    if ((data.errors)) {
-                        setTimeout(function () {
-                            $('#addModal').modal('show');
-                            swal("Error", "No se ingreso la informacion", "error", {
-                              buttons: false,
-                              timer: 2000,
-                            });
-                        }, 500);
+        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
 
-                     if (data.errors.fkinscripcion) {
-                            $('.errorInscripcion').removeClass('hidden');
-                            $('.errorInscripcion').text(data.errors.fkinscripcion);
-                        }
+        var carrera_id = $("#carrera_id").val();
+        var curso_id =  id.value;
+        var anio_id = $("#anio_id").val();
+        var bimestre_id = $("#bimestre_id").val();  
 
-                     if (data.errors.fkcantidad_alumno) {
-                            $('.errorCantidadAlumno').removeClass('hidden');
-                            $('.errorCantidadAlumno').text(data.errors.fkcantidad_alumno);
-                        }
+        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
+        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', curso_id);
+        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', anio_id);    
+        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', bimestre_id);         
 
-                    if (data.errors.fkperiodo_academico) {
-                            $('.errorPeriodoAcademico').removeClass('hidden');
-                            $('.errorPeriodoAcademico').text(data.errors.fkperiodo_academico);
-                        }
+        $('#info-table').DataTable({ 
 
-                     if (data.errors.nota) {
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: ruta_pasando_bimestre,
+                columns: [
+                    { data: 'alumno', name: 'alumno' },
+                    { data: 'nota1', name: 'nota1' },
+                    { data: 'nota2', name: 'nota2' },
+                    { data: 'nota3', name: 'nota3' },
+                    { data: 'nota4', name: 'nota4' },
+                    { data: 'promedio_actual', name: 'promedio_actual' },
+                    { data: 'promedio_final', name: 'promedio_final' },                                         
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+
+        });  
+    } 
+
+    function filtrarAnio(id) {
+        let ruta_original = null;
+
+        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
+
+        var carrera_id = $("#carrera_id").val();
+        var curso_id =  $("#curso_id").val();
+        var anio_id = id.value;
+        var bimestre_id = $("#bimestre_id").val();  
+
+        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
+        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', curso_id);
+        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', anio_id);    
+        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', bimestre_id);         
+
+        $('#info-table').DataTable({ 
+
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: ruta_pasando_bimestre,
+                columns: [
+                    { data: 'alumno', name: 'alumno' },
+                    { data: 'nota1', name: 'nota1' },
+                    { data: 'nota2', name: 'nota2' },
+                    { data: 'nota3', name: 'nota3' },
+                    { data: 'nota4', name: 'nota4' },
+                    { data: 'promedio_actual', name: 'promedio_actual' },
+                    { data: 'promedio_final', name: 'promedio_final' },                                         
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+
+        });
+    }  
+
+    function filtrarPeriodo(id) {
+        let ruta_original = null;
+
+        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
+
+        var carrera_id = $("#carrera_id").val();
+        var curso_id =  $("#curso_id").val();
+        var anio_id = $("#anio_id").val();
+        var bimestre_id = id.value;  
+
+        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
+        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', curso_id);
+        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', anio_id);    
+        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', bimestre_id);         
+
+        $('#info-table').DataTable({ 
+
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: ruta_pasando_bimestre,
+                columns: [
+                    { data: 'alumno', name: 'alumno' },
+                    { data: 'nota1', name: 'nota1' },
+                    { data: 'nota2', name: 'nota2' },
+                    { data: 'nota3', name: 'nota3' },
+                    { data: 'nota4', name: 'nota4' },
+                    { data: 'promedio_actual', name: 'promedio_actual' },
+                    { data: 'promedio_final', name: 'promedio_final' },                                         
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+
+        });
+    }     
+
+    $(document).on('click', '.agregar-nota', function() {
+        nombre1 = $(this).data('nombre');
+        fkperiodo = $("#bimestre_id").val();
+        fkinscripcion = $(this).data('fkinscripcion');
+        fkcurso = $(this).data('fkcarrera_curso');    
+
+        $('.modal-title').text('Agregar Informacion');
+        $('.alumno-nombre').text('Alumno, '+nombre1);
+        $('.errorNota').addClass('hidden');
+        $('#addModal').modal('show');
+    }); 
+
+    $('.modal-footer').on('click', '.add', function() {
+        $.ajax({
+            type: 'POST',
+            url: '/academico/nota/nota',
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'fkinscripcion': fkinscripcion,
+                'fkcarrera_curso': fkcurso,
+                'fkperiodo_academico': fkperiodo,
+                'nota': $('#nota_add').val(),
+            },
+            success: function(data) {
+                $('.errorNota').addClass('hidden');
+
+                if ((data.errors)) {
+                    setTimeout(function () {
+                        $('#addModal').modal('show');
+                        swal("Error", "No se ingreso la informacion", "error", {
+                          buttons: false,
+                          timer: 2000,
+                        });
+                    }, 500);
+
+                    if (data.errors.nota) {
                             $('.errorNota').removeClass('hidden');
                             $('.errorNota').text(data.errors.nota);
-                        }
-
-                     if (data.errors.fkcarrera_curso) {
-                            $('.errorCarreraCurso').removeClass('hidden');
-                            $('.errorCarreraCurso').text(data.errors.fkcarrera_curso);
-                        }
-
-                     } else {
-                        swal("Correcto", "Se ingreso la informacion", "success")
-                        .then((value) => {
-                            $('#fkinscripcion_add').val('');
-                            $('#fkperiodo_academico_add').val('');
-                            $('#fkcantidad_alumno_add').val('');
-                            $('#fkcarrera_curso_add').val('');
-                            $('#nota_add').val('');
-                            table.ajax.reload();
-                        });                          
                     }
-                },
-            }); 
-        });
 
+                } else {
+                    swal("Correcto", "Se ingreso la informacion", "success")
+                    .then((value) => {
+                        fkinscripcion = 0;
+                        fkcurso = 0;
+                        fkperiodo = 0;
+                        $('#nota_add').val('');
+
+                        let ruta_original = null;
+
+                        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
+
+                        var ruta_pasando_carrera = ruta_original.replace('carrera_id', $("#carrera_id").val());
+                        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', $("#curso_id").val());
+                        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', $("#anio_id").val());    
+                        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', $("#bimestre_id").val());         
+
+                        $('#info-table').DataTable({ 
+
+                                destroy: true,   
+                                processing: true,
+                                serverSide: false,
+                                paginate: true,
+                                searching: true,
+                                ajax: ruta_pasando_bimestre,
+                                columns: [
+                                    { data: 'alumno', name: 'alumno' },
+                                    { data: 'nota1', name: 'nota1' },
+                                    { data: 'nota2', name: 'nota2' },
+                                    { data: 'nota3', name: 'nota3' },
+                                    { data: 'nota4', name: 'nota4' },
+                                    { data: 'promedio_actual', name: 'promedio_actual' },
+                                    { data: 'promedio_final', name: 'promedio_final' },     
+                                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                                ]
+
+                        });
+
+
+                    });                          
+                }
+            },
+        }); 
+    });    
+
+    $(document).on('click', '.delete-modal', function() {
+        id = $(this).data('id');
+        swal({
+          title: "Esta seguro?",
+          text: "modificara el estado de la informacion",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+                type: 'POST',
+                url: "/academico/nota/estado",
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'pknota': id,
+                },
+                success: function(data) {                 
+                    swal("Correcto", "Se elimino la nota", "success")
+                    .then((value) => {
+                        let ruta_original = null;
+
+                        ruta_original = "{{ route('nota.getdata', ['carrera' => 'carrera_id', 'curso' => 'curso_id', 'anio' => 'anio_id', 'bimestre' => 'bimestre_id']) }}";
+
+                        var ruta_pasando_carrera = ruta_original.replace('carrera_id', $("#carrera_id").val());
+                        var ruta_pasando_curso = ruta_pasando_carrera.replace('curso_id', $("#curso_id").val());
+                        var ruta_pasando_anio = ruta_pasando_curso.replace('anio_id', $("#anio_id").val());    
+                        var ruta_pasando_bimestre = ruta_pasando_anio.replace('bimestre_id', $("#bimestre_id").val());         
+
+                        $('#info-table').DataTable({ 
+
+                                destroy: true,   
+                                processing: true,
+                                serverSide: false,
+                                paginate: true,
+                                searching: true,
+                                ajax: ruta_pasando_bimestre,
+                                columns: [
+                                    { data: 'alumno', name: 'alumno' },
+                                    { data: 'nota1', name: 'nota1' },
+                                    { data: 'nota2', name: 'nota2' },
+                                    { data: 'nota3', name: 'nota3' },
+                                    { data: 'nota4', name: 'nota4' },
+                                    { data: 'promedio_actual', name: 'promedio_actual' },
+                                    { data: 'promedio_final', name: 'promedio_final' },     
+                                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                                ]
+
+                        });
+                    });                                                    
+                },
+            });                                          
+          } else {
+            swal("no se realizo el prcceso!");
+          }
+        });            
+    });
     </script>
 @stop

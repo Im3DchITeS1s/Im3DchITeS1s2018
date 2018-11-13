@@ -23,11 +23,10 @@ use App\Estado;
 
 class NotaController extends Controller
 {
-  protected $verificar_insert =
+    protected $verificar_insert =
     [
         'fkinscripcion' => 'required|integer', 
         'fkperiodo_academico' => 'required|integer', 
-        'fkcantidad_alumno' => 'required|integer', 
         'fkcarrera_curso'=>'required|integer', 
         'nota'=>'required|numeric|between:1,100', 
     ];
@@ -45,63 +44,158 @@ class NotaController extends Controller
 
     public function index()
     {
-       return view('/academico/nota/nota');   
+        $carreras = CantidadAlumno::join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+                                ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+                                ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+                                ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+                                ->where('cantidad_alumno.fkestado', 5)
+                                ->select('cantidad_alumno.id as id', 'grado.nombre as grado', 'carrera.nombre as carrera', 'seccion.letra as seccion')->orderBy('carrera.nombre')->get();
+        $ciclos = Ciclo::select('id', 'nombre')->get();
+        $periodos = PeriodoAcademico::join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')
+                            ->where('periodo_academico.fkestado', 5)->where('periodo_academico.fkestado', 5)
+                            ->select('periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo')->orderBy('periodo_academico.id', 'asc')->get();
+
+        return view('/academico/nota/nota', compact('carreras', 'ciclos', 'periodos'));   
     }
     
-   public function getdata()
+    public function getdata($carrera, $curso, $anio, $bimestre)
     {
-      
-        $color_estado = "";
-        $query = Nota::dataNota(5);
+        $query = Inscripcion::alumnosAgregarNota($carrera, $curso, $anio, $bimestre);
+
         return Datatables::of($query)
             ->addColumn('alumno', function ($data) {
                 return $data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2;
             }) 
-            ->addColumn('datos_carreras', function ($data) {
-                return $data->carrera.' '.$data->grado.' '.$data->punteo;
-            }) 
-           ->addColumn('action', function ($data) {
-                switch ($data->id_estado) {
-                    
-                            case 5:
-                        $color_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'" data-estado="activo"><span class="fa fa-thumbs-up"></span></button>';
-                        break;
+            ->addColumn('nota1', function ($data) {
+                $nota = 0;
 
-                            case 6:
-                        $color_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'" data-estado="inactivo"><span class="fa fa-thumbs-down"></span></button>';
-                        break;
+                $buscar_nota = Nota::buscarNotaAluno($data->id, 1, $data->carrera_curso);
+
+                if(!is_null($buscar_nota))
+                {
+                    $nota = $buscar_nota->nota;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'"data-fkinscripcion="'.$data->fkinscripcion.'" data-fkperiodo_academico="'.$data->fkperiodo_academico.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fkcarrera_curso="'.$data->fkcarrera_curso.'" data-nota="'.$data->nota.'" data-id_estado="'.$data->id_estado.'">
-                    <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
+                return $nota;
+            }) 
+            ->addColumn('nota2', function ($data) {
+                $nota = 0;
+
+                $buscar_nota = Nota::buscarNotaAluno($data->id, 2, $data->carrera_curso);
+
+                if(!is_null($buscar_nota))
+                {
+                    $nota = $buscar_nota->nota;
+                }
+
+                return $nota;
+            }) 
+            ->addColumn('nota3', function ($data) {
+                $nota = 0;
+
+                $buscar_nota = Nota::buscarNotaAluno($data->id, 3, $data->carrera_curso);
+
+                if(!is_null($buscar_nota))
+                {
+                    $nota = $buscar_nota->nota;
+                }
+
+                return $nota;
+            }) 
+            ->addColumn('nota4', function ($data) {
+                $nota = 0;
+
+                $buscar_nota = Nota::buscarNotaAluno($data->id, 4, $data->carrera_curso);
+
+                if(!is_null($buscar_nota))
+                {
+                    $nota = $buscar_nota->nota;
+                }
+
+                return $nota;
+            })  
+            ->addColumn('promedio_actual', function ($data) {
+                $nota = 0;
+
+                $promedios_actuales = Nota::select('nota')->where('fkinscripcion', $data->id)->where('fkcarrera_curso', $data->carrera_curso)->where('fkestado', 5)->get();
+
+                foreach ($promedios_actuales as $promedio_actual) 
+                {
+                    $nota = $promedio_actual->nota + $nota;
+                }
+
+                if($nota > count($promedios_actuales))
+                {
+                    $nota = $nota / count($promedios_actuales);
+                }
+
+                return $nota;
+            }) 
+            ->addColumn('promedio_final', function ($data) {
+                $nota = 0;
+
+                $promedios_actuales = Nota::select('nota')->where('fkinscripcion', $data->id)->where('fkcarrera_curso', $data->carrera_curso)->where('fkestado', 5)->get();
+
+                foreach ($promedios_actuales as $promedio_actual) 
+                {
+                    $nota = $promedio_actual->nota + $nota;
+                }
+
+                if($nota > count($promedios_actuales))
+                {
+                    $nota = $nota / 4;
+                }
+
+                return $nota;
+            })                         
+           ->addColumn('action', function ($data) {
+                $bimestre = intval($data->bimestre);
+                $agregar_nota = '';
+                $imprimir = '';
+                $eliminar = '';
+
+                $buscar_nota = Nota::buscarNotaAluno($data->id, $bimestre, $data->carrera_curso);
+                $imprimir_promedio = Nota::buscarNotaAlumnoPromedio($data->id, $data->carrera_curso);
+
+                if(is_null($buscar_nota))
+                {
+                    $agregar_nota = '<button class="agregar-nota btn btn-success btn-xs" type="button" data-fkinscripcion="'.$data->id.'" data-fkcarrera_curso="'.$data->carrera_curso.'" data-nombre="'.$data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2.'">Agregar Nota</button>';
+                }
+                else
+                {
+                    $eliminar = '<button class="eliminar-nota btn btn-danger btn-xs" type="button" data-id="'.$buscar_nota->id.'">Eliminar</button>';
+                }
+
+                if(count($imprimir_promedio) > 2)
+                {
+                    $imprimir = '<button class="imprimir-nota btn btn-warning btn-xs" type="button" data-fkinscripcion="'.$data->id.'" data-fkcarrera_curso="'.$data->carrera_curso.'">Imprimir</button>';
+                }
+
+                return $agregar_nota.' '.$imprimir.' '.$eliminar;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
 
-      public function dropinscrito(Request $request, $id)
-        {
-            if($request->ajax()){
-                $data = Inscripcion::AlumosCarrera($id,date('Y'));
-                return response()->json($data);
-            }        
-        }  
-  
- 	public function dropcarreracurso(Request $request, $id)
+    public function dropCurso(Request $request, $id)
     {
-    	if($request->ajax()){
-    		$data = CarreraCurso::buscarcarreracurso($id);
-    		return response()->json($data);
-    	}
-    }
-
-    
+        if($request->ajax()){
+            $data = CantidadAlumno::join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+                    ->join('carrera_curso', 'carrera_grado.fkcarrera', 'carrera_curso.fkcarrera')
+                    ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+                    ->where('curso.fkestado', 5)
+                    ->where('cantidad_alumno.id', $id)
+                    ->select('curso.*')->orderBy('curso.nombre')->get();
+            return response()->json($data);
+        }        
+    } 
+ 
     public function create()
     {
       
     }
 
-  public function store(Request $request)
+    public function store(Request $request)
     {
         $estado = Estado::buscarIDEstado(5);
 
@@ -109,15 +203,22 @@ class NotaController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new Nota();         
-            $insert->fkinscripcion = $request->fkinscripcion;
-            $insert->fkperiodo_academico = $request->fkperiodo_academico;           
-            $insert->fkcantidad_alumno = $request->fkcantidad_alumno;
-            $insert->fkcarrera_curso = $request->fkcarrera_curso; 
-            $insert->nota = $request->nota;         
-            $insert->fkestado = $estado->id;                                                                           
-            $insert->save();
-            return response()->json($insert);
+
+            $buscar_notar = Nota::buscarNotaAluno($request->fkinscripcion, $request->fkperiodo_academico, $request->fkcarrera_curso);
+
+            if(is_null($buscar_notar))
+            {
+                $insert = new Nota();         
+                $insert->fkinscripcion = $request->fkinscripcion;
+                $insert->fkperiodo_academico = $request->fkperiodo_academico;           
+                $insert->fkcarrera_curso = $request->fkcarrera_curso; 
+                $insert->nota = $request->nota;         
+                $insert->fkestado = $estado->id;                                                                           
+                $insert->save();
+                return response()->json($insert);                
+            }
+
+            return response()->json($buscar_notar); 
         }        
     }
 
@@ -133,20 +234,7 @@ class NotaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_insert);
-        if ($validator->fails()) {
-            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
-        } else {
-            $cambiar = new Nota();         
-            $cambiar->fkinscripcion = $request->fkinscripcion;
-            $cambiar->fkperiodo_academico = $request->fkperiodo_academico;           
-            $cambiar->fkcantidad_alumno = $request->fkcantidad_alumno;
-            $cambiar->fkcarrera_curso = $request->fkcarrera_curso; 
-            $cambiar->nota = $request->nota;          
-            $cambiar->fkestado = $estado->id;     
-            $cambiar->save();
-            return response()->json($cambiar);
-        }        
+    
     }
 
     public function destroy($id)
@@ -154,15 +242,13 @@ class NotaController extends Controller
         //
     }
     
-      public function cambiarEstado(Request $request)
+    public function cambiarEstado(Request $request)
     {
-        if($request->estado == "activo")
-            $estado = Estado::buscarIDEstado(6);
-        else
-            $estado = Estado::buscarIDEstado(5);
+        $estado = Estado::buscarIDEstado(6);
+
         $cambiar = CatedraticoCurso::findOrFail($request->pknota); 
         $cambiar->fkestado = $estado->id;
         $cambiar->save();
         return response()->json($cambiar);          
     }
-    }
+}
