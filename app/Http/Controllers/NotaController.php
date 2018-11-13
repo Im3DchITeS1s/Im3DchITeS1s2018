@@ -11,6 +11,7 @@ use Response;
 use App\Inscripcion;
 use App\PeriodoAcademico;
 use App\CantidadAlumno;
+use App\CatedraticoCurso;
 use App\CarreraCurso;
 use App\CarreraGrado;
 use App\Ciclo;
@@ -185,7 +186,7 @@ class NotaController extends Controller
                     ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
                     ->where('curso.fkestado', 5)
                     ->where('cantidad_alumno.id', $id)
-                    ->select('curso.*')->orderBy('curso.nombre')->get();
+                    ->select('cantidad_alumno.id as id', 'curso.nombre as nombre')->orderBy('curso.nombre')->get();
             return response()->json($data);
         }        
     } 
@@ -224,7 +225,44 @@ class NotaController extends Controller
 
     public function show($id)
     {
-        //
+        $alumno = Inscripcion::join('persona', 'inscripcion.fkpersona', 'persona.id')
+                ->join('genero', 'persona.fkgenero', 'genero.id')
+                ->join('cantidad_alumno', 'inscripcion.fkcantidad_alumno', 'cantidad_alumno.id')
+                ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
+                ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
+                ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
+                ->join('carrera_curso', 'carrera.id', 'carrera_curso.fkcarrera')
+                ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
+                ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
+                ->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+                ->where('inscripcion.id', $id)
+                ->where('ciclo.nombre', date('Y'))
+                ->select('persona.codigo', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'genero.nombre as genero', 'carrera.nombre as carrera', 'grado.nombre as grado',  'seccion.letra as seccion', 'curso.nombre as curso', 'ciclo.nombre as ciclo', 'carrera.id as fkcarrera', 'cantidad_alumno.id as fkcantidad_alumno', 'genero.id as fkgenero', 'inscripcion.id as fkinscripcion')->first(); 
+
+        $catedratico = CatedraticoCurso::join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
+                ->join('persona', 'catedratico_curso.fkpersona', 'persona.id')
+                ->where('catedratico_curso.fkestado', 5)
+                ->where('catedratico_curso.fkcantidad_alumno', $alumno->fkcantidad_alumno)
+                ->select('persona.codigo', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2')->first(); 
+
+        $cursos = CarreraCurso::join('curso', 'carrera_curso.fkcurso', 'curso.id')
+                    ->where('carrera_curso.fkestado', 5)
+                    ->where('carrera_curso.fkcarrera', $alumno->fkcarrera)
+                    ->select('curso.nombre as curso', 'curso.id as id')
+                    ->orderBy('curso.nombre', 'asc')->get();
+
+        $promedios_actuales = Nota::join('carrera_curso', 'nota.fkcarrera_curso', 'carrera_curso.id')
+                            ->select('nota.*', 'carrera_curso.fkcurso as fkcurso', \DB::raw("(SELECT nota FROM nota
+                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 1 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota1"), \DB::raw("(SELECT nota FROM nota
+                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 2 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota2"), \DB::raw("(SELECT nota FROM nota
+                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 3 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota3"), \DB::raw("(SELECT nota FROM nota
+                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 4 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota4"))
+                            ->where('nota.fkinscripcion', $alumno->fkinscripcion)
+                            ->where('nota.fkestado', 5)->groupBy('nota.fkcarrera_curso')->get();                
+
+        $pdf = \PDF::loadView('academico.reporte.notaalumno', compact('alumno', 'catedratico', 'cursos', 'promedios_actuales'));
+
+        return $pdf->download('nota_del_alumno_'.$alumno->nombre1.'_'.$alumno->apellido1.' '. date('d-m-Y h:i:s') .'.pdf');                 
     }
 
     public function edit($id)

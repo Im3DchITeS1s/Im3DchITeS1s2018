@@ -171,10 +171,9 @@ class Inscripcion extends Model
 	            ->select(['inscripcion.id as id','persona.nombre1 as nombre1','persona.nombre2 as nombre2','persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'carrera_curso.id as carrera_curso', \DB::raw("(SELECT id FROM periodo_academico
 	                          WHERE id = ".$bimestre."
 	                        ) as bimestre")])
-				->where('cantidad_alumno.id',$carrera)
-				->where('carrera_curso.id',$curso)
+				->where('cantidad_alumno.id',$curso)
 				->where('ciclo.nombre',$anio)
-	            ->orderBy('apellido1', 'asc')->get();
+	            ->orderBy('apellido1', 'asc')->groupBy('inscripcion.id')->get();
 		}
 		else
 		{
@@ -191,7 +190,6 @@ class Inscripcion extends Model
 	                          WHERE id = 0
 	                        ) as bimestre")])
 				->where('cantidad_alumno.id',0)
-				->where('carrera_curso.id',0)
 				->where('ciclo.nombre',0)
 	            ->orderBy('apellido1', 'asc')->get();			
 		}

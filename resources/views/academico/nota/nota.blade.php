@@ -4,13 +4,8 @@
 
 @section('content_header')
     <div class="content-header">
-        <h1>Ingreso de Notas
-            <button type="button" class="add-modal btn btn-success">
-                <span class="fa fa-plus-circle"></span>
-            </button> 
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <h1>Ingreso de Notas</h1>
+        <ol class="breadcrumb">            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active">Ingreso de Notas</li>
         </ol>                      
     </div>    
@@ -466,5 +461,28 @@
           }
         });            
     });
+
+    $(document).on('click', '.imprimir-nota', function() {
+        
+        id = $(this).data('fkinscripcion');
+
+        let ruta_original = null;
+
+        ruta_original = "{{ route('nota.show', ['show' => 'fkinscripcion']) }}";
+
+        var ruta_enviar = ruta_original.replace('fkinscripcion', id);
+
+        $.ajax({
+            type: 'GET',
+            url: ruta_enviar,
+            data: {
+                '_token': $('input[name=_token]').val()
+            },
+            success: function(data) {   
+                window.location.replace(ruta_enviar);                                                               
+            }
+        });         
+
+    });    
     </script>
 @stop
