@@ -19,7 +19,7 @@
     <!-- Nuevo -->  
     <script src="{{ asset('js/herramientas/menuatras.js') }}"></script> 
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
-    <!--<script src="{{ asset('js/herramientas/lscio.js') }}"></script>-->  
+    <script src="{{ asset('js/herramientas/lscio.js') }}"></script> 
     <meta name="_token" content="{{ csrf_token() }}"/>
 
     @if(config('adminlte.plugins.select2'))

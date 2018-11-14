@@ -84,8 +84,13 @@ class Cuestionario extends Model
 
 	public static function verificarCuestionariosVencidos($date){
 		return Cuestionario::where('fin', '<=', $date)
-		    ->where('fkestado', '!=', 22)->get();    	
-	}			
+		    ->where('fkestado', '=', 21)->get();    	
+	}
+
+	public static function verificarCuestionariosPublicar($date){
+		return Cuestionario::where('inicio', '<=', $date)
+		    ->whereIn('fkestado', [18, 19, 20])->get();    	
+	}				
 
 	public static function cursoPerteneceAlCuestionario($id)
 	{

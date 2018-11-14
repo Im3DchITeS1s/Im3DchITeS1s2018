@@ -45,12 +45,18 @@ class CuestionarioController extends Controller
     public function index()
     {
         $contar_vencidos = 0;
+        $contar_publicados = 0;
         $estado = Estado::buscarIDEstado(22);
+        
         $cuestionarios_vencidos = Cuestionario::verificarCuestionariosVencidos(date('Y-m-d'));
+        $cuestionarios_publicados = Cuestionario::verificarCuestionariosPublicar(date('Y-m-d'));
 
         if(count($cuestionarios_vencidos) > 0)
             $contar_vencidos = count($cuestionarios_vencidos);
-           
+
+        if(count($cuestionarios_publicados) > 0)
+            $contar_publicados = count($cuestionarios_publicados);
+                       
         foreach ($cuestionarios_vencidos as $cuestionario) 
         {
             $cambiar = Cuestionario::findOrFail($cuestionario->id); 
@@ -58,7 +64,14 @@ class CuestionarioController extends Controller
             $cambiar->save();
         }
 
-        return view('blackboard/cuestionario', compact('contar_vencidos'));
+        foreach ($cuestionarios_publicados as $cues) 
+        {
+            $cambiar = Cuestionario::findOrFail($cues->id); 
+            $cambiar->fkestado = 21;
+            $cambiar->save();
+        }        
+
+        return view('blackboard/cuestionario', compact('contar_vencidos', 'contar_publicados'));
     }
 
     public function getdataCuestionarioCreado()

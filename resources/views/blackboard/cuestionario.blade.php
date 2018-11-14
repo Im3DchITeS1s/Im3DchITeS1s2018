@@ -216,13 +216,20 @@
         <div class="col-md-12">
             <div class="box-footer no-border">
               <div class="row">
-                <div class="col-xs-12 text-center" style="border-right: 1px solid #f4f4f4">
+                <div class="col-xs-6 text-center" style="border-right: 1px solid #f4f4f4">
                   <div style="display:inline;width:60px;height:60px;">
                     <input type="text" value="{{ $contar_vencidos }}" class="dial">
                   </div>
 
                   <div class="knob-label">Cuestionarios / Evaluaciones caducaron</div>
                 </div>
+                <div class="col-xs-6 text-center" style="border-right: 1px solid #f4f4f4">
+                  <div style="display:inline;width:60px;height:60px;">
+                    <input type="text" value="{{ $contar_publicados }}" class="otro">
+                  </div>
+
+                  <div class="knob-label">Cuestionarios / Evaluaciones publicadas</div>
+                </div>                
               </div>
             </div>            
         </div>        
@@ -407,9 +414,13 @@
         var id_respuesta = 0;
         var seleccion = 0;
       
-    $(function() {
-        $(".dial").knob();
-    });
+        $(function() {
+            $(".dial").knob();
+        });
+
+        $(function() {
+            $(".otro").knob();
+        });
 
         $(document).ready(function() {
             $('#punteo_add').addClass('hidden');
