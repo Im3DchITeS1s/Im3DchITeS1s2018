@@ -275,11 +275,6 @@ return [
                 'icon_color' => 'red',
                 ],
                 [
-                'text'    => 'Encargado de Estudiantes',
-                'url'     => '/academico/encargadoalumno/encargadoalumno',
-                'icon_color' => 'red',
-                ],
-                [
                 'text'    => 'Ingreso de Encargados',
                 'url'     => '/academico/encargado/encargado',
                 'icon_color' => 'red',
@@ -370,22 +365,6 @@ return [
                 ],                
                 ],                           
             ],
-        ],
-        [  
-            'text'    => 'Rendimiento Académico',
-            'icon'    => 'line-chart',
-            'submenu' => [
-                [
-                'text' => 'Desempeño de Docente',
-                'url'  => '#',
-                'icon_color' => 'red',
-                ],
-                [
-                'text'    => 'Rendimiento Académico',
-                'url'     => '#',
-                'icon_color' => 'yellow',
-                ],
-            ],                      
         ],        
     ],    
 
