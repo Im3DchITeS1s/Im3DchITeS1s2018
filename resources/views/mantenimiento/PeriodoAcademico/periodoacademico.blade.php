@@ -5,9 +5,6 @@
 @section('content_header')
     <div class="content-header">
         <h1>Período Académico
-            <button type="button" class="add-modal btn btn-success">
-                <span class="fa fa-plus-circle"></span>
-            </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -58,19 +55,7 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                        <!--Nombre-->
-                        <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Nombre</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="Nombre" autofocus maxlength="20">
-                                </div>                                                          
-                            <small class="control-label">Max: 20| unico</small>
-                            <p class="errorNombre text-center alert alert-danger hidden"></p>
-                        </div>   
-                           
+              
                              <!--Drop list de la Tipo Período-->
                              <div class="col-sm-6">
                                 <div class="input-group">
@@ -142,16 +127,7 @@
                             <div class="col-sm-12">
                                 <small class="pull-right" style="color:orange;"></small>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Nombre</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="editar nombre" autofocus>
-                                </div>     
-                            </div>
+                        
                         
                         <!--Drop actualizar carreragrado-->
                         
@@ -239,7 +215,6 @@
          //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
-            $('.errorNombre').addClass('hidden');
             $('.errorInicio').addClass('hidden');
             $('.errorFin').addClass('hidden');
             $('.errorTipoPeriodo').addClass('hidden');
@@ -262,7 +237,6 @@
                 url: '/mantenimiento/periodoacademico',
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'nombre': $('#nombre_add').val(),
                     'inicio': $('#inicio_add').val(),
                     'fin':    $('#fin_add').val(),
                     'fktipo_periodo':    $('#fktipo_periodo_add').val(),
@@ -281,10 +255,6 @@
                               timer: 2000,
                             });
                         }, 500);
-                     if (data.errors.nombre) {
-                            $('.errorNombre').removeClass('hidden');
-                            $('.errorNombre').text(data.errors.nonmbre);
-                        }
 
                        if (data.errors.inicio) {
                             $('.errorInicio').removeClass('hidden');
@@ -304,7 +274,6 @@
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
-                            $('#nombre').val('');
                             $('#inicio').val('');
                             $('#fin').val('');
                             $('#fktipo_periodo').val('');
@@ -319,13 +288,11 @@
             $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
-            $('.errorNombre').addClass('hidden');
             $('.errorInicio').addClass('hidden');
             $('.errorFin').addClass('hidden');
             $('.errorTipoPeriodo').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
-            $('#nombre_edit').val($(this).data('nombre'));
             $('#inicio_edit').val($(this).data('inicio'));
             $('#fin').val($(this).data('fin_edit'));
             $('#fktipo_periodo').val($(this).data('fktipo_periodo_edit'));
@@ -353,7 +320,6 @@
                 data: {
                     '_token':   $('input[name=_token]').val(),
                     'id':       $("#id_edit").val(),
-                    'nombre':   $('#nombre_edit').val(),
                     'inicio':   $('#inicio_edit').val(),
                     'fin':      $('#fin_edit').val(),
                     'fktipo_periodo': $('#fktipo_periodo_edit').val()
@@ -374,10 +340,6 @@
                             });
                         }, 500);
 
-                        if (data.errors.nombre) {
-                            $('.errorNombre').removeClass('hidden');
-                            $('.errorNombre').text(data.errors.nombre);
-                        }
                         if (data.errors.inicio) {
                             $('.errorInicio').removeClass('hidden');
                             $('.errorInicio').text(data.errors.inicio);
@@ -394,7 +356,6 @@
                         swal("Correcto", "Se modifico la informacion", "success")
                             .then((value) => {
                             $("#id_edit").val('');
-                            $('#nombre_edit').val('');
                             $('#inicio_edit').val('');
                             $('#fin_edit').val('');
                             $('#fktipo_periodo_edit').val('');

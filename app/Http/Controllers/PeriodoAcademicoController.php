@@ -16,7 +16,7 @@ class PeriodoAcademicoController extends Controller
 {
      protected $verificar_insert =
     [
-        'nombre' => 'required|max:20',
+      
        	'inicio' => 'required', 
         'fin' => 'required', 
         'fktipo_periodo' => 'required|integer', 
@@ -90,7 +90,6 @@ class PeriodoAcademicoController extends Controller
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $insert = new PeriodoAcademico();
-            $insert->nombre = $request->nombre;
             $insert->inicio = date("Y-m-d", strtotime($request->inicio));
             $insert->fin = date("Y-m-d", strtotime($request->fin));
 			$insert->fktipo_periodo = $request->fktipo_periodo;
@@ -116,8 +115,7 @@ class PeriodoAcademicoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = PeriodoAcademico::findOrFail($id);  
-            $cambiar->nombre = $request->nombre;
+            $cambiar = PeriodoAcademico::findOrFail($id);
             $cambiar->inicio = date("Y-m-d", strtotime($request->inicio)); 
             $cambiar->fin =date("Y-m-d", strtotime($request->fin)); 
         	$cambiar->fktipo_periodo = $request->fktipo_periodo;
