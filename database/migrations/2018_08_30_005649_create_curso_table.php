@@ -10,7 +10,7 @@ class CreateCursoTable extends Migration
     {
         Schema::create('curso', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre', 75)->unique();
+            $table->string('nombre', 100)->unique();
 
             $table->unsignedInteger('fkestado');
 

@@ -15,13 +15,8 @@ class CursoController extends Controller
 {
     protected $verificar_insert =
     [
-        'nombre' => 'required|max:75|unique:curso',
+        'nombre' => 'required|max:100|unique:curso',
     ];
-
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:75|unique:curso,nombre,$id',
-    ];    
 
     public function __construct()
     {
@@ -113,7 +108,9 @@ class CursoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:100|unique:curso,nombre,'.$request->id]);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

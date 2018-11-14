@@ -11,10 +11,5 @@ class TipoPeriodoTableSeeder extends Seeder
         $nuevo->nombre = 'Bimestre';        
         $nuevo->fkestado = 5;
         $nuevo->save();
-
-        $nuevo = new TipoPeriodo();
-        $nuevo->nombre = 'Trimestre';        
-        $nuevo->fkestado = 5;
-        $nuevo->save();
     }
 }

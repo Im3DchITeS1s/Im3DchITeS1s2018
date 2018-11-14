@@ -18,11 +18,6 @@ class TipoPersonaController extends Controller
         'nombre' => 'required|max:50|unique:tipo_persona',
     ];
 
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:32|unique:tipo_persona,nombre,$id',
-    ];    
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -104,7 +99,9 @@ class TipoPersonaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:20|unique:tipo_persona,nombre,'.$request->id]);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

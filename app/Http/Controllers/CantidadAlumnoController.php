@@ -64,7 +64,7 @@ class CantidadAlumnoController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'"data-cantidad="'.$data->cantidad.'" data-fkcarrera_grado="'.$data->fkcarrera_grado.'" data-fkgrado="'.$data->fkseccion.'" data-fkestado="'.$data->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'"data-cantidad="'.$data->cantidad.'" data-fkcarrera_grado="'.$data->fkcarrera_grado.'" data-fkseccion="'.$data->fkseccion.'" data-fkestado="'.$data->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
@@ -114,7 +114,8 @@ class CantidadAlumnoController extends Controller
             {
                 $insert = new CantidadAlumno();           
                 $insert->fkcarrera_grado = $request->fkcarrera_grado;
-                $insert->fkseccion = $request->fkseccion;           
+                $insert->fkseccion = $request->fkseccion;  
+                $insert->cantidad = $request->cantidad;         
                 $insert->fkestado = $estado->id;                                                                           
                 $insert->save();
                 return response()->json($insert);
@@ -141,12 +142,18 @@ class CantidadAlumnoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = CantidadAlumno::findOrFail($id);            
-            $cambiar->cantidad = $request->cantidad;
-            $cambiar->fkcarrera_grado = $request->fkcarrera_grado;    
-            $cambiar->fkseccion = $request->fkseccion;                                    
-            $cambiar->save();
-            return response()->json($cambiar); 
+            $existe = CantidadAlumno::where('fkcarrera_grado', $request->fkcarrera_grado)->where('fkseccion', $request->fkseccion)->get();
+
+            if(count($existe) == 0)
+            {
+                $cambiar = CantidadAlumno::findOrFail($id);            
+                $cambiar->cantidad = $request->cantidad;
+                $cambiar->fkcarrera_grado = $request->fkcarrera_grado;    
+                $cambiar->fkseccion = $request->fkseccion;                                    
+                $cambiar->save();
+                return response()->json($cambiar); 
+            }
+            return response()->json($existe);            
         }       
     }     
 

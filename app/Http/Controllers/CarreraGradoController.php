@@ -16,11 +16,10 @@ use App\Estado;
 
 class CarreraGradoController extends Controller
 {
-     protected $verificar_insert =
+    protected $verificar_insert =
     [
         'fkcarrera' => 'required|integer', 
-        'fkgrado' => 'required|integer',
-                                                                              
+        'fkgrado' => 'required|integer',                                       
     ];
 
     public function __construct()
@@ -42,7 +41,7 @@ class CarreraGradoController extends Controller
     }
 
 
- public function getdata()
+    public function getdata()
     {
       
          $color_estado = "";
@@ -105,9 +104,9 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->get();
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->first();
             
-            if(count($existe) == 0)
+            if(is_null($existe))
             {
                 $insert = new CarreraGrado();            
                 $insert->fkcarrera = $request->fkcarrera;
@@ -116,7 +115,10 @@ class CarreraGradoController extends Controller
                 $insert->save();
                 return response()->json($insert);
             }
-            return response()->json($existe);            
+            else
+            {
+                return response()->json($existe); 
+            }           
         }        
     }
 
@@ -136,9 +138,9 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->get();
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->first();
             
-            if(count($existe) == 0)
+            if(is_null($existe))
             {            
                 $cambiar = CarreraGrado::findOrFail($id);              
                 $cambiar->fkcarrera = $request->fkcarrera;
@@ -146,7 +148,10 @@ class CarreraGradoController extends Controller
                 $cambiar->save();
                 return response()->json($cambiar);
             }
-            return response()->json($existe);              
+            else
+            {
+                return response()->json($existe); 
+            }                   
         }        
     }
 

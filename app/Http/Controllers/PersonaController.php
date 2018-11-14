@@ -30,23 +30,7 @@ class PersonaController extends Controller
         'fktipo_persona' => 'required|integer', 
         'fkpais_departamento' => 'required|integer',      
         'fkgenero' => 'required|integer',                                                                            
-    ];
-
-    protected $verificar_update =
-    [
-        'dpi' => 'required|max:15|unique:persona,nombre1,$id', 
-        'nombre1' => 'required|max:20',  
-        'nombre2' => 'max:20', 
-        'nombre3' => 'max:20',
-        'apellido1' => 'required|max:20',  
-        'apellido2' => 'max:20', 
-        'apellido3' => 'max:20', 
-        'lugar' => 'max:100', 
-        'fecha_nacimiento' => 'required', 
-        'fktipo_persona' => 'required|integer', 
-        'fkpais_departamento' => 'required|integer',      
-        'fkgenero' => 'required|integer',        
-    ];    
+    ];  
 
     public function __construct()
     {
@@ -106,7 +90,7 @@ class PersonaController extends Controller
 
                 $btn_estado = '<button class="delete-modal btn btn-'.$colot_btn.' btn-xs" type="button" data-id="'.$data->id.'" data-accion="'.$accion.'"><span class="'.$icon.'"></span></button>';
 
-                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-nombre1="'.$data->nombre1.'" data-nombre2="'.$data->nombre2.'" data-nombre3="'.$data->nombre3.'" data-apellido1="'.$data->apellido1.'" data-apellido2="'.$data->apellido2.'" data-apellido3="'.$data->apellido3.'" data-lugar="'.$data->lugar.'" data-fecha_nacimiento="'.$data->fecha_nacimiento.'"
+                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-nombre1="'.$data->nombre1.'" data-nombre2="'.$data->nombre2.'" data-nombre3="'.$data->nombre3.'" data-apellido1="'.$data->apellido1.'" data-apellido2="'.$data->apellido2.'" data-apellido3="'.$data->apellido3.'" data-lugar="'.$data->lugar.'" data-fecha_nacimiento="'.date("d/m/Y", strtotime($data->fecha_nacimiento)).'"
                     data-fktipo_persona="'.$data->fktipo_persona.'" data-fkpais_departamento="'.$data->fkpais_departamento.'" data-fkgenero="'.$data->fkgenero.'" data-fkestado="'.$data->fkestado.'" data-codigo="'.$data->codigo.'" data-dpi="'.$data->dpi.'">
                     <span class="glyphicon glyphicon-edit"></span></button>';           
 
@@ -219,7 +203,20 @@ class PersonaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['dpi' => 'required|max:15|unique:persona,dpi,'.$request->id,
+                'nombre1' => 'required|max:20',  
+                'nombre2' => 'max:20', 
+                'nombre3' => 'max:20',
+                'apellido1' => 'required|max:20',  
+                'apellido2' => 'max:20', 
+                'apellido3' => 'max:20', 
+                'lugar' => 'max:100', 
+                'fecha_nacimiento' => 'required', 
+                'fktipo_persona' => 'required|integer', 
+                'fkpais_departamento' => 'required|integer',      
+                'fkgenero' => 'required|integer']);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

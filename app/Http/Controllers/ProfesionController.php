@@ -18,12 +18,6 @@ class ProfesionController extends Controller
         'nombre' => 'required|max:50|unique:profesion',
     ];
 
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:32|unique:profesion,nombre,$id',
-        'fkestado' => 'required'
-    ];    
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -106,15 +100,13 @@ class ProfesionController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make(Input::all(),        
-            ['nombre' => 'required|max:50|unique:profesion,nombre,'.$request->id,
-            'fkestado' => 'required']);
+            ['nombre' => 'required|max:50|unique:profesion,nombre,'.$request->id]);
         
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $cambiar = Profesion::findOrFail($id);  
             $cambiar->nombre = $request->nombre;
-            $cambiar->fkestado = $request->fkestado;
             $cambiar->save();
             return response()->json($cambiar);
         }        

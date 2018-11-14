@@ -18,11 +18,6 @@ class GeneroController extends Controller
         'nombre' => 'required|max:50|unique:genero',
     ];
 
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:32|unique:genero,id,$id',
-    ];    
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -112,7 +107,9 @@ class GeneroController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:12|unique:genero,nombre,'.$request->id]);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

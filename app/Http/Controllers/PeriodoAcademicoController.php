@@ -14,12 +14,17 @@ use App\Estado;
 
 class PeriodoAcademicoController extends Controller
 {
-     protected $verificar_insert =
+    protected $verificar_insert =
     [
-      
        	'inicio' => 'required', 
         'fin' => 'required', 
         'fktipo_periodo' => 'required|integer', 
+    ];
+
+    protected $verificar_update =
+    [
+        'inicio' => 'required', 
+        'fin' => 'required', 
     ];
 
     public function __construct()
@@ -43,6 +48,12 @@ class PeriodoAcademicoController extends Controller
         $color_estado = "";
         $query = PeriodoAcademico::dataPeriodoAcademico();
         return Datatables::of($query)
+            ->addColumn('inicio', function ($periodoacademico) {
+                return date("d/m/Y", strtotime($periodoacademico->inicio));
+            }) 
+            ->addColumn('fin', function ($periodoacademico) {
+                return date("d/m/Y", strtotime($periodoacademico->fin));
+            })             
             ->addColumn('action', function ($periodoacademico) {
                 switch ($periodoacademico->id_estado) {
                     case 5:
@@ -53,9 +64,9 @@ class PeriodoAcademicoController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$periodoacademico->id.'" data-nombre="'.$periodoacademico->nombre.'" data-inicio="'.$periodoacademico->inicio.'" data-fin="'.$periodoacademico->fin.'" data-fktipo_periodo="'.$periodoacademico->fktipo_periodo.'" data-fkestado="'.$periodoacademico->id_estado.'">
+                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$periodoacademico->id.'" data-nombre="'.$periodoacademico->nombre.'" data-inicio="'.date("d/m/Y", strtotime($periodoacademico->inicio)).'" data-fin="'.date("d/m/Y", strtotime($periodoacademico->fin)).'" data-fktipo_periodo="'.$periodoacademico->fktipo_periodo.'" data-fkestado="'.$periodoacademico->id_estado.'">
                     <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
-            })       
+            })                    
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
     }
@@ -111,14 +122,13 @@ class PeriodoAcademicoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_insert);
+        $validator = Validator::make(Input::all(), $this->verificar_update);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $cambiar = PeriodoAcademico::findOrFail($id);
             $cambiar->inicio = date("Y-m-d", strtotime($request->inicio)); 
             $cambiar->fin =date("Y-m-d", strtotime($request->fin)); 
-        	$cambiar->fktipo_periodo = $request->fktipo_periodo;
             $cambiar->save();
             return response()->json($cambiar);
         }        

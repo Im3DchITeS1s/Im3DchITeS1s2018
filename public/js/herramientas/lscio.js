@@ -5,5 +5,4 @@ function inhabilitar()
 }
 
 document.oncontextmenu=inhabilitar
-document.onkeydown=inhabilitar
 

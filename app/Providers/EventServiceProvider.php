@@ -107,16 +107,16 @@ class EventServiceProvider extends ServiceProvider
         ], 
 
         'carreragrado.created' => [
-            'App\Events\CarreraGradoEvent@created',
+            'App\Events\CarreraGradoGradoEvent@created',
         ],
         'carreragrado.updating' => [
-            'App\Events\CarreraGradoEvent@updating',
+            'App\Events\CarreraGradoGradoEvent@updating',
         ],        
         'carreragrado.updated' => [
-            'App\Events\CarreraGradoEvent@updated',
+            'App\Events\CarreraGradoGradoEvent@updated',
         ],
         'carreragrado.deleted' => [
-            'App\Events\CarreraGradoEvent@deleted',
+            'App\Events\CarreraGradoGradoEvent@deleted',
         ], 
 
         'catedraticocontenidoeducativo.created' => [

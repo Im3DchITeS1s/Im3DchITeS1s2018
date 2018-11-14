@@ -107,7 +107,9 @@ class GradoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_insert);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:50|unique:grado,nombre,'.$request->id]);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
