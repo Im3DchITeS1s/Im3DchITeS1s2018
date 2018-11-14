@@ -51,7 +51,9 @@ class NotaController extends Controller
                                 ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
                                 ->where('cantidad_alumno.fkestado', 5)
                                 ->select('cantidad_alumno.id as id', 'grado.nombre as grado', 'carrera.nombre as carrera', 'seccion.letra as seccion')->orderBy('carrera.nombre')->get();
+
         $ciclos = Ciclo::select('id', 'nombre')->get();
+
         $periodos = PeriodoAcademico::join('tipo_periodo', 'periodo_academico.fktipo_periodo', 'tipo_periodo.id')
                             ->where('periodo_academico.fkestado', 5)->where('periodo_academico.fkestado', 5)
                             ->select('periodo_academico.id as id', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo')->orderBy('periodo_academico.id', 'asc')->get();
@@ -186,7 +188,7 @@ class NotaController extends Controller
                     ->join('curso', 'carrera_curso.fkcurso', 'curso.id')
                     ->where('curso.fkestado', 5)
                     ->where('cantidad_alumno.id', $id)
-                    ->select('cantidad_alumno.id as id', 'curso.nombre as nombre')->orderBy('curso.nombre')->get();
+                    ->select('carrera_curso.id as id', 'curso.nombre as nombre')->orderBy('curso.nombre')->get();
             return response()->json($data);
         }        
     } 
@@ -248,17 +250,16 @@ class NotaController extends Controller
         $cursos = CarreraCurso::join('curso', 'carrera_curso.fkcurso', 'curso.id')
                     ->where('carrera_curso.fkestado', 5)
                     ->where('carrera_curso.fkcarrera', $alumno->fkcarrera)
-                    ->select('curso.nombre as curso', 'curso.id as id')
+                    ->select('curso.nombre as curso', 'carrera_curso.id as id')
                     ->orderBy('curso.nombre', 'asc')->get();
 
-        $promedios_actuales = Nota::join('carrera_curso', 'nota.fkcarrera_curso', 'carrera_curso.id')
-                            ->select('nota.*', 'carrera_curso.fkcurso as fkcurso', \DB::raw("(SELECT nota FROM nota
-                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 1 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota1"), \DB::raw("(SELECT nota FROM nota
-                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 2 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota2"), \DB::raw("(SELECT nota FROM nota
-                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 3 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota3"), \DB::raw("(SELECT nota FROM nota
-                              WHERE fkinscripcion = '".$alumno->fkinscripcion."' AND fkperiodo_academico = 4 AND fkcarrera_curso = nota.fkcarrera_curso ) as nota4"))
+        $promedios_actuales = Nota::select('nota.*', 'fkcarrera_curso as fkcurso', \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 1 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota1"), \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 2 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota2"), \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 3 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota3"), \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 4 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota4"))
                             ->where('nota.fkinscripcion', $alumno->fkinscripcion)
-                            ->where('nota.fkestado', 5)->groupBy('nota.fkcarrera_curso')->get();                
+                            ->where('nota.fkestado', 5)->groupBy('fkcarrera_curso')->get();              
 
         $pdf = \PDF::loadView('academico.reporte.notaalumno', compact('alumno', 'catedratico', 'cursos', 'promedios_actuales'));
 

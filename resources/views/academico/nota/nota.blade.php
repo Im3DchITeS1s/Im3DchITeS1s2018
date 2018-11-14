@@ -25,8 +25,8 @@
             <div class="row">
                 <div class="col-md-5">
                     <small>Carrera Grado / Sección</small>
-                    <select class="form-control" name="carrera_id" id="carrera_id" onChange="mostrarCursosDeCarrera(this);">
-                      <option value="0">seleccione carrera</option>
+                    <select class="form-control" name="carrera_id" id="carrera_id" style="font-size: 11px;" onChange="mostrarCursosDeCarrera(this);">
+                      <option value="0"><small>seleccione carrera</small></option>
                         @foreach ($carreras as $carrera)
                           <option value="{{$carrera->id}}">{{$carrera->carrera}} {{$carrera->grado}} / {{$carrera->seccion}}</option>
                         @endforeach
@@ -35,15 +35,15 @@
 
                 <div class="col-md-3">
                     <small>Curso</small>
-                    <select class="form-control" name="curso_id" id="curso_id" onChange="filtrarCurso(this);">
-                      <option value="0">seleccione carrera</option>
+                    <select class="form-control" name="curso_id" id="curso_id" style="font-size: 11px;" onChange="filtrarCurso(this);">
+                      <option value="0"><small>seleccione carrera</small></option>
                     </select>
                 </div>                                              
 
                 <div class="col-md-2">
                     <small>Año</small> 
-                    <select class="form-control" name="anio_id" id="anio_id" onChange="filtrarAnio(this);">
-                      <option value="0">seleccione año</option>
+                    <select class="form-control" name="anio_id" id="anio_id" style="font-size: 11px;" onChange="filtrarAnio(this);">
+                      <option value="0"><small>seleccionar año</small></option>
                         @foreach ($ciclos as $ciclo)
                           <option value="{{$ciclo->nombre}}">{{$ciclo->nombre}}</option>
                         @endforeach
@@ -52,7 +52,7 @@
 
                 <div class="col-md-2">
                     <small>Bimestre</small>
-                    <select class="form-control" name="bimestre_id" id="bimestre_id" onChange="filtrarPeriodo(this);">
+                    <select class="form-control" name="bimestre_id" id="bimestre_id" style="font-size: 11px;" onChange="filtrarPeriodo(this);">
                       <option value="0">seleccione bimestre</option>
                         @foreach ($periodos as $periodo)
                           <option value="{{$periodo->id}}">{{$periodo->periodo_academico}} {{$periodo->tipo_periodo}}</option>
@@ -200,7 +200,7 @@
 
         $.get("/filtrar/curso/carrera/nota/"+id.value,function(response){
             $("#curso_id").empty();
-            $("#curso_id").append('<option value="0">seleccione curso</option>'); 
+            $("#curso_id").append('<option value="0"><small>seleccione curso</small></option>'); 
             for(i=0; i<response.length; i++){
                 $("#curso_id").append('<option value="'+response[i].id+'">'+response[i].nombre+'</option>'); 
             }
