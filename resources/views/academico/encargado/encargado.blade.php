@@ -653,7 +653,7 @@
         </div>
     </div>     
 
-    <!-- AJAX CRUD operations -->
+       <!-- AJAX CRUD operations -->
     <script type="text/javascript">
         var id_persona=0;
         var id_email=0;
@@ -1409,15 +1409,15 @@
                                 $('#email_add_edit').val(''),                            
                                 table_email.ajax.reload();
 
-                                if(existe == false){
-                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
-                                        $("#seleccionar_email_add").empty();
-                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
-                                        for(i=0; i<response.length; i++){
-                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
-                                        }
-                                    });
-                                }                                
+
+                                $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                    $("#email_add").empty();
+                                    $("#email_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                    }
+                                });
+                               
                             });                        
                         }
                     },
@@ -1462,15 +1462,13 @@
                                 $('#email_add_edit').val(''),                                
                                 table_email.ajax.reload();
 
-                                if(existe == false){
-                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
-                                        $("#seleccionar_email_add").empty();
-                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
-                                        for(i=0; i<response.length; i++){
-                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
-                                        }
-                                    });
-                                }                                
+                                $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                    $("#email_add").empty();
+                                    $("#email_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                    }
+                                });                              
                             });                        
                         }
                     },
