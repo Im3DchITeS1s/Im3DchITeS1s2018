@@ -140,7 +140,7 @@
                 $('#fktipo_periodo_add').val('').trigger('change.select2'); 
                 }
             });      
-            });              
+        });              
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({

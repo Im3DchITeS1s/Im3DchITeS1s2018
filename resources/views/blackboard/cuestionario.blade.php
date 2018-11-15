@@ -255,73 +255,118 @@
                         <div class="tab-content">
                             <div id="creados" class="tab-pane fade in active">
                                 <h3>CREADOS</h3>
-                                <table class="table table-bordered table-hover dataTable" id="info-table-creados" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Documento</th>
-                                            <th width="1%">Titulo</th>
-                                            <th width="1%">Carrera - Grado</th>
-                                            <th width="1%">Fechas</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <br>
+                                            <div class="box-body table-responsive no-padding">
+                                                <table class="table table-bordered table-hover dataTable" id="info-table-creados" width="100%">
+                                                    <thead >
+                                                        <tr>
+                                                            <th width="1%">Documento</th>
+                                                            <th width="1%">Titulo</th>
+                                                            <th width="1%">Carrera - Grado</th>
+                                                            <th width="1%">Fechas</th>
+                                                            <th width="1%">Accion</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="edicion" class="tab-pane fade">
                                 <h3>EDICION</h3>
-                                <table class="table table-bordered table-hover dataTable" id="info-table-edicion" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Documento</th>
-                                            <th width="1%">Titulo</th>
-                                            <th width="1%">Carrera - Grado</th>
-                                            <th width="1%">Fechas</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>                               
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <br>
+                                            <div class="box-body table-responsive no-padding">
+                                                <table class="table table-bordered table-hover dataTable" id="info-table-edicion" width="100%">
+                                                    <thead >
+                                                        <tr>
+                                                            <th width="1%">Documento</th>
+                                                            <th width="1%">Titulo</th>
+                                                            <th width="1%">Carrera - Grado</th>
+                                                            <th width="1%">Fechas</th>
+                                                            <th width="1%">Accion</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                                             
                             </div>
                             <div id="listo" class="tab-pane fade">
                                 <h3>LISTO</h3>
-                                <table class="table table-bordered table-hover dataTable" id="info-table-listo" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Documento</th>
-                                            <th width="1%">Titulo</th>
-                                            <th width="1%">Carrera - Grado</th>
-                                            <th width="1%">Fechas</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>                                 
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <br>
+                                            <div class="box-body table-responsive no-padding">
+                                                <table class="table table-bordered table-hover dataTable" id="info-table-listo" width="100%">
+                                                    <thead >
+                                                        <tr>
+                                                            <th width="1%">Documento</th>
+                                                            <th width="1%">Titulo</th>
+                                                            <th width="1%">Carrera - Grado</th>
+                                                            <th width="1%">Fechas</th>
+                                                            <th width="1%">Accion</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                                                  
                             </div>
                             <div id="publicado" class="tab-pane fade">
                                 <h3>PUBLICADO</h3>
-                                <table class="table table-bordered table-hover dataTable" id="info-table-publicado" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Documento</th>
-                                            <th width="1%">Titulo</th>
-                                            <th width="1%">Carrera - Grado</th>
-                                            <th width="1%">Fechas</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>                                 
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <br>
+                                            <div class="box-body table-responsive no-padding">
+                                                <table class="table table-bordered table-hover dataTable" id="info-table-publicado" width="100%">
+                                                    <thead >
+                                                        <tr>
+                                                            <th width="1%">Documento</th>
+                                                            <th width="1%">Titulo</th>
+                                                            <th width="1%">Carrera - Grado</th>
+                                                            <th width="1%">Fechas</th>
+                                                            <th width="1%">Accion</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                                                 
                             </div>
                             <div id="restringido" class="tab-pane fade">
                                 <h3>RESTRINGIDO</h3>
-                                <table class="table table-bordered table-hover dataTable" id="info-table-restringido" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Documento</th>
-                                            <th width="1%">Titulo</th>
-                                            <th width="1%">Carrera - Grado</th>
-                                            <th width="1%">Fechas</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>                                 
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <br>
+                                            <div class="box-body table-responsive no-padding">
+                                                <table class="table table-bordered table-hover dataTable" id="info-table-restringido" width="100%">
+                                                    <thead >
+                                                        <tr>
+                                                            <th width="1%">Documento</th>
+                                                            <th width="1%">Titulo</th>
+                                                            <th width="1%">Carrera - Grado</th>
+                                                            <th width="1%">Fechas</th>
+                                                            <th width="1%">Accion</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                                                  
                             </div>
                         </div>                                                                           
                     </div>                          
@@ -494,7 +539,7 @@
             }   
             if(sel.value == 2)
             {
-                $("punteo_add").val('0');                                        
+                $("#punteo_add").val('0');                                        
             }                      
         } 
 

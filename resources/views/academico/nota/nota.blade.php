@@ -62,22 +62,27 @@
             </div>
             <br><br>
             <div class="row">
-                <div class="col-sm-12">
-                    <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                        <thead >
-                            <tr>
-                                <th width="25%">Alumno</th>
-                                <th width="5%">Primer Nota</th>
-                                <th width="5%">Segunda Nota</th>
-                                <th width="5%">Tercera Nota</th>
-                                <th width="5%">Cuarta Nota</th>
-                                <th width="5%">Promedio Actual</th>
-                                <th width="5%">Promedio Final</th>
-                                <th width="8%">Accion</th>
-                            </tr>
-                        </thead>
-                    </table>         
-                </div>                
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="25%">Alumno</th>
+                                        <th width="5%">Primer Nota</th>
+                                        <th width="5%">Segunda Nota</th>
+                                        <th width="5%">Tercera Nota</th>
+                                        <th width="5%">Cuarta Nota</th>
+                                        <th width="5%">Promedio Actual</th>
+                                        <th width="5%">Promedio Final</th>
+                                        <th width="8%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

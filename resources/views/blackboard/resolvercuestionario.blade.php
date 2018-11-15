@@ -42,12 +42,13 @@
 
                         @endforeach
                     </div>
-                    <form class="form-horizontal" name="formulario" role="form" method="POST" action="{{ route('cuestionario.store') }}">
+                    <form class="form-horizontal" name="formulario" role="form" method="POST" action="{{ route('cuestionarioresponder.store') }}">
                     {{ csrf_field() }}
                     <div class="box-footer">
                         @foreach($encabezados as $encabezado)
                             <div class="row">
                                 <input type="text" value="{{$encabezado->id}}" name="idEncuesta" style="visibility: hidden;">
+                                <input type="text" value="0" name="respuesta_unica[0]" style="visibility: hidden;">
                                 <div class="col-md-12">                                  
                                     <h4><b>{{$encabezado->descripcion}}</b></h4>
                                 </div>                               

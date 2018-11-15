@@ -153,6 +153,7 @@ Route::get('/academico/inscripcion/dropencargado/{id}', 'InscripcionController@d
 //Inscripcion
 Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
 Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
+Route::get('/academico/inscripcion/dropCantidadAlumnoInscripcion/{id}', 'InscripcionController@dropCantidadAlumnoInscripcion');
 Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
 Route::get('/academico/inscripcion/droptiperiodo/{id}', 'InscripcionController@droptiperiodo');
 Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
@@ -221,6 +222,7 @@ Route::post('/gestionadministrativa/inventario/producto/cambiarEstado', 'Product
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
+Route::post('/plataforma/blackboard/bandeja/responder/cuestionario/responder', 'ResponderBandejaCuestionarioController@storeCuestionario')->name('cuestionarioresponder.store');
 Route::get('/bandeja/responder/carrera', 'ResponderBandejaCuestionarioController@getdataCarrera');
 Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionarioController@getdata');
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');

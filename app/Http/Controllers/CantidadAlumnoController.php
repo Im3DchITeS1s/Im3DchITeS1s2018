@@ -108,7 +108,8 @@ class CantidadAlumnoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CantidadAlumno::where('fkcarrera_grado', $request->fkcarrera_grado)->where('fkseccion', $request->fkseccion)->get();
+            $existe = CantidadAlumno::where('fkcarrera_grado', $request->fkcarrera_grado)
+            ->where('fkseccion', $request->fkseccion)->where('fkestado', 5)->get();
 
             if(count($existe) == 0)
             {
@@ -142,7 +143,7 @@ class CantidadAlumnoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CantidadAlumno::where('fkcarrera_grado', $request->fkcarrera_grado)->where('fkseccion', $request->fkseccion)->get();
+            $existe = CantidadAlumno::where('fkcarrera_grado', $request->fkcarrera_grado)->where('fkseccion', $request->fkseccion)->where('fkestado', 5)->get();
 
             if(count($existe) == 0)
             {

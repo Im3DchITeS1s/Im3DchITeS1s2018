@@ -64,23 +64,25 @@
                         <hr>
 
                         <br>
-
                         <div class="row">
-
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th width="1%">Catedrático</th>
-                                            <th width="1%">Contenido Educativo</th>
-                                            <th width="1%">Tarea</th>
-                                            <th width="1%">Fecha</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <br>
+                                    <div class="box-body table-responsive no-padding">
+                                        <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                            <thead >
+                                                <tr>
+                                                    <th width="1%">Catedrático</th>
+                                                    <th width="1%">Contenido Educativo</th>
+                                                    <th width="1%">Tarea</th>
+                                                    <th width="1%">Fecha</th>
+                                                    <th width="1%">Accion</th>
+                                                </tr>
+                                            </thead>
+                                        </table> 
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
 

@@ -27,21 +27,26 @@
         </div>
 
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="15%">Actividad</th>
-                            <th width="15%">Descripción</th>
-                            <th width="15%">Fecha Ingresada</th>
-                            <th width="15%">Fecha Programada</th>
-                            <th width="8%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="15%">Actividad</th>
+                                        <th width="15%">Descripción</th>
+                                        <th width="15%">Fecha Ingresada</th>
+                                        <th width="15%">Fecha Programada</th>
+                                        <th width="8%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>               
+            </div>
         </div>
     </div>
 

@@ -119,6 +119,11 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function store(Request $request)
     {  
+             
+    }
+
+    public function storeCuestionario(Request $request)
+    {  
         $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
         
         if(!is_null($inscrito))
@@ -126,12 +131,15 @@ class ResponderBandejaCuestionarioController extends Controller
             foreach ($request->respuesta_unica as $value) {
                 $respuesta = Respuesta::respuestaCorrecta($value);
 
-                $insert = new Alumno_Cuestionario_Respuesta();
-                $insert->fkcuestionario = $request->idEncuesta;
-                $insert->fkinscripcion = $inscrito->id;
-                $insert->fkpregunta = $respuesta->fkpregunta;
-                $insert->fkrespuesta = $respuesta->id;    
-                $insert->save();        
+                if(!is_null($respuesta))
+                {
+                    $insert = new Alumno_Cuestionario_Respuesta();
+                    $insert->fkcuestionario = $request->idEncuesta;
+                    $insert->fkinscripcion = $inscrito->id;
+                    $insert->fkpregunta = $respuesta->fkpregunta;
+                    $insert->fkrespuesta = $respuesta->id;    
+                    $insert->save();  
+                }      
             } 
             
             $this->calcularPunteoObtenido($request->idEncuesta, Auth::user()->fkpersona);
@@ -142,7 +150,7 @@ class ResponderBandejaCuestionarioController extends Controller
         {
             return view('errores.500');  
         }            
-    }
+    }    
 
     public function show($id)
     {

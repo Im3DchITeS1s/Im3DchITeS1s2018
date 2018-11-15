@@ -27,22 +27,27 @@
         </div>
 
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="1%">Codigo</th>
-                            <th width="1%">Nombre1</th>
-                            <th width="1%">Nombre2</th>
-                            <th width="1%">Apellido1</th>
-                            <th width="1%">Apellido2</th>
-                            <th width="1%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="1%">Codigo</th>
+                                        <th width="1%">Nombre1</th>
+                                        <th width="1%">Nombre2</th>
+                                        <th width="1%">Apellido1</th>
+                                        <th width="1%">Apellido2</th>
+                                        <th width="1%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>                                              
+            </div>             
         </div>
     </div>
 
@@ -456,20 +461,25 @@
                                     </div>                                                               
                                     <p class="errorSeleccionCompania text-center alert alert-danger hidden"></p>
                                 </div>    
-                            </div>    
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-telefono" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="1%">Telefonos</th>
-                                                <th width="1%">Compania</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div>
+                            </div>   
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <br>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-bordered table-hover dataTable" id="info-table-telefono" width="100%">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="1%">Telefonos</th>
+                                                        <th width="1%">Compania</th>
+                                                        <th width="1%">Accion</th>
+                                                    </tr>
+                                                </thead>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>                                              
+                            </div>                              
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary edit_persona_telefono">
                                     <span id="" class='fa fa-save'></span>
@@ -508,19 +518,24 @@
                                     <p class="errorSeleccionEmail text-center alert alert-danger hidden"></p>
                                 </div>    
                             </div>
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-email" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="1%">Emails</th>
-                                                <th width="1%">Tipo Email</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div>    
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <br>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-bordered table-hover dataTable" id="info-table-email" width="100%">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="1%">Emails</th>
+                                                        <th width="1%">Tipo Email</th>
+                                                        <th width="1%">Accion</th>
+                                                    </tr>
+                                                </thead>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>                                              
+                            </div>                               
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary edit_persona_email">
                                     <span id="" class='fa fa-save'></span>
@@ -571,19 +586,24 @@
                                     </div>                                                               
                                     <p class="errorSeleccionarRol text-center alert alert-danger hidden"></p>
                                 </div>                                      
-                            </div>                            
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-sistema-rol-usuario" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="100%">Sistema / Rol</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div>    
+                            </div>          
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <br>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-bordered table-hover dataTable" id="info-table-sistema-rol-usuario" width="100%">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="100%">Sistema / Rol</th>
+                                                        <th width="1%">Accion</th>
+                                                    </tr>
+                                                </thead>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>                                              
+                            </div>                                                  
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary edit_persona_usuario">
                                     <span id="" class='fa fa-save'></span>

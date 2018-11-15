@@ -102,7 +102,7 @@ class CarreraCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CarreraCurso::where('fkcarrera', $request->fkcarrera)->where('fkcurso', $request->fkcurso)->get();
+            $existe = CarreraCurso::where('fkcarrera', $request->fkcarrera)->where('fkcurso', $request->fkcurso)->where('fkestado', 5)->get();
 
             if(count($existe) == 0)
             {
@@ -133,7 +133,7 @@ class CarreraCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CarreraCurso::where('fkcarrera', $request->fkcarrera)->where('fkcurso', $request->fkcurso)->get();
+            $existe = CarreraCurso::where('fkcarrera', $request->fkcarrera)->where('fkcurso', $request->fkcurso)->where('fkestado', 5)->get();
 
             if(count($existe) == 0)
             {

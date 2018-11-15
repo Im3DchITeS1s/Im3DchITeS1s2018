@@ -277,11 +277,11 @@ class PersonaController extends Controller
 
         $persona = Persona::where('fktipo_persona', $id)->orderby('codigo','DESC')->take(1)->first();
 
-        if(count($persona) > 0) {
+        if(!is_null($persona)) {
             $correlativo = substr($persona->codigo, 4, 7);
             $numero=$correlativo+1;
         }
-        if(count($persona) == 0) {
+        else {
             $numero=1;
         }        
 

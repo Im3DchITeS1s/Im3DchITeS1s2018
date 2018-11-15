@@ -25,21 +25,26 @@
             </div>
         </div>
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="15%">Alumno</th>
-                            <th width="15%">Carrera Grado Sección</th>
-                            <th width="15%">Periodo Académico</th>
-                            <th width="15%">Ciclo</th>
-                            <th width="15%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="15%">Alumno</th>
+                                        <th width="15%">Carrera Grado Sección</th>
+                                        <th width="15%">Periodo Académico</th>
+                                        <th width="15%">Ciclo</th>
+                                        <th width="15%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 
@@ -286,7 +291,7 @@
             $('.errorPago').addClass('hidden');
             $('#addModal').modal('show');
 
-            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+            $.get("/academico/inscripcion/dropCantidadAlumnoInscripcion/"+5,function(response, id){
                 $("#fkcantidad_alumno_add").empty();
                 $("#fkcantidad_alumno_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
@@ -411,7 +416,7 @@
             fkciclo = $(this).data('fkciclo');
             $('#editModal').modal('show');
 
-            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+            $.get("/academico/inscripcion/dropCantidadAlumnoInscripcion/"+5,function(response, id){
                 $("#fkcantidad_alumno_edit").empty();
                 $("#fkcantidad_alumno_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){

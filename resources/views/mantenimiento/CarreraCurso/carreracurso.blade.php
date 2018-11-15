@@ -222,7 +222,7 @@
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/carreracurso/',
+                url: '/mantenimiento/carreracurso',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),

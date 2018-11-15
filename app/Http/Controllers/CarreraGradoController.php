@@ -104,8 +104,8 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->first();
-            
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->where('fkestado', 5)->first();
+
             if(is_null($existe))
             {
                 $insert = new CarreraGrado();            
@@ -138,7 +138,7 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->first();
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->where('fkestado', 5)->first();
             
             if(is_null($existe))
             {            

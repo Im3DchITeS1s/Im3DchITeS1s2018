@@ -27,20 +27,23 @@
         </div>
 
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="25%">Catedrático</th>
-                            <th width="25%">Carrera Grado Cursos</th>
-                            <th width="25%">Fecha (Inicio-Fin)</th>
-                            <th width="8%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="col-xs-12">
+                <div class="box">
+                    <br>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                            <thead >
+                                <tr>
+                                    <th width="25%">Catedrático</th>
+                                    <th width="25%">Carrera Grado Cursos</th>
+                                    <th width="25%">Fecha (Inicio-Fin)</th>
+                                    <th width="8%">Accion</th>
+                                </tr>
+                            </thead>
+                        </table> 
+                    </div>
+                </div>
+            </div> 
         </div>
     </div>
 
@@ -150,121 +153,13 @@
         </div>
     </div>   
 
-
- <!-- Modal Editar -->
-    <div id="editModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="id_edit" disabled>
-                        </div>
-
-                        <div class="form-group has-warning">
-                            <div class="col-sm-11">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                               <!--Inicio-->
-                        <div class="col-sm-5">
-                                <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
-                                            <label>Inicio</label>
-                                        <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="fecha_inicio_edit" name="fecha_inicio_edit" placeholder="dd/mm/yyyy" autofocus>
-                                </div>                                                               
-                                    <p class="errorInicio text-center alert alert-danger hidden"></p>
-                        </div>
-                             <!--Fin-->
-                        <div class="col-sm-5">
-                                 <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
-                                            <label>Fin</label>
-                                        <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="fecha_fin_edit" name="fecha_fin_edit" placeholder="dd/mm/yyyy" autofocus>
-                                 </div>                                                               
-                                    <p class="errorFin text-center alert alert-danger hidden"></p>
-                        </div>  
-                         <!--Campo de Periodos-->
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                  <div class="input-group-addon">
-                                   <label>No. Períodos</label>
-                                  </div>
-                                  <input type="text" class="form-control" id="cantidad_periodo_edit" name ="cantidad_periodo_edit" placeholder="Cantidad de Periodos" autofocus maxlength="6">
-                                </div>                                                               
-                                <small class="control-label"> </small>
-                                <p class="errorCantidad text-center alert alert-danger hidden"></p>
-                            </div>  
-
-                             <!--Drop list de la Catedratico-->
-                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Catedratico</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkpersona_edit" id='fkpersona_edit' required autofocus>
-                                    </select> 
-                                </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
-                                <p class="errorPersona text-center alert alert-danger hidden"></p>
-                            </div> 
-
-
-                             <!--Drop list de la Carrera Grado-->
-                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Carreras Grados</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcantidad_alumno_edit" id='fkcantidad_alumno_edit' onChange="llenardrop(this);" required autofocus>
-                                    </select> 
-                                </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                       
-                                <p class="errorCantidadAlumno text-center alert alert-danger hidden"></p>
-                            </div> 
-
-                            <!--Drop list de la Carrera Grado-->
-                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Carrera Curso</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fkcarrera_curso_edit" id='fkcarrera_curso_edit' required autofocus>
-                                    </select> 
-                                </div>                                                               
-                                <p class="errorCarreraCurso text-center alert alert-danger hidden"></p>
-                            </div> 
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>     
-
       <!-- AJAX CRUD operations -->
     <script type="text/javascript">
         var table = "";
+
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy',
+        });        
 
         //dropdownlist
         $(document).ready(function() {
@@ -310,21 +205,21 @@
                 }
             });   
 
-          $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
                 $("#fkcantidad_alumno_add").empty();
                 $("#fkcantidad_alumno_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
-                    $("#fkcantidad_alumno_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" | "+ response[i].grado+"</option>");
+                    $("#fkcantidad_alumno_add").append("<option value='"+response[i].id+"'> "+response[i].carrera+" | "+ response[i].grado+" | "+response[i].letra+"</option>");
                     $('#fkcantidad_alumno_add').val('').trigger('change.select2'); 
                 }
             });
 
-       });       
+        });       
         
 
-    function llenardrop(id) {
+        function llenardrop(id) {
 
-         $.get("/academico/catedraticocurso/dropcarreracurso/"+id.value,function(response, id){
+             $.get("/academico/catedraticocurso/dropcarreracurso/"+id.value,function(response, id){
                 $("#fkcarrera_curso_add").empty();
                 $("#fkcarrera_curso_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
@@ -333,8 +228,20 @@
                 }
             });
 
-    }
+        }
 
+        function llenardropE(id) {
+
+             $.get("/academico/catedraticocurso/dropcarreracurso/"+id.value,function(response, id){
+                $("#fkcarrera_curso_edit").empty();
+                $("#fkcarrera_curso_edit").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkcarrera_curso_edit").append("<option value='"+response[i].id+"'> "+response[i].curso+"</option>");
+                    $('#fkcarrera_curso_edit').val('').trigger('change.select2'); 
+                }
+            });
+
+        }        
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
@@ -399,9 +306,9 @@
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
-                            $('#inicio_add').val('');
-                            $('#fin_add').val('');
-                            $('cantidad_periodo_add').val('');
+                            $('#fecha_inicio_add').val('');
+                            $('#fecha_fin_add').val('');
+                            $('#cantidad_periodo_add').val('');
                             $('#fkpersona_add').val('');
                             $('#fkcantidad_alumno_add').val('');
                              $('#fkcarrea_curso_add').val('');

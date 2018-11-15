@@ -16,15 +16,15 @@ class PeriodoAcademicoController extends Controller
 {
     protected $verificar_insert =
     [
-       	'inicio' => 'required', 
-        'fin' => 'required', 
+        'inicio' => 'required|date_format:"d/m/Y"',    
+        'fin' => 'required|date_format:"d/m/Y""',          
         'fktipo_periodo' => 'required|integer', 
     ];
 
     protected $verificar_update =
     [
-        'inicio' => 'required', 
-        'fin' => 'required', 
+        'inicio' => 'required|date_format:"d/m/Y"',    
+        'fin' => 'required|date_format:"d/m/Y""'  
     ];
 
     public function __construct()

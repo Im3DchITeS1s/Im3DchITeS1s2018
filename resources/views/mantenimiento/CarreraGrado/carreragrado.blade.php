@@ -221,7 +221,7 @@
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/carreragrado/',
+                url: '/mantenimiento/carreragrado',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),

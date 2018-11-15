@@ -111,6 +111,14 @@ class InscripcionController extends Controller
             ->make(true);
     }
 
+    public function dropCantidadAlumnoInscripcion(Request $request, $id)
+    {
+        if($request->ajax()){
+            $data = CantidadAlumno::dropCantidadAlumnoInscripcion($id);
+            return response()->json($data);
+        }        
+    }     
+
     public function dropCantidadCarreraGrado(Request $request, $id)
     {
         if($request->ajax()){

@@ -26,8 +26,8 @@ class CatedraticoCursoController extends Controller
      
     protected $verificar_insert =
     [
-        'fecha_inicio' => 'required', 
-        'fecha_fin' => 'required', 
+        'fecha_inicio' => 'required|date_format:"d/m/Y"',    
+        'fecha_fin' => 'required|date_format:"d/m/Y"',         
         'cantidad_periodo' => 'required|integer', 
         'fkpersona'=>'numeric|required|integer', 
         'fkcantidad_alumno'=>'numeric|required|integer', 
@@ -76,8 +76,7 @@ class CatedraticoCursoController extends Controller
                         break;
                 }
 
-                return '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'"data-fkpersona="'.$data->fkpersona.'" data-fkcantidad_alumno="'.$data->fkcantidad_alumno.'" data-fecha_inicio="'.$data->fecha_inicio.'" data-fecha_fin="'.$data->fecha_fin.'" data-cantidad_periodo="'.$data->cantidad_periodo.'" data-id_estado="'.$data->id_estado.'">
-                    <span class="glyphicon glyphicon-edit"></span></button> '.$color_estado;
+                return $color_estado;
             })       
             ->editColumn('id', 'ID: {{$id}}')       
             ->make(true);
@@ -122,7 +121,7 @@ class CatedraticoCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CatedraticoCurso::where('fkpersona', $request->fkpersona)->where('fkcantidad_alumno', $request->fkcantidad_alumno)->where('fkcarrera_curso', $request->fkcarrera_curso)->get();
+            $existe = CatedraticoCurso::where('fkestado', 5)->where('fkcantidad_alumno', $request->fkcantidad_alumno)->where('fkcarrera_curso', $request->fkcarrera_curso)->get();
 
             if(count($existe) == 0)
             {
@@ -157,7 +156,8 @@ class CatedraticoCursoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $existe = CatedraticoCurso::where('fkpersona', $request->fkpersona)->where('fkcantidad_alumno', $request->fkcantidad_alumno)->where('fkcarrera_curso', $request->fkcarrera_curso)->get();
+            $existe = CatedraticoCurso::where('fkestado', 5)->where('fkcantidad_alumno', $request->fkcantidad_alumno)
+            ->where('fkcarrera_curso', $request->fkcarrera_curso)->get();
 
             $cambiar = new CatedraticoCurso();            
             $cambiar->fecha_inicio = $request->fecha_inicio;

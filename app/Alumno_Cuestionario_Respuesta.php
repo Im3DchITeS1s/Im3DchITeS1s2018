@@ -48,6 +48,7 @@ class Alumno_Cuestionario_Respuesta extends Model
             ->join('respuesta', 'alumno_cuestionario_respuesta.fkrespuesta', 'respuesta.id')
             ->where('inscripcion.fkpersona', $fkpersona)
             ->where('respuesta.validar', $valido)
+            ->where('respuesta.fkestado', 5)
             ->where('alumno_cuestionario_respuesta.fkcuestionario', $id)
             ->select('respuesta.descripcion as respuesta', 'respuesta.validar as validar')->get();
 	}
