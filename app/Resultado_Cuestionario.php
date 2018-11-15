@@ -17,14 +17,13 @@ class Resultado_Cuestionario extends Model
 				->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
 				->join('cuestionario', 'resultado_cuestionario.fkcuestionario', 'cuestionario.id')
 				->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
-				->where('Resultado_Cuestionario.fkinscripcion', $inscripcion)
+				->where('resultado_cuestionario.fkinscripcion', $inscripcion)
 				->where('ciclo.nombre', $ciclo)
-	            ->where('catedratico_curso.fkcantidad_alumno', $carrera_grado_seccion)
-	            ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)				
+	            ->where('resultado_cuestionario.fkcarrera_curso', $carrera_curso)				
 				->select('resultado_cuestionario.fkcuestionario as fkcuestionario')->get();
 	}	
 
-	public static function todosResultados($ciclo, $carrera_grado_seccion, $carrera_curso)
+	public static function todosResultados($ciclo, $carrera_grado_seccion, $carrera_curso, $inscrito)
 	{
 		return Resultado_Cuestionario::join('inscripcion', 'resultado_cuestionario.fkinscripcion', 'inscripcion.id')
 				->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
@@ -32,7 +31,8 @@ class Resultado_Cuestionario extends Model
 				->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
 				->where('ciclo.nombre', $ciclo)
 	            ->where('catedratico_curso.fkcantidad_alumno', $carrera_grado_seccion)
-	            ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)				
+	            ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)	
+	            ->where('inscripcion.id', $inscrito)				
 				->select('resultado_cuestionario.fkcuestionario as fkcuestionario')->get();
 	}
 

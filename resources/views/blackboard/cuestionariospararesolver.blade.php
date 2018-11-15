@@ -36,7 +36,7 @@
                                     @if($cuestionario_resuelto->fkcuestionario == $cuestionario->id)
                                       <div class="progress-group">
                                         <div class="col-md-11">
-                                            <span class="progress-text"><a href="{{ route('obtenida.show', ['id' => $cuestionario->id]) }}" class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</a></span>
+                                            <span class="progress-text"><a href="{{ route('obtenida.show', ['id' => $cuestionario->id]) }}" class='btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</a></span>
                                             <div class="progress sm" style="height: 20px;">
                                                 <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'>
                                                     <strong>Prioridad: {{ $cuestionario->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario->fin)) }}</strong>
@@ -98,7 +98,7 @@
         $(document).on('click', '.resolver-modal', function() {
             var id = $(this).data('id');
 
-            let ruta1 = "{{ route('cuestionarios.encabezadoCuestionarioSeleccionado', ['id' => 'id']) }}";
+            let ruta1 = "{{ route('cuestionarios.encabezadoCuestionarioSeleccionado', ['id1' => 'id']) }}";
             var ruta = ruta1.replace('id', id);
 
             $.ajax({

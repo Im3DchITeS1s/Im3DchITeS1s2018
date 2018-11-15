@@ -74,14 +74,16 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function mostrarCuestionariosSeleccionados($carrega_grado_seccion, $carrera_curso)
     {
-        $cuestionarios_resueltos = Resultado_Cuestionario::todosResultados(date('Y'), $carrega_grado_seccion, $carrera_curso);
+        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
+
+        $cuestionarios_resueltos = Resultado_Cuestionario::todosResultados(date('Y'), $carrega_grado_seccion, $carrera_curso, $inscrito->id);
         $cuestionarios = Cuestionario::dataBandejaCuestionario($carrega_grado_seccion, $carrera_curso);
         return view('/blackboard/cuestionariospararesolver', compact('cuestionarios_resueltos', 'cuestionarios'));      
     }
 
     public function encabezadoCuestionarioSeleccionado($id)
     {
-        $verificar = Resultado_Cuestionario::buscarCuestionarioResuelto(Auth::user()->fkpersona, 5);
+        $verificar = Resultado_Cuestionario::buscarCuestionarioResuelto(5, Auth::user()->fkpersona);
         
         if(count($verificar) != 0)
         {

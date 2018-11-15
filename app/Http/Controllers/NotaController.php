@@ -254,10 +254,10 @@ class NotaController extends Controller
                     ->orderBy('curso.nombre', 'asc')->get();
 
         $promedios_actuales = Nota::select('nota.*', 'fkcarrera_curso as fkcurso', \DB::raw("(SELECT n.nota FROM nota n
-                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 1 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota1"), \DB::raw("(SELECT n.nota FROM nota n
-                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 2 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota2"), \DB::raw("(SELECT n.nota FROM nota n
-                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 3 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota3"), \DB::raw("(SELECT n.nota FROM nota n
-                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 4 AND n.fkcarrera_curso = nota.fkcarrera_curso ) as nota4"))
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 1 AND n.fkcarrera_curso = nota.fkcarrera_curso AND n.fkestado = 5 ) as nota1"), \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 2 AND n.fkcarrera_curso = nota.fkcarrera_curso AND n.fkestado = 5 ) as nota2"), \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 3 AND n.fkcarrera_curso = nota.fkcarrera_curso AND n.fkestado = 5 ) as nota3"), \DB::raw("(SELECT n.nota FROM nota n
+                              WHERE n.fkinscripcion = '".$alumno->fkinscripcion."' AND n.fkperiodo_academico = 4 AND n.fkcarrera_curso = nota.fkcarrera_curso AND n.fkestado = 5 ) as nota4"))
                             ->where('nota.fkinscripcion', $alumno->fkinscripcion)
                             ->where('nota.fkestado', 5)->groupBy('fkcarrera_curso')->get();              
 

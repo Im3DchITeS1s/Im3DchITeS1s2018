@@ -232,7 +232,7 @@
 
         let ruta_original = null;
 
-        ruta_original = "{{ route('catedratico.show', ['show' => 'contenido_id']) }}";
+        ruta_original = "{{ route('alumno.show', ['show' => 'contenido_id']) }}";
 
         var ruta_enviar = ruta_original.replace('contenido_id', id);
 

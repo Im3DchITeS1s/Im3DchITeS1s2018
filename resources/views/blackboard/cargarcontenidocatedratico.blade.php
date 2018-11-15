@@ -250,8 +250,8 @@
             var fileEl=$('input[type=file]');
             $(fileEl).on('change',function () {
                 
-                var oFile = document.getElementById("archivo_add").files[0];
-                var extension = ($("#archivo_add").val().substring($("#archivo_add").val().lastIndexOf("."))).toLowerCase();
+                var oFile = document.getElementById("archivo").files[0];
+                var extension = ($("#archivo").val().substring($("#archivo").val().lastIndexOf("."))).toLowerCase();
 
                 if (oFile.size > 2097152) // 2 mb for bytes.
                 {
@@ -260,7 +260,7 @@
                       timer: 2000,
                     });
 
-                    document.getElementById("archivo_add").value = null;
+                    document.getElementById("archivo").value = null;
                 }
                 else
                 {

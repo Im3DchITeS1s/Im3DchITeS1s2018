@@ -32,7 +32,6 @@ class Respuesta extends Model
 				->select('respuesta.id as id','respuesta.descripcion as descripcion','respuesta.validar as validar','respuesta.fkpregunta as fkpregunta', 'etiqueta.tipo as tipo')
             	->where('pregunta.fkcuestionario', $id)
             	->where('cuestionario.fkestado', $estado)
-            	->where('pregunta.fkestado', 5)
             	->where('respuesta.fkestado', 5)->inRandomOrder()->get(); 
 	}
 
