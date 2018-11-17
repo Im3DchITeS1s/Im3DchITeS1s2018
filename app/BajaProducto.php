@@ -18,7 +18,8 @@ class BajaProducto extends Model
 	{
 		return BajaProducto::join('inventario_stock','baja_producto.fkinventario_stock','inventario_stock.id')
 				->join('producto','inventario_stock.fkproducto','producto.id')
-				->select(['baja_producto.id as id','baja_producto.cantidad as cantidad','baja_producto.observacion as observacion, producto.nombre as producto']);
+				->select(['baja_producto.id as id','baja_producto.cantidad as cantidad','producto.nombre as producto','baja_producto.observacion as observacion','inventario_stock.cantidad as actual'])
+				->orderBy('baja_producto.id','desc');
 	}       
 
     public static function boot() {

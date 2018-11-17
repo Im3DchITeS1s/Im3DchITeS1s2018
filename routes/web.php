@@ -269,7 +269,8 @@ Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('alta
 //Baja Producto
 Route::resource('/gestionadministrativa/inventario/bajaproducto', 'BajaProductoController');
 Route::get('/gestionadministrativa/inventario/bajaproducto/dropproducto/{id}', 'BajaProductoController@dropProducto');
-Route::get('AltaProducto/getdata', 'AltaProductoController@getdata')->name('altaproducto.getdata');
+Route::get('BajaProducto/getdata', 'BajaProductoController@getdata')->name('bajaproducto.getdata');
+
 
 // Tipo Pago
 

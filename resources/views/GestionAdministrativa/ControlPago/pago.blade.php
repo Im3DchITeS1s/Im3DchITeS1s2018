@@ -104,6 +104,7 @@
                             <table class="table table-bordered table-hover dataTable" id="info-table-pago" width="100%">
                                 <thead >
                                     <tr>
+                                        
                                         <th width="1%">Mes</th>
                                         <th width="1%">Pago Q</th>                                        
                                         <th width="1%">Accion</th>

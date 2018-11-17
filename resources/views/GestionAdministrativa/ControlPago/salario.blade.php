@@ -52,7 +52,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <div class="input-group">
                               <div class="input-group-addon">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
@@ -63,16 +63,37 @@
                             </div>
                             <p class="errorMes text-center alert alert-danger hidden"></p>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                              <div class="input-group-addon">
+                                <small class="pull-right" style="color: black;"><i class="fa fa-calculator"></i></small>
+                              </div>
+                              <input type="text" class="form-control" id="periodo" placeholder="Cantida de Periodos"  disabled="true"required autofocus>
+                            </div>
+                            <p class="errorPeriodo text-center alert alert-danger hidden"></p>
+                        </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                              <div class="input-group-addon">
+                                <small class="pull-right" style="color: black;"><i class="fa fa-calculator"></i></small>
+                              </div>
+                              <input type="text" class="form-control" id="valorperiodo" placeholder="Varlor por periodo"  required autofocus>
+                            </div>
+                            <p class="errorvalorperiodo text-center alert alert-danger hidden"></p>
+                        </div>
+
+                
+                        <div class="col-sm-6">
                             <div class="input-group">
                               <div class="input-group-addon">
                                 <small class="pull-right" style="color: red;"><i class="fa fa-asterisk"></i></small>
                               </div>
-                              <input type="text" class="form-control" id="pago" placeholder="monto" required autofocus>
+                              <input type="text" class="form-control" id="pago" placeholder="Salario Total" required autofocus>
                             </div>
                             <p class="errorPago text-center alert alert-danger hidden"></p>
-                        </div>
+                        </div><br><br>
+
                     </form>
 
                     <div class="modal-footer">
@@ -88,6 +109,7 @@
                             <table class="table table-bordered table-hover dataTable" id="info-table-pago" width="100%">
                                 <thead >
                                     <tr>
+                                        <th width="1%">Codigo</th>
                                         <th width="1%">Mes</th>
                                         <th width="1%">Pago Q</th>
                                         <th width="1%">Accion</th>
@@ -120,9 +142,11 @@
         });
          //Modal
         $(document).on('click', '.edit-modal-salario', function() {
-            $('.modal-title').text('Agregar Pago');
+            $('.modal-title').text('Agregar Pago Salario');
             $('.errorMes').addClass('hidden');
+            $('.errorPeriodo').addClass('hidden');
             $('.errorPago').addClass('hidden');
+            $('.errorvalorperiodo').addClass('hidden');
 
             id = $(this).data('id');
             $('#editModal').modal('show');
@@ -135,9 +159,9 @@
                 }
             });
 
-            function verificarMes(idmes, nombremes, fkinscripcion)
+            function verificarMes(idmes, nombremes, fkpersona)
             {
-                $.get("/meses/pagos/alumno/"+fkinscripcion+"/"+idmes,function(data){
+                $.get("/meses/pagos/alumno/"+fkpersona+"/"+idmes,function(data){
                     console.log(data);
                     if(data === 0)
                     {
@@ -150,7 +174,7 @@
 
             let ruta_original = null;
 
-            ruta_original = "{{ route('pago.getdatapago', ['fkinscripcion' => 'id']) }}";
+            ruta_original = "{{ route('pago.getdatapago', ['fkspersona' => 'id']) }}";
 
             var ruta_pasando_inscripcion = ruta_original.replace('id', id);
 
@@ -174,12 +198,12 @@
         $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'POST',
-                url: '/gestionadministrativa/controlpago/pago',
+                url: '/gestionadministrativa/controlpago/slario',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkmes': $("#fkmes").val(),
                     'fktipo_pago':   2,
-                    'fkinscripcion': id,
+                    'fkspersona': id,
                     'pago': $('#pago').val()
                 },
                 success: function(data) {

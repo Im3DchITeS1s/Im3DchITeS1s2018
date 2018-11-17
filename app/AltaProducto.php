@@ -17,7 +17,8 @@ class AltaProducto extends Model
 		//funcion de carga datable 
 	public static function dataAltaProducto(){
 		return AltaProducto::join('producto','alta_producto.fkproducto','producto.id')
-				->select(['alta_producto.id as id', 'alta_producto.cantidad as cantidad','alta_producto.observacion','alta_producto.fkproducto']); 
+				->select(['alta_producto.id as id', 'alta_producto.cantidad as cantidad','producto.nombre as producto','alta_producto.observacion']) 
+				->orderBy('alta_producto.id', 'asc');
      }
 
      #Funcion para buscar Producto

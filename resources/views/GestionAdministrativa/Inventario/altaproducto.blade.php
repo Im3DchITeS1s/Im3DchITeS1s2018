@@ -74,7 +74,7 @@
     </div>
      <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">MOVIMIENTOS</h3>
+            <h3 class="box-title">ULTIMOS MOVIMIENTOS</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
@@ -86,10 +86,10 @@
                 <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
                     <thead >
                         <tr>
-                            <th width="25%">Producto</th>
-                            <th width="25%">Descripcion</th>
-                            <th width="25%">Categoria</th>
-                            <th width="8%">Accion</th>
+                            <th width="20%">Codigo</th>
+                            <th width="20%">Cantidad</th>
+                            <th width="20%">Producto</th>
+                            <th width="20%">Observacion</th>
                         </tr>
                     </thead>
                 </table>         
@@ -98,7 +98,6 @@
         </div>
 
         <div class="box-footer">
-
         </div>
     </div>
 
@@ -110,12 +109,12 @@
             table = $('#info-table').DataTable({
                 processing: true,
                 serverSide: false,
-                ajax: '{!! route('producto.getdata') !!}',
+                ajax: '{!! route('altaproducto.getdata') !!}',
                 columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'cantidad', name: 'cantidad' },
                     { data: 'producto', name: 'producto' },
-                    { data: 'descripcion', name: 'descripcion' },
-                    { data: 'categoria', name: 'categoria_add' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                    { data: 'observacion', name: 'observacion' },
                 ]
             });
 
