@@ -87,7 +87,7 @@ class Respuesta extends Model
             	->where('etiqueta.tipo', 'multiple')
             	->where('respuesta.validar', 1)
             	->where('cuestionario.fkestado', 21)
-            	->Orwhere('cuestionario.fkestado', 22)
+            	->whereOr('cuestionario.fkestado', 22)
             	->where('pregunta.fkestado', 5)
             	->where('respuesta.fkestado', 5)->get(); 
 	}

@@ -127,7 +127,7 @@ class ResponderBandejaCuestionarioController extends Controller
     public function storeCuestionario(Request $request)
     {  
         $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
-        
+
         if(!is_null($inscrito))
         {
             foreach ($request->respuesta_unica as $value) {
@@ -187,8 +187,7 @@ class ResponderBandejaCuestionarioController extends Controller
         $preguntas = Pregunta::preguntaEncuestaImprimir($fkencuesta, 21);
 
         $punteo_respuesta_valida = $cuestionario->punteo/count($preguntas);
-
-        $buscarRespuestasCuestionario = Alumno_Cuestionario_Respuesta::respuestasDelCuestionario($fkencuesta, $fkpersona);
+        $buscarRespuestasCuestionario = Alumno_Cuestionario_Respuesta::respuestasDelCuestionario($fkpersona, $fkencuesta);
 
         foreach ($buscarRespuestasCuestionario as $valor) {
             $respuestas = Respuesta::respustasTipoMultiple($fkencuesta, $valor->fkpregunta);

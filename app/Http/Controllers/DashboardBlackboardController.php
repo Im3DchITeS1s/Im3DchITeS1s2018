@@ -27,7 +27,7 @@ class DashboardBlackboardController extends Controller
     {
         $rol = Sistema_Rol_Usuario::rolPersonaLoguea(Auth::user()->id);
         $alumno = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));        
-        $catedratico_cusos = CatedraticoCurso::cantidadAlumnoCursoCatedratico(Auth::user()->fkpersona);
+        $catedratico_cusos = CatedraticoCurso::buscarCursoCatedratico(Auth::user()->fkpersona);
         $contenidoscatedratico = Catedratico_Contenido_Educativo::mostrarContenidoDashboardCatedratico();
 
         if(is_null($alumno)) {

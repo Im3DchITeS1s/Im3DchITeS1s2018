@@ -123,19 +123,7 @@
         });
     });    
 
-    function filtrarCarrera(id) {
-        let ruta_original = null;
-
-        var carrera_id = id.value;
-        var cuestionario_id = $("#cuestionario_id").val();
-        var anio_id = $("#anio_id").val();
-
-        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
-
-        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
-        var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);
-        var ruta_pasando_anio = ruta_pasando_cuestionario.replace('anio_id', anio_id);      
-
+    function filtrarCarrera(id) {    
         $.get("/filtrar/cuestionario/carrera/"+id.value,function(response){
             $("#cuestionario_id").empty();
             $("#cuestionario_id").append('<option value="0">seleccione curso</option>'); 
@@ -143,25 +131,6 @@
                 $("#cuestionario_id").append('<option value="'+response[i].id+'">'+response[i].titulo+'</option>'); 
             }
         });     
-
-        $('#info-table').DataTable({ 
-
-                destroy: true,   
-                processing: true,
-                serverSide: false,
-                paginate: true,
-                searching: true,
-                ajax: ruta_pasando_anio,
-                columns: [
-                    { data: 'carrera_curso', name: 'carrera_curso' },
-                    { data: 'titulo', name: 'titulo' },
-                    { data: 'alumno', name: 'alumno' },
-                    { data: 'punteo', name: 'punteo' },
-                    { data: 'fecha', name: 'fecha' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-                ]
-
-        });
     }
 
     

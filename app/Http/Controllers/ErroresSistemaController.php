@@ -16,12 +16,12 @@ class ErroresSistemaController extends Controller
 	public function error500()
 	{
 		flash('¡Sin Privilegios!')->error()->important();
-    	return view('errores.500');
+    	return redirect()->route('home');
 	}
 
 	public function error404()
 	{
 		flash('¡Sin Privilegios!')->error()->important();
-    	return view('errores.404');
+    	return redirect()->route('home');
 	}	
 }

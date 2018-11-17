@@ -213,7 +213,7 @@ class CuestionarioController extends Controller
             })                           
             ->addColumn('action', function ($data) {
 
-                $resueltos = Resultado_Cuestionario::buscarCuestionariosResueltosPorID($data->id);
+                $resueltos = Resultado_Cuestionario::contarResueltosPorID($data->id);
 
                 $prioridad = '<button class="btn btn-'.$data->color_prioridad.' btn-xs" type="button">'.$data->prioridad.'</button>';
 

@@ -29,11 +29,11 @@ class AlumnoContenidoEducativoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['index', 'store', 'update']]);
-        $this->middleware('director', ['only' => ['index', 'store', 'update']]);
-        $this->middleware('secretaria', ['only' => ['index', 'store', 'update']]);
-        $this->middleware('contador', ['only' => ['index', 'store', 'update']]);
-        $this->middleware('catedratico', ['only' => ['index', 'store', 'update']]);
+        $this->middleware('admin', ['only' => ['index', 'index_historico', 'store', 'update']]);
+        $this->middleware('director', ['only' => ['index', 'index_historico', 'store', 'update']]);
+        $this->middleware('secretaria', ['only' => ['index', 'index_historico', 'store', 'update']]);
+        $this->middleware('contador', ['only' => ['index', 'index_historico', 'store', 'update']]);
+        $this->middleware('catedratico', ['only' => ['index', 'index_historico', 'store', 'update']]);
         //$this->middleware('alumno', ['only' => ['index', 'store', 'update']]);
     }
 
