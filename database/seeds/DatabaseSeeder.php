@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     	$this->call(TipoPersonaTableSeeder::class);
     	$this->call(GeneroTableSeeder::class);
     	$this->call(PaisDepartamentoTableSeeder::class);
-    	$this->call(ProfesionTableSeeder::class);
+    	//$this->call(ProfesionTableSeeder::class);
 		$this->call(PersonaTableSeeder::class);    	
     	$this->call(SistemaTableSeeder::class);
         $this->call(RolTableSeeder::class);
@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         //Gestion Academica
         //$this->call(CarreraTableSeeder::class);
-        //this->call(CursoTableSeeder::class);
+        //$this->call(CursoTableSeeder::class);
         //$this->call(GradoTableSeeder::class);
         $this->call(SeccionTableSeeder::class);
         $this->call(CicloTableSeeder::class);
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(CantidadAlumnoTableSeeder::class);
         //$this->call(CatedraticoCursoTableSeeder::class); 
         $this->call(TipoPeriodoTableSeeder::class); 
-        //$this->call(PeriodoAcademicoTableSeeder::class);
+        $this->call(PeriodoAcademicoTableSeeder::class);
 
         //Blackboard
         $this->call(PrioridadTableSeeder::class); 

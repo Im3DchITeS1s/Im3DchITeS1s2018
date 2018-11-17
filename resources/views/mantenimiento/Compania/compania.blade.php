@@ -65,7 +65,6 @@
                                   </div>
                                   <input type="text" class="form-control" id="nombre_add" placeholder="Ingresar Compania" autofocus>
                                 </div>                                                               
-                                <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
                         </div>

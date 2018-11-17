@@ -5,9 +5,6 @@
 @section('content_header')
     <div class="content-header">
         <h1>Período Académico
-            <button type="button" class="add-modal btn btn-success">
-                <span class="fa fa-plus-circle"></span>
-            </button> 
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -45,87 +42,7 @@
         </div>
     </div>
 
-
-    <!-- Modal Agregar -->
-    <div id="addModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group has-success">
-                        <!--Nombre-->
-                        <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Nombre</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                  <input type="text" class="form-control" id="nombre_add" placeholder="Nombre" autofocus maxlength="20">
-                                </div>                                                          
-                            <small class="control-label">Max: 20| unico</small>
-                            <p class="errorNombre text-center alert alert-danger hidden"></p>
-                        </div>   
-                           
-                             <!--Drop list de la Tipo Período-->
-                             <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Tipo Período</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fktipo_periodo_add" id='fktipo_periodo_add' required autofocus>
-                                    </select> 
-                                </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
-                                <p class="errorTipoPeriodo text-center alert alert-danger hidden"></p>
-                            </div> 
-
-                         <!--Inicio-->
-                        <div class="col-sm-6">
-                                <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
-                                            <label>Inicio</label>
-                                        <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="inicio_add" name="inicio_add" placeholder="dd/mm/yyyy" autofocus>
-                                </div>                                                               
-                                    <p class="errorInicio text-center alert alert-danger hidden"></p>
-                        </div>
-
-                             <!--Fin-->
-                        <div class="col-sm-6">
-                                 <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
-                                            <label>Fin</label>
-                                        <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="fin_add" name="fin_add" placeholder="dd/mm/yyyy" autofocus>
-                                 </div>                                                               
-                                    <p class="errorFin text-center alert alert-danger hidden"></p>
-                        </div>     
-                     </div> 
-                    </form>
-                </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary add" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
-            </div>
-        </div>
-    </div>   
-
-
- <!-- Modal Editar -->
+    <!-- Modal Editar -->
     <div id="editModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -142,58 +59,30 @@
                             <div class="col-sm-12">
                                 <small class="pull-right" style="color:orange;"></small>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Nombre</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-
-                                    <input type="text" class="form-control" id="nombre_edit" placeholder="editar nombre" autofocus>
-                                </div>     
-                            </div>
                         
-                        <!--Drop actualizar carreragrado-->
-                        
+                            <!--Inicio-->
                             <div class="col-sm-6">
-                                <small class="pull-right" style="color:orange;"></small>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Tipo Período</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                    </div>
-                                    <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
-                                    name="fktipo_periodo_edit" id='fktipo_periodo_edit' required autofocus>
-                                    </select> 
-                                </div>     
-                            </div>
-                    
-
-                    <!--Inicio-->
-                        <div class="col-sm-6">
                                 <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
+                                    <div class="input-group-addon">
                                             <label>Inicio</label>
                                         <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="inicio_edit" name="inicio_edit" placeholder="dd/mm/yyyy" autofocus>
+                                    </div>
+                                    <input type="text" class="form-control" id="inicio_edit" name="inicio_edit" placeholder="dd/mm/yyyy" autofocus>
                                 </div>                                                               
-                                    <p class="errorInicio text-center alert alert-danger hidden"></p>
-                        </div>
+                                <p class="errorInicio text-center alert alert-danger hidden"></p>
+                            </div>
 
                              <!--Fin-->
-                        <div class="col-sm-6">
-                                 <div class="input-group date" data-provide="datepicker">
-                                      <div class="input-group-addon">
+                            <div class="col-sm-6">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <div class="input-group-addon">
                                             <label>Fin</label>
                                         <i class="fa fa-calendar"></i>
-                                      </div>
-                                      <input type="text" class="form-control" id="fin_edit" name="fin_edit" placeholder="dd/mm/yyyy" autofocus>
-                                 </div>                                                               
-                                    <p class="errorFin text-center alert alert-danger hidden"></p>
-                        </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="fin_edit" name="fin_edit" placeholder="dd/mm/yyyy" autofocus>
+                                </div>                                                               
+                                <p class="errorFin text-center alert alert-danger hidden"></p>
+                            </div>
                     </div>
                     </form>
                     <div class="modal-footer">
@@ -212,11 +101,9 @@
     <script type="text/javascript">
         var table = "";
 
-        //dropdownlist
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
-       
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy',
+        });  
 
         //Leer
         $(document).ready(function() {
@@ -239,7 +126,6 @@
          //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
-            $('.errorNombre').addClass('hidden');
             $('.errorInicio').addClass('hidden');
             $('.errorFin').addClass('hidden');
             $('.errorTipoPeriodo').addClass('hidden');
@@ -254,7 +140,7 @@
                 $('#fktipo_periodo_add').val('').trigger('change.select2'); 
                 }
             });      
-            });              
+        });              
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
@@ -262,7 +148,6 @@
                 url: '/mantenimiento/periodoacademico',
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'nombre': $('#nombre_add').val(),
                     'inicio': $('#inicio_add').val(),
                     'fin':    $('#fin_add').val(),
                     'fktipo_periodo':    $('#fktipo_periodo_add').val(),
@@ -281,10 +166,6 @@
                               timer: 2000,
                             });
                         }, 500);
-                     if (data.errors.nombre) {
-                            $('.errorNombre').removeClass('hidden');
-                            $('.errorNombre').text(data.errors.nonmbre);
-                        }
 
                        if (data.errors.inicio) {
                             $('.errorInicio').removeClass('hidden');
@@ -304,7 +185,6 @@
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
-                            $('#nombre').val('');
                             $('#inicio').val('');
                             $('#fin').val('');
                             $('#fktipo_periodo').val('');
@@ -315,55 +195,36 @@
             }); 
         });
 
-//Edit
-            $(document).on('click', '.edit-modal', function() {    
+        //Edit
+        $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
-            $('.errorNombre').addClass('hidden');
             $('.errorInicio').addClass('hidden');
             $('.errorFin').addClass('hidden');
             $('.errorTipoPeriodo').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
-            $('#nombre_edit').val($(this).data('nombre'));
             $('#inicio_edit').val($(this).data('inicio'));
-            $('#fin').val($(this).data('fin_edit'));
-            $('#fktipo_periodo').val($(this).data('fktipo_periodo_edit'));
+            $('#fin_edit').val($(this).data('fin'));
             id = $('#id_edit').val();
-            fktipo_periodo = $(this).data('fktipo_periodo');
-            $('#editModal').modal('show');
-
-            
-            $.get("/mantenimiento/periodoacademico/droptiperiodo/"+5,function(response,id){
-                $("#fktipo_periodo_edit").empty();
-                $("#fktipo_periodo_edit").append("<option value=''> seleccionar </option>");
-                for(i=0; i<response.length; i++){
-                $("#fktipo_periodo_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                $('#fktipo_periodo_edit').val(fktipo_periodo).trigger('change.select2'); 
-                }
-            });      
-            }); 
+            $('#editModal').modal('show');     
+        }); 
      
           
 
-          $('.modal-footer').on('click', '.edit', function() {
+        $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
                 url: '/mantenimiento/periodoacademico/' + id,
                 data: {
                     '_token':   $('input[name=_token]').val(),
                     'id':       $("#id_edit").val(),
-                    'nombre':   $('#nombre_edit').val(),
                     'inicio':   $('#inicio_edit').val(),
-                    'fin':      $('#fin_edit').val(),
-                    'fktipo_periodo': $('#fktipo_periodo_edit').val()
+                    'fin':      $('#fin_edit').val()
                 },
                 success: function(data) {
-                    $('.errorNombre').addClass('hidden');
                     $('.errorInicio').addClass('hidden');
-                    $('.errorFin').addClass('hidden');
-                    $('.errorTipoPeriodo').addClass('hidden')
-               
+                    $('.errorFin').addClass('hidden');            
 
                     if ((data.errors)) {
                         setTimeout(function () {
@@ -374,10 +235,6 @@
                             });
                         }, 500);
 
-                        if (data.errors.nombre) {
-                            $('.errorNombre').removeClass('hidden');
-                            $('.errorNombre').text(data.errors.nombre);
-                        }
                         if (data.errors.inicio) {
                             $('.errorInicio').removeClass('hidden');
                             $('.errorInicio').text(data.errors.inicio);
@@ -386,19 +243,13 @@
                             $('.errorFin').removeClass('hidden');
                             $('.errorFin').text(data.errors.fin);
                         }
-                        if (data.errors.fktipo_periodo) {
-                            $('.errorTipoPeriodo').removeClass('hidden');
-                            $('.errorTipoPeriodo').text(data.errors.fktipo_periodo);
-                        }
                     } else {
                         swal("Correcto", "Se modifico la informacion", "success")
                             .then((value) => {
                             $("#id_edit").val('');
-                            $('#nombre_edit').val('');
                             $('#inicio_edit').val('');
                             $('#fin_edit').val('');
-                            $('#fktipo_periodo_edit').val('');
-                          table.ajax.reload(); 
+                            table.ajax.reload(); 
                         });                          
                     }
                 },

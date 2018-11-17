@@ -91,9 +91,8 @@
                             </div>
 
                         </div>
-                 </div>
-
                     </form>
+                </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary add" data-dismiss="modal">
                             <span id="" class='fa fa-save'></span>
@@ -102,7 +101,6 @@
                             <span class='fa fa-ban'></span>
                         </button>
                     </div>
-                </div>
             </div>
         </div>
     </div>   
@@ -151,21 +149,21 @@
                             </div>
 
                         </div>
-                 </div>
+                    </form>                        
+                </div>
 
-          </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary edit" data-dismiss="modal">
+                        <span id="" class='fa fa-save'></span>
+                    </button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+                        <span class='fa fa-ban'></span>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
+   
 
 
       <!-- AJAX CRUD operations -->
@@ -181,6 +179,7 @@
         //Leer
      $(document).ready(function() {
             table = $('#info-table').DataTable({  
+                destroy: true,   
                 processing: true,
                 serverSide: false,
                 paginate: true,
@@ -193,7 +192,8 @@
                 ]
             });
         });
-  //Insertar
+
+        //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCarrera').addClass('hidden');
@@ -217,12 +217,12 @@
                     $('#fkcurso_add').val('').trigger('change.select2'); 
                 }
             });      
-            });              
+        });              
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/carreracurso/',
+                url: '/mantenimiento/carreracurso',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),
@@ -262,17 +262,13 @@
         });
 
         //Edit
-            $(document).on('click', '.edit-modal', function() {    
+        $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorCarrera').addClass('hidden');
             $('.errorCurso').addClass('hidden');
-                                
-            $('#id_edit').val($(this).data('id'));
-            $('#fkcarrera_edit').val($(this).data('fkcarrera'));
-            $('#curso_edit').val($(this).data('fkcurso'));
-    
-            id = $('#id_edit').val();
+                                   
+            id = $(this).data('id');
             fkcarrera = $(this).data('fkcarrera');
             fkcurso = $(this).data('fkcurso');
             $('#editModal').modal('show');
@@ -283,22 +279,22 @@
                 $("#fkcarrera_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcarrera_edit').val('').trigger('change.select2'); 
+                    $('#fkcarrera_edit').val(fkcarrera).trigger('change.select2'); 
                 }
-            });              
-            }); 
+            });  
 
-           $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
+            $.get("/mantenimiento/carreracurso/dropcurso/"+5,function(response,id){
                 $("#fkcurso_edit").empty();
                 $("#fkcurso_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcurso_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkcurso_edit').val('').trigger('change.select2'); 
+                    $('#fkcurso_edit').val(fkcurso).trigger('change.select2'); 
                 }
-            });       
+            });                        
+        });      
           
 
-          $('.modal-footer').on('click', '.edit', function() {
+        $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
                 url: '/mantenimiento/carreracurso/' + id,
@@ -374,9 +370,6 @@
               }
             });            
         });
-       
-
-
        
     </script>
 @stop

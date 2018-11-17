@@ -74,14 +74,16 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function mostrarCuestionariosSeleccionados($carrega_grado_seccion, $carrera_curso)
     {
-        $cuestionarios_resueltos = Resultado_Cuestionario::todosResultados(date('Y'), $carrega_grado_seccion, $carrera_curso);
+        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
+
+        $cuestionarios_resueltos = Resultado_Cuestionario::todosResultados(date('Y'), $carrega_grado_seccion, $carrera_curso, $inscrito->id);
         $cuestionarios = Cuestionario::dataBandejaCuestionario($carrega_grado_seccion, $carrera_curso);
         return view('/blackboard/cuestionariospararesolver', compact('cuestionarios_resueltos', 'cuestionarios'));      
     }
 
     public function encabezadoCuestionarioSeleccionado($id)
     {
-        $verificar = Resultado_Cuestionario::buscarCuestionarioResuelto(Auth::user()->fkpersona, 5);
+        $verificar = Resultado_Cuestionario::buscarCuestionarioResuelto(5, Auth::user()->fkpersona);
         
         if(count($verificar) != 0)
         {
@@ -119,19 +121,27 @@ class ResponderBandejaCuestionarioController extends Controller
 
     public function store(Request $request)
     {  
+             
+    }
+
+    public function storeCuestionario(Request $request)
+    {  
         $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
-        
+
         if(!is_null($inscrito))
         {
             foreach ($request->respuesta_unica as $value) {
                 $respuesta = Respuesta::respuestaCorrecta($value);
 
-                $insert = new Alumno_Cuestionario_Respuesta();
-                $insert->fkcuestionario = $request->idEncuesta;
-                $insert->fkinscripcion = $inscrito->id;
-                $insert->fkpregunta = $respuesta->fkpregunta;
-                $insert->fkrespuesta = $respuesta->id;    
-                $insert->save();        
+                if(!is_null($respuesta))
+                {
+                    $insert = new Alumno_Cuestionario_Respuesta();
+                    $insert->fkcuestionario = $request->idEncuesta;
+                    $insert->fkinscripcion = $inscrito->id;
+                    $insert->fkpregunta = $respuesta->fkpregunta;
+                    $insert->fkrespuesta = $respuesta->id;    
+                    $insert->save();  
+                }      
             } 
             
             $this->calcularPunteoObtenido($request->idEncuesta, Auth::user()->fkpersona);
@@ -142,7 +152,7 @@ class ResponderBandejaCuestionarioController extends Controller
         {
             return view('errores.500');  
         }            
-    }
+    }    
 
     public function show($id)
     {
@@ -177,8 +187,7 @@ class ResponderBandejaCuestionarioController extends Controller
         $preguntas = Pregunta::preguntaEncuestaImprimir($fkencuesta, 21);
 
         $punteo_respuesta_valida = $cuestionario->punteo/count($preguntas);
-
-        $buscarRespuestasCuestionario = Alumno_Cuestionario_Respuesta::respuestasDelCuestionario($fkencuesta, $fkpersona);
+        $buscarRespuestasCuestionario = Alumno_Cuestionario_Respuesta::respuestasDelCuestionario($fkpersona, $fkencuesta);
 
         foreach ($buscarRespuestasCuestionario as $valor) {
             $respuestas = Respuesta::respustasTipoMultiple($fkencuesta, $valor->fkpregunta);

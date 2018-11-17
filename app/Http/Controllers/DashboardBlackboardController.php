@@ -27,7 +27,8 @@ class DashboardBlackboardController extends Controller
     {
         $rol = Sistema_Rol_Usuario::rolPersonaLoguea(Auth::user()->id);
         $alumno = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));        
-        $catedratico_cusos = CatedraticoCurso::cantidadAlumnoCursoCatedratico(Auth::user()->fkpersona);
+        $catedratico_cusos = CatedraticoCurso::buscarCursoCatedratico(Auth::user()->fkpersona);
+        $contenidoscatedratico = Catedratico_Contenido_Educativo::mostrarContenidoDashboardCatedratico();
 
         if(is_null($alumno)) {
             $fkcantidad_alumno = 0;
@@ -42,7 +43,7 @@ class DashboardBlackboardController extends Controller
         $tareas = Catedratico_Contenido_Educativo::contenidoParaAlumnoLoguea(1, $fkcantidad_alumno);   
         $vistos = VistaContenido::contenidoVistoAlumno($id);      
 
-        return view('blackboard.dashboardblackboard', compact('contenidos', 'tareas', 'vistos', 'catedratico_cusos', 'rol'));
+        return view('blackboard.dashboardblackboard', compact('contenidos', 'tareas', 'vistos', 'catedratico_cusos', 'rol', 'contenidoscatedratico'));
     }
 
     public function create()

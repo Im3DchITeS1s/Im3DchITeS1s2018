@@ -63,24 +63,26 @@
                         <hr>
 
                         <br>
-
                         <div class="row">
-
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                                    <thead >
-                                        <tr>
-                                            <th width="1%">Carrera Curso</th>
-                                            <th width="1%">Cuestionario</th>
-                                            <th width="1%">Alumno</th>
-                                            <th width="1%">Punteo</th>
-                                            <th width="1%">Fecha</th>
-                                            <th width="1%">Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <br>
+                                    <div class="box-body table-responsive no-padding">
+                                        <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                            <thead >
+                                                <tr>
+                                                    <th width="1%">Carrera Curso</th>
+                                                    <th width="1%">Cuestionario</th>
+                                                    <th width="1%">Alumno</th>
+                                                    <th width="1%">Punteo</th>
+                                                    <th width="1%">Fecha</th>
+                                                    <th width="1%">Accion</th>
+                                                </tr>
+                                            </thead>
+                                        </table> 
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -95,7 +97,7 @@
     $(document).ready(function() {
         let ruta_original = null;
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', 0);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', 0);
@@ -121,19 +123,7 @@
         });
     });    
 
-    function filtrarCarrera(id) {
-        let ruta_original = null;
-
-        var carrera_id = id.value;
-        var cuestionario_id = $("#cuestionario_id").val();
-        var anio_id = $("#anio_id").val();
-
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
-
-        var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
-        var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);
-        var ruta_pasando_anio = ruta_pasando_cuestionario.replace('anio_id', anio_id);      
-
+    function filtrarCarrera(id) {    
         $.get("/filtrar/cuestionario/carrera/"+id.value,function(response){
             $("#cuestionario_id").empty();
             $("#cuestionario_id").append('<option value="0">seleccione curso</option>'); 
@@ -141,25 +131,6 @@
                 $("#cuestionario_id").append('<option value="'+response[i].id+'">'+response[i].titulo+'</option>'); 
             }
         });     
-
-        $('#info-table').DataTable({ 
-
-                destroy: true,   
-                processing: true,
-                serverSide: false,
-                paginate: true,
-                searching: true,
-                ajax: ruta_pasando_anio,
-                columns: [
-                    { data: 'carrera_curso', name: 'carrera_curso' },
-                    { data: 'titulo', name: 'titulo' },
-                    { data: 'alumno', name: 'alumno' },
-                    { data: 'punteo', name: 'punteo' },
-                    { data: 'fecha', name: 'fecha' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-                ]
-
-        });
     }
 
     
@@ -170,7 +141,7 @@
         var cuestionario_id = id.value;
         var anio_id = $("#anio_id").val();
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);
@@ -203,7 +174,7 @@
         var cuestionario_id = $("#cuestionario_id").val();
         var anio_id = id.value;
 
-        ruta_original = "{{ route('alumnohistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
+        ruta_original = "{{ route('categoriahistorico.getdata', ['carrera' => 'carrera_id', 'cuestionario' => 'cuestionario_id', 'anio' => 'anio_id']) }}";
 
         var ruta_pasando_carrera = ruta_original.replace('carrera_id', carrera_id);
         var ruta_pasando_cuestionario = ruta_pasando_carrera.replace('cuestionario_id', cuestionario_id);

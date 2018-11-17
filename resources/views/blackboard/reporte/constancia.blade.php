@@ -69,7 +69,6 @@
             <strong>Carrera, </strong>{{$resultado_encuesta->grado}} {{$resultado_encuesta->carrera}} Sección {{$resultado_encuesta->seccion}}.<br>
             <strong>Catedrático, </strong>{{$catedratico->nombre1}} {{$catedratico->nombre2}} {{$catedratico->apellido1}} {{$catedratico->apellido2}}.<br>
             <strong>Curso, </strong>{{$resultado_encuesta->curso}}.<br>
-            <strong>Curso, </strong>{{$resultado_encuesta->curso}}.<br>   
             <strong>Periodo Académico, </strong>{{$resultado_encuesta->periodo_academico}} {{$resultado_encuesta->tipo_periodo}}.<br>   
             <strong>Fecha, </strong> del {{ date('d/m/Y', strtotime($resultado_encuesta->cuestionario_inicia)) }} hasta {{ date('d/m/Y', strtotime($resultado_encuesta->cuestionario_finaliza)) }}.<br>  
             <strong>Prioridad, </strong> {{$resultado_encuesta->prioridad}}.<br>  

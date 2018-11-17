@@ -22,5 +22,21 @@ class PeriodoAcademicoTableSeeder extends Seeder
         $nuevo->fktipo_periodo = 1;        
         $nuevo->fkestado = 5;
         $nuevo->save();
+
+        $nuevo = new PeriodoAcademico();
+        $nuevo->nombre = 'Tecer';
+        $nuevo->inicio = '2018-01-01';
+        $nuevo->fin = '2018-12-31';
+        $nuevo->fktipo_periodo = 1;        
+        $nuevo->fkestado = 5;
+        $nuevo->save();
+
+        $nuevo = new PeriodoAcademico();
+        $nuevo->nombre = 'Cuarto';
+        $nuevo->inicio = '2018-01-01';
+        $nuevo->fin = '2018-12-31';
+        $nuevo->fktipo_periodo = 1;        
+        $nuevo->fkestado = 5;
+        $nuevo->save();        
     }
 }

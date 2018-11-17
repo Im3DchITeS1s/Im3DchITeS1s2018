@@ -70,7 +70,6 @@
                                   <input type="text" class="form-control" id="nombre_add" placeholder="Ingresar carrera" autofocus>
                                 </div>                               
                                 <textarea type="text" class="form-control" id="descripcion_add" placeholder="Ingresar Descripcion" autofocus></textarea>
-                                <small class="control-label">Max: 32</small>
                                 <p class="errorNombre text-center alert alert-danger hidden"></p>
                             </div>
                         </div>
@@ -161,6 +160,7 @@
             $('.errorDescripcion').addClass('hidden');
             $('#addModal').modal('show');
         });
+
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
@@ -225,6 +225,7 @@
                 }
             });           
         });
+        
         $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',

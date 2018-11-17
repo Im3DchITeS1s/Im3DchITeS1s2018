@@ -91,21 +91,20 @@
                             </div>
 
                         </div>
+                    </form>                        
                  </div>
 
-                    </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary add" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary add" data-dismiss="modal">
+                        <span id="" class='fa fa-save'></span>
+                    </button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+                        <span class='fa fa-ban'></span>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>   
+    </div>  
 
     <!-- Modal Editar -->
     <div id="editModal" class="modal fade" role="dialog">
@@ -150,26 +149,25 @@
                             </div>
 
                         </div>
-                 </div>
+                    </form>    
+                </div>
 
-          </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
-                            <span id="" class='fa fa-save'></span>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
-                            <span class='fa fa-ban'></span>
-                        </button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary edit" data-dismiss="modal">
+                        <span id="" class='fa fa-save'></span>
+                    </button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+                        <span class='fa fa-ban'></span>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>    
-
+    </div>
 
       <!-- AJAX CRUD operations -->
     <script type="text/javascript">
         var table = "";
+        var id = 0;
 
         //dropdownlist
         $(document).ready(function() {
@@ -178,8 +176,9 @@
        
 
         //Leer
-     $(document).ready(function() {
+        $(document).ready(function() {
             table = $('#info-table').DataTable({  
+                destroy: true,   
                 processing: true,
                 serverSide: false,
                 paginate: true,
@@ -192,7 +191,8 @@
                 ]
             });
         });
-  //Insertar
+        
+        //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorCarrera').addClass('hidden');
@@ -216,12 +216,12 @@
                     $('#fkgrado_add').val('').trigger('change.select2'); 
                 }
             });      
-            });              
+        });              
 
         $('.modal-footer').on('click', '.add', function() {
             $.ajax({
                 type: 'POST',
-                url: '/mantenimiento/carreragrado/',
+                url: '/mantenimiento/carreragrado',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'fkcarrera': $('#fkcarrera_add').val(),
@@ -239,17 +239,16 @@
                               timer: 2000,
                             });
                         }, 500);
-                     if (data.errors.fkcarrera) {
+                        if (data.errors.fkcarrera) {
                             $('.errorCarrera').removeClass('hidden');
                             $('.errorCarrera').text(data.errors.fkcarrera);
                         }
 
-                      if (data.errors.fkgrado) {
+                        if (data.errors.fkgrado) {
                             $('.errorGrado').removeClass('hidden');
                             $('.errorGrado').text(data.errors.fkgrado);
                         }
-            
-
+        
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
@@ -263,43 +262,39 @@
         });
 
         //Edit
-            $(document).on('click', '.edit-modal', function() {    
+        $(document).on('click', '.edit-modal', function() {    
             $('#id_edit').addClass('hidden');                               
             $('.modal-title').text('Editar Informacion');
             $('.errorCarrera').addClass('hidden');
             $('.errorGrado').addClass('hidden');
-                                
-            $('#id_edit').val($(this).data('id'));
-            $('#fkcarrera_edit').val($(this).data('fkcarrera'));
-            $('#fkgrado_edit').val($(this).data('fkgrado'));
-    
-            id = $('#id_edit').val();
+                                    
+            id = $(this).data('id');
             fkcarrera = $(this).data('fkcarrera');
             fkgrado = $(this).data('fkgrado');
             $('#editModal').modal('show');
 
             
-           $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
+            $.get("/mantenimiento/carreragrado/dropcarrera/"+5,function(response,id){
                 $("#fkcarrera_edit").empty();
                 $("#fkcarrera_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
                     $('#fkcarrera_edit').val(fkcarrera).trigger('change.select2'); 
                 }
-            });              
             }); 
 
-           $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
+            $.get("/mantenimiento/carreragrado/dropgrado/"+5,function(response,id){
                 $("#fkgrado_edit").empty();
                 $("#fkgrado_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkgrado_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
-                    $('#fkgrado_edit').val('').trigger('change.select2'); 
+                    $('#fkgrado_edit').val(fkgrado).trigger('change.select2'); 
                 }
-            });       
+            });                             
+        });    
           
 
-          $('.modal-footer').on('click', '.edit', function() {
+        $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
                 url: '/mantenimiento/carreragrado/' + id,
@@ -333,10 +328,10 @@
                     } else {
                         swal("Correcto", "Se modifico la informacion", "success")
                             .then((value) => {
-                            $("#id_edit").val('');
+                            id = 0;
                             $('#fkcarrera_edit').val('');
                             $('fkgrado_edit').val('');
-                          table.ajax.reload(); 
+                            table.ajax.reload(); 
                         });                          
                     }
                 },
@@ -345,6 +340,7 @@
         
         // delete
         $(document).on('click', '.delete-modal', function() {
+            console.log('delete');
             id = $(this).data('id');
             swal({
               title: "Esta seguro?",
@@ -375,9 +371,5 @@
               }
             });            
         });
-       
-
-
-       
     </script>
 @stop

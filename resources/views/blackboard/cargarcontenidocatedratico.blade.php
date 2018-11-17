@@ -48,7 +48,6 @@
                               </div>
                               <input type="text" class="form-control" id="titulo_add" placeholder="titulo" required autofocus>
                             </div>
-                            <small class="control-label">required|max:100</small>
                             <p class="errorTitutloAdd text-center alert alert-danger hidden"></p>                  
                         </div>                    
                         <div class="col-sm-12">
@@ -118,22 +117,27 @@
                     </div>
 
                     <div class="box-body">
-                      <div class="row">
-                        <div class="col-md-12">
-                             <table class="table table-bordered table-hover dataTable" id="info-table-contenido" width="100%">
-                                <thead >
-                                    <tr>
-                                        <th width="1%">Titulo</th>
-                                        <th width="1%">Descripción</th>
-                                        <th width="1%">Formato</th>
-                                        <th width="1%">Tarea</th>
-                                        <th width="1%">Fecha</th>
-                                        <th width="1%">Accion</th>
-                                    </tr>
-                                </thead>
-                            </table>                              
-                        </div>
-                      </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <br>
+                                    <div class="box-body table-responsive no-padding">
+                                        <table class="table table-bordered table-hover dataTable" id="info-table-contenido" width="100%">
+                                            <thead >
+                                                <tr>
+                                                    <th width="1%">Titulo</th>
+                                                    <th width="1%">Descripción</th>
+                                                    <th width="1%">Formato</th>
+                                                    <th width="1%">Tarea</th>
+                                                    <th width="1%">Fecha</th>
+                                                    <th width="1%">Accion</th>
+                                                </tr>
+                                            </thead>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                         
                     </div>
                 </div>                   
             </div>
@@ -227,27 +231,27 @@
             switch(sel.value)
             {
                 case "1":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.pdf' autofocus required>");                 
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.pdf' autofocus required>");                 
                 break;
 
                 case "2":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.xls, .xlsx' autofocus required>");                
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.xls, .xlsx' autofocus required>");                
                 break;
 
                 case "3":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.docx, .doc' autofocus required>");                
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.docx, .doc' autofocus required>");                
                 break;
 
                 case "4":
-                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo_add' name='archivo_add' accept='.ppt, .ppsx' autofocus required>");                
+                    $("#mostrarInputFile").append("<input type='file' class='form-control' id='archivo' name='archivo' accept='.ppt, .ppsx' autofocus required>");                
                 break;                
             }
 
             var fileEl=$('input[type=file]');
             $(fileEl).on('change',function () {
                 
-                var oFile = document.getElementById("archivo_add").files[0];
-                var extension = ($("#archivo_add").val().substring($("#archivo_add").val().lastIndexOf("."))).toLowerCase();
+                var oFile = document.getElementById("archivo").files[0];
+                var extension = ($("#archivo").val().substring($("#archivo").val().lastIndexOf("."))).toLowerCase();
 
                 if (oFile.size > 2097152) // 2 mb for bytes.
                 {
@@ -256,7 +260,7 @@
                       timer: 2000,
                     });
 
-                    document.getElementById("archivo_add").value = null;
+                    document.getElementById("archivo").value = null;
                 }
                 else
                 {

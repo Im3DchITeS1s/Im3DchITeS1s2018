@@ -66,7 +66,7 @@ class CuestionarioHistoricoAlumno extends Controller
     {
         if($request->ajax()){
             $data = CarreraCurso::join('curso', 'carrera_curso.fkcurso', 'curso.id')
-            ->where('fkcarrera', $id)->where('fkcurso', 5)->select('curso.*')->get();
+            ->where('fkcarrera', $id)->where('carrera_curso.fkestado', 5)->select('curso.*')->get();
             return response()->json($data);
         }        
     }       

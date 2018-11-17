@@ -22,12 +22,6 @@ class EmailController extends Controller
         'nombre' => 'required|max:20|unique:email'                                                                           
     ];
 
-    protected $verificar_update =
-    [
-        'nombre' => 'required|max:20|unique:email',
-        'fktipo_email' => 'required|integer',           
-    ];    
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -80,6 +74,7 @@ class EmailController extends Controller
         $estado = Estado::buscarIDEstado(5);
 
         $validator = Validator::make(Input::all(), $this->verificar_insert);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
@@ -105,7 +100,9 @@ class EmailController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_update);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:20|unique:email,nombre,'.$request->id]);
+        
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

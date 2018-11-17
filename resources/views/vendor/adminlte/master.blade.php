@@ -16,8 +16,10 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
 
-    <!-- Nuevo -->   
+    <!-- Nuevo -->  
+    <script src="{{ asset('js/herramientas/menuatras.js') }}"></script> 
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/herramientas/lscio.js') }}"></script> 
     <meta name="_token" content="{{ csrf_token() }}"/>
 
     @if(config('adminlte.plugins.select2'))
@@ -41,15 +43,17 @@
         <!-- DataTables with bootstrap 3 style -->   
 
         <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}"> 
-        <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css"> -->        
+        <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" oncontextmenu="return false" onkeydown="return false;" onmousedown="return false;"> -->        
     @endif
 
     @yield('adminlte_css')
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    @yield('maps')
     
 </head>
-<body class="hold-transition @yield('body_class')">
+<body class="hold-transition @yield('body_class')" onload="nobackbutton();" >
 
 @yield('body')
 

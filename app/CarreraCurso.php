@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\CantidadAlumno;
 use App\CarreraGrado;
 use Event;
 
@@ -19,12 +20,10 @@ class CarreraCurso extends Model
 	}
 
 	public static function buscarcarreracurso($id){
-		$carrera = CarreraGrado::find($id);
-
 		return CarreraCurso::join('carrera', 'carrera_curso.fkcarrera', 'carrera.id')
 			->join('curso', 'carrera_curso.fkcurso', 'curso.id')
 			->where('carrera_curso.fkestado', 5)
-            ->where('carrera_curso.fkcarrera', $carrera->fkcarrera)
+            ->where('carrera_curso.fkcarrera', $id)
             ->select('carrera_curso.id as id', 'carrera.nombre as carrera', 'curso.nombre as curso')
             ->orderBy('carrera.nombre', 'asc')->get();
 	}

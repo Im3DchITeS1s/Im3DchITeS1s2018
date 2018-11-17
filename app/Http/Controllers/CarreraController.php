@@ -110,7 +110,10 @@ public function dropcarrera(Request $request, $id)
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(Input::all(), $this->verificar_insert);
+        $validator = Validator::make(Input::all(),        
+            ['nombre' => 'required|max:100|unique:carrera,nombre,'.$request->id,
+                'descripcion' => 'max:1000']);
+
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {

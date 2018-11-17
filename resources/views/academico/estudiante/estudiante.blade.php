@@ -27,22 +27,27 @@
         </div>
 
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="1%">Codigo</th>
-                            <th width="1%">Nombre1</th>
-                            <th width="1%">Nombre2</th>
-                            <th width="1%">Apellido1</th>
-                            <th width="1%">Apellido2</th>
-                            <th width="1%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="1%">Codigo</th>
+                                        <th width="1%">Nombre1</th>
+                                        <th width="1%">Nombre2</th>
+                                        <th width="1%">Apellido1</th>
+                                        <th width="1%">Apellido2</th>
+                                        <th width="1%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>                                              
+            </div>             
         </div>
     </div>
 
@@ -456,20 +461,25 @@
                                     </div>                                                               
                                     <p class="errorSeleccionCompania text-center alert alert-danger hidden"></p>
                                 </div>    
-                            </div>    
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-telefono" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="1%">Telefonos</th>
-                                                <th width="1%">Compania</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div>
+                            </div>   
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <br>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-bordered table-hover dataTable" id="info-table-telefono" width="100%">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="1%">Telefonos</th>
+                                                        <th width="1%">Compania</th>
+                                                        <th width="1%">Accion</th>
+                                                    </tr>
+                                                </thead>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>                                              
+                            </div>                              
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary edit_persona_telefono">
                                     <span id="" class='fa fa-save'></span>
@@ -479,7 +489,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div id="email" class="tab-pane fade">
+                         <div id="email" class="tab-pane fade">
                             <h4>E-mails <label class="nombre_persona form-label hidden"></label></label></h4>
                             <div class="form-group">
                                 <input type="text" class="form-control hidden" id="fkpersona_email" disabled>
@@ -491,7 +501,7 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-font"></i>
                                       </div>
-                                      <input type="text" class="form-control" id="email_add_edit" placeholder="Usuario" autofocus>
+                                      <input type="text" class="form-control" id="email_add_edit" placeholder="email" autofocus>
                                     </div>                                                               
                                     <small class="control-label">Max: 15</small>
                                     <p class="errorEmail text-center alert alert-danger hidden"></p>
@@ -508,19 +518,24 @@
                                     <p class="errorSeleccionEmail text-center alert alert-danger hidden"></p>
                                 </div>    
                             </div>
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-email" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="1%">Emails</th>
-                                                <th width="1%">Tipo Email</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div>    
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <br>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-bordered table-hover dataTable" id="info-table-email" width="100%">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="1%">Emails</th>
+                                                        <th width="1%">Tipo Email</th>
+                                                        <th width="1%">Accion</th>
+                                                    </tr>
+                                                </thead>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>                                              
+                            </div>                               
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary edit_persona_email">
                                     <span id="" class='fa fa-save'></span>
@@ -549,6 +564,17 @@
                             </div>
                             <div class="form-group has-success">                               
                                 <div class="col-sm-12">
+                                    <small>escoger los correos a donde se enviara la informacion</small>
+                                    <div class="input-group">
+                                        <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
+                                        name="email_add" id='email_add' required autofocus>
+                                        </select> 
+                                    </div>                                                               
+                                    <p class="errorSeleccionarEmail text-center alert alert-danger hidden"></p>
+                                </div>                                      
+                            </div>
+                            <div class="form-group has-success">                               
+                                <div class="col-sm-12">
                                     <small>escoger los permisos que tendra el usuario en los sistemas</small>
                                     <div class="input-group">
                                       <div class="input-group-addon">
@@ -560,19 +586,24 @@
                                     </div>                                                               
                                     <p class="errorSeleccionarRol text-center alert alert-danger hidden"></p>
                                 </div>                                      
-                            </div>                            
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="info-table-sistema-rol-usuario" width="100%">
-                                        <thead >
-                                            <tr>
-                                                <th width="100%">Sistema / Rol</th>
-                                                <th width="1%">Accion</th>
-                                            </tr>
-                                        </thead>
-                                    </table>         
-                                </div>                
-                              </div>    
+                            </div>          
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <br>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-bordered table-hover dataTable" id="info-table-sistema-rol-usuario" width="100%">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="100%">Sistema / Rol</th>
+                                                        <th width="1%">Accion</th>
+                                                    </tr>
+                                                </thead>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>                                              
+                            </div>                                                  
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary edit_persona_usuario">
                                     <span id="" class='fa fa-save'></span>
@@ -615,7 +646,7 @@
         </div>
     </div>     
 
-    <!-- AJAX CRUD operations -->
+        <!-- AJAX CRUD operations -->
     <script type="text/javascript">
         var id_persona=0;
         var id_email=0;
@@ -634,10 +665,12 @@
             $('.js-example-basic-multiple').select2({
                 tags: "true",
                 placeholder: "Seleccionar una o mas opciones",
-            });           
+            });
         });
+
+        //Leer
         $(document).ready(function() {
-            table = $('#info-table').DataTable({  
+            table = $('#info-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{!! route('estudiante.getdata') !!}',
@@ -649,7 +682,7 @@
                     { data: 'apellido2', name: 'apellido2' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
-            });            
+            });
         });
 
         // Insert
@@ -822,9 +855,7 @@
                             $('#lugar_add').val('');
                             $('#fecha_nacimiento_add').val('');
                             $('#fkgenero_add').val('');
-
-                            table.ajax.reload()
-
+                            table.ajax.reload();
                         });                          
                     }
                 },
@@ -948,6 +979,32 @@
                     $("#codigo_edit").attr("disabled", true); 
                 });               
             });          
+
+            //DataTable Profesion
+            table_profesion = $('#info-table-profesion').DataTable({
+                destroy: true,   
+                processing: true,
+                serverSide: false,
+                paginate: true,
+                searching: true,
+                ajax: {
+                    url: '/personaprofesion/getdata/'+id,
+                    type: 'GET'
+                },
+                columns: [
+                    { data: 'profesion', name: 'profesion' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+            }); 
+
+            $.get("/sistema/imedchi/personaprofesion/dropprofesion/"+5,function(response,id){
+                $("#fkprofesion_add_edit").empty();
+                $("#fkprofesion_add_edit").append("<option value=''> seleccionar </option>");
+                for(i=0; i<response.length; i++){
+                    $("#fkprofesion_add_edit").append("<option value='"+response[i].id+"'> "+response[i].nombre+" </option>");
+                    $('#fkprofesion_add_edit').val('').trigger('change.select2'); 
+                }
+            });
 
             //DataTable Email
             table_email = $('#info-table-email').DataTable({
@@ -1223,7 +1280,7 @@
                     } else {
                         $('#editModal').modal('show');
                         swal("Correcto", "Se modifico la informacion", "success")
-                        .then((value) => {                         
+                        .then((value) => {                          
                             table.ajax.reload();
                         });                        
                     }
@@ -1345,15 +1402,15 @@
                                 $('#email_add_edit').val(''),                            
                                 table_email.ajax.reload();
 
-                                if(existe == false){
-                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
-                                        $("#seleccionar_email_add").empty();
-                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
-                                        for(i=0; i<response.length; i++){
-                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
-                                        }
-                                    });
-                                }                                
+
+                                $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                    $("#email_add").empty();
+                                    $("#email_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                    }
+                                });
+                               
                             });                        
                         }
                     },
@@ -1398,15 +1455,13 @@
                                 $('#email_add_edit').val(''),                                
                                 table_email.ajax.reload();
 
-                                if(existe == false){
-                                    $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
-                                        $("#seleccionar_email_add").empty();
-                                        $("#seleccionar_email_add").append("<option value=''> seleccionar </option>");
-                                        for(i=0; i<response.length; i++){
-                                            $("#seleccionar_email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
-                                        }
-                                    });
-                                }                                
+                                $.get("/sistema/imedchi/usuario/dropemail/"+id,function(response,departamento){
+                                    $("#email_add").empty();
+                                    $("#email_add").append("<option value=''> seleccionar </option>");
+                                    for(i=0; i<response.length; i++){
+                                        $("#email_add").append("<option value='"+response[i].email+""+response[i].tipo_email+"'> "+response[i].email+""+response[i].tipo_email+" </option>");
+                                    }
+                                });                              
                             });                        
                         }
                     },

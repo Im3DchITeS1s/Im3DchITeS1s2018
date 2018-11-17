@@ -30,42 +30,45 @@
                         @foreach($cuestionarios as $cuestionario)
 
                             @if(count($cuestionarios_resueltos) > 0)
-
+                                <input type="text" id="idCuestionario" class="hidden" value="{{ $existe = 0 }}" />
                                 @foreach($cuestionarios_resueltos as $cuestionario_resuelto)
-
+                                    
                                     @if($cuestionario_resuelto->fkcuestionario == $cuestionario->id)
                                       <div class="progress-group">
                                         <div class="col-md-11">
-                                            <span class="progress-text"><a href="{{ route('obtenida.show', ['id' => $cuestionario->id]) }}" class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</a></span>
+                                            <span class="progress-text"><a href="{{ route('obtenida.show', ['id' => $cuestionario_resuelto->fkcuestionario]) }}" class='btn btn-block btn-info btn-xs' data-id='{{ $cuestionario_resuelto->fkcuestionario }}'> Carrera: {{ $cuestionario_resuelto->carrera }} / Grado: {{ $cuestionario_resuelto->grado }} / Seccion: {{ $cuestionario_resuelto->seccion }} / {{ $cuestionario_resuelto->tipo_cuestionario_resuelto}}: {{ $cuestionario_resuelto->titulo }} / Punteo: {{ $cuestionario_resuelto->punteo }}</a></span>
                                             <div class="progress sm" style="height: 20px;">
-                                                <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'>
-                                                    <strong>Prioridad: {{ $cuestionario->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario->fin)) }}</strong>
+                                                <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario_resuelto->color_prioridad }}'>
+                                                    <strong>Prioridad: {{ $cuestionario_resuelto->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario_resuelto->fin)) }}</strong>
                                                 </div>
                                             </div>
                                         </div>
                                          <div class="col-md-1"> 
                                             <img src="{{ asset('img/check.png') }}" height="90%;" width="90%;"> 
                                          </div>
-                
-                                      </div>  
-                                    @else
-                                      <div class="progress-group">
-                                        <div class="col-md-11">
-                                            <span class="progress-text"><button class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</button></span>
-                                            <div class="progress sm" style="height: 20px;">
-                                                <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'>
-                                                    <strong>Prioridad: {{ $cuestionario->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario->fin)) }}</strong>
-                                                </div>
-                                            </div>
-                                        </div>
-                                         <div class="col-md-1"> 
-                                            <img src="{{ asset('img/contaestar.png') }}" height="90%;" width="90%;"> 
-                                         </div>
-                
-                                      </div>
+                                      </div> 
+                                      <input type="text" id="idCuestionario" class="hidden" value="{{ $existe = 1 }}" />
+                                      @break
                                     @endif
 
                                 @endforeach
+
+                                @if( $existe == 0)
+                                  <div class="progress-group">
+                                    <div class="col-md-11">
+                                        <span class="progress-text"><button class='resolver-modal btn btn-block btn-info btn-xs' data-id='{{ $cuestionario->id }}'> Carrera: {{ $cuestionario->carrera }} / Grado: {{ $cuestionario->grado }} / Seccion: {{ $cuestionario->seccion }} / {{ $cuestionario->tipo_cuestionario}}: {{ $cuestionario->titulo }} / Punteo: {{ $cuestionario->punteo }}</button></span>
+                                        <div class="progress sm" style="height: 20px;">
+                                            <div style="width: 100%" class='progress-bar progress-bar-{{ $cuestionario->color_prioridad }}'>
+                                                <strong>Prioridad: {{ $cuestionario->prioridad }} y Finaliza: {{ date('d/m/Y', strtotime($cuestionario->fin)) }}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-1"> 
+                                        <img src="{{ asset('img/contaestar.png') }}" height="90%;" width="90%;"> 
+                                     </div>
+            
+                                  </div>
+                                @endif
 
                             @else
                             
@@ -98,7 +101,7 @@
         $(document).on('click', '.resolver-modal', function() {
             var id = $(this).data('id');
 
-            let ruta1 = "{{ route('cuestionarios.encabezadoCuestionarioSeleccionado', ['id' => 'id']) }}";
+            let ruta1 = "{{ route('cuestionarios.encabezadoCuestionarioSeleccionado', ['id1' => 'id']) }}";
             var ruta = ruta1.replace('id', id);
 
             $.ajax({

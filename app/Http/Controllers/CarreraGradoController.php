@@ -16,11 +16,10 @@ use App\Estado;
 
 class CarreraGradoController extends Controller
 {
-     protected $verificar_insert =
+    protected $verificar_insert =
     [
         'fkcarrera' => 'required|integer', 
-        'fkgrado' => 'required|integer',
-                                                                              
+        'fkgrado' => 'required|integer',                                       
     ];
 
     public function __construct()
@@ -42,7 +41,7 @@ class CarreraGradoController extends Controller
     }
 
 
- public function getdata()
+    public function getdata()
     {
       
          $color_estado = "";
@@ -105,12 +104,21 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $insert = new CarreraGrado();            
-            $insert->fkcarrera = $request->fkcarrera;
-            $insert->fkgrado = $request->fkgrado;           
-            $insert->fkestado = $estado->id;                                                                           
-            $insert->save();
-            return response()->json($insert);
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->where('fkestado', 5)->first();
+
+            if(is_null($existe))
+            {
+                $insert = new CarreraGrado();            
+                $insert->fkcarrera = $request->fkcarrera;
+                $insert->fkgrado = $request->fkgrado;           
+                $insert->fkestado = $estado->id;                                                                           
+                $insert->save();
+                return response()->json($insert);
+            }
+            else
+            {
+                return response()->json($existe); 
+            }           
         }        
     }
 
@@ -130,11 +138,20 @@ class CarreraGradoController extends Controller
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $cambiar = CarreraGrado::findOrFail($id);              
-            $cambiar->fkcarrera = $request->fkcarrera;
-            $cambiar->fkgrado = $request->fkgrado;
-            $cambiar->save();
-            return response()->json($cambiar);
+            $existe = CarreraGrado::where('fkcarrera', $request->fkcarrera)->where('fkgrado', $request->fkgrado)->where('fkestado', 5)->first();
+            
+            if(is_null($existe))
+            {            
+                $cambiar = CarreraGrado::findOrFail($id);              
+                $cambiar->fkcarrera = $request->fkcarrera;
+                $cambiar->fkgrado = $request->fkgrado;
+                $cambiar->save();
+                return response()->json($cambiar);
+            }
+            else
+            {
+                return response()->json($existe); 
+            }                   
         }        
     }
 

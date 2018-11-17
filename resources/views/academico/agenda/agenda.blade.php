@@ -27,21 +27,26 @@
         </div>
 
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="15%">Actividad</th>
-                            <th width="15%">Descripción</th>
-                            <th width="15%">Fecha Ingresada</th>
-                            <th width="15%">Fecha Programada</th>
-                            <th width="8%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="15%">Actividad</th>
+                                        <th width="15%">Descripción</th>
+                                        <th width="15%">Fecha Ingresada</th>
+                                        <th width="15%">Fecha Programada</th>
+                                        <th width="8%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>               
+            </div>
         </div>
     </div>
 
@@ -58,18 +63,7 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group has-success">
-                        <!--Descripción-->
-                        <div class="col-sm-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <label>Descripción</label>
-                                        <i class="fa fa-sticky-note"></i>
-                                  </div>
-                                  <textarea rows="4" cols="60" type="text" class="form-control" id="descripcion_add" placeholder="Descripción" autofocus maxlength="1000"></textarea>
-                                </div>                                                          
-                            <small class="control-label">Max: 1000| unico</small>
-                            <p class="errorDescripcion text-center alert alert-danger hidden"></p>
-                        </div>   
+                        
                            
                              <!--Drop list de la Actividad-->
                              <div class="col-sm-6">
@@ -109,7 +103,19 @@
                                       <input type="text" class="form-control" id="fecha_programada_add" name="fecha_programada_add" placeholder="dd/mm/yyyy" autofocus>
                                  </div>                                                               
                                     <p class="errorFechaProgramada text-center alert alert-danger hidden"></p>
-                        </div>     
+                        </div>    
+                                      <!--Descripción-->
+                        <div class="col-sm-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <label>Descripción</label>
+                                        <i class="fa fa-sticky-note"></i>
+                                  </div>
+                                  <textarea rows="4" cols="60" type="text" class="form-control" id="descripcion_add" placeholder="Descripción" autofocus maxlength="1000"></textarea>
+                                </div>                                                          
+                            <small class="control-label">Max: 1000| unico</small>
+                            <p class="errorDescripcion text-center alert alert-danger hidden"></p>
+                        </div>    
                      </div> 
                     </form>
                 </div>

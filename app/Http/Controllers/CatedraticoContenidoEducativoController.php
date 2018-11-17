@@ -57,17 +57,7 @@ class CatedraticoContenidoEducativoController extends Controller
     public function index_historico()
     {
         $catedratico = Persona::where('id', Auth::user()->fkpersona)->first();
-        $carreras = CatedraticoCurso::join('cantidad_alumno', 'catedratico_curso.fkcantidad_alumno', 'cantidad_alumno.id')
-            ->join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')
-            ->join('carrera', 'carrera_grado.fkcarrera', 'carrera.id')
-            ->join('grado', 'carrera_grado.fkgrado', 'grado.id')
-            ->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
-            ->join('carrera_curso', 'catedratico_curso.fkcarrera_curso', 'carrera_curso.id')
-            ->join('curso', 'carrera_curso.fkcurso', 'curso.id')            
-            ->where('catedratico_curso.fkpersona', $catedratico->id)
-            ->where('catedratico_curso.fkestado', 5)
-            ->select('catedratico_curso.id as id', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'curso.nombre as curso')
-            ->get();
+        $carreras = CatedraticoCurso::buscarCursoCatedratico(Auth::user()->fkpersona);
         $ciclos = Ciclo::select('id', 'nombre')->get();
         return view('/blackboard/historicos/contenidoeducativocatedraticohistorico', compact('catedratico', 'carreras', 'ciclos'));
     }
@@ -76,7 +66,7 @@ class CatedraticoContenidoEducativoController extends Controller
     {
         $color_estado = "";
 
-        $query = Catedratico_Contenido_Educativo::dataContenidoEducativoCatedratico();
+        $query = Catedratico_Contenido_Educativo::dataContenidoEducativoCatedratico(Auth::user()->fkpersona);
 
         return Datatables::of($query)
             ->addColumn('tarea', function ($data) {
@@ -123,16 +113,22 @@ class CatedraticoContenidoEducativoController extends Controller
                 return date('d/m/Y h:i:s', strtotime($data->created_at));
             })                      
             ->addColumn('action', function ($data) {
+                $imprimir = ' ';
                 $vistos = VistaContenido::contenidoVistoCatedratico($data->id);
                 $tareas = Alumno_Contenido_Educativo::tareasEntregadasGlobal($data->id);
 
+                if(count($vistos) > 0)
+                {
+                    $imprimir = '<button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button>';
+                }
+
                 if($data->responder == 1)
                 {
-                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($vistos).'</button>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="ver-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'">'.count($tareas).'</button>  '.$imprimir.' <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;" target="_blank">Descargar</a>';
                 }
                 else
                 {
-                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  <button class="imprimir-modal btn btn-primary btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-print"></span></button> <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';                  
+                    return '<small class="label bg-yellow btn-xs">'.count($vistos).'</small>  '.$imprimir.' <a href="'.$data->archivo.'" class="btn btn-success btn-xs pull-right" style="margin-right: 5px;">Descargar</a>';                  
                 }                
 
             })       

@@ -153,6 +153,7 @@ Route::get('/academico/inscripcion/dropencargado/{id}', 'InscripcionController@d
 //Inscripcion
 Route::resource('/academico/inscripcion/inscripcion', 'InscripcionController');
 Route::get('inscripcion/getdata', 'InscripcionController@getdata')->name('inscripcion.getdata');
+Route::get('/academico/inscripcion/dropCantidadAlumnoInscripcion/{id}', 'InscripcionController@dropCantidadAlumnoInscripcion');
 Route::get('/academico/inscripcion/dropCantidadCarreraGrado/{id}', 'InscripcionController@dropCantidadCarreraGrado');
 Route::get('/academico/inscripcion/droptiperiodo/{id}', 'InscripcionController@droptiperiodo');
 Route::get('/academico/inscripcion/dropestudiante/{id}', 'InscripcionController@dropestudiante');
@@ -171,8 +172,9 @@ Route::post('/academico/agenda/cambiarEstado', 'AgendaController@cambiarEstado')
 
 //Nota
 Route::resource('/academico/nota/nota', 'NotaController');
-Route::get('Nota/getdata', 'NotaController@getdata')->name('Nota.getdata');
-Route::get('/academico/nota/dropinscrito/{id}', 'NotaController@dropinscrito');
+Route::get('nota/getdata/{carrera}/{curso}/{anio}/{bimestre}', 'NotaController@getdata')->name('nota.getdata');
+Route::post('/academico/nota/estado', 'NotaController@cambiarEstado');
+Route::get('/filtrar/curso/carrera/nota/{id}', 'NotaController@dropCurso');
 
 //Sistema Rol Usuario
 Route::resource('/sistema/imedchi/sistemarolusuario', 'SistemaRolUsuarioController');
@@ -220,6 +222,7 @@ Route::post('/gestionadministrativa/inventario/producto/cambiarEstado', 'Product
 
 //RespuestaBandejaCuestionario
 Route::resource('/plataforma/blackboard/bandeja/responder/cuestionario', 'ResponderBandejaCuestionarioController');
+Route::post('/plataforma/blackboard/bandeja/responder/cuestionario/responder', 'ResponderBandejaCuestionarioController@storeCuestionario')->name('cuestionarioresponder.store');
 Route::get('/bandeja/responder/carrera', 'ResponderBandejaCuestionarioController@getdataCarrera');
 Route::get('/bandeja/responder/cuestionario/{id}', 'ResponderBandejaCuestionarioController@getdata');
 Route::get('/contar/bandeja/responder/cuestionario/{id1}/{id2}', 'ResponderBandejaCuestionarioController@contadorCuestionarios');
@@ -250,7 +253,12 @@ Route::post('/plataforma/blackboard/cargar/contenido_educativo/catedratico/cambi
 
 //CargarContenidoAlumno
 Route::resource('/plataforma/blackboard/cargar/contenido_educativo/alumno', 'AlumnoContenidoEducativoController');
-
+Route::get('/plataforma/blackboard/contenido_educativo/alumno/historico', 'AlumnoContenidoEducativoController@index_historico')->name('contenido_educativo_alumno.historico');
+Route::get('getdata/blackboard/ver/todas/tareas/alumno', 'AlumnoContenidoEducativoController@getDataAlumnoLogin')->name('tareasalumno.getdata');
+Route::get('getdata/blackboard/ver/tareas/alumno/{id}', 'AlumnoContenidoEducativoController@getdata')->name('tareas.getdata');
+Route::post('/gurdar/documento/visto/alumo', 'AlumnoContenidoEducativoController@store_verificar');
+Route::post('/blackboard/contenido_alumno/cambiarEstado', 'AlumnoContenidoEducativoController@cambiarEstado');
+Route::get('get/historicos/contenido/alumno/{carrera}/{curso}/{anio}', 'AlumnoContenidoEducativoController@filtrogetdata')->name('alumnocontenidohistorico.filtrogetdata');
 
 //Categoria
 Route::resource('/gestionadministrativa/inventario/categoria', 'CategoriaController');
@@ -306,16 +314,13 @@ Route::get('/filtrar/curso/carrera/{id}', 'CuestionarioHistoricoAlumno@dropCurso
 
 // Cuestionarios Historicos Catedratico
 Route::get('/plataforma/blackboard/cuestionario/historicos/catedraticohistorico', 'CuestionarioHistoricoCatedratico@index')->name('catedraticohistorico.index');
-Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('alumnohistorico.getdata');
+Route::get('get/historicos/catedraticohistorico/{carrera}/{cuestionario}/{anio}', 'CuestionarioHistoricoCatedratico@getdata')->name('categoriahistorico.getdata');
 Route::get('/filtrar/cuestionario/carrera/{id}', 'CuestionarioHistoricoCatedratico@dropCuestionario');
-
 
 
 // Dashboard Blackboard
 Route::resource('/dashboard/blackboard', 'DashboardBlackboardController');
 
-Route::get('/500', ['as' => 'denied', function() {
-	flash('¡Sin Privilegios!')->error()->important();
-    return view('errores.500');
-}])->middleware('auth');
-
+// Errores Sistema
+Route::get('/500', 'ErroresSistemaController@error500');
+Route::get('/404', 'ErroresSistemaController@error404');

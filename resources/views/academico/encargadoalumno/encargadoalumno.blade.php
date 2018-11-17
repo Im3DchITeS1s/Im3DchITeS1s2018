@@ -170,7 +170,7 @@
 
       <!-- AJAX CRUD operations -->
     <script type="text/javascript">
-        var table = "";
+        var table = "";        
 
         //dropdownlist
         $(document).ready(function() {
@@ -191,7 +191,7 @@
         });
 
     
-  //Insertar
+        //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
             $('.errorEstudiante').addClass('hidden');

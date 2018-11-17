@@ -13,11 +13,17 @@ class Agenda extends Model
 	protected $fillable = ['descripcion', 'fecha_ingresada', 'fecha_programada'];
 
 
- public static function dataAgenda(){
- 	return Agenda::join('tipoactividad','agenda.fktipoactividad','=','tipoactividad.id')
- 				->join('estado', 'agenda.fkestado','=','estado.id')
- 				->select(['agenda.id as id','tipoactividad.nombre as actividad', 'agenda.descripcion','agenda.fecha_ingresada','agenda.fecha_programada','agenda.fktipoactividad as fktipoactividad','agenda.fkestado as fkestado']);
+ 	public static function dataAgenda(){
+ 		return Agenda::join('tipoactividad','agenda.fktipoactividad','=','tipoactividad.id')
+ 					->join('estado', 'agenda.fkestado','=','estado.id')
+ 					->select(['agenda.id as id','tipoactividad.nombre as actividad', 'agenda.descripcion','agenda.fecha_ingresada','agenda.fecha_programada','agenda.fktipoactividad as fktipoactividad','agenda.fkestado as fkestado']);
  }
+
+ 	public static function AgendaActividad(){
+ 			return Agenda::join('tipoactividad','agenda.fktipoactividad','=','tipoactividad.id')
+ 						->join('estado','agenda.fkestado','=','estado.id')
+ 						->select(['agenda.id','tipoactividad.nombre','fecha_programada','agenda.fkestado']);
+ 											}
 
 	public static function buscarIDCarreraCurso($id)
     {

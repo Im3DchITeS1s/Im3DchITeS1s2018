@@ -155,6 +155,43 @@ class Inscripcion extends Model
             ->orderBy('apellido1', 'asc')->get();
 	}	
 
+	public static function alumnosAgregarNota($carrera, $curso, $anio, $bimestre){
+
+		if($bimestre > 0)
+		{
+			return Inscripcion::join('cantidad_alumno','inscripcion.fkcantidad_alumno','cantidad_alumno.id')
+				->join('carrera_grado','cantidad_alumno.fkcarrera_grado','carrera_grado.id')
+				->join('carrera_curso','carrera_grado.fkcarrera','carrera_curso.fkcarrera')
+				->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+				->join('persona','inscripcion.fkpersona','persona.id')
+	            ->select(['inscripcion.id as id','persona.nombre1 as nombre1','persona.nombre2 as nombre2','persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'carrera_curso.id as carrera_curso', \DB::raw("(SELECT id FROM periodo_academico
+	                          WHERE id = ".$bimestre."
+	                        ) as bimestre")])
+	            ->where('cantidad_alumno.id',$carrera)
+				->where('carrera_curso.id',$curso)
+				->where('ciclo.nombre',$anio)
+	            ->orderBy('apellido1', 'asc')->get();
+		}
+		else
+		{
+			return Inscripcion::join('cantidad_alumno','inscripcion.fkcantidad_alumno','cantidad_alumno.id')
+				->join('seccion','cantidad_alumno.fkseccion','seccion.id')
+				->join('carrera_grado','cantidad_alumno.fkcarrera_grado','carrera_grado.id')
+				->join('carrera','carrera_grado.fkcarrera','carrera.id')
+				->join('grado','carrera_grado.fkgrado','grado.id')
+				->join('carrera_curso','carrera.id','carrera_curso.fkcarrera')
+				->join('curso','carrera_curso.fkcurso','curso.id')
+				->join('ciclo', 'inscripcion.fkciclo', 'ciclo.id')
+				->join('persona','inscripcion.fkpersona','persona.id')
+	            ->select(['inscripcion.id as id','persona.nombre1 as nombre1','persona.nombre2 as nombre2','persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'carrera_curso.id as carrera_curso', \DB::raw("(SELECT id FROM periodo_academico
+	                          WHERE id = 0
+	                        ) as bimestre")])
+				->where('cantidad_alumno.id',0)
+				->where('ciclo.nombre',0)
+	            ->orderBy('apellido1', 'asc')->get();			
+		}
+	}	
+
 	public static function boot() {
 
 	    parent::boot();

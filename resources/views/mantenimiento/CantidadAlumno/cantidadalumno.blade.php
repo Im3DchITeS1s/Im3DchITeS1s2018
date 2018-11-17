@@ -62,11 +62,9 @@
                                     <div class="input-group-addon">
                                         <label>Cantidad</label>
                                         <i class="fa fa-sticky-note"></i>
-                                    
                                   </div>
                                   <input type="text" class="form-control" id="cantidad_add" placeholder="Cantidad" autofocus maxlength="6">
                                 </div>                                                          
-                                <small class="control-label">Max: 6| unico</small>
                                 <p class="errorCantidad text-center alert alert-danger hidden"></p>
                             </div>   
                         </div>      
@@ -86,8 +84,9 @@
                                 <p class="errorCarreraGrado text-center alert alert-danger hidden"></p>
                             </div> 
                         </div> 
+                        
                         <div class="form-group has-success">                       
-                          <div class="col-sm-6">
+                          <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <label>Seccion</label>
@@ -290,7 +289,7 @@
                      } else {
                         swal("Correcto", "Se ingreso la informacion", "success")
                         .then((value) => {
-                            $('#cantidad').val('');
+                            $('#cantidad_add').val('');
                             $('#fkcarrera_grado_add').val('');
                             $('#fkseccion_add').val('');
                             table.ajax.reload();
@@ -309,9 +308,6 @@
             $('.errorSeccion').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
-            $('#cantidad_edit').val($(this).data('cantidad'));
-            $('#fkcarrera_grado_edit').val($(this).data('fkcarrera_grado'));
-            $('#fkseccion_edit').val($(this).data('fkseccion'));
             id = $('#id_edit').val();
             fkcarrera_grado = $(this).data('fkcarrera_grado');
             fkseccion = $(this).data('fkseccion');
@@ -323,23 +319,23 @@
                 $("#fkcarrera_grado_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkcarrera_grado_edit").append("<option value='"+response[i].id+"'> "+response[i].carrera+"/"+response[i].grado+" </option>");
-                    $('#fkcarrera_grado_edit').val('').trigger('change.select2'); 
+                    $('#fkcarrera_grado_edit').val(fkcarrera_grado).trigger('change.select2'); 
                 }
-                  });
-            }); 
-
+            });
 
             $.get("/mantenimiento/cantidadalumno/dropCantidadSeccion/"+5,function(response,id){
                 $("#fkseccion_edit").empty();
                 $("#fkseccion_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
                     $("#fkseccion_edit").append("<option value='"+response[i].id+"'> "+response[i].letra+" </option>");
-                    $('#fkseccion_edit').val('').trigger('change.select2'); 
+                    $('#fkseccion_edit').val(fkseccion).trigger('change.select2'); 
                 }
-            });        
+            });               
+        }); 
+    
           
 
-          $('.modal-footer').on('click', '.edit', function() {
+        $('.modal-footer').on('click', '.edit', function() {
             $.ajax({
                 type: 'PUT',
                 url: '/mantenimiento/cantidadalumno/' + id,

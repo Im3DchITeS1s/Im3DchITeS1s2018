@@ -24,23 +24,27 @@
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
         </div>
-        <select name="datos" id="uno">uno</select>
         <div class="box-body">
-          <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
-                    <thead >
-                        <tr>
-                            <th width="15%">Alumno</th>
-                            <th width="15%">Carrera Grado Sección</th>
-                            <th width="15%">Periodo Académico</th>
-                            <th width="15%">Ciclo</th>
-                            <th width="15%">Accion</th>
-                        </tr>
-                    </thead>
-                </table>         
-            </div>                
-          </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <br>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover dataTable" id="info-table" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th width="15%">Alumno</th>
+                                        <th width="15%">Carrera Grado Sección</th>
+                                        <th width="15%">Periodo Académico</th>
+                                        <th width="15%">Ciclo</th>
+                                        <th width="15%">Accion</th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 
@@ -61,7 +65,7 @@
                              <div class="col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <label>Carreras|GyS</label>
+                                       
                                         <i class="fa fa-sticky-note"></i>
                                   </div>
                                     <select class="form-control js-example-basic-single" name="state" style="width: 100%;"
@@ -125,7 +129,7 @@
                                     name="fkciclo_add" id='fkciclo_add' required autofocus>
                                     </select> 
                                 </div>   
-                                <small class="control-label">Debe de seleccionar uno</small>                                                     
+                                <small class="control-label">Debe de seleccionar uno</small>         
                                 <p class="errorCiclo text-center alert alert-danger hidden"></p>
                             </div> 
                             
@@ -259,8 +263,7 @@
             $('.js-example-basic-single').select2();
         });
        
-
-        //Leer
+  //Leer
         $(document).ready(function() {
             table = $('#info-table').DataTable({  
                 processing: true,
@@ -278,7 +281,6 @@
             });
         });
 
-
         //Insertar
         $(document).on('click', '.add-modal', function() {
             $('.modal-title').text('Agregar Informacion');
@@ -289,7 +291,7 @@
             $('.errorPago').addClass('hidden');
             $('#addModal').modal('show');
 
-            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+            $.get("/academico/inscripcion/dropCantidadAlumnoInscripcion/"+5,function(response, id){
                 $("#fkcantidad_alumno_add").empty();
                 $("#fkcantidad_alumno_add").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){
@@ -335,7 +337,7 @@
                     'fkcantidad_alumno': $('#fkcantidad_alumno_add').val(),
                     'fktipo_periodo': $('#fktipo_periodo_add').val(),
                     'fkpersona': $('#fkpersona_add').val(),
-                    'ciclo': $('#fkciclo_add').val(),
+                    'fkciclo': $('#fkciclo_add').val(),
                     'pago': $('#pago_add').val(),
 
 
@@ -402,7 +404,7 @@
             $('.modal-title').text('Editar Informacion');
             $('.errorPersona').addClass('hidden');
             $('.errorPeriodo').addClass('hidden');
-            $('.errorPersona').addClass('hidden');
+            $('.errorCiclo').addClass('hidden');
             $('.errorPago').addClass('hidden');
                                 
             $('#id_edit').val($(this).data('id'));
@@ -411,9 +413,10 @@
             fkcantidad_alumno = $(this).data('fkcantidad_alumno');
             fktipo_periodo = $(this).data('fktipo_periodo');
             fkpersona = $(this).data('fkpersona');
+            fkciclo = $(this).data('fkciclo');
             $('#editModal').modal('show');
 
-            $.get("/academico/inscripcion/dropCantidadCarreraGrado/"+5,function(response, id){
+            $.get("/academico/inscripcion/dropCantidadAlumnoInscripcion/"+5,function(response, id){
                 $("#fkcantidad_alumno_edit").empty();
                 $("#fkcantidad_alumno_edit").append("<option value=''> seleccionar </option>");
                 for(i=0; i<response.length; i++){

@@ -20,10 +20,10 @@ class ResultadoCuestionarioController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['show', 'edit']]);
-        $this->middleware('director', ['only' => ['show', 'edit']]);
-        $this->middleware('secretaria', ['only' => ['show', 'edit']]);
-        $this->middleware('contador', ['only' => ['show', 'edit']]);
+        $this->middleware('admin', ['only' => ['index', 'show', 'edit']]);
+        $this->middleware('director', ['only' => ['index', 'show', 'edit']]);
+        $this->middleware('secretaria', ['only' => ['index', 'show', 'edit']]);
+        $this->middleware('contador', ['only' => ['index', 'show', 'edit']]);
         //$this->middleware('catedratico', ['only' => ['show', 'edit']]);
         //$this->middleware('alumno', ['only' => ['show', 'edit']]);
     } 

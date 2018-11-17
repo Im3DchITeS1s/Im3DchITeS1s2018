@@ -52,27 +52,7 @@ class UsuarioController extends Controller
     public function getdata()
     {
         $query = User::dataUsuario();
-        return Datatables::of($query)
-            ->addColumn('action', function ($data) {
-                switch ($data->fkestado) {
-                    case 11:
-                        $btn_estado = '<button class="delete-modal btn btn-danger btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-down"></span></button>';       
-                        break;
-                    case 12:
-                        $btn_estado = '<button class="delete-modal btn btn-success btn-xs" type="button" data-id="'.$data->id.'"><span class="fa fa-thumbs-up"></span></button>';        
-                        break;
-                    case 13:
-                        $btn_estado = '';
-                        break;                                                
-                }
-
-                $btn_edit = '<button class="edit-modal btn btn-warning btn-xs" type="button" data-id="'.$data->id.'" data-username="'.$data->username.'" data-email="'.$data->email.'" data-fecha_inactivo="'.$data->fecha_inactivo.'" data-nombre1="'.$data->nombre1.'" data-nombre2="'.$data->nombre2.'" data-apellido1="'.$data->apellido1.'" data-apellido2="'.$data->apellido2.'" data-fkestado="'.$data->fkestado.'">
-                    <span class="glyphicon glyphicon-edit"></span></button>';           
-
-                return '<small class="label label-success">'.$data->estado.'</small> '.$btn_edit.' '.$btn_estado;
-            })                  
-            ->editColumn('id', 'ID: {{$id}}')       
-            ->make(true);
+        return Datatables::of($query)->make(true);
     }
 
     public function droppersona(Request $request, $id)
@@ -143,6 +123,11 @@ class UsuarioController extends Controller
 
                     }while(!is_null($buscar_existe_alumno));   
                 }      
+
+                $no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+                $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+                
+                $username = str_replace($no_permitidas, $permitidas ,$username);                
 
                 $insert = new User();
                 $insert->username = $username;
@@ -224,7 +209,7 @@ class UsuarioController extends Controller
           'user' => "Su usuario es: ".$usuario." y su email es: ".$usuario."@imedchi.edu.gt",
           'confirmation' => " se le ha creado una cuenta en el Sistema IMEDCHI y es necesario que confirme su Correo Electrónico y el siguiente",
           'token' => "Código: " . $token,
-          'link' => "Ingresar al Siguiente LINK:  http://127.0.0.1:8000/usuario/reset/password/confirmar"
+          'link' => "Ingresar al Siguiente LINK:  http://167.99.237.41/usuario/reset/password/confirmar"
         );
         Mail::send('emails.correo_bienvenida', $data, function ($message) use ($email){
             $message->subject('Confirmar Cuenta');

@@ -10,6 +10,15 @@ class VistaContenido extends Model
 	protected $table = 'contenido_visto';
 	protected $guarded = ['id', 'fkinscripcion', 'fkcatedratico_contenido_educativo']; 
 
+	public static function visto($fkinscripcion, $idcontenido)
+	{
+		return VistaContenido::/*join('catedratico_contenido_educativo', 'contenido_visto.fkcatedratico_contenido_educativo', 'catedratico_contenido_educativo.id')
+			->join('alumno_contenido_educativo', 'catedratico_contenido_educativo.id', 'alumno_contenido_educativo.fkcatedratico_contenido')
+			->where('alumno_contenido_educativo.fkestado', 5)*/
+			where('contenido_visto.fkinscripcion', $fkinscripcion)
+			->where('fkcatedratico_contenido_educativo', $idcontenido)->select('contenido_visto.*')->get();
+	}
+
 	public static function contenidoVistoAlumno($fkinscripcion)
 	{
 		return VistaContenido::where('fkinscripcion', $fkinscripcion)->latest()->take(50)->get(); 

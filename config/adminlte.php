@@ -203,7 +203,7 @@ return [
                     ],
                     [
                         'text' => 'Contenido Historico',
-                        'url'  => '/plataforma/blackboard/cargar/contenido_educativo/catedratico/historico', 'CatedraticoContenidoEducativoController@index_historico',
+                        'url'  => '/plataforma/blackboard/contenido_educativo/alumno/historico',
                         'icon_color' => 'yellow',
                     ],                      
                 ],
@@ -272,11 +272,6 @@ return [
                 [
                 'text' => 'Ingreso de Alumnos',
                 'url'  => '/academico/estudiante/estudiante',
-                'icon_color' => 'red',
-                ],
-                [
-                'text'    => 'Encargado de Estudiantes',
-                'url'     => '/academico/encargadoalumno/encargadoalumno',
                 'icon_color' => 'red',
                 ],
                 [
@@ -370,22 +365,6 @@ return [
                 ],                
                 ],                           
             ],
-        ],
-        [  
-            'text'    => 'Rendimiento Académico',
-            'icon'    => 'line-chart',
-            'submenu' => [
-                [
-                'text' => 'Desempeño de Docente',
-                'url'  => '#',
-                'icon_color' => 'red',
-                ],
-                [
-                'text'    => 'Rendimiento Académico',
-                'url'     => '#',
-                'icon_color' => 'yellow',
-                ],
-            ],                      
         ],        
     ],    
 

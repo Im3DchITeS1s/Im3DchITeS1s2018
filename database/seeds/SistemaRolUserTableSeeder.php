@@ -91,14 +91,14 @@ class SistemaRolUserTableSeeder extends Seeder
 
 
 
-		/*1*/$persona1 = User::where('username', 'Admin')->first();
+		/*1*/$persona1 = 1;
 		/*2*/$persona2 = User::where('username', 'Jose')->first();
 		/*3*/$persona3 = User::where('username', 'Alejandro')->first();		
 
 
 		$nuevo = new Sistema_Rol_Usuario();
 		$nuevo->fksistema_rol = $blackboard_admin->id;   
-		$nuevo->fkuser = $persona1->id;  
+		$nuevo->fkuser = $persona1;  
 		$nuevo->save(); 	
 
 		/*$nuevo = new Sistema_Rol_Usuario();
@@ -121,7 +121,7 @@ class SistemaRolUserTableSeeder extends Seeder
 
 		$nuevo = new Sistema_Rol_Usuario();
 		$nuevo->fksistema_rol = $academico_admin->id;   
-		$nuevo->fkuser = $persona1->id;  
+		$nuevo->fkuser = $persona1;  
 		$nuevo->save(); 
 
 		/*$nuevo = new Sistema_Rol_Usuario();
@@ -139,7 +139,7 @@ class SistemaRolUserTableSeeder extends Seeder
 
 		$nuevo = new Sistema_Rol_Usuario();
 		$nuevo->fksistema_rol = $administracion_admin->id;   
-		$nuevo->fkuser = $persona1->id;  
+		$nuevo->fkuser = $persona1;  
 		$nuevo->save(); 
 
 		/*$nuevo = new Sistema_Rol_Usuario();
