@@ -122,7 +122,7 @@ class InscripcionController extends Controller
     public function dropCantidadCarreraGrado(Request $request, $id)
     {
         if($request->ajax()){
-            $data = CantidadAlumno::dropCantidadAlumno($id);
+            $data = CantidadAlumno::dropCantidadAlumnoInscripcion($id);
             return response()->json($data);
         }        
     }  

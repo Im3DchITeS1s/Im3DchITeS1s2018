@@ -56,7 +56,7 @@ class Cuestionario extends Model
             ->select('cuestionario.id as id', 'cuestionario.titulo as titulo', 'cuestionario.descripcion as descripcion', 'cuestionario.punteo as punteo', 'cuestionario.fkcatedratico_curso as fkcatedratico_curso', 'cuestionario.fkperiodo_academico as fkperiodo_academico', 'cuestionario.fktipo_cuestionario as fktipo_cuestionario', 'cuestionario.fkprioridad as fkprioridad', 'cuestionario.fkestado as fkestado', 'carrera.nombre as carrera', 'curso.nombre as curso', 'grado.nombre as grado', 'seccion.letra as seccion', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'prioridad.nombre as prioridad', 'prioridad.color as color_prioridad', 'estado.nombre as estado', 'tipo_cuestionario.nombre as tipo_cuestionario', 'cuestionario.inicio as inicio', 'cuestionario.fin as fin')
             ->where('catedratico_curso.fkcantidad_alumno', $carrera_grado_seccion)
             ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)
-            ->where('cuestionario.inicio', '>=', date('Y-m-d'))
+            ->where('cuestionario.inicio', '<=', date('Y-m-d'))
             ->where('cuestionario.fkestado', 21)->get();     	
 	}
 

@@ -20,10 +20,12 @@ class CarreraCurso extends Model
 	}
 
 	public static function buscarcarreracurso($id){
+		$carrera = CantidadAlumno::join('carrera_grado', 'cantidad_alumno.fkcarrera_grado', 'carrera_grado.id')->where('cantidad_alumno.id', $id)->select('carrera_grado.fkcarrera as id')->first();
+
 		return CarreraCurso::join('carrera', 'carrera_curso.fkcarrera', 'carrera.id')
 			->join('curso', 'carrera_curso.fkcurso', 'curso.id')
 			->where('carrera_curso.fkestado', 5)
-            ->where('carrera_curso.fkcarrera', $id)
+            ->where('carrera_curso.fkcarrera', $carrera->id)
             ->select('carrera_curso.id as id', 'carrera.nombre as carrera', 'curso.nombre as curso')
             ->orderBy('carrera.nombre', 'asc')->get();
 	}

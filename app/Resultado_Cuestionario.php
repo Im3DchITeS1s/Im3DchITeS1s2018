@@ -20,7 +20,7 @@ class Resultado_Cuestionario extends Model
 				->join('catedratico_curso', 'cuestionario.fkcatedratico_curso', 'catedratico_curso.id')
 				->where('resultado_cuestionario.fkinscripcion', $inscripcion)
 				->where('ciclo.nombre', $ciclo)
-				->where('cuestionario.inicio', '>=', date('Y-m-d'))
+				->where('cuestionario.inicio', '<=', date('Y-m-d'))
 	            ->where('resultado_cuestionario.fkcarrera_curso', $carrera_curso)				
 				->select('resultado_cuestionario.fkcuestionario as fkcuestionario')->get();
 	}	
@@ -46,7 +46,7 @@ class Resultado_Cuestionario extends Model
 	            ->select('cuestionario.id as fkcuestionario', 'cuestionario.titulo as titulo', 'cuestionario.descripcion as descripcion', 'cuestionario.punteo as punteo', 'cuestionario.fkcatedratico_curso as fkcatedratico_curso', 'cuestionario.fkperiodo_academico as fkperiodo_academico', 'cuestionario.fktipo_cuestionario as fktipo_cuestionario', 'cuestionario.fkprioridad as fkprioridad', 'cuestionario.fkestado as fkestado', 'carrera.nombre as carrera', 'curso.nombre as curso', 'grado.nombre as grado', 'seccion.letra as seccion', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'prioridad.nombre as prioridad', 'prioridad.color as color_prioridad', 'estado.nombre as estado', 'tipo_cuestionario.nombre as tipo_cuestionario', 'cuestionario.inicio as inicio', 'cuestionario.fin as fin')
 				->where('ciclo.nombre', $ciclo)
 	            ->where('catedratico_curso.fkcantidad_alumno', $carrera_grado_seccion)
-	            ->where('cuestionario.inicio', '>=', date('Y-m-d'))
+	            ->where('cuestionario.inicio', '<=', date('Y-m-d'))
 	            ->where('catedratico_curso.fkcarrera_curso', $carrera_curso)->get();
 	}
 
@@ -81,7 +81,7 @@ class Resultado_Cuestionario extends Model
 			->where('resultado_cuestionario.fkestado', $estado)
 			->where('inscripcion.fkpersona', $fkpersona)
 			->where('cuestionario.id', $fkcuestionario)
-			->select('resultado_cuestionario.id as id', 'resultado_cuestionario.punteo as punteo_obtenido', 'cuestionario.id as fkcuestionario', 'cuestionario.titulo as titulo', 'cuestionario.descripcion as descripcion', 'cuestionario.punteo as punteo_cuestionario', 'cuestionario.inicio as cuestionario_inicia', 'cuestionario.fin as cuestionario_finaliza', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'prioridad.nombre as prioridad', 'prioridad.color as prioridad_color', 'carrera.nombre as carrera', 'grado.nombre as nombre', 'seccion.letra as seccion', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'ciclo.nombre as ciclo', 'estado.nombre as estado', 'curso.nombre as curso')->first();
+			->select('resultado_cuestionario.id as id', 'resultado_cuestionario.punteo as punteo_obtenido', 'cuestionario.id as fkcuestionario', 'cuestionario.titulo as titulo', 'cuestionario.descripcion as descripcion', 'cuestionario.punteo as punteo_cuestionario', 'cuestionario.inicio as cuestionario_inicia', 'cuestionario.fin as cuestionario_finaliza', 'periodo_academico.nombre as periodo_academico', 'tipo_periodo.nombre as tipo_periodo', 'prioridad.nombre as prioridad', 'prioridad.color as prioridad_color', 'carrera.nombre as carrera', 'grado.nombre as grado', 'seccion.letra as seccion', 'persona.nombre1 as nombre1', 'persona.nombre2 as nombre2', 'persona.apellido1 as apellido1', 'persona.apellido2 as apellido2', 'ciclo.nombre as ciclo', 'estado.nombre as estado', 'curso.nombre as curso')->first();
 	}
 
 	public static function contarResueltosPorID($fkcuestionario)

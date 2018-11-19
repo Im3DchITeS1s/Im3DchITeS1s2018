@@ -60,7 +60,7 @@ class CatedraticoCursoController extends Controller
                 return $data->nombre1." ".$data->nombre2." ".$data->apellido1." ".$data->apellido2;
             }) 
             ->addColumn('datos_carreras', function ($data) {
-                return $data->carrera.' '.$data->grado.' '.$data->curso;
+                return $data->carrera.' '.$data->grado.' '.$data->seccion.' '.$data->curso;
 
             })  
             ->addColumn('fecha', function ($data) {
@@ -89,7 +89,6 @@ class CatedraticoCursoController extends Controller
             return response()->json($estado);
         }        
     }
-  
 
     public function dropcarreracurso(Request $request, $id)
     {

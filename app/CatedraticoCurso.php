@@ -22,7 +22,7 @@ class CatedraticoCurso extends Model
 				->join('seccion', 'cantidad_alumno.fkseccion', '=', 'seccion.id')
 				->join('persona', 'catedratico_curso.fkpersona', '=', 'persona.id')
 				->select(['catedratico_curso.id as id','cantidad_alumno.fkcarrera_grado as fkcarrera_grado','carrera_grado.fkcarrera','carrera.nombre as carrera','carrera_grado.fkgrado as fkgrado','grado.nombre as grado', 'carrera_curso.fkcurso',
-					'curso.nombre as curso','catedratico_curso.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','catedratico_curso.fecha_inicio','catedratico_curso.fecha_fin','catedratico_curso.cantidad_periodo', 'catedratico_curso.fkestado as id_estado']);
+					'curso.nombre as curso','catedratico_curso.fkpersona as fkpersona','persona.nombre1','persona.nombre2','persona.apellido1','persona.apellido2','catedratico_curso.fecha_inicio','catedratico_curso.fecha_fin','catedratico_curso.cantidad_periodo', 'catedratico_curso.fkestado as id_estado', 'seccion.letra as seccion']);
 	}
 
 	public static function buscarCursoCatedratico($id){

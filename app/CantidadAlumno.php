@@ -27,7 +27,7 @@ class CantidadAlumno extends Model
 					->join('seccion', 'cantidad_alumno.fkseccion', 'seccion.id')
 					->where('cantidad_alumno.fkestado', $id)
                     ->select('cantidad_alumno.id as id','carrera.nombre as carrera','grado.nombre as grado','seccion.letra as letra')
-                    ->orderBy('carrera.nombre', 'asc')->groupBy('cantidad_alumno.id')->get();
+                    ->orderBy('carrera.nombre', 'asc')->get();
    	}    	
 
 	public static function dropCantidadAlumno($id){

@@ -31,7 +31,9 @@ class ResponderBandejaCuestionarioController extends Controller
     }
 
     public function index()
-    {       
+    {   
+        $inscrito = Inscripcion::alumnoInscrito(Auth::user()->fkpersona, date('Y'));
+        dd($inscrito);
         return view('/blackboard/bandejacuestionario');
     }
 

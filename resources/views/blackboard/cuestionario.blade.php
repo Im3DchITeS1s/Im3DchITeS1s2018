@@ -14,6 +14,7 @@
 @stop
 
 @section('content')
+    <div class="pantalla"></div>
     <div class="row">
         <div class="col-md-12">
             <div class="box box-success">
@@ -1261,6 +1262,9 @@
         });
 
         $('.modal-footer').on('click', '.addRespuesta', function() {
+            
+            $(".pantalla").css({ 'position': 'absolute', 'top':'0', 'left':'0', 'z-index':'9999', 'width':'100%', 'height':'100%', 'background': 'url({{ asset("img/fondo.png") }})', 'cursor':'pointer' });              
+            
             if(id_respuesta > 0)
             {
                 $.get("/plataforma/blackboard/respuesta/valida/"+id_pregunta+"/"+text_etiqueta+"/"+seleccion,function(response){
@@ -1307,7 +1311,10 @@
                                             $('#respuesta_add').val('');
                                             $('#validacion_add').prop("checked", false);
                                             seleccion = 0;     
-                                            tabla_respuesta.ajax.reload();                                
+                                            tabla_respuesta.ajax.reload();
+                                        
+                                        $(".pantalla").css({'z-index':'1', 'width':'0%', 'height':'0%' });  
+
                                         });                          
                                     }
                                 },
@@ -1316,6 +1323,8 @@
                         }
                         else
                         {
+                            $(".pantalla").css({'z-index':'1', 'width':'0%', 'height':'0%' });  
+
                             swal("Advertencia", "Ya existe una respuesta correcta para la pregunta", "warning", {
                               buttons: false,
                               timer: 2000,
@@ -1362,7 +1371,10 @@
                                         $('#respuesta_add').val('');
                                         $('#validacion_add').prop("checked", false);
                                         seleccion = 0;     
-                                        tabla_respuesta.ajax.reload();                                
+                                        tabla_respuesta.ajax.reload();  
+
+                                        $(".pantalla").css({'z-index':'1', 'width':'0%', 'height':'0%' });  
+
                                     });                          
                                 }
                             },
@@ -1418,7 +1430,10 @@
                                             $('#respuesta_add').val('');
                                             $('#validacion_add').prop("checked", false);       
                                             seleccion = 0;
-                                            tabla_respuesta.ajax.reload();                                
+                                            tabla_respuesta.ajax.reload();  
+
+                                            $(".pantalla").css({'z-index':'1', 'width':'0%', 'height':'0%' });  
+
                                         });                          
                                     }
                                 },
@@ -1427,7 +1442,6 @@
                         }
                         else
                         {
-                            console.log("entroelse");
                             swal("Advertencia", "Ya existe una respuesta correcta para la pregunta", "warning", {
                               buttons: false,
                               timer: 2000,
@@ -1475,7 +1489,10 @@
                                         $('#respuesta_add').val('');
                                         $('#validacion_add').prop("checked", false);       
                                         seleccion = 0;
-                                        tabla_respuesta.ajax.reload();                                
+                                        tabla_respuesta.ajax.reload();
+            
+                                        $(".pantalla").css({'z-index':'1', 'width':'0%', 'height':'0%' });  
+
                                     });                          
                                 }
                             },
@@ -1484,7 +1501,8 @@
                     }
                 });                
 
-            }           
+            }            
+                      
         });
 
         $(document).on('click', '.editRespuesta-modal', function() { 
